@@ -1,0 +1,44 @@
+# ------------------- Deployment ------------------- #
+
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  labels:
+    k8s-app: sample-web
+  name: sample-web
+  namespace: default
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      k8s-app: sample-web
+  template:
+    metadata:
+      labels:
+        k8s-app: sample-web
+    spec:
+      containers:
+      - name: sample-web
+        image: index.docker.io/nalbam/sample-web:latest
+        ports:
+        - containerPort: 80
+          protocol: TCP
+
+---
+# ------------------- Service ------------------- #
+
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: sample-web
+  name: sample-web
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      targetPort: 80
+  selector:
+    k8s-app: sample-web
+  type: LoadBalancer

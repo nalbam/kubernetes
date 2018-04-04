@@ -35,7 +35,7 @@ kops update cluster ${KOPS_CLUSTER_NAME} --yes
 
 kops validate cluster
 
-ssh admin@bastion.kube.nalbam.com
+watch kubectl -n kube-system get pod,svc
 
 kops delete cluster ${KOPS_CLUSTER_NAME} --yes
 ```
@@ -47,7 +47,7 @@ kops delete cluster ${KOPS_CLUSTER_NAME} --yes
 ```
 kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.7.0.yaml
 
-kubectl -n kube-system top pod
+watch kubectl -n kube-system top pod
 ```
  * https://github.com/kubernetes/kops/blob/master/docs/addons.md
  * https://github.com/kubernetes/heapster
@@ -64,3 +64,9 @@ kubectl proxy
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 ```
  * https://github.com/kubernetes/dashboard
+
+## sample
+```
+kubectl create -f sample/web.yml
+
+```
