@@ -45,7 +45,8 @@ kops delete cluster ${KOPS_CLUSTER_NAME} --yes
 
 ## sample
 ```
-kubectl create -f sample/web.yml
+kubectl create -f sample/smaple-node.yml
+kubectl create -f sample/smaple-web.yml
 ```
 
 ## dashboard

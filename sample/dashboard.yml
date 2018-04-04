@@ -167,7 +167,7 @@ spec:
     k8s-app: kubernetes-dashboard
 
 ---
-# ------------------- Ingress ------------------- #
+# ------------------- Dashboard Ingress ------------------- #
 
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -181,4 +181,4 @@ spec:
       - path: /
         backend:
           serviceName: kubernetes-dashboard
-          servicePort: 443
+          servicePort: 80
