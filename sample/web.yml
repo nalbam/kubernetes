@@ -37,7 +37,8 @@ metadata:
   namespace: default
 spec:
   ports:
-    - port: 80
+    - name: http
+      port: 80
       targetPort: 80
   selector:
     k8s-app: sample-web

@@ -237,6 +237,8 @@ metadata:
     k8s-addon: ingress-nginx.addons.k8s.io
   annotations:
     service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "arn:aws:acm:ap-northeast-2:00000:certificate/0000-0000-0000-0000-0000"
 spec:
   type: LoadBalancer
   selector:
@@ -244,10 +246,10 @@ spec:
   ports:
   - name: http
     port: 80
-    targetPort: http
+    targetPort: 80
   - name: https
     port: 443
-    targetPort: https
+    targetPort: 80
 
 ---
 
