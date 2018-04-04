@@ -17,18 +17,15 @@ aws route53 create-hosted-zone --name ${KOPS_CLUSTER_NAME} --caller-reference ${
 aws s3 mb ${KOPS_STATE_STORE}
 
 kops create cluster \
-    --cloud aws \
     --name ${KOPS_CLUSTER_NAME} \
     --state ${KOPS_STATE_STORE} \
-    --zones ap-northeast-2a,ap-northeast-2c \
-    --networking calico \
-    --topology private \
-    --bastion \
     --master-size t2.micro \
-    --master-count 1 \
     --node-size t2.small \
     --node-count 2 \
-    --dns-zone nalbam.com
+    --zones ap-northeast-2a,ap-northeast-2c \
+    --dns-zone nalbam.com \
+    --network-cidr 10.20.0.0/16 \
+    --networking calico
 
 kops get cluster
 
@@ -36,10 +33,34 @@ kops edit cluster ${KOPS_CLUSTER_NAME}
 
 kops update cluster ${KOPS_CLUSTER_NAME} --yes
 
-kops delete cluster ${KOPS_CLUSTER_NAME} --yes
+kops validate cluster
 
-ssh -i ~/.ssh/id_rsa admin@api.${KOPS_CLUSTER_NAME}
+ssh admin@bastion.kube.nalbam.com
+
+kops delete cluster ${KOPS_CLUSTER_NAME} --yes
 ```
  * https://github.com/kubernetes/kops
  * https://kubernetes.io/docs/getting-started-guides/kops/
  * http://woowabros.github.io/experience/2018/03/13/k8s-test.html
+
+## addons heapster
+```
+kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.7.0.yaml
+
+kubectl -n kube-system top pod
+```
+ * https://github.com/kubernetes/kops/blob/master/docs/addons.md
+ * https://github.com/kubernetes/heapster
+
+## addons dashboard
+```
+kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.3.yaml
+
+kubectl -n kube-system get secret | grep dashboard
+kubectl -n kube-system describe secret kubernetes-dashboard-token-xxxxx
+
+kubectl proxy
+
+http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
+```
+ * https://github.com/kubernetes/dashboard
