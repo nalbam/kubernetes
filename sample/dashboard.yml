@@ -165,3 +165,20 @@ spec:
       targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard
+
+---
+# ------------------- Ingress ------------------- #
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: kubernetes-dashboard
+spec:
+  rules:
+  - host: dashboard-kube.nalbam.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: kubernetes-dashboard
+          servicePort: 443

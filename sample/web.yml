@@ -39,7 +39,10 @@ spec:
   ports:
     - name: http
       port: 80
-      targetPort: 80
+      targetPort: http
+    - name: https
+      port: 443
+      targetPort: https
   selector:
     k8s-app: sample-web
 
@@ -58,4 +61,4 @@ spec:
       - path: /
         backend:
           serviceName: sample-web
-          servicePort: 80
+          servicePort: 443
