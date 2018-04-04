@@ -43,16 +43,12 @@ kops delete cluster ${KOPS_CLUSTER_NAME} --yes
  * https://kubernetes.io/docs/getting-started-guides/kops/
  * http://woowabros.github.io/experience/2018/03/13/k8s-test.html
 
-## addons heapster
+## sample
 ```
-kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.7.0.yaml
-
-watch kubectl -n kube-system top pod
+kubectl create -f sample/web.yml
 ```
- * https://github.com/kubernetes/kops/blob/master/docs/addons.md
- * https://github.com/kubernetes/heapster
 
-## addons dashboard
+## dashboard
 ```
 kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.3.yaml
 
@@ -63,10 +59,24 @@ kubectl proxy
 
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 ```
+ * https://github.com/kubernetes/kops/blob/master/docs/addons.md
  * https://github.com/kubernetes/dashboard
 
-## sample
+## heapster
 ```
-kubectl create -f sample/web.yml
+kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.7.0.yaml
 
+watch kubectl -n kube-system top pod
 ```
+ * https://github.com/kubernetes/kops/blob/master/docs/addons.md
+ * https://github.com/kubernetes/heapster
+
+## ingress-nginx
+```
+kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
+
+kubectl get svc -n kube-ingress -owide
+
+curl -v -H "Host: sample-web.nalbam.com" ad3154ef237ea11e88ee4024a15f2590-1745430647.ap-northeast-2.elb.amazonaws.com
+```
+ * https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx

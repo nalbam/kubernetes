@@ -41,4 +41,20 @@ spec:
       targetPort: 80
   selector:
     k8s-app: sample-web
-  type: LoadBalancer
+
+---
+# ------------------- Ingress ------------------- #
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sample-web
+spec:
+  rules:
+  - host: sample-web.nalbam.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: sample-web
+          servicePort: 80
