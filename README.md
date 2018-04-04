@@ -53,6 +53,8 @@ kubectl create -f sample/smaple-web.yml
 ```
 kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.3.yaml
 
+kubectl create -f sample/dashboard.yml
+
 kubectl -n kube-system get secret | grep dashboard
 kubectl -n kube-system describe secret kubernetes-dashboard-token-xxxxx
 
@@ -67,6 +69,8 @@ http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-da
 ```
 kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.7.0.yaml
 
+kubectl create -f sample/heapster.yml
+
 watch kubectl -n kube-system top pod
 ```
  * https://github.com/kubernetes/kops/blob/master/docs/addons.md
@@ -75,6 +79,8 @@ watch kubectl -n kube-system top pod
 ## ingress-nginx
 ```
 kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
+
+kubectl create -f sample/ingress-nginx.yml
 
 kubectl get svc -n kube-ingress -owide
 
