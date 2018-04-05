@@ -55,6 +55,9 @@ kubectl apply -f sample/sample-web.yml
 watch kubectl get node,pod,svc -n default
 
 kubectl describe pod sample-web
+
+TUNL_IP=$(ifconfig tunl0 | grep inet | awk -F' ' '{print $2}')
+IP_LIST=$(kubectl get svc --all-namespaces | grep LoadBalancer | awk -F' ' '{print $6}')
 ```
 
 ## ingress-nginx
