@@ -53,35 +53,22 @@ vhost_http() {
     HOST="$2"
     PORT="$3"
 
-    echo_ "--> ${DOM}:${PORT}"
+    echo_ "# ${DOM}:${PORT} -> ${HOST}:${PORT}"
 
-    TEMPLATE="${SHELL_DIR}/template/vhost-http.conf"
+    # template
+    if [ "${PORT}" == "443" ] || [ "${PORT}" == "8443" ]; then
+        TEMPLATE="${SHELL_DIR}/template/vhost-https.conf"
+        DEST_FILE="${HTTPD_CONF_DIR}/toast-${DOM}-https.conf"
+    else
+        TEMPLATE="${SHELL_DIR}/template/vhost-http.conf"
+        DEST_FILE="${HTTPD_CONF_DIR}/toast-${DOM}-http.conf"
+    fi
+
     TEMP_FILE1="${TEMP_DIR}/toast-vhost1.tmp"
     TEMP_FILE2="${TEMP_DIR}/toast-vhost2.tmp"
     TEMP_FILE3="${TEMP_DIR}/toast-vhost3.tmp"
 
-    # gen vhost
-    DEST_FILE="${HTTPD_CONF_DIR}/toast-${DOM}-http.conf"
-    sed "s/DOM/$DOM/g" ${TEMPLATE} > ${TEMP_FILE1}
-    sed "s/HOST/$HOST/g" ${TEMP_FILE1} > ${TEMP_FILE2}
-    sed "s/PORT/$PORT/g" ${TEMP_FILE2} > ${TEMP_FILE3}
-    sudo cp -rf ${TEMP_FILE3} ${DEST_FILE}
-}
-
-vhost_https() {
-    DOM="$1"
-    HOST="$2"
-    PORT="$3"
-
-    echo_ "--> ${DOM}:${PORT}"
-
-    TEMPLATE="${SHELL_DIR}/template/vhost-https.conf"
-    TEMP_FILE1="${TEMP_DIR}/toast-vhost1.tmp"
-    TEMP_FILE2="${TEMP_DIR}/toast-vhost2.tmp"
-    TEMP_FILE3="${TEMP_DIR}/toast-vhost3.tmp"
-
-    # gen vhost
-    DEST_FILE="${HTTPD_CONF_DIR}/toast-${DOM}-https.conf"
+    # replace
     sed "s/DOM/$DOM/g" ${TEMPLATE} > ${TEMP_FILE1}
     sed "s/HOST/$HOST/g" ${TEMP_FILE1} > ${TEMP_FILE2}
     sed "s/PORT/$PORT/g" ${TEMP_FILE2} > ${TEMP_FILE3}
@@ -133,15 +120,15 @@ usage() {
 
 vhost_local
 
-vhost_https kubernetes-dashboard.apps.nalbam.com 10.105.224.212 443
+vhost_http kubernetes-dashboard.apps.nalbam.com 10.105.224.212 443
 
-vhost_http  sample-node.apps.nalbam.com 10.101.129.213 80
-vhost_https sample-node.apps.nalbam.com 10.101.129.213 443
+vhost_http sample-node.apps.nalbam.com 10.101.129.213 80
+vhost_http sample-node.apps.nalbam.com 10.101.129.213 443
 
-vhost_http  sample-spring.apps.nalbam.com 10.96.242.167 80
-vhost_https sample-spring.apps.nalbam.com 10.96.242.167 443
+vhost_http sample-spring.apps.nalbam.com 10.96.242.167 80
+vhost_http sample-spring.apps.nalbam.com 10.96.242.167 443
 
-vhost_http  sample-web.apps.nalbam.com 10.106.199.73 80
-vhost_https sample-web.apps.nalbam.com 10.106.199.73 443
+vhost_http sample-web.apps.nalbam.com 10.106.199.73 80
+vhost_http sample-web.apps.nalbam.com 10.106.199.73 443
 
 httpd_restart
