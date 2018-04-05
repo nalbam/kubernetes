@@ -36,4 +36,5 @@ build/
 *.log
 
 # Temp
+.temp.json
 .temp.yml

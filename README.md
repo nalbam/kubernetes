@@ -3,8 +3,8 @@
 ## kops install
 ```
 export VERSION=$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)
-curl -LO https://github.com/kubernetes/kops/releases/download/${VERSION}/kops-linux-amd64 && \
- chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
+curl -LO https://github.com/kubernetes/kops/releases/download/${VERSION}/kops-linux-amd64
+chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
 ```
 
 ## kops usage
@@ -61,9 +61,23 @@ sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
 
-kubectl get svc -n kube-ingress -owide
+ELB_NAME=$(kubectl get svc -n kube-ingress -owide | grep ingress-nginx | awk -F' ' '{print $4}' | cut -d '-' -f 1)
 
-curl -v -H "Host: sample-web.nalbam.com" ad3154ef237ea11e88ee4024a15f2590-1745430647.ap-northeast-2.elb.amazonaws.com
+ELB_ZONE_ID=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep CanonicalHostedZoneNameID | cut -d '"' -f 4)
+ELB_DNS_NAME=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep '"DNSName"' | cut -d '"' -f 4)
+
+ZONE_ID=$(aws route53 list-hosted-zones | jq '.HostedZones[] | select(.Name=="nalbam.com.")' | grep '"Id"' | cut -d '"' -f 4 | cut -d '/' -f 3)
+
+RECORD=sample/.temp.json
+cp -rf sample/record-sets.json ${RECORD}
+
+DOMAIN="sample-web.nalbam.com."
+
+sed -i -e "s@{{DOMAIN}}@${DOMAIN}@g" "${RECORD}"
+sed -i -e "s@{{ELB_ZONE_ID}}@${ELB_ZONE_ID}@g" "${RECORD}"
+sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
+
+aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://./${RECORD}
 ```
  * https://github.com/kubernetes/ingress-nginx/
  * https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx
