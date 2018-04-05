@@ -93,32 +93,13 @@ lets_renew() {
 
 ################################################################################
 
-echo_bar() {
-    echo_ "================================================================================"
-}
-
-echo_toast() {
-    #figlet toast
-    echo_bar
-    echo_ "  _                  _    "
-    echo_ " | |_ ___   __ _ ___| |_  "
-    echo_ " | __/ _ \ / _' / __| __| "
-    echo_ " | || (_) | (_| \__ \ |_  "
-    echo_ "  \__\___/ \__,_|___/\__|  by nalbam "
-    echo_bar
-}
-
-usage() {
-    echo_toast
-    echo_ " Usage: toast"
-    echo_bar
-    echo_
-    echo_bar
-}
-
-################################################################################
-
 vhost_local
+
+ARR=($(kubectl get svc --all-namespaces -owide | grep 'toast=route' | awk -F' ' '{print $2 " " $4 " " $6}'))
+
+for i in "${ARR[@]}" ; do
+    echo $i
+done
 
 vhost_http kubernetes-dashboard.apps.nalbam.com 10.105.224.212 443
 
