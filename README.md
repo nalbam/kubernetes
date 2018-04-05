@@ -35,7 +35,7 @@ kops update cluster ${KOPS_CLUSTER_NAME} --yes
 
 kops validate cluster
 
-watch kubectl get node,pod,svc --all-namespaces
+watch kubectl get node,pod,svc,ing --all-namespaces
 
 kops delete cluster ${KOPS_CLUSTER_NAME} --yes
 ```
@@ -52,7 +52,7 @@ kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
 
-watch kubectl get node,pod,svc -n default
+watch kubectl get node,pod,svc,ing -n default
 
 kubectl describe pod sample-web
 ```

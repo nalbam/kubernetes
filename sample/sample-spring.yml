@@ -36,7 +36,7 @@ metadata:
   name: sample-spring
   namespace: default
 spec:
-  type: LoadBalancer
+  #type: LoadBalancer
   ports:
     - name: http
       port: 80
