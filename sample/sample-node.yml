@@ -36,6 +36,7 @@ metadata:
   name: sample-node
   namespace: default
 spec:
+  type: LoadBalancer
   ports:
     - name: http
       port: 80
