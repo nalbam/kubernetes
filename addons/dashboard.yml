@@ -184,7 +184,7 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: kubernetes-dashboard.nalbam.com
+  - host: kubernetes-dashboard.apps.nalbam.com
     http:
       paths:
       - path: /

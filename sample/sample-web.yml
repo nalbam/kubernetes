@@ -59,7 +59,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: sample-web.nalbam.com
+  - host: sample-web.apps.nalbam.com
     http:
       paths:
       - path: /

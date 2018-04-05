@@ -59,7 +59,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: sample-spring.nalbam.com
+  - host: sample-spring.apps.nalbam.com
     http:
       paths:
       - path: /
