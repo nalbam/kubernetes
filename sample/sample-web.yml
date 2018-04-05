@@ -52,7 +52,10 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
+  labels:
+    k8s-app: sample-web
   name: sample-web
+  namespace: default
 spec:
   rules:
   - host: sample-web.nalbam.com

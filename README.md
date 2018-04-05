@@ -19,9 +19,9 @@ aws s3 mb ${KOPS_STATE_STORE}
 kops create cluster \
     --name ${KOPS_CLUSTER_NAME} \
     --state ${KOPS_STATE_STORE} \
-    --master-size t2.micro \
-    --node-size t2.small \
-    --node-count 2 \
+    --master-size t2.small \
+    --node-size t2.medium \
+    --node-count 1 \
     --zones ap-northeast-2a,ap-northeast-2c \
     --dns-zone nalbam.com \
     --network-cidr 10.20.0.0/16 \
@@ -35,7 +35,7 @@ kops update cluster ${KOPS_CLUSTER_NAME} --yes
 
 kops validate cluster
 
-watch kubectl -n kube-system get pod,svc
+watch kubectl -n kube-system get node,pod,svc
 
 kops delete cluster ${KOPS_CLUSTER_NAME} --yes
 ```
@@ -45,15 +45,51 @@ kops delete cluster ${KOPS_CLUSTER_NAME} --yes
 
 ## sample
 ```
-kubectl create -f sample/smaple-node.yml
-kubectl create -f sample/smaple-web.yml
+kubectl apply -f sample/sample-node.yml
+kubectl apply -f sample/sample-spring.yml
+kubectl apply -f sample/sample-web.yml
 ```
+
+## ingress-nginx
+```
+ADDON=addons/.temp.yml
+cp -rf addons/ingress-nginx.yml ${ADDON}
+
+SSL_CERT_ARN=$(aws acm list-certificates | jq '.["CertificateSummaryList"][0]["CertificateArn"]' | sed "s/\"//g")
+
+sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
+
+kubectl apply -f ${ADDON}
+
+kubectl get svc -n kube-ingress -owide
+
+curl -v -H "Host: sample-web.nalbam.com" ad3154ef237ea11e88ee4024a15f2590-1745430647.ap-northeast-2.elb.amazonaws.com
+```
+ * https://github.com/kubernetes/ingress-nginx/
+ * https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx
+
+## heapster
+```
+ADDON=addons/.temp.yml
+cp -rf addons/heapster.yml ${ADDON}
+
+kubectl apply -f ${ADDON}
+
+watch kubectl -n kube-system top pod
+```
+ * https://github.com/kubernetes/heapster/
+ * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 
 ## dashboard
 ```
-kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.3.yaml
+ADDON=addons/.temp.yml
+cp -rf addons/dashboard.yml ${ADDON}
 
-kubectl create -f sample/dashboard.yml
+SSL_CERT_ARN=$(aws acm list-certificates | jq '.["CertificateSummaryList"][0]["CertificateArn"]' | sed "s/\"//g")
+
+sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
+
+kubectl apply -f ${ADDON}
 
 kubectl -n kube-system get secret | grep dashboard
 kubectl -n kube-system describe secret kubernetes-dashboard-token-xxxxx
@@ -62,28 +98,32 @@ kubectl proxy
 
 http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 ```
+ * https://github.com/kubernetes/dashboard/
  * https://github.com/kubernetes/kops/blob/master/docs/addons.md
- * https://github.com/kubernetes/dashboard
 
-## heapster
+## cluster-autoscaler
 ```
-kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/monitoring-standalone/v1.7.0.yaml
+ADDON=addons/.temp.yml
+cp -rf addons/cluster-autoscaler.yml ${ADDON}
 
-kubectl create -f sample/heapster.yml
+CLOUD_PROVIDER=aws
+IMAGE=k8s.gcr.io/cluster-autoscaler:v1.1.2
+MIN_NODES=2
+MAX_NODES=5
+AWS_REGION=ap-northeast-2
+GROUP_NAME="nodes.kube.nalbam.com"
+SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
 
-watch kubectl -n kube-system top pod
+sed -i -e "s@{{CLOUD_PROVIDER}}@${CLOUD_PROVIDER}@g" "${ADDON}"
+sed -i -e "s@{{IMAGE}}@${IMAGE}@g" "${ADDON}"
+sed -i -e "s@{{MIN_NODES}}@${MIN_NODES}@g" "${ADDON}"
+sed -i -e "s@{{MAX_NODES}}@${MAX_NODES}@g" "${ADDON}"
+sed -i -e "s@{{GROUP_NAME}}@${GROUP_NAME}@g" "${ADDON}"
+sed -i -e "s@{{AWS_REGION}}@${AWS_REGION}@g" "${ADDON}"
+sed -i -e "s@{{SSL_CERT_PATH}}@${SSL_CERT_PATH}@g" "${ADDON}"
+
+kubectl apply -f ${ADDON}
+
 ```
- * https://github.com/kubernetes/kops/blob/master/docs/addons.md
- * https://github.com/kubernetes/heapster
-
-## ingress-nginx
-```
-kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/ingress-nginx/v1.6.0.yaml
-
-kubectl create -f sample/ingress-nginx.yml
-
-kubectl get svc -n kube-ingress -owide
-
-curl -v -H "Host: sample-web.nalbam.com" ad3154ef237ea11e88ee4024a15f2590-1745430647.ap-northeast-2.elb.amazonaws.com
-```
- * https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx
+ * https://github.com/kubernetes/autoscaler/
+ * https://github.com/kubernetes/kops/tree/master/addons/cluster-autoscaler

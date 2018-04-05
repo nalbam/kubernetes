@@ -4,25 +4,25 @@ kind: Deployment
 apiVersion: apps/v1beta2
 metadata:
   labels:
-    k8s-app: sample-node
-  name: sample-node
+    k8s-app: sample-spring
+  name: sample-spring
   namespace: default
 spec:
-  replicas: 2
+  replicas: 1
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      k8s-app: sample-node
+      k8s-app: sample-spring
   template:
     metadata:
       labels:
-        k8s-app: sample-node
+        k8s-app: sample-spring
     spec:
       containers:
-      - name: sample-node
-        image: index.docker.io/nalbam/sample-node:latest
+      - name: sample-spring
+        image: index.docker.io/nalbam/sample-spring:latest
         ports:
-        - containerPort: 3000
+        - containerPort: 8080
           protocol: TCP
 
 ---
@@ -32,19 +32,19 @@ kind: Service
 apiVersion: v1
 metadata:
   labels:
-    k8s-app: sample-node
-  name: sample-node
+    k8s-app: sample-spring
+  name: sample-spring
   namespace: default
 spec:
   ports:
     - name: http
       port: 80
-      targetPort: 3000
+      targetPort: 8080
     - name: https
       port: 443
-      targetPort: 3000
+      targetPort: 8080
   selector:
-    k8s-app: sample-node
+    k8s-app: sample-spring
 
 ---
 # ------------------- Ingress ------------------- #
@@ -52,13 +52,16 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: sample-node
+  labels:
+    k8s-app: sample-spring
+  name: sample-spring
+  namespace: default
 spec:
   rules:
-  - host: sample-node.nalbam.com
+  - host: sample-spring.nalbam.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: sample-node
+          serviceName: sample-spring
           servicePort: 80
