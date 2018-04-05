@@ -45,9 +45,14 @@ kops delete cluster ${KOPS_CLUSTER_NAME} --yes
 
 ## sample
 ```
+git clone https://github.com/nalbam/kubernetes.git
+cd kubernetes
+
 kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
+
+watch kubectl -n default get node,pod,svc
 ```
 
 ## ingress-nginx
