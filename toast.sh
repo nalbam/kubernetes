@@ -33,16 +33,19 @@ vhost_local() {
     # localhost
     TEMPLATE="${SHELL_DIR}/template/localhost.conf"
     if [ -f "${TEMPLATE}" ]; then
-        sudo cp -rf ${TEMPLATE} "${HTTPD_CONF_DIR}/localhost.conf"
+        sudo cp -rf ${TEMPLATE} ${HTTPD_CONF_DIR}/localhost.conf
     fi
 
     # health.html
     if [ -d "${SITE_DIR}/localhost" ]; then
         TEMP_FILE="${TEMP_DIR}/toast-health.tmp"
         echo "OK" > ${TEMP_FILE}
-        cp -rf ${TEMP_FILE} "${SITE_DIR}/localhost/index.html"
-        cp -rf ${TEMP_FILE} "${SITE_DIR}/localhost/health.html"
+        cp -rf ${TEMP_FILE} ${SITE_DIR}/localhost/index.html
+        cp -rf ${TEMP_FILE} ${SITE_DIR}/localhost/health.html
     fi
+
+    # rm toast-*
+    sudo rm -rf ${HTTPD_CONF_DIR}/toast-*
 }
 
 vhost_http() {
