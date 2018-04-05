@@ -130,4 +130,15 @@ usage() {
 
 vhost_local
 
+vhost_https kubernetes-dashboard.apps.nalbam.com 10.106.199.73 443
+
+vhost_http  sample-node.apps.nalbam.com 10.106.199.73 80
+vhost_https sample-node.apps.nalbam.com 10.106.199.73 443
+
+vhost_http  sample-spring.apps.nalbam.com 10.106.199.73 80
+vhost_https sample-spring.apps.nalbam.com 10.106.199.73 443
+
+vhost_http  sample-web.apps.nalbam.com 10.106.199.73 80
+vhost_https sample-web.apps.nalbam.com 10.106.199.73 443
+
 httpd_restart
