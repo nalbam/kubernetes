@@ -59,7 +59,7 @@ metadata:
   namespace: default
 spec:
   rules:
-  - host: $(POD_NAMESPACE)-sample-node.nalbam.com
+  - host: sample-node.nalbam.com
     http:
       paths:
       - path: /
