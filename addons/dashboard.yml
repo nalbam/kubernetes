@@ -171,7 +171,6 @@ spec:
       targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard
-    toast: route
 
 ---
 # ------------------- Dashboard Ingress ------------------- #
