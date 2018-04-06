@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: sample-web
-        image: index.docker.io/nalbam/sample-web:latest
+        image: index.docker.io/nalbam/sample-web:alpine
         ports:
         - containerPort: 80
           protocol: TCP

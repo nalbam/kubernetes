@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: sample-node
-        image: index.docker.io/nalbam/sample-node:latest
+        image: index.docker.io/nalbam/sample-node:alpine
         ports:
         - containerPort: 3000
           protocol: TCP
