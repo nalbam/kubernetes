@@ -93,13 +93,22 @@ lets_renew() {
 
 ################################################################################
 
-vhost_local
-
 KUBE_ING=/tmp/kube_ing
 KUBE_SVC=/tmp/kube_svc
 
 kubectl get ing --all-namespaces -owide | grep " 80 " | awk -F' ' '{print $2 " " $3}' > /tmp/kube_ing
 kubectl get svc --all-namespaces -owide | grep 'NodePort' | awk -F' ' '{print $2 " " $4 " " $6}' > /tmp/kube_svc
+
+md5sum ${KUBE_ING} > ${KUBE_ING}_sum_now
+md5sum ${KUBE_SVC} > ${KUBE_SVC}_sum_now
+
+if [ ! -z ${KUBE_ING}_sum_old ] && [ ! -z ${KUBE_SVC}_sum_old ]; then
+    if [ ! diff ${KUBE_ING}_sum_new ${KUBE_ING}_sum_old ] && [ ! diff ${KUBE_SVC}_sum_new ${KUBE_SVC}_sum_old ]; then
+        exit
+    fi
+fi
+
+vhost_local
 
 while read ING; do
     # sample-web sample-web.apps.nalbam.com
@@ -138,3 +147,6 @@ while read ING; do
 done < ${KUBE_ING}
 
 httpd_restart
+
+cp -rf ${KUBE_ING}_sum_now ${KUBE_ING}_sum_old
+cp -rf ${KUBE_SVC}_sum_now ${KUBE_SVC}_sum_old
