@@ -111,6 +111,8 @@ kubectl get svc --all-namespaces -owide | grep 'NodePort' | awk -F' ' '{print $2
 #    fi
 #fi
 
+date
+
 vhost_local
 
 while read ING; do
