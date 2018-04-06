@@ -95,21 +95,36 @@ lets_renew() {
 
 vhost_local
 
-ARR=($(kubectl get svc --all-namespaces -owide | grep 'toast=route' | awk -F' ' '{print $2 " " $4 " " $6}'))
+KUBE_ING=/tmp/kube_ing
+KUBE_SVC=/tmp/kube_svc
 
-for i in "${ARR[@]}" ; do
-    echo $i
-done
+kubectl get ing --all-namespaces -owide | grep " 80 " | awk -F' ' '{print $2 " " $3}' > /tmp/kube_ing
+kubectl get svc --all-namespaces -owide | grep 'NodePort' | awk -F' ' '{print $2 " " $4 " " $6}' > /tmp/kube_svc
 
-vhost_http kubernetes-dashboard.apps.nalbam.com 10.105.224.212 443
+while read ING; do
+    # sample-web sample-web.apps.nalbam.com
+    ARR=(${ING})
 
-vhost_http sample-node.apps.nalbam.com 10.101.129.213 80
-vhost_http sample-node.apps.nalbam.com 10.101.129.213 443
+    NAME=${ARR[0]}
+    DOMAIN=${ARR[1]}
 
-vhost_http sample-spring.apps.nalbam.com 10.96.242.167 80
-vhost_http sample-spring.apps.nalbam.com 10.96.242.167 443
+    while read SVC; do
+        # sample-web 10.102.17.19 80:31105/TCP,443:30344/TCP
+        ARR=(${SVC})
 
-vhost_http sample-web.apps.nalbam.com 10.106.199.73 80
-vhost_http sample-web.apps.nalbam.com 10.106.199.73 443
+        if [ "${NAME}" == "${ARR[0]}" ]; then
+            IP=${ARR[1]}
+            PORTS=($(echo ${ARR[2]} | sed -e "s/,/ /g"))
+
+            for V in "${PORTS[@]}"; do
+                PORT=$(echo ${V} | cut -d '/' -f 1 | cut -d ':' -f 1)
+
+                vhost_http ${DOMAIN} ${IP} ${PORT}
+            done
+
+            break
+        fi
+    done < ${KUBE_SVC}
+done < ${KUBE_ING}
 
 httpd_restart
