@@ -165,7 +165,7 @@ metadata:
     #service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
     #service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{SSL_CERT_ARN}}"
 spec:
-  #type: LoadBalancer
+  type: NodePort
   ports:
     - port: 443
       targetPort: 8443
