@@ -102,7 +102,7 @@ kubectl get svc --all-namespaces -owide | grep 'NodePort' | awk -F' ' '{print $2
 md5sum ${KUBE_ING} > ${KUBE_ING}_sum_now
 md5sum ${KUBE_SVC} > ${KUBE_SVC}_sum_now
 
-if [ ! -z ${KUBE_ING}_sum_old ] && [ ! -z ${KUBE_SVC}_sum_old ]; then
+if [ ! -s ${KUBE_ING}_sum_old ] && [ ! -s ${KUBE_SVC}_sum_old ]; then
     diff ${KUBE_ING}_sum_now ${KUBE_ING}_sum_old > ${KUBE_ING}_diff
     diff ${KUBE_SVC}_sum_now ${KUBE_SVC}_sum_old > ${KUBE_SVC}_diff
 
