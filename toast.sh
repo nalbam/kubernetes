@@ -108,6 +108,10 @@ while read ING; do
     NAME=${ARR[0]}
     DOMAIN=${ARR[1]}
 
+    if [ "${DOMAIN}" == "" ]; then
+        continue
+    fi
+
     while read SVC; do
         # sample-web 10.102.17.19 80:31105/TCP,443:30344/TCP
         ARR=(${SVC})
@@ -119,8 +123,14 @@ while read ING; do
             for V in "${PORTS[@]}"; do
                 PORT=$(echo ${V} | cut -d '/' -f 1 | cut -d ':' -f 1)
 
+                if [ "${PORT}" == "" ]; then
+                    continue
+                fi
+
                 vhost_http ${DOMAIN} ${IP} ${PORT}
             done
+
+            lets_encrypt ${DOMAIN}
 
             break
         fi
