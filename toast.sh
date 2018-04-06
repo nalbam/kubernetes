@@ -104,9 +104,9 @@ md5sum ${KUBE_SVC} > ${KUBE_SVC}_sum_now
 
 if [ ! -z ${KUBE_ING}_sum_old ] && [ ! -z ${KUBE_SVC}_sum_old ]; then
     diff ${KUBE_ING}_sum_now ${KUBE_ING}_sum_old > ${KUBE_ING}_diff
-    diff ${KUBE_SVC}_sum_now ${KUBE_SVC}_sum_old > ${KUBE_ING}_diff
+    diff ${KUBE_SVC}_sum_now ${KUBE_SVC}_sum_old > ${KUBE_SVC}_diff
 
-    if [ -s ${KUBE_ING}_diff ] && [ -s ${KUBE_ING}_diff ]; then
+    if [ -s ${KUBE_ING}_diff ] && [ -s ${KUBE_SVC}_diff ]; then
         exit
     fi
 fi
