@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: sample-spring
-        image: index.docker.io/nalbam/sample-spring:alpine
+        image: index.docker.io/nalbam/sample-spring:slim
         ports:
         - containerPort: 8080
           protocol: TCP
