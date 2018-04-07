@@ -110,6 +110,7 @@ if [ -f ${KUBE_ING}_sum_old ] && [ -f ${KUBE_SVC}_sum_old ]; then
     KUBE_SVC_SIZE=$(du -k ${KUBE_SVC}_diff | cut -f1)
 
     if [ "${KUBE_ING_SIZE}" == "0" ] && [ "${KUBE_SVC_SIZE}" == "0" ]; then
+        echo "no change"
         exit
     fi
 fi
