@@ -106,7 +106,10 @@ if [ -f ${KUBE_ING}_sum_old ] && [ -f ${KUBE_SVC}_sum_old ]; then
     diff ${KUBE_ING}_sum_now ${KUBE_ING}_sum_old > ${KUBE_ING}_diff
     diff ${KUBE_SVC}_sum_now ${KUBE_SVC}_sum_old > ${KUBE_SVC}_diff
 
-    if [ -s ${KUBE_ING}_diff ] && [ -s ${KUBE_SVC}_diff ]; then
+    KUBE_ING_SIZE=$(du -k ${KUBE_ING}_diff | cut -f1)
+    KUBE_SVC_SIZE=$(du -k ${KUBE_SVC}_diff | cut -f1)
+
+    if [ "${KUBE_ING_SIZE}" == "0" ] && [ "${KUBE_SVC_SIZE}" == "0" ]; then
         exit
     fi
 fi
