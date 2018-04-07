@@ -99,17 +99,17 @@ KUBE_SVC=/tmp/kube_svc
 kubectl get ing --all-namespaces -owide | grep " 80 " | awk -F' ' '{print $2 " " $3}' > /tmp/kube_ing
 kubectl get svc --all-namespaces -owide | grep 'NodePort' | awk -F' ' '{print $2 " " $4 " " $6}' > /tmp/kube_svc
 
-#md5sum ${KUBE_ING} > ${KUBE_ING}_sum_now
-#md5sum ${KUBE_SVC} > ${KUBE_SVC}_sum_now
-#
-#if [ ! -s ${KUBE_ING}_sum_old ] && [ ! -s ${KUBE_SVC}_sum_old ]; then
-#    diff ${KUBE_ING}_sum_now ${KUBE_ING}_sum_old > ${KUBE_ING}_diff
-#    diff ${KUBE_SVC}_sum_now ${KUBE_SVC}_sum_old > ${KUBE_SVC}_diff
-#
-#    if [ -s ${KUBE_ING}_diff ] && [ -s ${KUBE_SVC}_diff ]; then
-#        exit
-#    fi
-#fi
+md5sum ${KUBE_ING} > ${KUBE_ING}_sum_now
+md5sum ${KUBE_SVC} > ${KUBE_SVC}_sum_now
+
+if [ -f ${KUBE_ING}_sum_old ] && [ -f ${KUBE_SVC}_sum_old ]; then
+    diff ${KUBE_ING}_sum_now ${KUBE_ING}_sum_old > ${KUBE_ING}_diff
+    diff ${KUBE_SVC}_sum_now ${KUBE_SVC}_sum_old > ${KUBE_SVC}_diff
+
+    if [ -s ${KUBE_ING}_diff ] && [ -s ${KUBE_SVC}_diff ]; then
+        exit
+    fi
+fi
 
 date
 
@@ -153,5 +153,5 @@ done < ${KUBE_ING}
 
 httpd_restart
 
-#cp -rf ${KUBE_ING}_sum_now ${KUBE_ING}_sum_old
-#cp -rf ${KUBE_SVC}_sum_now ${KUBE_SVC}_sum_old
+cp -rf ${KUBE_ING}_sum_now ${KUBE_ING}_sum_old
+cp -rf ${KUBE_SVC}_sum_now ${KUBE_SVC}_sum_old
