@@ -93,6 +93,8 @@ lets_renew() {
 
 ################################################################################
 
+date
+
 KUBE_ING=/tmp/kube_ing
 KUBE_SVC=/tmp/kube_svc
 
@@ -114,8 +116,6 @@ if [ -f ${KUBE_ING}_sum_old ] && [ -f ${KUBE_SVC}_sum_old ]; then
         exit
     fi
 fi
-
-date
 
 vhost_local
 
