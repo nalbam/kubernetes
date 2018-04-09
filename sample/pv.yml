@@ -1,9 +1,9 @@
-# ------------------- PersistentVolume ------------------- #
+# ------------------- 001 ------------------- #
 
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: data-pv-10g
+  name: data-pv-001
   labels:
     type: local
 spec:
@@ -13,15 +13,15 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/data/pv/10g"
+    path: "/data/pv/001"
 
 ---
-# ------------------- PersistentVolume ------------------- #
+# ------------------- 002 ------------------- #
 
 kind: PersistentVolume
 apiVersion: v1
 metadata:
-  name: data-pv-mysql
+  name: data-pv-002
   labels:
     type: local
 spec:
@@ -31,4 +31,22 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: "/data/pv/mysql"
+    path: "/data/pv/002"
+
+---
+# ------------------- 003 ------------------- #
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-pv-003
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/pv/003"

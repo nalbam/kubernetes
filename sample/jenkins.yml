@@ -28,19 +28,20 @@ spec:
           successThreshold: 2
           failureThreshold: 5
         volumeMounts:
-        - name: jenkins-home
+        - name: jenkins_home
           mountPath: /var/jenkins_home
-        - name: jenkins-m2
+        - name: jenkins_m2
           mountPath: /home/jenkins/.m2
       volumes:
-      - name: jenkins-home
-        emptyDir: {}
-      - name: jenkins-m2
-        emptyDir: {}
-#        hostPath:
-#          path: /var/jenkins_home
+      - name: jenkins_home
+        hostPath:
+          path: /data/pv/jenkins_home
+      - name: jenkins_m2
+        hostPath:
+          path: /data/pv/jenkins_m2
 #        persistentVolumeClaim:
 #          claimName: jenkins-home-claim
+#        emptyDir: {}
 
 ---
 # ------------------- Service (jenkins) ------------------- #
