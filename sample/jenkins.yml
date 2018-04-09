@@ -22,7 +22,7 @@ spec:
           protocol: TCP
         volumeMounts:
         - name: jenkins-storage
-          mountPath: /var/lib/jenkins
+          mountPath: /var/jenkins_home
       volumes:
       - name: jenkins-storage
         emptyDir: {}
