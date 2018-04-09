@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: jenkins
-        image: nalbam/jenkins:slim
+        image: nalbam/jenkins:alpine
         ports:
         - containerPort: 8080
         - containerPort: 50000
