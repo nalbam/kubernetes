@@ -12,9 +12,6 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/pv/10g"
-  selector:
-    matchLabels:
-      k8s-app: data-pv-10g
 
 ---
 
@@ -32,9 +29,6 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/pv/20g"
-  selector:
-    matchLabels:
-      k8s-app: data-pv-20g
 
 ---
 
@@ -52,6 +46,3 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/pv/mysql"
-  selector:
-    matchLabels:
-      k8s-app: data-pv-mysql
