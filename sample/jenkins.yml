@@ -21,10 +21,10 @@ spec:
         - containerPort: 8080
           protocol: TCP
         volumeMounts:
-        - name: jenkins-storage
+        - name: jenkins-home
           mountPath: /var/jenkins_home
       volumes:
-      - name: jenkins-storage
+      - name: jenkins-home
         emptyDir: {}
 
 ---
