@@ -58,4 +58,3 @@ spec:
       storage: 5Gi
   selector:
     k8s-app: data-pv-mysql
-    type: local
