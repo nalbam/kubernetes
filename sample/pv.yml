@@ -29,3 +29,20 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/pv/20g"
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-pv-mysql
+  labels:
+    type: local
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/pv/mysql"
