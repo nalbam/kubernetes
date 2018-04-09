@@ -98,8 +98,8 @@ date
 KUBE_ING=/tmp/kube_ing
 KUBE_SVC=/tmp/kube_svc
 
-kubectl get ing --all-namespaces -owide | grep " 80 " | awk -F' ' '{print $2 " " $3}' > /tmp/kube_ing
-kubectl get svc --all-namespaces -owide | grep 'NodePort' | awk -F' ' '{print $2 " " $4 " " $6}' > /tmp/kube_svc
+kubectl get ing --all-namespaces -owide | grep " 80 " | awk -F' ' '{print $2 " " $3}' > ${KUBE_ING}
+kubectl get svc --all-namespaces -owide | grep 'NodePort' | awk -F' ' '{print $2 " " $4 " " $6}' > ${KUBE_SVC}
 
 md5sum ${KUBE_ING} > ${KUBE_ING}_sum_now
 md5sum ${KUBE_SVC} > ${KUBE_SVC}_sum_now
