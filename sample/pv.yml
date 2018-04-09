@@ -1,18 +1,14 @@
-apiVersion: v1
 kind: PersistentVolume
+apiVersion: v1
 metadata:
-  name: pv0010g
+  name: data-pv-10g
+  labels:
+    type: local
 spec:
+  storageClassName: manual
   capacity:
     storage: 10Gi
-  volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Recycle
-  storageClassName: slow
-  mountOptions:
-    - hard
-    - nfsvers=4.1
-  nfs:
+  hostPath:
     path: /data/pv/20g
-    server: 172.17.0.2
