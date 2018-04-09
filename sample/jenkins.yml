@@ -1,0 +1,49 @@
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  labels:
+    k8s-app: jenkins
+  name: jenkins
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      k8s-app: jenkins
+  template:
+    metadata:
+      labels:
+        k8s-app: jenkins
+    spec:
+      containers:
+      - name: jenkins
+        image: nalbam/jenkins:slim
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - name: jenkins-storage
+          mountPath: /var/lib/jenkins
+      volumes:
+      - name: jenkins-storage
+        emptyDir: {}
+
+---
+
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: jenkins
+  name: jenkins
+  namespace: default
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+    - name: https
+      port: 443
+      targetPort: 8080
+  selector:
+    k8s-app: jenkins
