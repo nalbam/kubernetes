@@ -82,7 +82,7 @@ httpd_restart() {
 lets_encrypt() {
     DOM="$1"
 
-    if [ -z /etc/letsencrypt/renewal/${DOM}.conf ]; then
+    if [ ! -f /etc/letsencrypt/renewal/${DOM}.conf ]; then
         sudo ~/certbot/certbot-auto certonly --standalone --email me@nalbam.com -d ${DOM}
     fi
 }
