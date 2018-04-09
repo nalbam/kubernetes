@@ -10,9 +10,9 @@ minikube config set vm-driver kvm2
 minikube start --vm-driver=kvm2  # ubuntu
 minikube start --vm-driver=xhyve # mac
 
-minikube dashboard
-
 eval $(minikube docker-env)
+
+minikube dashboard
 
 minikube service sample-node
 
