@@ -14,14 +14,18 @@ ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
 git clone https://github.com/nalbam/kubernetes.git
 cd kubernetes
 
+kubectl apply -f sample/pv.yml
+
 kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
 
+kubectl apply -f sample/jenkins.yml
+kubectl apply -f sample/mysql.yml
+
 kubectl get node,deploy,rs,pod,svc,ing,pv,pvc -n default
 
 kubectl describe pod sample-web
-
 ```
 
 ## helm
