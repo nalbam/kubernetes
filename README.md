@@ -102,7 +102,8 @@ cp -rf addons/heapster.yml ${ADDON}
 
 kubectl apply -f ${ADDON}
 
-watch kubectl -n kube-system top pod
+watch kubectl top pod -n kube-system
+watch kubectl top pod --all-namespaces
 ```
  * https://github.com/kubernetes/heapster/
  * https://github.com/kubernetes/kops/blob/master/docs/addons.md
@@ -118,8 +119,8 @@ sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
 
-kubectl -n kube-system get secret | grep dashboard
-kubectl -n kube-system describe secret kubernetes-dashboard-token-xxxxx
+kubectl get secret -n kube-system | grep dashboard
+kubectl describe secret -n kube-system kubernetes-dashboard-token-xxxxx
 
 kubectl proxy
 
@@ -150,7 +151,6 @@ sed -i -e "s@{{AWS_REGION}}@${AWS_REGION}@g" "${ADDON}"
 sed -i -e "s@{{SSL_CERT_PATH}}@${SSL_CERT_PATH}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
-
 ```
  * https://github.com/kubernetes/autoscaler/
  * https://github.com/kubernetes/kops/tree/master/addons/cluster-autoscaler
