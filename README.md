@@ -18,10 +18,28 @@ kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
 
-watch kubectl get node,pod,svc,ing -n default
+kubectl get all -n default
 
 kubectl describe pod sample-web
 ```
+
+## helm
+```
+helm init
+
+helm list
+helm search jenkins
+
+helm install -n ci -f charts/jenkins.yaml stable/jenkins
+
+helm history ci
+helm upgrade ci spinnaker
+
+helm delete --purge ci
+```
+* https://helm.sh/
+* https://github.com/kubernetes/helm
+* https://github.com/kubernetes/charts
 
 ## heapster
 ```
