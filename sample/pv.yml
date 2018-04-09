@@ -11,7 +11,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /data/pv/10g
+    path: "/data/pv/10g"
 
 ---
 
@@ -28,4 +28,4 @@ spec:
   accessModes:
     - ReadWriteOnce
   hostPath:
-    path: /data/pv/20g
+    path: "/data/pv/20g"
