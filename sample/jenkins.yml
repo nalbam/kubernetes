@@ -63,7 +63,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: jenkins
+  name: jenkins-slave
 spec:
   selector:
     app: jenkins
