@@ -34,11 +34,13 @@ spec:
           mountPath: /home/jenkins/.m2
       volumes:
       - name: jenkins-home
-        hostPath:
-          path: /data/pv/jenkins_home
+        persistentVolumeClaim:
+          claimName: jenkins-home-claim
       - name: jenkins-m2
-        hostPath:
-          path: /data/pv/jenkins_m2
+        persistentVolumeClaim:
+          claimName: jenkins-m2-claim
+#        hostPath:
+#          path: /data/pv/jenkins_home
 #        persistentVolumeClaim:
 #          claimName: jenkins-home-claim
 #        emptyDir: {}
@@ -95,17 +97,32 @@ spec:
           serviceName: jenkins
           servicePort: 80
 
-#---
-## ------------------- PersistentVolumeClaim ------------------- #
-#
-#kind: PersistentVolumeClaim
-#apiVersion: v1
-#metadata:
-#  name: jenkins-home-claim
-#spec:
-#  storageClassName: manual
-#  accessModes:
-#    - ReadWriteOnce
-#  resources:
-#    requests:
-#      storage: 8Gi
+---
+# ------------------- PersistentVolumeClaim ------------------- #
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jenkins-home-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+# ------------------- PersistentVolumeClaim ------------------- #
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jenkins-m2-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
