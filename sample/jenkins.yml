@@ -30,8 +30,6 @@ spec:
         volumeMounts:
         - name: jenkins-home
           mountPath: /var/jenkins_home
-        - name: jenkins-m2
-          mountPath: /home/jenkins/.m2
       volumes:
       - name: jenkins-home
         persistentVolumeClaim:
