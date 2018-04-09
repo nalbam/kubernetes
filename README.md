@@ -18,7 +18,7 @@ kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
 
-kubectl get deploy,pod,svc,ing,pv,pvc -n default
+kubectl get deploy,rs,pod,svc,ing,pv,pvc -n default
 
 kubectl describe pod sample-web
 

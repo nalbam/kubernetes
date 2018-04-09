@@ -3,10 +3,7 @@
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
-  labels:
-    app: jenkins
   name: jenkins
-  namespace: default
 spec:
   selector:
     matchLabels:
@@ -66,10 +63,7 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  labels:
-    app: jenkins
   name: jenkins
-  namespace: default
 spec:
   selector:
     app: jenkins
@@ -85,10 +79,7 @@ spec:
 kind: Ingress
 apiVersion: extensions/v1beta1
 metadata:
-  labels:
-    app: jenkins
-  name: jenkins
-  namespace: default
+  name: jenkins-slave
 spec:
   rules:
   - host: jenkins.apps.nalbam.com
@@ -105,7 +96,7 @@ spec:
 #kind: PersistentVolumeClaim
 #apiVersion: v1
 #metadata:
-#  name: mysql-pv-claim
+#  name: jenkins-pv-claim
 #spec:
 #  storageClassName: manual
 #  accessModes:
