@@ -14,7 +14,7 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/pv/001"
-#  persistentVolumeReclaimPolicy: Recycle
+#  persistentVolumeReclaimPolicy: Retain
 
 ---
 # ------------------- 002 ------------------- #
