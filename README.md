@@ -21,6 +21,7 @@ kubectl apply -f sample/sample-web.yml
 kubectl get all -n default
 
 kubectl describe pod sample-web
+
 ```
 
 ## helm
