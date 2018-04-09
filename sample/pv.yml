@@ -1,3 +1,5 @@
+# ------------------- PersistentVolume ------------------- #
+
 kind: PersistentVolume
 apiVersion: v1
 metadata:
@@ -14,23 +16,7 @@ spec:
     path: "/data/pv/10g"
 
 ---
-
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: data-pv-20g
-  labels:
-    type: local
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 20Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/pv/20g"
-
----
+# ------------------- PersistentVolume ------------------- #
 
 kind: PersistentVolume
 apiVersion: v1
