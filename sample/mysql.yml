@@ -29,6 +29,8 @@ spec:
       volumes:
       - name: mysql-storage
         emptyDir: {}
+#        persistentVolumeClaim:
+#          claimName: mysql-pv-claim
 
 ---
 
@@ -41,3 +43,17 @@ spec:
   - port: 3306
   selector:
     app: mysql
+
+#---
+#
+#kind: PersistentVolumeClaim
+#apiVersion: v1
+#metadata:
+#  name: mysql-pv-claim
+#spec:
+#  storageClassName: manual
+#  accessModes:
+#    - ReadWriteOnce
+#  resources:
+#    requests:
+#      storage: 8Gi
