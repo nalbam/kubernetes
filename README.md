@@ -1,5 +1,13 @@
-# kubernetes
-* see: https://github.com/nalbam/basecamp/blob/master/kubernetes.md
+## basic
+```
+kubectl config view
+
+# watch all namespaces
+watch kubectl get node,pod,svc,ing --all-namespaces
+
+# get tunnel ip
+ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
+```
 
 ## sample
 ```
