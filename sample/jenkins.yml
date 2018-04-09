@@ -36,9 +36,6 @@ spec:
       - name: jenkins-home
         persistentVolumeClaim:
           claimName: jenkins-home-claim
-      - name: jenkins-m2
-        persistentVolumeClaim:
-          claimName: jenkins-m2-claim
 #        hostPath:
 #          path: /data/pv/jenkins_home
 #        persistentVolumeClaim:
@@ -104,21 +101,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: jenkins-home-claim
-spec:
-  storageClassName: manual
-  accessModes:
-    - ReadWriteOnce
-  resources:
-    requests:
-      storage: 10Gi
-
----
-# ------------------- PersistentVolumeClaim ------------------- #
-
-kind: PersistentVolumeClaim
-apiVersion: v1
-metadata:
-  name: jenkins-m2-claim
 spec:
   storageClassName: manual
   accessModes:
