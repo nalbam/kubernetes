@@ -57,4 +57,4 @@ spec:
     requests:
       storage: 5Gi
   selector:
-    name: data-pv-mysql
+    k8s-app: data-pv-mysql
