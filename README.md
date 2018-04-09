@@ -3,7 +3,7 @@
 kubectl config view
 
 # watch all namespaces
-watch kubectl get node,pod,svc,ing --all-namespaces
+watch kubectl get node,deploy,rs,pod,svc,ing,pv,pvc --all-namespaces
 
 # get tunnel ip
 ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
@@ -18,7 +18,7 @@ kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
 
-kubectl get deploy,rs,pod,svc,ing,pv,pvc -n default
+kubectl get node,deploy,rs,pod,svc,ing,pv,pvc -n default
 
 kubectl describe pod sample-web
 
