@@ -1,14 +1,16 @@
+# ------------------- Deployment ------------------- #
+
 kind: Deployment
-apiVersion: apps/v1beta2
+apiVersion: extensions/v1beta1
 metadata:
   labels:
-    k8s-app: jenkins
+    app: jenkins
   name: jenkins
   namespace: default
 spec:
   selector:
     matchLabels:
-      k8s-app: jenkins
+      app: jenkins
   template:
     metadata:
       labels:
@@ -19,42 +21,72 @@ spec:
         image: nalbam/jenkins:slim
         ports:
         - containerPort: 8080
-          protocol: TCP
+        - containerPort: 50000
+        readinessProbe:
+          httpGet:
+            path: /login
+            port: 8080
+          periodSeconds: 10
+          timeoutSeconds: 5
+          successThreshold: 2
+          failureThreshold: 5
         volumeMounts:
         - name: jenkins-home
           mountPath: /var/jenkins_home
       volumes:
       - name: jenkins-home
         emptyDir: {}
+#        hostPath:
+#          path: /var/jenkins_home
+#        persistentVolumeClaim:
+#          claimName: mysql-pv-claim
 
 ---
+# ------------------- Service (jenkins) ------------------- #
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: jenkins
+spec:
+  type: NodePort
+  selector:
+    app: jenkins
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
+  - name: https
+    port: 443
+    targetPort: 8080
+
+---
+# ------------------- Service (slave) ------------------- #
 
 kind: Service
 apiVersion: v1
 metadata:
   labels:
-    k8s-app: jenkins
+    app: jenkins
   name: jenkins
   namespace: default
 spec:
-  type: NodePort
-  ports:
-    - name: http
-      port: 80
-      targetPort: 8080
-    - name: https
-      port: 443
-      targetPort: 8080
   selector:
-    k8s-app: jenkins
+    app: jenkins
+  ports:
+  - name: slave
+    protocol: TCP
+    port: 50000
+    targetPort: 50000
 
 ---
+# ------------------- Ingress ------------------- #
 
-apiVersion: extensions/v1beta1
 kind: Ingress
+apiVersion: extensions/v1beta1
 metadata:
   labels:
-    k8s-app: jenkins
+    app: jenkins
   name: jenkins
   namespace: default
 spec:
@@ -66,3 +98,18 @@ spec:
         backend:
           serviceName: jenkins
           servicePort: 80
+
+#---
+## ------------------- PersistentVolumeClaim ------------------- #
+#
+#kind: PersistentVolumeClaim
+#apiVersion: v1
+#metadata:
+#  name: mysql-pv-claim
+#spec:
+#  storageClassName: manual
+#  accessModes:
+#    - ReadWriteOnce
+#  resources:
+#    requests:
+#      storage: 8Gi
