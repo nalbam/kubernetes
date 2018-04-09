@@ -57,10 +57,10 @@ vhost_http() {
 
     # template
     if [ "${PORT}" == "443" ] || [ "${PORT}" == "8443" ]; then
-        TEMPLATE="${SHELL_DIR}/template/vhost-https.conf"
+        TEMPLATE="${SHELL_DIR}/vhost/https.conf"
         DEST_FILE="${HTTPD_CONF_DIR}/toast-${DOM}-https.conf"
     else
-        TEMPLATE="${SHELL_DIR}/template/vhost-http.conf"
+        TEMPLATE="${SHELL_DIR}/vhost/http.conf"
         DEST_FILE="${HTTPD_CONF_DIR}/toast-${DOM}-http.conf"
     fi
 
