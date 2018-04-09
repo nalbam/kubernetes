@@ -55,6 +55,4 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 5Gi
-  selector:
-    k8s-app: data-pv-mysql
+      storage: 8Gi
