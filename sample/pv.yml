@@ -3,8 +3,8 @@ apiVersion: v1
 metadata:
   name: data-pv-10g
   labels:
-    type: local
     k8s-app: data-pv-10g
+    type: local
 spec:
   storageClassName: manual
   capacity:
@@ -21,8 +21,8 @@ apiVersion: v1
 metadata:
   name: data-pv-20g
   labels:
-    type: local
     k8s-app: data-pv-20g
+    type: local
 spec:
   storageClassName: manual
   capacity:
@@ -39,8 +39,8 @@ apiVersion: v1
 metadata:
   name: data-pv-mysql
   labels:
-    type: local
     k8s-app: data-pv-mysql
+    type: local
 spec:
   storageClassName: manual
   capacity:
