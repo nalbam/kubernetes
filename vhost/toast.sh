@@ -31,7 +31,7 @@ TEMP_DIR="/tmp"
 
 vhost_local() {
     # localhost
-    TEMPLATE="${SHELL_DIR}/vhost/localhost.conf"
+    TEMPLATE="${SHELL_DIR}/localhost.conf"
     if [ -f "${TEMPLATE}" ]; then
         sudo cp -rf ${TEMPLATE} ${HTTPD_CONF_DIR}/localhost.conf
     fi
@@ -57,10 +57,10 @@ vhost_http() {
 
     # template
     if [ "${PORT}" == "443" ] || [ "${PORT}" == "8443" ]; then
-        TEMPLATE="${SHELL_DIR}/vhost/https.conf"
+        TEMPLATE="${SHELL_DIR}/https.conf"
         DEST_FILE="${HTTPD_CONF_DIR}/toast-${DOM}-https.conf"
     else
-        TEMPLATE="${SHELL_DIR}/vhost/http.conf"
+        TEMPLATE="${SHELL_DIR}/http.conf"
         DEST_FILE="${HTTPD_CONF_DIR}/toast-${DOM}-http.conf"
     fi
 
