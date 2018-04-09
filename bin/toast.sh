@@ -31,7 +31,7 @@ TEMP_DIR="/tmp"
 
 vhost_local() {
     # localhost
-    TEMPLATE="${SHELL_DIR}/template/localhost.conf"
+    TEMPLATE="${SHELL_DIR}/vhost/localhost.conf"
     if [ -f "${TEMPLATE}" ]; then
         sudo cp -rf ${TEMPLATE} ${HTTPD_CONF_DIR}/localhost.conf
     fi
