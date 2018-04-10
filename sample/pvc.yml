@@ -3,7 +3,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: jenkins-claim
+  name: jenkins-pvc
 spec:
   storageClassName: manual
   accessModes:
@@ -17,7 +17,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: minio-claim
+  name: minio-pvc
 spec:
   storageClassName: manual
   accessModes:
@@ -31,7 +31,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: redis-claim
+  name: redis-pvc
 spec:
   storageClassName: manual
   accessModes:
