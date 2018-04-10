@@ -32,16 +32,16 @@ helm init
 helm list
 helm search jenkins
 
-helm install -n demo -f charts/jenkins.yaml stable/jenkins
-helm install -n demo -f charts/minio.yaml stable/jenkins
-helm install -n demo -f charts/mysql.yaml stable/jenkins
-helm install -n demo -f charts/redis.yaml stable/jenkins
-helm install -n demo -f charts/registry.yaml stable/jenkins
+helm install -n jenkins -f charts/jenkins.yaml stable/jenkins
+helm install -n minio -f charts/minio.yaml stable/jenkins
+helm install -n mysql -f charts/mysql.yaml stable/jenkins
+helm install -n redis -f charts/redis.yaml stable/jenkins
+helm install -n registry -f charts/registry.yaml stable/jenkins
 
-helm history demo
-helm upgrade demo spinnaker
+helm history jenkins
+helm upgrade jenkins -f charts/jenkins.yaml stable/jenkins
 
-helm delete --purge demo
+helm delete jenkins --purge
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm

@@ -1,11 +1,9 @@
-# ------------------- 001 ------------------- #
+# ------------------- PersistentVolume ------------------- #
 
 kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-pv-001
-  labels:
-    type: local
 spec:
   storageClassName: manual
   capacity:
@@ -17,14 +15,11 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
 
 ---
-# ------------------- 002 ------------------- #
 
 kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-pv-002
-  labels:
-    type: local
 spec:
   storageClassName: manual
   capacity:
@@ -36,14 +31,11 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
 
 ---
-# ------------------- 003 ------------------- #
 
 kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-pv-003
-  labels:
-    type: local
 spec:
   storageClassName: manual
   capacity:
@@ -55,14 +47,11 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
 
 ---
-# ------------------- 004 ------------------- #
 
 kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-pv-004
-  labels:
-    type: local
 spec:
   storageClassName: manual
   capacity:
@@ -74,14 +63,11 @@ spec:
   persistentVolumeReclaimPolicy: Recycle
 
 ---
-# ------------------- 005 ------------------- #
 
 kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-pv-005
-  labels:
-    type: local
 spec:
   storageClassName: manual
   capacity:

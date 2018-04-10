@@ -1,0 +1,41 @@
+# ------------------- PersistentVolumeClaim ------------------- #
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: jenkins-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: minio-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+
+---
+
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: redis-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
