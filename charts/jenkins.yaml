@@ -113,7 +113,7 @@ Agent:
   Image: nalbam/jnlp-slave
   ImageTag: latest
 # ImagePullSecret: jenkins
-  Component: "jenkins-slave"
+  Component: "slave"
   Privileged: false
   Cpu: "200m"
   Memory: "256Mi"
