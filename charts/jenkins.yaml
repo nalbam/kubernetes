@@ -10,7 +10,7 @@
 
 Master:
   Name: jenkins-master
-  Image: "jenkins/jenkins"
+  Image: "nalbam/jenkins"
   ImageTag: "lts"
 # ImagePullPolicy: "Always"
 # ImagePullSecret: jenkins
@@ -110,7 +110,6 @@ Master:
 
 Agent:
   Enabled: true
-# Image: jenkins/jnlp-slave
   Image: nalbam/jnlp-slave
   ImageTag: latest
 # ImagePullSecret: jenkins
