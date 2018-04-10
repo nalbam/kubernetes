@@ -56,7 +56,7 @@ redisDisableCommands: "FLUSHDB,FLUSHALL"
 ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
 ##
 persistence:
-  enabled: false
+  enabled: true
 
   ## The path the volume will be mounted at, useful when using different
   ## Redis images.
@@ -68,7 +68,7 @@ persistence:
   ## A manually managed Persistent Volume and Claim
   ## Requires persistence.enabled: true
   ## If defined, PVC must be created manually before volume will be bound
-  # existingClaim:
+  existingClaim: redis-claim
 
   ## redis data Persistent Volume Storage Class
   ## If defined, storageClassName: <storageClass>
