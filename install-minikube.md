@@ -17,6 +17,7 @@ minikube dashboard
 minikube service sample-node
 
 docker ps
+docker images
 ```
  * https://kubernetes.io/docs/tasks/tools/install-minikube/
  * https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/
