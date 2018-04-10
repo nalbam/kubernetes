@@ -46,7 +46,7 @@ sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
 sudo systemctl status kubelet -l
 
-watch kubectl get node,pod,svc,ing --all-namespaces
+watch kubectl get deploy,pod,svc,ing --all-namespaces
 
 ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
 ```

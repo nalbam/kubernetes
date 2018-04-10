@@ -33,7 +33,7 @@ kops update cluster ${KOPS_CLUSTER_NAME} --yes
 
 kops validate cluster
 
-watch kubectl get node,pod,svc,ing --all-namespaces
+watch kubectl get deploy,pod,svc,ing --all-namespaces
 
 kops delete cluster ${KOPS_CLUSTER_NAME} --yes
 ```
