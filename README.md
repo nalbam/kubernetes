@@ -14,8 +14,8 @@ ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
 git clone https://github.com/nalbam/kubernetes.git
 cd kubernetes
 
-kubectl apply -f sample/pv.yml
-kubectl apply -f sample/pvc.yml
+kubectl apply -f volume/pv.yml
+kubectl apply -f volume/pvc.yml
 
 kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
