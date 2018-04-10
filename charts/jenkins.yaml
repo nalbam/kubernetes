@@ -11,7 +11,7 @@
 Master:
   Name: jenkins-master
   Image: "nalbam/jenkins"
-  ImageTag: "alpine"
+  ImageTag: "slim"
 # ImagePullPolicy: "Always"
 # ImagePullSecret: jenkins
   Component: "jenkins-master"
@@ -111,7 +111,7 @@ Master:
 Agent:
   Enabled: true
   Image: nalbam/jnlp-slave
-  ImageTag: latest
+  ImageTag: slim
 # ImagePullSecret: jenkins
   Component: "slave"
   Privileged: false
