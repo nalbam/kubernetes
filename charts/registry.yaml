@@ -38,8 +38,8 @@ resources: {}
   #  cpu: 100m
   #  memory: 128Mi
 persistence:
-  accessMode: 'ReadWriteOnce'
   enabled: false
+  accessMode: 'ReadWriteOnce'
   size: 10Gi
   # storageClass: '-'
 
