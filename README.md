@@ -20,9 +20,6 @@ kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
 
-kubectl apply -f sample/jenkins.yml
-kubectl apply -f sample/mysql.yml
-
 kubectl get node,deploy,rs,pod,svc,ing,pv,pvc -n default
 
 kubectl describe pod sample-web
@@ -36,6 +33,10 @@ helm list
 helm search jenkins
 
 helm install -n ci -f charts/jenkins.yaml stable/jenkins
+helm install -n ci -f charts/minio.yaml stable/jenkins
+helm install -n ci -f charts/mysql.yaml stable/jenkins
+helm install -n ci -f charts/redis.yaml stable/jenkins
+helm install -n ci -f charts/registry.yaml stable/jenkins
 
 helm history ci
 helm upgrade ci spinnaker
