@@ -11,7 +11,7 @@
 Master:
   Name: jenkins-master
   Image: "nalbam/jenkins"
-  ImageTag: "lts"
+  ImageTag: "alpine"
 # ImagePullPolicy: "Always"
 # ImagePullSecret: jenkins
   Component: "jenkins-master"
