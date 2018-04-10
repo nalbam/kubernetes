@@ -4,8 +4,6 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-pv-001
-  annotations:
-    pv.beta.kubernetes.io/gid: "1000"
 spec:
   storageClassName: manual
   capacity:
@@ -22,8 +20,6 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-pv-002
-  annotations:
-    pv.beta.kubernetes.io/gid: "1000"
 spec:
   storageClassName: manual
   capacity:
@@ -40,8 +36,6 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: data-pv-003
-  annotations:
-    pv.beta.kubernetes.io/gid: "1000"
 spec:
   storageClassName: manual
   capacity:
@@ -50,40 +44,4 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/003"
-  persistentVolumeReclaimPolicy: Recycle
-
----
-
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: data-pv-004
-  annotations:
-    pv.beta.kubernetes.io/gid: "1000"
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/004"
-  persistentVolumeReclaimPolicy: Recycle
-
----
-
-kind: PersistentVolume
-apiVersion: v1
-metadata:
-  name: data-pv-005
-  annotations:
-    pv.beta.kubernetes.io/gid: "1000"
-spec:
-  storageClassName: manual
-  capacity:
-    storage: 10Gi
-  accessModes:
-    - ReadWriteOnce
-  hostPath:
-    path: "/data/005"
   persistentVolumeReclaimPolicy: Recycle
