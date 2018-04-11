@@ -21,12 +21,13 @@ jenkins:
     NodeSelector: {}
   Persistence:
     Enabled: true
-#    ExistingClaim: jenkins-home
+    StorageClass: standard
 
 docker-registry:
   enabled: true
   persistence:
     enabled: true
+    storageClass: standard
 
 ingress:
   jenkins:
