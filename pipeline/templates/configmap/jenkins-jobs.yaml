@@ -285,25 +285,6 @@ data:
         <actions/>
         <description></description>
         <keepDependencies>false</keepDependencies>
-        <properties>
-          <hudson.model.ParametersDefinitionProperty>
-            <parameterDefinitions>
-              <hudson.model.StringParameterDefinition>
-                <name>EXECUTOR_IMAGE</name>
-                <description></description>
-                <defaultValue>lachlanevenson/k8s-kubectl:latest</defaultValue>
-              </hudson.model.StringParameterDefinition>
-              <hudson.model.StringParameterDefinition>
-                <name>COMMAND</name>
-                <description></description>
-                <defaultValue>kubectl get pods</defaultValue>
-              </hudson.model.StringParameterDefinition>
-            </parameterDefinitions>
-          </hudson.model.ParametersDefinitionProperty>
-          <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-            <triggers/>
-          </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-        </properties>
         <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
           <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
     properties([
