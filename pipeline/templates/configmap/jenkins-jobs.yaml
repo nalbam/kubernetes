@@ -18,12 +18,12 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>EXECUTOR_IMAGE</name>
                 <description></description>
-                <defaultValue>maven:alpine</defaultValue>
+                <defaultValue>node:alpine</defaultValue>
               </hudson.model.StringParameterDefinition>
               <hudson.model.StringParameterDefinition>
                 <name>REPOSITORY_URL</name>
                 <description></description>
-                <defaultValue>https://github.com/nalbam/sample-web</defaultValue>
+                <defaultValue>https://github.com/nalbam/sample-node</defaultValue>
               </hudson.model.StringParameterDefinition>
               <hudson.model.StringParameterDefinition>
                 <name>BRANCH</name>
@@ -33,7 +33,7 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>COMMAND</name>
                 <description></description>
-                <defaultValue>mvn clean package</defaultValue>
+                <defaultValue>cd src/main/node && npm install</defaultValue>
               </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
           </hudson.model.ParametersDefinitionProperty>
@@ -177,7 +177,7 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>REPOSITORY_URL</name>
                 <description></description>
-                <defaultValue>https://github.com/nalbam/sample-web</defaultValue>
+                <defaultValue>https://github.com/nalbam/sample-spring</defaultValue>
               </hudson.model.StringParameterDefinition>
               <hudson.model.StringParameterDefinition>
                 <name>BRANCH</name>
@@ -220,6 +220,10 @@ data:
           container(&quot;executor&quot;) {
             sh &quot;mvn package -DskipTests&quot;
           }
+        }
+        stage(&quot;Result&quot;) {
+          junit &quot;**/target/surefire-reports/TEST-*.xml&quot;
+          archive &quot;target/*.jar&quot;
         }
       }
     }
