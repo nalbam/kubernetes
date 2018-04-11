@@ -121,8 +121,8 @@ spec:
         - containerPort: 9090
           protocol: TCP
         args:
-          - --insecure-port 9090
-          # - --auto-generate-certificates
+          - --insecure-port=9090
+          - --auto-generate-certificates
           # Uncomment the following line to manually specify Kubernetes API server Host
           # If not specified, Dashboard will attempt to auto discover the API server and connect
           # to it. Uncomment only if the default does not work.
