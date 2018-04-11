@@ -18,7 +18,7 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>EXECUTOR_IMAGE</name>
                 <description></description>
-                <defaultValue>nalbam/builder:alpine</defaultValue>
+                <defaultValue>maven:alpine</defaultValue>
               </hudson.model.StringParameterDefinition>
               <hudson.model.StringParameterDefinition>
                 <name>REPOSITORY_URL</name>
@@ -33,7 +33,7 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>COMMAND</name>
                 <description></description>
-                <defaultValue>ls -al</defaultValue>
+                <defaultValue>mvn clean package</defaultValue>
               </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
           </hudson.model.ParametersDefinitionProperty>
@@ -172,12 +172,12 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>EXECUTOR_IMAGE</name>
                 <description></description>
-                <defaultValue>nalbam/builder:alpine</defaultValue>
+                <defaultValue>lachlanevenson/k8s-kubectl:latest</defaultValue>
               </hudson.model.StringParameterDefinition>
               <hudson.model.StringParameterDefinition>
                 <name>COMMAND</name>
                 <description></description>
-                <defaultValue>ls -al</defaultValue>
+                <defaultValue>kubectl get pods</defaultValue>
               </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
           </hudson.model.ParametersDefinitionProperty>
