@@ -32,4 +32,4 @@ spec:
         command:
         - sh
         - -c
-        - "kubectl delete job --namespace {{ .Release.Namespace }} -l app={{ template "fullname" . }}"
+        - 'kubectl delete job --namespace {{ .Release.Namespace }} -l app={{ template "fullname" . }}'
