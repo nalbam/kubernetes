@@ -23,7 +23,6 @@ spec:
       - name: kubectl
         hostPath:
           path: /usr/bin/kubectl
-
       containers:
       - name: post-install-job
         image: "lachlanevenson/k8s-kubectl:v1.6.0"
