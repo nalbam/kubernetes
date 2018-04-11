@@ -46,6 +46,9 @@ kubectl exec -it pipeline-jenkins-68f5b766f4-p4klt -- /bin/bash
 
 kubectl delete job --namespace default -l app=pipeline-pipeline
 kubectl delete -f volume/pvc.yml
+kubectl delete -f volume/pv.yml
+
+docker rmi -f $(docker images -q)
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm
