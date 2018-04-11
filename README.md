@@ -23,7 +23,6 @@ kubectl describe pod sample-web
 ## volume
 ```
 kubectl apply -f volume/pv.yml
-kubectl apply -f volume/pvc.yml
 ```
 
 ## helm
@@ -45,7 +44,6 @@ kubectl create clusterrolebinding cluster-admin:default:default --clusterrole=cl
 kubectl exec -it pipeline-jenkins-68f5b766f4-p4klt -- /bin/bash
 
 kubectl delete job --namespace default -l app=pipeline-pipeline
-kubectl delete -f volume/pvc.yml
 kubectl delete -f volume/pv.yml
 
 docker rmi -f $(docker images -q)
