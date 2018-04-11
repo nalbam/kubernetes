@@ -1,0 +1,29 @@
+jenkins:
+  enabled: true
+  Master:
+    Image: jenkins/jenkins
+    ImageTag: alpine
+    ServiceType: NodePort
+    InstallPlugins:
+      - kubernetes:latest
+      - workflow-job:latest
+      - workflow-aggregator:latest
+      - credentials-binding:latest
+      - packer:latest
+      - git:latest
+    CustomConfigMap: true
+    NodeSelector: {}
+  Agent:
+    Image: jenkins/jnlp-slave
+    ImageTag: alpine
+    AlwaysPullImage: true
+    NodeSelector: {}
+#  Persistence:
+#    Enabled: true
+#    ExistingClaim: jenkins-pvc
+
+ingress:
+  jenkins:
+    enabled: true
+    host: jenkins.apps.nalbam.com
+    port: 80

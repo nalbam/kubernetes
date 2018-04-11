@@ -29,17 +29,19 @@ kubectl apply -f volume/pvc.yml
 ## helm
 ```
 helm init
-
 helm ls
-helm search jenkins
+
+cd charts/pipeline
+helm dependency build
+
+helm install -n pipeline -f charts/pipeline/values.yaml charts/pipeline
+helm history pipeline
+helm upgrade pipeline -f charts/pipeline/values.yaml charts/pipeline
+helm delete --purge pipeline
 
 helm install -n jenkins -f charts/jenkins/values.yaml stable/jenkins
-helm install -n minio -f charts/minio/values.yaml stable/minio
-helm install -n redis -f charts/redis/values.yaml stable/redis
-
 helm history jenkins
-helm upgrade jenkins -f charts/jenkins.yaml stable/jenkins
-
+helm upgrade jenkins -f charts/jenkins/values.yaml stable/jenkins
 helm delete --purge jenkins
 ```
 * https://helm.sh/

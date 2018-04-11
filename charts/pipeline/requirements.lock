@@ -1,0 +1,6 @@
+dependencies:
+- name: jenkins
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 0.14.3
+digest: sha256:fe0fe295f10b27ce01bdc63956314fb3a0816d49a337de1ae84c0a5371692767
+generated: 2018-04-11T15:28:10.914227183+09:00
