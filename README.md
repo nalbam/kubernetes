@@ -39,6 +39,8 @@ helm history pipeline
 helm upgrade pipeline -f pipeline/values.yaml pipeline
 helm delete --purge pipeline
 
+kubectl exec -it pipeline-jenkins-68f5b766f4-p4klt -- /bin/bash
+
 kubectl delete job --namespace default -l app=pipeline-pipeline
 kubectl delete -f volume/pvc.yml
 ```
