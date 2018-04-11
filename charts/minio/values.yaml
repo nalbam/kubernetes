@@ -1,0 +1,11 @@
+image:
+  repository: minio/minio
+  tag: RELEASE.2018-03-16T22-52-12Z
+  pullPolicy: IfNotPresent
+
+accessKey: AKIAITTECLKH2M5DVYYA
+secretKey: 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
+
+#persistence:
+#  enabled: true
+#  existingClaim: minio-pvc

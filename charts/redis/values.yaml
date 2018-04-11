@@ -1,0 +1,10 @@
+image:
+  registry: docker.io
+  repository: bitnami/redis
+  tag: 4.0.9
+
+redisPassword: password
+
+#persistence:
+#  enabled: true
+#  existingClaim: redis-pvc

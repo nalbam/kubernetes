@@ -1,0 +1,29 @@
+fullnameOverride: jenkins
+
+Master:
+  Name: jenkins-master
+  Image: jenkins/jenkins
+  ImageTag: alpine
+  ServiceType: NodePort
+  InstallPlugins:
+    - credentials-binding:latest
+    - git:latest
+    - kubernetes:latest
+    - packer:latest
+    - workflow-aggregator:latest
+    - workflow-job:latest
+#  InitScripts:
+#  Jobs: |-
+#    test: |-
+#      <<xml here>>
+#  CustomConfigMap: true
+
+Agent:
+  Enabled: true
+  Image: jenkins/jnlp-slave
+  ImageTag: alpine
+  AlwaysPullImage: true
+
+Persistence:
+  Enabled: true
+  ExistingClaim: jenkins-pvc

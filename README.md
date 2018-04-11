@@ -11,12 +11,6 @@ ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
 
 ## sample
 ```
-git clone https://github.com/nalbam/kubernetes.git
-cd kubernetes
-
-kubectl apply -f volume/pv.yml
-kubectl apply -f volume/pvc.yml
-
 kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
@@ -26,6 +20,12 @@ kubectl get node,deploy,pod,svc,ing,pv,pvc -n default
 kubectl describe pod sample-web
 ```
 
+## volume
+```
+kubectl apply -f volume/pv.yml
+kubectl apply -f volume/pvc.yml
+```
+
 ## helm
 ```
 helm init
@@ -33,11 +33,9 @@ helm init
 helm list
 helm search jenkins
 
-helm install -n jenkins -f charts/jenkins.yaml stable/jenkins
-helm install -n minio -f charts/minio.yaml stable/jenkins
-helm install -n mysql -f charts/mysql.yaml stable/jenkins
-helm install -n redis -f charts/redis.yaml stable/jenkins
-helm install -n registry -f charts/registry.yaml stable/jenkins
+helm install -n jenkins -f charts/jenkins/values.yaml stable/jenkins
+helm install -n minio -f charts/minio/values.yaml stable/jenkins
+helm install -n redis -f charts/redis/values.yaml stable/jenkins
 
 helm history jenkins
 helm upgrade jenkins -f charts/jenkins.yaml stable/jenkins
