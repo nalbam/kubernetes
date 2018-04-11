@@ -149,7 +149,6 @@ data:
         stage(&quot;Push Image&quot;) {
           container(&quot;executor&quot;) {
             sh &quot;docker push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
-            //sh &quot;gcloud docker -- push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
           }
         }
       }
