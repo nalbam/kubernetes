@@ -5,3 +5,6 @@ dependencies:
 - name: docker-registry
   version: 1.1.1
   repository: https://kubernetes-charts.storage.googleapis.com/
+- name: sonatype-nexus
+  version: 0.2.0
+  repository: https://kubernetes-charts.storage.googleapis.com/

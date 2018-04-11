@@ -29,6 +29,12 @@ docker-registry:
     enabled: true
     storageClass: standard
 
+sonatype-nexus:
+  enabled: true
+  persistence:
+    enabled: true
+    storageClass: standard
+
 ingress:
   jenkins:
     enabled: true
