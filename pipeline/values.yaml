@@ -45,3 +45,7 @@ ingress:
     enabled: true
     host: jenkins.apps.nalbam.com
     port: 80
+  sonatype-nexus:
+    enabled: true
+    host: nexus.apps.nalbam.com
+    port: 80
