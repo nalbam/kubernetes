@@ -30,9 +30,6 @@ docker-registry:
     tag: 2.6.2
   service:
     type: NodePort
-  docker:
-    enabled: true
-    port: 5509
   persistence:
     enabled: true
     storageClass: standard
@@ -44,6 +41,9 @@ sonatype-nexus:
     tag: 3.10.0-04
   service:
     type: NodePort
+  docker:
+    enabled: true
+    port: 5509
   persistence:
     enabled: true
     storageClass: standard
