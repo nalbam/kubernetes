@@ -122,7 +122,7 @@ data:
 {{- end }}
 {{- if .Values.Master.InitScripts }}
     mkdir -p /var/jenkins_home/init.groovy.d/;
-    cp -n /var/jenkins_config/*.groovy /var/jenkins_home/init.groovy.d/
+    cp -n /var/jenkins_config/*.groovy /var/jenkins_home/init.groovy.d/;
 {{- end }}
 {{- range $key, $val := .Values.Master.InitScripts }}
   init{{ $key }}.groovy: |-

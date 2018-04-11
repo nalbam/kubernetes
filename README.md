@@ -38,6 +38,8 @@ helm install -n pipeline -f pipeline/values.yaml pipeline
 helm history pipeline
 helm upgrade pipeline -f pipeline/values.yaml pipeline
 helm delete --purge pipeline
+
+kubectl delete job --namespace default -l app=pipeline-pipeline
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm
