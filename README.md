@@ -39,6 +39,7 @@ helm history pipeline
 helm upgrade pipeline -f pipeline/values.yaml pipeline
 helm delete --purge pipeline
 
+# User "system:serviceaccount:default:default" cannot list pods in the namespace "default"
 kubectl create clusterrolebinding cluster-admin:default:default --clusterrole=cluster-admin --serviceaccount=default:default
 
 kubectl exec -it pipeline-jenkins-68f5b766f4-p4klt -- /bin/bash
