@@ -111,7 +111,7 @@ data:
     mkdir -p /usr/share/jenkins/ref/secrets/;
     echo "false" > /usr/share/jenkins/ref/secrets/slave-to-master-security-kill-switch;
     cp -n /var/jenkins_config/config.xml /var/jenkins_home/;
-    mkdir -p /home/jenkins/.m2
+    mkdir -p /home/jenkins/.m2;
     cp -n /var/jenkins_config/settings.xml /home/jenkins/.m2/;
 {{- if .Values.Master.InstallPlugins }}
     cp -n /var/jenkins_config/plugins.txt /var/jenkins_home/;
