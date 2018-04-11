@@ -31,6 +31,8 @@ docker-registry:
 
 sonatype-nexus:
   enabled: true
+  service:
+    type: NodePort
   persistence:
     enabled: true
     storageClass: standard
