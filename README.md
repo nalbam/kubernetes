@@ -40,6 +40,7 @@ helm upgrade pipeline -f pipeline/values.yaml pipeline
 helm delete --purge pipeline
 
 kubectl delete job --namespace default -l app=pipeline-pipeline
+kubectl delete -f volume/pvc.yml
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm
