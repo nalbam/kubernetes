@@ -148,8 +148,77 @@ data:
         }
         stage(&quot;Push Image&quot;) {
           container(&quot;executor&quot;) {
-            //sh &quot;gcloud docker -- push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
             sh &quot;docker push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
+            //sh &quot;gcloud docker -- push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
+          }
+        }
+      }
+    }
+          </script>
+          <sandbox>true</sandbox>
+        </definition>
+        <triggers/>
+        <disabled>false</disabled>
+      </flow-definition>
+  build-maven.xml: |-
+    <?xml version='1.0' encoding='UTF-8'?>
+      <flow-definition plugin="workflow-job@2.17">
+        <actions/>
+        <description></description>
+        <keepDependencies>false</keepDependencies>
+        <properties>
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.StringParameterDefinition>
+                <name>EXECUTOR_IMAGE</name>
+                <description></description>
+                <defaultValue>maven:alpine</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>REPOSITORY_URL</name>
+                <description></description>
+                <defaultValue>https://github.com/nalbam/sample-web</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>BRANCH</name>
+                <description></description>
+                <defaultValue>master</defaultValue>
+              </hudson.model.StringParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+          <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+            <triggers/>
+          </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+        </properties>
+        <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
+          <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
+    properties([
+      buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
+    ])
+    podTemplate(label: label, containers: [
+      containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+    ],
+    volumes: [
+      hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+    ]) {
+      node(label) {
+        stage(&quot;Checkout&quot;) {
+          checkout([$class: &quot;GitSCM&quot;,
+            branches: [[name: &quot;$BRANCH&quot;]],
+            doGenerateSubmoduleConfigurations: false,
+            extensions: [],
+            submoduleCfg: [],
+            userRemoteConfigs: [[url: &quot;$REPOSITORY_URL&quot;]]]
+          )
+        }
+        stage(&quot;Test&quot;) {
+          container(&quot;executor&quot;) {
+            sh &quot;mvn test&quot;
+          }
+        }
+        stage(&quot;Package&quot;) {
+          container(&quot;executor&quot;) {
+            sh &quot;mvn package -DskipTests&quot;
           }
         }
       }
@@ -200,6 +269,71 @@ data:
         stage(&quot;Command&quot;) {
           container(&quot;executor&quot;) {
             sh &quot;$COMMAND&quot;
+          }
+        }
+      }
+    }
+          </script>
+          <sandbox>true</sandbox>
+        </definition>
+        <triggers/>
+        <disabled>false</disabled>
+      </flow-definition>
+  sample.xml: |-
+    <?xml version='1.0' encoding='UTF-8'?>
+      <flow-definition plugin="workflow-job@2.17">
+        <actions/>
+        <description></description>
+        <keepDependencies>false</keepDependencies>
+        <properties>
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.StringParameterDefinition>
+                <name>EXECUTOR_IMAGE</name>
+                <description></description>
+                <defaultValue>lachlanevenson/k8s-kubectl:latest</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>COMMAND</name>
+                <description></description>
+                <defaultValue>kubectl get pods</defaultValue>
+              </hudson.model.StringParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+          <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+            <triggers/>
+          </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+        </properties>
+        <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
+          <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
+    properties([
+      buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
+    ])
+    podTemplate(label: label, containers: [
+      containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+      containerTemplate(name: &quot;kubectl&quot;, image: &quot;lachlanevenson/k8s-kubectl:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+      containerTemplate(name: &quot;helm&quot;, image: &quot;lachlanevenson/k8s-helm:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+    ],
+    volumes: [
+      hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+    ]) {
+      node(label) {
+        stage(&quot;Info&quot;) {
+          sh &quot;uname -a&quot;
+        }
+        stage(&quot;Run docker&quot;) {
+          container(&quot;docker&quot;) {
+            sh &quot;docker images&quot;
+          }
+        }
+        stage(&quot;Run kubectl&quot;) {
+          container(&quot;kubectl&quot;) {
+            sh &quot;kubectl get pod,svc&quot;
+          }
+        }
+        stage(&quot;Run helm&quot;) {
+          container(&quot;helm&quot;) {
+            sh &quot;helm list&quot;
           }
         }
       }
