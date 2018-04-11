@@ -3,7 +3,7 @@
 kubectl config view
 
 # watch all namespaces
-watch kubectl get node,deploy,pod,svc,ing,pv,pvc --all-namespaces
+watch kubectl get deploy,pod,svc,ing,pvc,pv --all-namespaces
 
 # get tunnel ip
 ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
@@ -15,7 +15,7 @@ kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
 
-kubectl get node,deploy,pod,svc,ing,pv,pvc -n default
+kubectl get deploy,pod,svc,ing,pvc,pv -n default
 
 kubectl describe pod sample-web
 ```
@@ -30,7 +30,7 @@ kubectl apply -f volume/pvc.yml
 ```
 helm init
 
-helm list
+helm ls
 helm search jenkins
 
 helm install -n jenkins -f charts/jenkins/values.yaml stable/jenkins
@@ -40,11 +40,19 @@ helm install -n redis -f charts/redis/values.yaml stable/jenkins
 helm history jenkins
 helm upgrade jenkins -f charts/jenkins.yaml stable/jenkins
 
-helm delete jenkins --purge
+helm delete --purge jenkins
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm
 * https://github.com/kubernetes/charts
+
+## hlem-cos
+```
+helm repo add cos https://centerforopenscience.github.io/helm-charts/
+
+helm install -n jenkins -f charts/jenkins-cos/values.yaml cos/jenkins
+```
+* https://github.com/CenterForOpenScience/helm-charts
 
 ## heapster
 ```

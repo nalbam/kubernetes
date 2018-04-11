@@ -5,6 +5,8 @@ Master:
   Image: jenkins/jenkins
   ImageTag: alpine
   ServiceType: NodePort
+  adminUser: admin
+  AdminPassword: password
   InstallPlugins:
     - credentials-binding:latest
     - git:latest
