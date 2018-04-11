@@ -26,7 +26,7 @@ spec:
           name: {{ .Release.Name }}-jenkins-jobs
       containers:
       - name: post-install-job
-        image: "viglesiasce/minio-client:v0.4.0"
+        image: "python:alpine3.6"
         command:
         - curl
         - -X

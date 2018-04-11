@@ -53,38 +53,38 @@ data:
         </properties>
         <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
           <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
-        properties([
-          buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
-        ])
-        podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
-        ],
-        volumes: [
-          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
-        ]) {
-          node(label) {
-            stage(&quot;Checkout&quot;) {
-              checkout([$class: &quot;GitSCM&quot;,
-                branches: [[name: &quot;$BRANCH&quot;]],
-                doGenerateSubmoduleConfigurations: false,
-                extensions: [],
-                submoduleCfg: [],
-                userRemoteConfigs: [[url: &quot;$REPOSITORY_URL&quot;]]]
-              )
-            }
-            stage(&quot;Build Image&quot;) {
-              container(&quot;executor&quot;) {
-                sh &quot;docker build -t $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG .&quot;
-              }
-            }
-            stage(&quot;Push Image&quot;) {
-              container(&quot;executor&quot;) {
-                //sh &quot;gcloud docker -- push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
-                sh &quot;docker push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
-              }
-            }
+    properties([
+      buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
+    ])
+    podTemplate(label: label, containers: [
+      containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+    ],
+    volumes: [
+      hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+    ]) {
+      node(label) {
+        stage(&quot;Checkout&quot;) {
+          checkout([$class: &quot;GitSCM&quot;,
+            branches: [[name: &quot;$BRANCH&quot;]],
+            doGenerateSubmoduleConfigurations: false,
+            extensions: [],
+            submoduleCfg: [],
+            userRemoteConfigs: [[url: &quot;$REPOSITORY_URL&quot;]]]
+          )
+        }
+        stage(&quot;Build Image&quot;) {
+          container(&quot;executor&quot;) {
+            sh &quot;docker build -t $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG .&quot;
           }
         }
+        stage(&quot;Push Image&quot;) {
+          container(&quot;executor&quot;) {
+            //sh &quot;gcloud docker -- push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
+            sh &quot;docker push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
+          }
+        }
+      }
+    }
           </script>
           <sandbox>true</sandbox>
         </definition>
@@ -128,35 +128,35 @@ data:
         </properties>
         <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
           <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
-        properties([
-          buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
-        ])
-        podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
-        ],
-        volumes: [
-          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
-        ]) {
-          node(label) {
-            stage(&quot;Checkout&quot;) {
-              checkout([$class: &quot;GitSCM&quot;,
-                branches: [[name: &quot;$BRANCH&quot;]],
-                doGenerateSubmoduleConfigurations: false,
-                extensions: [],
-                submoduleCfg: [],
-                userRemoteConfigs: [[url: &quot;$REPOSITORY_URL&quot;]]]
-              )
-            }
-            stage(&quot;Info&quot;) {
-                sh &quot;uname -a &amp;&amp; whoami &amp;&amp; pwd &amp;&amp; ls -al /home/jenkins&quot;
-            }
-            stage(&quot;Run Command&quot;) {
-              container(&quot;executor&quot;) {
-                sh &quot;$COMMAND&quot;
-              }
-            }
+    properties([
+      buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
+    ])
+    podTemplate(label: label, containers: [
+      containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+    ],
+    volumes: [
+      hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+    ]) {
+      node(label) {
+        stage(&quot;Checkout&quot;) {
+          checkout([$class: &quot;GitSCM&quot;,
+            branches: [[name: &quot;$BRANCH&quot;]],
+            doGenerateSubmoduleConfigurations: false,
+            extensions: [],
+            submoduleCfg: [],
+            userRemoteConfigs: [[url: &quot;$REPOSITORY_URL&quot;]]]
+          )
+        }
+        stage(&quot;Info&quot;) {
+            sh &quot;uname -a &amp;&amp; whoami &amp;&amp; pwd &amp;&amp; ls -al /home/jenkins&quot;
+        }
+        stage(&quot;Run Command&quot;) {
+          container(&quot;executor&quot;) {
+            sh &quot;$COMMAND&quot;
           }
         }
+      }
+    }
           </script>
           <sandbox>true</sandbox>
         </definition>
