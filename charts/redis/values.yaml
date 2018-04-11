@@ -3,6 +3,8 @@ image:
   repository: bitnami/redis
   tag: 4.0.9
 
+serviceType: NodePort
+
 redisPassword: password
 
 persistence:

@@ -34,8 +34,8 @@ helm ls
 helm search jenkins
 
 helm install -n jenkins -f charts/jenkins/values.yaml stable/jenkins
-helm install -n minio -f charts/minio/values.yaml stable/jenkins
-helm install -n redis -f charts/redis/values.yaml stable/jenkins
+helm install -n minio -f charts/minio/values.yaml stable/minio
+helm install -n redis -f charts/redis/values.yaml stable/redis
 
 helm history jenkins
 helm upgrade jenkins -f charts/jenkins.yaml stable/jenkins
