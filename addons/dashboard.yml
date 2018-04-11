@@ -118,10 +118,11 @@ spec:
       - name: kubernetes-dashboard
         image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3
         ports:
+        - containerPort: 8443
+          protocol: TCP
         - containerPort: 9090
           protocol: TCP
         args:
-          - --insecure-port=9090
           - --auto-generate-certificates
           # Uncomment the following line to manually specify Kubernetes API server Host
           # If not specified, Dashboard will attempt to auto discover the API server and connect
@@ -135,9 +136,9 @@ spec:
           name: tmp-volume
         livenessProbe:
           httpGet:
-            scheme: HTTP
+            scheme: HTTPS
             path: /
-            port: 9090
+            port: 8443
           initialDelaySeconds: 30
           timeoutSeconds: 30
       volumes:
