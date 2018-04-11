@@ -3,7 +3,7 @@
 kubectl config view
 
 # watch all namespaces
-watch kubectl get deploy,pod,svc,ing,pvc,pv --all-namespaces
+watch kubectl get deploy,pod,svc,ing,job,pvc,pv --all-namespaces
 
 # get tunnel ip
 ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
@@ -15,7 +15,7 @@ kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
 
-kubectl get deploy,pod,svc,ing,pvc,pv -n default
+kubectl get deploy,pod,svc,ing,job,pvc,pv -n default
 
 kubectl describe pod sample-web
 ```
@@ -31,18 +31,13 @@ kubectl apply -f volume/pvc.yml
 helm init
 helm ls
 
-cd charts/pipeline
+cd pipeline
 helm dependency build
 
-helm install -n pipeline -f charts/pipeline/values.yaml charts/pipeline
+helm install -n pipeline -f pipeline/values.yaml pipeline
 helm history pipeline
-helm upgrade pipeline -f charts/pipeline/values.yaml charts/pipeline
+helm upgrade pipeline -f pipeline/values.yaml pipeline
 helm delete --purge pipeline
-
-helm install -n jenkins -f charts/jenkins/values.yaml stable/jenkins
-helm history jenkins
-helm upgrade jenkins -f charts/jenkins/values.yaml stable/jenkins
-helm delete --purge jenkins
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm

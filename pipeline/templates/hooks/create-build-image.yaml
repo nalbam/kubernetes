@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-create-run-pipeline
+  name: {{ .Release.Name }}-create-build-image
   labels:
     app: {{ template "fullname" . }}
     component: pipeline
@@ -26,7 +26,7 @@ spec:
           name: {{ .Release.Name }}-jenkins-jobs
       containers:
       - name: post-install-job
-        image: "python:alpine3.6"
+        image: "nalbam/builder:latest"
         command:
         - curl
         - -X
@@ -40,8 +40,8 @@ spec:
         - --max-time
         - "3"
         - --data-binary
-        - "@/jobs/run-pipeline.xml"
-        - "http://{{ .Release.Name }}-jenkins:8080/createItem?name=run-pipeline"
+        - "@/jobs/build-image.xml"
+        - "http://{{ .Release.Name }}-jenkins:8080/createItem?name=build-image"
         volumeMounts:
         - name: jenkins-jobs
           mountPath: /jobs
