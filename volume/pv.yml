@@ -37,6 +37,7 @@ apiVersion: v1
 metadata:
   name: data-pv-003
 spec:
+  storageClassName: standard
   capacity:
     storage: 10Gi
   accessModes:
