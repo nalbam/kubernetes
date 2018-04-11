@@ -4,6 +4,8 @@ jenkins:
     Image: jenkins/jenkins
     ImageTag: alpine
     ServiceType: NodePort
+    adminUser: admin
+    AdminPassword: password
     InstallPlugins:
       - kubernetes:latest
       - workflow-job:latest
