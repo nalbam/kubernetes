@@ -21,7 +21,7 @@ master:
   name: master
   image:
     repository: jenkinsci/jenkins
-    tag: 'lts'
+    tag: 'alpine'
     pullPolicy: Always
   useSecurity: true
   adminUser: admin
@@ -57,7 +57,7 @@ agent:
   privileged: false
   image:
     repository: jenkins/jnlp-slave
-    tag: 'latest'
+    tag: 'alpine'
     pullPolicy: IfNotPresent
   resources: {}
     #limits:
