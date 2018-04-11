@@ -15,8 +15,8 @@ spec:
         backend:
           serviceName: {{ .Release.Name }}-jenkins
           servicePort: {{ .Values.ingress.jenkins.port }}
-{{- if .Values.ingress.jenkins.tls }}
+{{ if .Values.ingress.jenkins.tls -}}
   tls:
 {{ toYaml .Values.ingress.jenkins.tls | indent 4 }}
-{{- end }}
-{{- end }}
+{{ end -}}
+{{ end -}}

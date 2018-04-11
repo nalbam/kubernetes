@@ -13,4 +13,4 @@ subjects:
 - kind: ServiceAccount
   name: {{ template "fullname" . }}
   namespace: {{ .Release.Namespace }}
-{{- end -}}
+{{ end -}}

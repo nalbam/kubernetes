@@ -45,4 +45,4 @@ spec:
         volumeMounts:
         - name: jenkins-jobs
           mountPath: /jobs
-{{- end }}
+{{ end -}}

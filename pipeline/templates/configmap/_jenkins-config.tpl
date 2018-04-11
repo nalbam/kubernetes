@@ -70,7 +70,7 @@ data:
               <annotations/>
               <imagePullSecrets/>
             </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
-{{- end -}}
+{{- end }}
           </templates>
           <serverUrl>https://kubernetes.default</serverUrl>
           <skipTlsVerify>false</skipTlsVerify>

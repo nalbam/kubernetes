@@ -211,4 +211,4 @@ data:
         <triggers/>
         <disabled>false</disabled>
       </flow-definition>
-{{- end }}
+{{ end -}}
