@@ -9,7 +9,6 @@ jenkins:
       - workflow-job:latest
       - workflow-aggregator:latest
       - credentials-binding:latest
-      - packer:latest
       - git:latest
     CustomConfigMap: true
     NodeSelector: {}
@@ -18,9 +17,9 @@ jenkins:
     ImageTag: alpine
     AlwaysPullImage: true
     NodeSelector: {}
-#  Persistence:
-#    Enabled: true
-#    ExistingClaim: jenkins-pvc
+  Persistence:
+    Enabled: true
+    ExistingClaim: jenkins-pvc
 
 ingress:
   jenkins:

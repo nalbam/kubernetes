@@ -1,12 +1,11 @@
-{{- if .Values.ingress.jenkins.enabled }}
+{{ if .Values.ingress.jenkins.enabled -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-{{- if .Values.ingress.jenkins.annotations }}
-  annotations:
-{{ toYaml .Values.ingress.jenkins.annotations | indent 4 }}
-{{- end }}
-  name: {{ template "fullname" . }}
+  name: {{ .Release.Name }}-jenkins
+  labels:
+    app: {{ template "fullname" . }}
+    component: jenkins
 spec:
   rules:
   - host: {{ .Values.ingress.jenkins.host | quote }}
@@ -14,10 +13,10 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: {{ template "fullname" . }}
+          serviceName: {{ .Release.Name }}-jenkins
           servicePort: {{ .Values.ingress.jenkins.port }}
 {{- if .Values.ingress.jenkins.tls }}
   tls:
 {{ toYaml .Values.ingress.jenkins.tls | indent 4 }}
-{{- end -}}
+{{- end }}
 {{- end }}
