@@ -25,6 +25,9 @@ jenkins:
 
 docker-registry:
   enabled: true
+  image:
+    repository: registry
+    tag: 2.6.2
   persistence:
     enabled: true
     storageClass: standard
