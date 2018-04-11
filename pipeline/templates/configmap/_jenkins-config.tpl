@@ -62,7 +62,7 @@ data:
                 </org.csanchez.jenkins.plugins.kubernetes.PodVolumes_-HostPathVolume>
                 <org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
                   <mountPath>/home/jenkins/.m2</mountPath>
-                  <claimName>maven-repo</claimName>
+                  <claimName>jenkins-maven-repo</claimName>
                   <readOnly>false</readOnly>
                 </org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
               </volumes>
