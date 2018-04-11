@@ -99,12 +99,22 @@ data:
       <globalNodeProperties/>
       <noUsageStatistics>true</noUsageStatistics>
     </hudson>
+  settings.xml: |-
+    <?xml version='1.0' encoding='UTF-8'?>
+    <settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                          https://maven.apache.org/xsd/settings-1.0.0.xsd">
+        <localRepository>/var/jenkins_home/.m2/repository</localRepository>
+    </settings>
   apply_config.sh: |-
     mkdir -p /usr/share/jenkins/ref/secrets/;
     echo "false" > /usr/share/jenkins/ref/secrets/slave-to-master-security-kill-switch;
-    cp -n /var/jenkins_config/config.xml /var/jenkins_home;
+    cp -n /var/jenkins_config/config.xml /var/jenkins_home/;
+    mkdir -p /home/jenkins/.m2
+    cp -n /var/jenkins_config/settings.xml /home/jenkins/.m2/;
 {{- if .Values.Master.InstallPlugins }}
-    cp -n /var/jenkins_config/plugins.txt /var/jenkins_home;
+    cp -n /var/jenkins_config/plugins.txt /var/jenkins_home/;
     /usr/local/bin/install-plugins.sh `echo $(cat /var/jenkins_home/plugins.txt)`;
 {{- end }}
 {{- if .Values.Master.ScriptApproval }}
