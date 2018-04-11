@@ -8,5 +8,5 @@ serviceType: NodePort
 redisPassword: password
 
 persistence:
-  enabled: true
-  existingClaim: redis-pvc
+  enabled: false
+#  existingClaim: redis-pvc
