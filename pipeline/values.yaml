@@ -31,6 +31,9 @@ docker-registry:
 
 sonatype-nexus:
   enabled: true
+  image:
+    repository: cavemandaveman/nexus
+    tag: 3.10.0-04
   service:
     type: NodePort
   persistence:
