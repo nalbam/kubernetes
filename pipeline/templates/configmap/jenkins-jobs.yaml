@@ -33,7 +33,7 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>COMMAND</name>
                 <description></description>
-                <defaultValue>cd src/main/node && npm install</defaultValue>
+                <defaultValue>cd src/main/node &amp;&amp; npm install</defaultValue>
               </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
           </hudson.model.ParametersDefinitionProperty>
