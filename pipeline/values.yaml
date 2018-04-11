@@ -28,6 +28,8 @@ docker-registry:
   image:
     repository: registry
     tag: 2.6.2
+  service:
+    type: ClusterIP
   persistence:
     enabled: true
     storageClass: standard
@@ -47,8 +49,4 @@ ingress:
   jenkins:
     enabled: true
     host: jenkins.apps.nalbam.com
-    port: 80
-  sonatype-nexus:
-    enabled: true
-    host: nexus.apps.nalbam.com
     port: 80
