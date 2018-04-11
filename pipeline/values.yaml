@@ -21,7 +21,7 @@ jenkins:
     NodeSelector: {}
   Persistence:
     Enabled: true
-    ExistingClaim: jenkins-pvc
+    ExistingClaim: jenkins-home
 
 ingress:
   jenkins:

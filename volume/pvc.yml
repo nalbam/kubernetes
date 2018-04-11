@@ -3,7 +3,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: jenkins-pvc
+  name: jenkins-home
 spec:
   storageClassName: manual
   accessModes:
