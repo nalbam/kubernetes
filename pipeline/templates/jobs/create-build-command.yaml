@@ -2,7 +2,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ .Release.Name }}-create-run-pipeline
+  name: {{ .Release.Name }}-create-build-command
   labels:
     app: {{ template "fullname" . }}
     component: pipeline
@@ -40,8 +40,8 @@ spec:
         - --max-time
         - "3"
         - --data-binary
-        - "@/jobs/run-pipeline.xml"
-        - "http://{{ .Release.Name }}-jenkins:8080/createItem?name=run-pipeline"
+        - "@/jobs/build-command.xml"
+        - "http://{{ .Release.Name }}-jenkins:8080/createItem?name=build-command"
         volumeMounts:
         - name: jenkins-jobs
           mountPath: /jobs

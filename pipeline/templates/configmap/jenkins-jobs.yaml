@@ -6,6 +6,75 @@ metadata:
   labels:
     app: {{ template "fullname" . }}
 data:
+  build-command.xml: |-
+    <?xml version='1.0' encoding='UTF-8'?>
+      <flow-definition plugin="workflow-job@2.17">
+        <actions/>
+        <description></description>
+        <keepDependencies>false</keepDependencies>
+        <properties>
+          <hudson.model.ParametersDefinitionProperty>
+            <parameterDefinitions>
+              <hudson.model.StringParameterDefinition>
+                <name>EXECUTOR_IMAGE</name>
+                <description></description>
+                <defaultValue>nalbam/builder:alpine</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>REPOSITORY_URL</name>
+                <description></description>
+                <defaultValue>https://github.com/nalbam/sample-web</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>BRANCH</name>
+                <description></description>
+                <defaultValue>master</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>COMMAND</name>
+                <description></description>
+                <defaultValue>ls -al</defaultValue>
+              </hudson.model.StringParameterDefinition>
+            </parameterDefinitions>
+          </hudson.model.ParametersDefinitionProperty>
+          <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+            <triggers/>
+          </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+        </properties>
+        <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
+          <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
+    properties([
+      buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
+    ])
+    podTemplate(label: label, containers: [
+      containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+    ],
+    volumes: [
+      hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+    ]) {
+      node(label) {
+        stage(&quot;Checkout&quot;) {
+          checkout([$class: &quot;GitSCM&quot;,
+            branches: [[name: &quot;$BRANCH&quot;]],
+            doGenerateSubmoduleConfigurations: false,
+            extensions: [],
+            submoduleCfg: [],
+            userRemoteConfigs: [[url: &quot;$REPOSITORY_URL&quot;]]]
+          )
+        }
+        stage(&quot;Command&quot;) {
+          container(&quot;executor&quot;) {
+            sh &quot;$COMMAND&quot;
+          }
+        }
+      }
+    }
+          </script>
+          <sandbox>true</sandbox>
+        </definition>
+        <triggers/>
+        <disabled>false</disabled>
+      </flow-definition>
   build-image.xml: |-
     <?xml version='1.0' encoding='UTF-8'?>
       <flow-definition plugin="workflow-job@2.17">
@@ -18,7 +87,7 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>EXECUTOR_IMAGE</name>
                 <description></description>
-                <defaultValue>nalbam/builder:latest</defaultValue>
+                <defaultValue>nalbam/builder:alpine</defaultValue>
               </hudson.model.StringParameterDefinition>
               <hudson.model.StringParameterDefinition>
                 <name>REPOSITORY_URL</name>
@@ -103,17 +172,7 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>EXECUTOR_IMAGE</name>
                 <description></description>
-                <defaultValue>nalbam/builder:latest</defaultValue>
-              </hudson.model.StringParameterDefinition>
-              <hudson.model.StringParameterDefinition>
-                <name>REPOSITORY_URL</name>
-                <description></description>
-                <defaultValue>https://github.com/nalbam/sample-web</defaultValue>
-              </hudson.model.StringParameterDefinition>
-              <hudson.model.StringParameterDefinition>
-                <name>BRANCH</name>
-                <description></description>
-                <defaultValue>master</defaultValue>
+                <defaultValue>nalbam/builder:alpine</defaultValue>
               </hudson.model.StringParameterDefinition>
               <hudson.model.StringParameterDefinition>
                 <name>COMMAND</name>
@@ -138,19 +197,7 @@ data:
       hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
     ]) {
       node(label) {
-        stage(&quot;Checkout&quot;) {
-          checkout([$class: &quot;GitSCM&quot;,
-            branches: [[name: &quot;$BRANCH&quot;]],
-            doGenerateSubmoduleConfigurations: false,
-            extensions: [],
-            submoduleCfg: [],
-            userRemoteConfigs: [[url: &quot;$REPOSITORY_URL&quot;]]]
-          )
-        }
-        stage(&quot;Info&quot;) {
-            sh &quot;uname -a &amp;&amp; whoami &amp;&amp; pwd &amp;&amp; ls -al /home/jenkins&quot;
-        }
-        stage(&quot;Run Command&quot;) {
+        stage(&quot;Command&quot;) {
           container(&quot;executor&quot;) {
             sh &quot;$COMMAND&quot;
           }
@@ -159,54 +206,6 @@ data:
     }
           </script>
           <sandbox>true</sandbox>
-        </definition>
-        <triggers/>
-        <disabled>false</disabled>
-      </flow-definition>
-  run-pipeline.xml: |
-    <?xml version='1.0' encoding='UTF-8'?>
-      <flow-definition plugin="workflow-job@2.17">
-        <actions/>
-        <description></description>
-        <keepDependencies>false</keepDependencies>
-        <properties>
-          <hudson.model.ParametersDefinitionProperty>
-            <parameterDefinitions>
-              <hudson.model.StringParameterDefinition>
-                <name>REPOSITORY_URL</name>
-                <description></description>
-                <defaultValue></defaultValue>
-              </hudson.model.StringParameterDefinition>
-              <hudson.model.StringParameterDefinition>
-                <name>BRANCH</name>
-                <description></description>
-                <defaultValue></defaultValue>
-              </hudson.model.StringParameterDefinition>
-            </parameterDefinitions>
-          </hudson.model.ParametersDefinitionProperty>
-          <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-            <triggers/>
-          </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-        </properties>
-        <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.45">
-          <scm class="hudson.plugins.git.GitSCM" plugin="git@3.2.0">
-            <configVersion>2</configVersion>
-            <userRemoteConfigs>
-              <hudson.plugins.git.UserRemoteConfig>
-                <url>${REPOSITORY_URL}</url>
-              </hudson.plugins.git.UserRemoteConfig>
-            </userRemoteConfigs>
-            <branches>
-              <hudson.plugins.git.BranchSpec>
-                <name>*/${BRANCH}</name>
-              </hudson.plugins.git.BranchSpec>
-            </branches>
-            <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-            <submoduleCfg class="list"/>
-            <extensions/>
-          </scm>
-          <scriptPath>Jenkinsfile</scriptPath>
-          <lightweight>false</lightweight>
         </definition>
         <triggers/>
         <disabled>false</disabled>
