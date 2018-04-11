@@ -102,7 +102,7 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>IMAGE_REPO</name>
                 <description></description>
-                <defaultValue>{{ .Release.Name }}-registry:5000</defaultValue>
+                <defaultValue>{{ .Release.Name }}-docker-registry:5000</defaultValue>
               </hudson.model.StringParameterDefinition>
               <hudson.model.StringParameterDefinition>
                 <name>IMAGE_NAME</name>

@@ -2,5 +2,8 @@ dependencies:
 - name: jenkins
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 0.14.3
-digest: sha256:fe0fe295f10b27ce01bdc63956314fb3a0816d49a337de1ae84c0a5371692767
-generated: 2018-04-11T15:28:10.914227183+09:00
+- name: docker-registry
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 1.1.1
+digest: sha256:ae505c25a576ff4cb40f91a911f01ee22218c1ea3911cc69231ae8261b2929ea
+generated: 2018-04-11T19:34:42.100304073+09:00

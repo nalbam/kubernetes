@@ -2,3 +2,6 @@ dependencies:
 - name: jenkins
   version: 0.14.3
   repository: https://kubernetes-charts.storage.googleapis.com/
+- name: docker-registry
+  version: 1.1.1
+  repository: https://kubernetes-charts.storage.googleapis.com/

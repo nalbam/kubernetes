@@ -16,7 +16,7 @@ minikube dashboard
 
 minikube service sample-web
 
-watch kubectl get deploy,pod,svc,ing --all-namespaces
+kubectl get deploy,pod,svc,ing,job,pvc,pv -n default
 
 minikube stop
 minikube delete
