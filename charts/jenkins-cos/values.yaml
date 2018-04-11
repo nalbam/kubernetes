@@ -20,7 +20,7 @@ nginx:
 master:
   name: master
   image:
-    repository: jenkinsci/jenkins
+    repository: jenkins/jenkins
     tag: 'alpine'
     pullPolicy: Always
   useSecurity: true
