@@ -11,7 +11,7 @@ data:
     <hudson>
       <disabledAdministrativeMonitors/>
       <version>{{ .Values.Master.ImageTag }}</version>
-      <numExecutors>2</numExecutors>
+      <numExecutors>0</numExecutors>
       <mode>NORMAL</mode>
       <useSecurity>false</useSecurity>
       <authorizationStrategy class="hudson.security.FullControlOnceLoggedInAuthorizationStrategy">
