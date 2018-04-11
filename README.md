@@ -41,7 +41,7 @@ helm delete --purge pipeline
 # User "system:serviceaccount:default:default" cannot list pods in the namespace "default"
 kubectl create clusterrolebinding cluster-admin:default:default --clusterrole=cluster-admin --serviceaccount=default:default
 
-kubectl exec -it pipeline-jenkins-68f5b766f4-p4klt -- /bin/bash
+kubectl exec -it $(kubectl get pod | grep pipeline-jenkins | awk -F' ' '{print $1}') -- /bin/bash
 
 kubectl delete job --namespace default -l app=pipeline-pipeline
 kubectl delete -f volume/pv.yml
