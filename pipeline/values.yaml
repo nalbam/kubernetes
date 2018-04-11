@@ -28,3 +28,6 @@ ingress:
     enabled: true
     host: jenkins.apps.nalbam.com
     port: 80
+
+rbac:
+  create: true
