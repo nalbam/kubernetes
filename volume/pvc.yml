@@ -5,7 +5,7 @@ apiVersion: v1
 metadata:
   name: jenkins-home
 spec:
-  storageClassName: manual
+  storageClassName: standard
   accessModes:
     - ReadWriteOnce
   resources:
@@ -19,6 +19,7 @@ apiVersion: v1
 metadata:
   name: jenkins-maven-repo
 spec:
+  storageClassName: standard
   accessModes:
     - ReadWriteOnce
   resources:
@@ -32,7 +33,7 @@ apiVersion: v1
 metadata:
   name: docker-registry
 spec:
-  storageClassName: manual
+  storageClassName: standard
   accessModes:
     - ReadWriteOnce
   resources:

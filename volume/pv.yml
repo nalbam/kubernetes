@@ -12,7 +12,7 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/001"
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Delete
 
 ---
 
@@ -28,7 +28,7 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/002"
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Delete
 
 ---
 
@@ -44,7 +44,7 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/003"
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Delete
 
 ---
 
@@ -53,13 +53,14 @@ apiVersion: v1
 metadata:
   name: data-pv-004
 spec:
+  storageClassName: manual
   capacity:
     storage: 10Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
     path: "/data/004"
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Delete
 
 ---
 
@@ -74,4 +75,4 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/005"
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Delete
