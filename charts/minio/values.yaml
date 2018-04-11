@@ -6,6 +6,6 @@ image:
 accessKey: AKIAITTECLKH2M5DVYYA
 secretKey: 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
 
-#persistence:
-#  enabled: true
-#  existingClaim: minio-pvc
+persistence:
+  enabled: true
+  existingClaim: minio-pvc

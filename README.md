@@ -45,13 +45,6 @@ helm delete --purge jenkins
 * https://helm.sh/
 * https://github.com/kubernetes/helm
 * https://github.com/kubernetes/charts
-
-## hlem-cos
-```
-helm repo add cos https://centerforopenscience.github.io/helm-charts/
-
-helm install -n jenkins -f charts/jenkins-cos/values.yaml cos/jenkins
-```
 * https://github.com/CenterForOpenScience/helm-charts
 
 ## heapster

@@ -5,6 +5,6 @@ image:
 
 redisPassword: password
 
-#persistence:
-#  enabled: true
-#  existingClaim: redis-pvc
+persistence:
+  enabled: true
+  existingClaim: redis-pvc
