@@ -149,15 +149,15 @@ while read ING; do
         NAME=
         HOST=
         PORT=
-        conntinue
+        continue
     fi
     if [ "${ARR[0]}" == "host" ]; then
         HOST="${ARR[1]}"
-        conntinue
+        continue
     fi
     if [ "${ARR[0]}" == "serviceName" ]; then
         NAME="${ARR[1]}"
-        conntinue
+        continue
     fi
     if [ "${ARR[0]}" == "servicePort" ]; then
         PORT="${ARR[1]}"
