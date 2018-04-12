@@ -21,11 +21,19 @@ EOF
 
 sysctl --system
 
+# docker insecure-registry
+vi /etc/sysconfig/docker
+INSECURE_REGISTRY='--insecure-registry 10.0.0.0/24 --insecure-registry pp-docker-registry:5000 --insecure-registry pp-sonatype-nexus:5000'
+
+# docker cgroup
 docker info | grep -i cgroup
 
 vi /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
 Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=systemd --runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice"
+```
 
+## start
+```
 kubeadm init
 
 kubeadm reset

@@ -37,12 +37,9 @@ PORT=
 
 date
 
-KUBE_ING=/tmp/kube_ing_hosts
+KUBE_ING=/tmp/kube_svc_hosts
 
-kubectl get ing --all-namespaces -o json \
- | grep -E '"namespace"|"host"|"serviceName"|"servicePort"' \
- | sed 's/[":,]/ /g' \
- | awk -F' ' '{print $1 " " $2}' > ${KUBE_ING}
+kubectl get svc --all-namespaces | awk '{print $1 " " $2 " " $4}' > ${KUBE_ING}
 
 md5sum ${KUBE_ING} > ${KUBE_ING}_sum_now
 
@@ -66,37 +63,8 @@ echo "# $(date)" >> ${TMP_HOSTS}
 while read LINE; do
     ARR=(${LINE})
 
-    if [ "${ARR[0]}" == "namespace" ]; then
-        NS="${ARR[1]}"
-        NAME=
-        HOST=
-        PORT=
-        continue
-    fi
-    if [ "${ARR[0]}" == "host" ]; then
-        HOST="${ARR[1]}"
-        continue
-    fi
-    if [ "${ARR[0]}" == "serviceName" ]; then
-        NAME="${ARR[1]}"
-        continue
-    fi
-    if [ "${ARR[0]}" == "servicePort" ]; then
-        PORT="${ARR[1]}"
-    fi
-
-    if [ "${NS}" == "" ] || [ "${HOST}" == "" ] || [ "${NAME}" == "" ] || [ "${PORT}" == "" ]; then
-        continue
-    fi
-
-    IP=$(kubectl get svc ${NAME} -n ${NS} | grep ${NAME} | awk '{print $3}')
-
-    if [ "${IP}" == "" ]; then
-        continue
-    fi
-
-    echo "${IP} ${NAME}"
-    echo "${IP} ${NAME}" >> ${TMP_HOSTS}
+    echo "${ARR[2]} ${ARR[1]} ${ARR[0]}.${ARR[1]} ${ARR[0]}.${ARR[1]}.local"
+    echo "${ARR[2]} ${ARR[1]} ${ARR[0]}.${ARR[1]} ${ARR[0]}.${ARR[1]}.local" >> ${TMP_HOSTS}
 done < ${KUBE_ING}
 
 sudo cp -rf ${TMP_HOSTS} /etc/hosts

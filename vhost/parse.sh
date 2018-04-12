@@ -141,8 +141,6 @@ fi
 vhost_local
 
 while read LINE; do
-#    echo ${LINE}
-
     ARR=(${LINE})
 
     if [ "${ARR[0]}" == "namespace" ]; then
