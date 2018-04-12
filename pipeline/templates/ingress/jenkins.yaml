@@ -6,6 +6,10 @@ metadata:
   labels:
     app: {{ template "fullname" . }}
     component: jenkins
+{{- if .Values.ingress.jenkins.annotations }}
+  annotations:
+{{ toYaml .Values.ingress.jenkins.annotations | indent 4 }}
+{{- end }}
 spec:
   rules:
   - host: {{ .Values.ingress.jenkins.host | quote }}
