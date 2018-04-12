@@ -95,8 +95,8 @@ lets_renew() {
 
 date
 
-KUBE_ING=/tmp/kube_ing
-KUBE_SVC=/tmp/kube_svc
+KUBE_ING=/tmp/kube_ing_toast
+KUBE_SVC=/tmp/kube_svc_toast
 
 kubectl get ing --all-namespaces -owide | grep " 80 " | awk -F' ' '{print $2 " " $3}' > ${KUBE_ING}
 kubectl get svc --all-namespaces -owide | grep 'NodePort' | awk -F' ' '{print $2 " " $4 " " $6}' > ${KUBE_SVC}

@@ -118,7 +118,7 @@ PORT=
 
 date
 
-KUBE_ING=/tmp/kube_ing
+KUBE_ING=/tmp/kube_ing_parse
 
 kubectl get ing --all-namespaces -o json \
  | grep -E '"namespace"|"host"|"serviceName"|"servicePort"' \
