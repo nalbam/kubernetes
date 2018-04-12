@@ -201,6 +201,16 @@ data:
                 <description></description>
                 <defaultValue>master</defaultValue>
               </hudson.model.StringParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>TEST</name>
+                <description></description>
+                <defaultValue>mvn test</defaultValue>
+              </hudson.model.StringParameterDefinition>
+              <hudson.model.StringParameterDefinition>
+                <name>COMMAND</name>
+                <description></description>
+                <defaultValue>mvn package -DskipTests</defaultValue>
+              </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
           </hudson.model.ParametersDefinitionProperty>
           <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
@@ -230,12 +240,12 @@ data:
         }
         stage(&quot;Test&quot;) {
           container(&quot;executor&quot;) {
-            sh &quot;mvn test&quot;
+            sh &quot;$TEST&quot;
           }
         }
-        stage(&quot;Package&quot;) {
+        stage(&quot;Build&quot;) {
           container(&quot;executor&quot;) {
-            sh &quot;mvn package -DskipTests&quot;
+            sh &quot;$COMMAND&quot;
           }
         }
         stage(&quot;Result&quot;) {

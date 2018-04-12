@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}-delete-jobs
   labels:
     app: {{ template "fullname" . }}
-    component: pipeline
+    component: {{ .Release.Name }}
   annotations:
     "helm.sh/hook": post-delete
 spec:
@@ -12,7 +12,7 @@ spec:
     metadata:
       labels:
         app: {{ template "fullname" . }}
-        component: pipeline
+        component: {{ .Release.Name }}
     spec:
       {{- if .Values.nodeSelector }}
       nodeSelector:

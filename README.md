@@ -64,7 +64,6 @@ docker rmi -f $(docker images -q)
 ## cleanup
 ```
 helm delete --purge pipeline
-kubectl delete job --namespace default -l app=pipeline-pipeline
 kubectl delete -f volume/pv.yml
 sudo rm -rf /data/00*
 ```
