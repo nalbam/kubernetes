@@ -5,7 +5,7 @@ jenkins:
     ImageTag: alpine
     AdminUser: admin
     AdminPassword: password
-    ServiceType: ClusterIP
+    ServiceType: NodePort
     InstallPlugins:
       - git:latest
       - kubernetes:latest
@@ -27,7 +27,7 @@ sonatype-nexus:
     repository: cavemandaveman/nexus
     tag: 3.10.0-04
   service:
-    type: ClusterIP
+    type: NodePort
   docker:
     enabled: true
     port: 5000
