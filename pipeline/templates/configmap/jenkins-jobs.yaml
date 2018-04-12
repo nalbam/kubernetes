@@ -10,7 +10,7 @@ data:
     build-command
     build-image
     build-maven
-    rum-command
+    run-command
     sample
   create-jobs.sh: |-
     #!/bin/bash
@@ -19,7 +19,7 @@ data:
       STATUS="$(curl -I ${URL} 2>/dev/null | head -n 1 | cut -d$' ' -f2)"
       if [ "${STATUS}" != "200" ]; then
         echo "# create... ${LINE}"
-        curl -I -X POST -H "Content-Type: application/xml" \
+        curl -X POST -H "Content-Type: application/xml" \
           --retry "20" \
           --retry-delay "20" \
           --max-time "15" \
