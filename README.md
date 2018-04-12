@@ -9,6 +9,14 @@ watch kubectl get deploy,pod,svc,ing,job,pvc,pv --all-namespaces
 ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
 ```
 
+## cluster-admin
+```
+kubectl apply -f role/cluster-admin.yml
+
+kubectl describe clusterrole cluster-admin
+kubectl describe clusterrolebindings cluster-admin:default:default
+```
+
 ## sample
 ```
 kubectl apply -f sample/sample-node.yml
