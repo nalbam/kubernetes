@@ -141,7 +141,8 @@ fi
 vhost_local
 
 while read LINE; do
-    # sample-web sample-web.apps.nalbam.com
+    echo ${LINE}
+
     ARR=(${LINE})
 
     if [ "${ARR[0]}" == "namespace" ]; then
