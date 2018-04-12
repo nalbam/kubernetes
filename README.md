@@ -39,6 +39,13 @@ kubectl describe pod sample-web
 kubectl apply -f volume/pv.yml
 ```
 
+## nginx-ingress
+```
+helm install -n rr stable/nginx-ingress
+
+helm delete --purge rr
+```
+
 ## pipeline (helm)
 ```
 helm init
@@ -47,14 +54,12 @@ helm ls
 cd pipeline
 helm dependency build
 
-helm install -n pipeline -f pipeline/values.yaml pipeline
-helm history pipeline
-helm upgrade pipeline -f pipeline/values.yaml pipeline
-helm delete --purge pipeline
+helm install -n pp -f pipeline/values.yaml pipeline
+helm history pp
+helm upgrade pp -f pipeline/values.yaml pipeline
+helm delete --purge pp
 
-kubectl exec -it $(kubectl get pod | grep pipeline-jenkins | awk -F' ' '{print $1}') -- /bin/bash
-
-docker rmi -f $(docker images -q)
+kubectl exec -it $(kubectl get pod | grep pp-jenkins | awk -F' ' '{print $1}') -- /bin/bash
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm
@@ -63,8 +68,9 @@ docker rmi -f $(docker images -q)
 
 ## cleanup
 ```
-helm delete --purge pipeline
+helm delete --purge pp
 kubectl delete -f volume/pv.yml
+docker rmi -f $(docker images -q)
 sudo rm -rf /data/00*
 ```
 
