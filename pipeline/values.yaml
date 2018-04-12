@@ -6,7 +6,6 @@ jenkins:
     AdminUser: admin
     AdminPassword: password
     ServiceType: NodePort
-    HostName: jenkins.apps.nalbam.com
     InstallPlugins:
       - git:latest
       - kubernetes:latest
@@ -18,8 +17,6 @@ jenkins:
     Image: jenkins/jnlp-slave
     ImageTag: alpine
     AlwaysPullImage: true
-  NetworkPolicy:
-    Enabled: true
   Persistence:
     Enabled: true
     StorageClass: standard
@@ -42,3 +39,9 @@ sonatype-nexus:
   persistence:
     enabled: true
     storageClass: standard
+
+ingress:
+  jenkins:
+    enabled: true
+    host: jenkins.apps.nalbam.com
+    port: 8080
