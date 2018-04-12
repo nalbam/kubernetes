@@ -20,7 +20,7 @@ jenkins:
     AlwaysPullImage: true
   NetworkPolicy:
     Enabled: true
-  Enabled: false  Persistence:
+  Persistence:
     Enabled: true
     StorageClass: standard
 
