@@ -141,7 +141,7 @@ fi
 vhost_local
 
 while read LINE; do
-    echo ${LINE}
+#    echo ${LINE}
 
     ARR=(${LINE})
 
