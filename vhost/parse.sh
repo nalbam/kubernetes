@@ -53,7 +53,7 @@ vhost_http() {
     _HOST="$2"
     _PORT="$3"
 
-    echo_ "# ${_DOM}:443 -> ${_HOST}:${_PORT}"
+    echo_ "# ${_DOM}:80  -> ${_HOST}:${_PORT}"
 
     # template
     TEMPLATE="${SHELL_DIR}/http.conf"
