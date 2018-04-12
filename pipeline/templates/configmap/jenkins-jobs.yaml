@@ -20,8 +20,8 @@ data:
       if [ "${STATUS}" != "200" ]; then
         curl -X POST -H "Content-Type: application/xml" \
           --retry "20" \
-          --retry-delay "10" \
-          --max-time "7" \
+          --retry-delay "20" \
+          --max-time "15" \
           --data-binary "@/jobs/${LINE}.xml" \
           "http://{{ .Release.Name }}-jenkins:8080/createItem?name=${LINE}"
       fi
