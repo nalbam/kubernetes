@@ -14,7 +14,7 @@ while read REGION; do
 
     while read ID; do
         aws ec2 modify-instance-attribute --instance-id ${ID} --no-disable-api-termination
-        aws ec2 terminate-instances --instance-ids ${ID}
+        aws ec2 terminate-instances --instance-ids ${ID} | grep InstanceId
     done < ${INSTANCES}
 
     aws ec2 describe-instances | grep InstanceId | awk -F'"' '{print $4}'
