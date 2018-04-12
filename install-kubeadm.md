@@ -23,7 +23,7 @@ sysctl --system
 
 # docker insecure-registry
 vi /etc/sysconfig/docker
-INSECURE_REGISTRY='--insecure-registry 10.0.0.0/24 --insecure-registry pp-docker-registry:5000 --insecure-registry pp-sonatype-nexus:5000'
+INSECURE_REGISTRY='--insecure-registry pp-docker-registry:5000 --insecure-registry pp-sonatype-nexus:5000'
 
 # docker cgroup
 docker info | grep -i cgroup
