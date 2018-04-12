@@ -55,5 +55,5 @@ ingress:
     port: 80
   nexus:
     enabled: true
-    host: jenkins.apps.nalbam.com
+    host: nexus.apps.nalbam.com
     port: 80
