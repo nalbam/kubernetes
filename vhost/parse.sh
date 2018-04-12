@@ -178,12 +178,6 @@ while read LINE; do
     vhost_https ${HOST} ${IP} ${PORT}
 
     lets_encrypt ${HOST}
-
-    NS=
-    IP=
-    HOST=
-    NAME=
-    PORT=
 done < ${KUBE_ING}
 
 httpd_restart
