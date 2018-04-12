@@ -41,9 +41,9 @@ sonatype-nexus:
     tag: 3.10.0-04
   service:
     type: NodePort
-#  docker:
-#    enabled: true
-#    port: 5509
+  docker:
+    enabled: true
+    port: 5509
   persistence:
     enabled: true
     storageClass: standard

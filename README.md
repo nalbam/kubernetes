@@ -1,5 +1,7 @@
 ## basic
 ```
+cat ~/.kube/config
+
 kubectl config view
 
 # watch all namespaces

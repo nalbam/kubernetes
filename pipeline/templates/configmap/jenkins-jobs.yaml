@@ -294,7 +294,7 @@ data:
       buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
     ])
     podTemplate(label: label, containers: [
-      containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+      containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:alpine&quot;, command: &quot;cat&quot;, ttyEnabled: true),
       containerTemplate(name: &quot;kubectl&quot;, image: &quot;lachlanevenson/k8s-kubectl:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
       containerTemplate(name: &quot;helm&quot;, image: &quot;lachlanevenson/k8s-helm:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true)
     ],
@@ -306,7 +306,7 @@ data:
           sh &quot;uname -a&quot;
         }
         stage(&quot;Run docker&quot;) {
-          container(&quot;docker&quot;) {
+          container(&quot;builder&quot;) {
             sh &quot;docker images&quot;
           }
         }
