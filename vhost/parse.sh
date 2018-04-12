@@ -169,6 +169,10 @@ while read LINE; do
 
     IP=$(kubectl get svc ${NAME} -n ${NS} | grep ${NAME} | awk '{print $3}')
 
+    if [ "${IP}" == "" ]; then
+        continue
+    fi
+
     vhost_http  ${HOST} ${IP} ${PORT}
     vhost_https ${HOST} ${IP} ${PORT}
 
