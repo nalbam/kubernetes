@@ -14,8 +14,6 @@ data:
     sample
   create-jobs.sh: |-
     #!/bin/bash
-    ls -al /jobs/
-    cat /jobs/jobs.txt
     while read LINE; do
       URL="http://{{ .Release.Name }}-jenkins:8080/job/${LINE}/api/json"
       STATUS="$(curl -I ${URL} 2>/dev/null | head -n 1 | cut -d$' ' -f2)"
