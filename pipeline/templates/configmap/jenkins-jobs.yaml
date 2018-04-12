@@ -8,7 +8,7 @@ metadata:
 data:
   create-jobs.sh: |-
     #!/bin/bash
-    ls /jobs/ | grep xml > /jobs/jobs.txt
+    ls /jobs/ | grep xml > /tmp/jobs.txt
     while read LINE; do
       NAME=$(echo ${LINE} | awk -F'.xml' '{print $1}')
       URL="http://{{ .Release.Name }}-jenkins:8080/job/${NAME}/api/json"
@@ -23,7 +23,7 @@ data:
           "http://{{ .Release.Name }}-jenkins:8080/createItem?name=${NAME}"
         echo "# created. ${LINE}"
       fi
-    done < /jobs/jobs.txt
+    done < /tmp/jobs.txt
   build-command.xml: |-
     <?xml version='1.0' encoding='UTF-8'?>
       <flow-definition plugin="workflow-job@2.17">
