@@ -37,7 +37,7 @@ kubectl describe pod sample-web
 kubectl apply -f volume/pv.yml
 ```
 
-## helm
+## pipeline (helm)
 ```
 helm init
 helm ls
