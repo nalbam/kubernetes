@@ -140,9 +140,9 @@ fi
 
 vhost_local
 
-while read ING; do
+while read LINE; do
     # sample-web sample-web.apps.nalbam.com
-    ARR=(${ING})
+    ARR=(${LINE})
 
     if [ "${ARR[0]}" == "namespace" ]; then
         NS="${ARR[1]}"
@@ -163,12 +163,22 @@ while read ING; do
         PORT="${ARR[1]}"
     fi
 
+    if [ "${HOST}" == "" ] || [ "${NAME}" == "" ] || [ "${PORT}" == "" ]; then
+        continue
+    fi
+
     IP=$(kubectl get svc ${NAME} -n ${NS} | grep ${NAME} | awk '{print $3}')
 
     vhost_http  ${HOST} ${IP} ${PORT}
     vhost_https ${HOST} ${IP} ${PORT}
 
     lets_encrypt ${HOST}
+
+    NS=
+    IP=
+    HOST=
+    NAME=
+    PORT=
 done < ${KUBE_ING}
 
 httpd_restart
