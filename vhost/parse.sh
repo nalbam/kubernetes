@@ -163,7 +163,7 @@ while read LINE; do
         PORT="${ARR[1]}"
     fi
 
-    if [ "${HOST}" == "" ] || [ "${NAME}" == "" ] || [ "${PORT}" == "" ]; then
+    if [ "${NS}" == "" ] || [ "${HOST}" == "" ] || [ "${NAME}" == "" ] || [ "${PORT}" == "" ]; then
         continue
     fi
 
