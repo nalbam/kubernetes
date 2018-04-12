@@ -54,10 +54,10 @@ helm ls
 cd pipeline
 helm dependency build
 
-helm install -n pipeline -f pipeline/values.yaml pipeline
-helm history pipeline
-helm upgrade pipeline -f pipeline/values.yaml pipeline
-helm delete --purge pipeline
+helm install -n pp -f pipeline/values.yaml pipeline
+helm history pp
+helm upgrade pp -f pipeline/values.yaml pipeline
+helm delete --purge pp
 
 kubectl exec -it $(kubectl get pod | grep pp-jenkins | awk -F' ' '{print $1}') -- /bin/bash
 ```
@@ -68,7 +68,7 @@ kubectl exec -it $(kubectl get pod | grep pp-jenkins | awk -F' ' '{print $1}') -
 
 ## cleanup
 ```
-helm delete --purge pipeline
+helm delete --purge pp
 kubectl delete -f volume/pv.yml
 docker rmi -f $(docker images -q)
 sudo rm -rf /data/00*
