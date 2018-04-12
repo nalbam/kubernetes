@@ -63,7 +63,7 @@ echo "# $(date)" >> ${TMP_HOSTS}
 while read LINE; do
     ARR=(${LINE})
 
-    if [ "${ARR[0]}" == "CLUSTER-IP" ]; then
+    if [ "${ARR[0]}" == "NAMESPACE" ]; then
         continue
     fi
 
