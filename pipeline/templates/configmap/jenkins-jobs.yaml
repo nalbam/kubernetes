@@ -24,6 +24,7 @@ data:
           --max-time "15" \
           --data-binary "@/jobs/${LINE}.xml" \
           "http://{{ .Release.Name }}-jenkins:8080/createItem?name=${LINE}"
+        echo "# created ${LINE}"
       fi
     done < /jobs/jobs.txt
   build-command.xml: |-
