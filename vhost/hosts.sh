@@ -60,9 +60,9 @@ fi
 TMP_HOSTS=/tmp/hosts
 
 cat ${SHELL_DIR}/hosts > ${TMP_HOSTS}
-echo "" > ${TMP_HOSTS}
-echo "# $(date)" > ${TMP_HOSTS}
-echo "" > ${TMP_HOSTS}
+echo "" >> ${TMP_HOSTS}
+echo "# $(date)" >> ${TMP_HOSTS}
+echo "" >> ${TMP_HOSTS}
 
 while read LINE; do
     ARR=(${LINE})
