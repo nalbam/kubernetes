@@ -28,7 +28,9 @@ spec:
       - name: post-install-job
         image: "nalbam/builder:alpine"
         command:
-        - sh /jobs/create-jobs.sh
+        - sh
+        - -C
+        - '/jobs/create-jobs.sh'
         volumeMounts:
         - name: jenkins-jobs
           mountPath: /jobs

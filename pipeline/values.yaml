@@ -23,17 +23,6 @@ jenkins:
     Enabled: true
     StorageClass: standard
 
-docker-registry:
-  enabled: true
-  image:
-    repository: registry
-    tag: 2.6.2
-  service:
-    type: NodePort
-  persistence:
-    enabled: true
-    storageClass: standard
-
 sonatype-nexus:
   enabled: true
   image:
@@ -48,6 +37,17 @@ sonatype-nexus:
     enabled: true
     storageClass: standard
 
+docker-registry:
+  enabled: false
+  image:
+    repository: registry
+    tag: 2.6.2
+  service:
+    type: NodePort
+  persistence:
+    enabled: true
+    storageClass: standard
+
 ingress:
   jenkins:
     enabled: true
@@ -58,6 +58,6 @@ ingress:
     host: nexus.apps.nalbam.com
     port: 80
   registry:
-    enabled: true
+    enabled: false
     host: registry.apps.nalbam.com
     port: 80

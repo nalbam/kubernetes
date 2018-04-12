@@ -37,6 +37,8 @@ kubectl describe pod sample-web
 ## volume
 ```
 kubectl apply -f volume/pv.yml
+
+kubectl delete -f volume/pv.yml
 ```
 
 ## pipeline (helm)
@@ -52,13 +54,7 @@ helm history pipeline
 helm upgrade pipeline -f pipeline/values.yaml pipeline
 helm delete --purge pipeline
 
-# User "system:serviceaccount:default:default" cannot list pods in the namespace "default"
-kubectl create clusterrolebinding cluster-admin:default:default --clusterrole=cluster-admin --serviceaccount=default:default
-
 kubectl exec -it $(kubectl get pod | grep pipeline-jenkins | awk -F' ' '{print $1}') -- /bin/bash
-
-kubectl delete job --namespace default -l app=pipeline-pipeline
-kubectl delete -f volume/pv.yml
 
 docker rmi -f $(docker images -q)
 ```
@@ -66,6 +62,14 @@ docker rmi -f $(docker images -q)
 * https://github.com/kubernetes/helm
 * https://github.com/kubernetes/charts
 * https://github.com/CenterForOpenScience/helm-charts
+
+## cleanup
+```
+helm delete --purge pipeline
+kubectl delete job --namespace default -l app=pipeline-pipeline
+kubectl delete -f volume/pv.yml
+sudo rm -rf /data/00*
+```
 
 ## heapster
 ```
