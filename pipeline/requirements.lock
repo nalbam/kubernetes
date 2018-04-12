@@ -5,5 +5,8 @@ dependencies:
 - name: sonatype-nexus
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 0.2.0
-digest: sha256:d385e1932be764e02906dfd8b5aa9d31e30cd09f9665794f4f7f0c315e360a94
-generated: 2018-04-12T14:21:59.13416793+09:00
+- name: docker-registry
+  repository: https://kubernetes-charts.storage.googleapis.com/
+  version: 1.1.1
+digest: sha256:d49c35f9a1fdc2d75a146335eb1d3f158ab1b2db17d8baa6d3bcc64a11d4101f
+generated: 2018-04-12T18:38:35.655114588+09:00
