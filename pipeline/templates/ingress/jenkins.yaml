@@ -11,7 +11,8 @@ spec:
   - host: {{ .Values.ingress.jenkins.host | quote }}
     http:
       paths:
-      - backend:
+      - path: /
+        backend:
           serviceName: {{ .Release.Name }}-jenkins
           servicePort: {{ .Values.ingress.jenkins.port }}
 {{ if .Values.ingress.jenkins.tls -}}
