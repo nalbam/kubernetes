@@ -63,6 +63,10 @@ echo "# $(date)" >> ${TMP_HOSTS}
 while read LINE; do
     ARR=(${LINE})
 
+    if [ "${ARR[0]}" == "CLUSTER-IP" ]; then
+        continue
+    fi
+
     echo "${ARR[2]} ${ARR[1]} ${ARR[0]}.${ARR[1]} ${ARR[0]}.${ARR[1]}.local"
     echo "${ARR[2]} ${ARR[1]} ${ARR[0]}.${ARR[1]} ${ARR[0]}.${ARR[1]}.local" >> ${TMP_HOSTS}
 done < ${KUBE_ING}
