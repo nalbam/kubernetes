@@ -37,8 +37,6 @@ kubectl describe pod sample-web
 ## volume
 ```
 kubectl apply -f volume/pv.yml
-
-kubectl delete -f volume/pv.yml
 ```
 
 ## pipeline (helm)

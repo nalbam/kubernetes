@@ -15,12 +15,14 @@ data:
   create-jobs.sh: |-
     #!/bin/bash
     ls -al /jobs/
-    while read V; do
+    cat /jobs/jobs.txt
+    while read LINE; do
         curl -X POST -H "Content-Type: application/xml" \
           --retry "20" \
           --retry-delay "10" \
-          --max-time "3" \
-          --data-binary "@/jobs/${V}.xml" "http://{{ .Release.Name }}-jenkins:8080/createItem?name=${V}"
+          --max-time "7" \
+          --data-binary "@/jobs/${LINE}.xml" \
+          "http://{{ .Release.Name }}-jenkins:8080/createItem?name=${LINE}"
     done < /jobs/jobs.txt
   build-command.xml: |-
     <?xml version='1.0' encoding='UTF-8'?>
