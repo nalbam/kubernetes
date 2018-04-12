@@ -57,3 +57,7 @@ ingress:
     enabled: true
     host: nexus.apps.nalbam.com
     port: 80
+  registry:
+    enabled: true
+    host: registry.apps.nalbam.com
+    port: 80
