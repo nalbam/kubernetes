@@ -8,9 +8,10 @@ metadata:
 data:
   create-jobs.sh: |-
     #!/bin/bash
-    ls /jobs/ | grep yaml > /jobs/jobs.txt
+    ls /jobs/ | grep xml > /jobs/jobs.txt
     while read LINE; do
-      URL="http://{{ .Release.Name }}-jenkins:8080/job/${LINE}/api/json"
+      NAME=$(echo ${LINE} | awk -F'.xml' '{print $1}')
+      URL="http://{{ .Release.Name }}-jenkins:8080/job/${NAME}/api/json"
       STATUS="$(curl -I ${URL} 2>/dev/null | head -n 1 | cut -d$' ' -f2)"
       if [ "${STATUS}" != "200" ]; then
         echo "# create... ${LINE}"
@@ -18,8 +19,8 @@ data:
           --retry "20" \
           --retry-delay "20" \
           --max-time "15" \
-          --data-binary "@/jobs/${LINE}.xml" \
-          "http://{{ .Release.Name }}-jenkins:8080/createItem?name=${LINE}"
+          --data-binary "@/jobs/${LINE}" \
+          "http://{{ .Release.Name }}-jenkins:8080/createItem?name=${NAME}"
         echo "# created. ${LINE}"
       fi
     done < /jobs/jobs.txt
