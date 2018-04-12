@@ -1,0 +1,22 @@
+{{ if .Values.ingress.nexus.enabled -}}
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-sonatype-nexus
+  labels:
+    app: {{ template "fullname" . }}
+    component: sonatype-nexus
+spec:
+  rules:
+  - host: {{ .Values.ingress.nexus.host | quote }}
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {{ .Release.Name }}-sonatype-nexus
+          servicePort: {{ .Values.ingress.nexus.port }}
+{{ if .Values.ingress.nexus.tls -}}
+  tls:
+{{ toYaml .Values.ingress.nexus.tls | indent 4 }}
+{{ end -}}
+{{ end -}}

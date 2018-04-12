@@ -249,7 +249,7 @@ data:
               <hudson.model.StringParameterDefinition>
                 <name>COMMAND</name>
                 <description></description>
-                <defaultValue>kubectl get pods</defaultValue>
+                <defaultValue>kubectl get all --all-namespaces</defaultValue>
               </hudson.model.StringParameterDefinition>
             </parameterDefinitions>
           </hudson.model.ParametersDefinitionProperty>

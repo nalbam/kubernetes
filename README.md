@@ -13,12 +13,12 @@ ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
 ```
 kubectl apply -f role/nalbam.yml
 
-kubectl get sa --all-namespaces
+kubectl get sa --all-namespaces | grep nalbam
 kubectl get clusterrole
-kubectl get clusterrolebindings
+kubectl get clusterrolebindings | grep nalbam
 
 kubectl describe clusterrole cluster-admin
-kubectl describe clusterrolebindings cluster-admin:default:default
+kubectl describe clusterrolebindings cluster-admin:default:nalbam
 ```
 
 ## sample
