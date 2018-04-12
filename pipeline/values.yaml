@@ -14,12 +14,10 @@ jenkins:
       - workflow-aggregator:latest
       - credentials-binding:latest
     CustomConfigMap: true
-    NodeSelector: {}
   Agent:
     Image: jenkins/jnlp-slave
     ImageTag: alpine
     AlwaysPullImage: true
-    NodeSelector: {}
   NetworkPolicy:
     Enabled: true
   Enabled: false  Persistence:
