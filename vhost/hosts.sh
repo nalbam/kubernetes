@@ -93,6 +93,7 @@ while read LINE; do
         continue
     fi
 
+    echo "${IP} ${NAME} ${HOST}"
     echo "${IP} ${NAME} ${HOST}" >> ${TMP_HOSTS}
 done < ${KUBE_ING}
 
