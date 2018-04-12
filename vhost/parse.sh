@@ -49,46 +49,46 @@ vhost_local() {
 }
 
 vhost_http() {
-    DOM="$1"
-    HOST="$2"
-    PORT="$3"
+    _DOM="$1"
+    _HOST="$2"
+    _PORT="$3"
 
-    echo_ "# ${DOM}:80 -> ${HOST}:${PORT}"
+    echo_ "# ${_DOM}:443 -> ${_HOST}:${_PORT}"
 
     # template
     TEMPLATE="${SHELL_DIR}/http.conf"
-    DEST_FILE="${HTTPD_CONF_DIR}/toast-${DOM}-http.conf"
+    DEST_FILE="${HTTPD_CONF_DIR}/toast-${_DOM}-http.conf"
 
     TEMP_FILE1="${TEMP_DIR}/toast-vhost1.tmp"
     TEMP_FILE2="${TEMP_DIR}/toast-vhost2.tmp"
     TEMP_FILE3="${TEMP_DIR}/toast-vhost3.tmp"
 
     # replace
-    sed "s/DOM/$DOM/g" ${TEMPLATE} > ${TEMP_FILE1}
-    sed "s/HOST/$HOST/g" ${TEMP_FILE1} > ${TEMP_FILE2}
-    sed "s/PORT/$PORT/g" ${TEMP_FILE2} > ${TEMP_FILE3}
+    sed "s/DOM/$_DOM/g" ${TEMPLATE} > ${TEMP_FILE1}
+    sed "s/HOST/$_HOST/g" ${TEMP_FILE1} > ${TEMP_FILE2}
+    sed "s/PORT/$_PORT/g" ${TEMP_FILE2} > ${TEMP_FILE3}
     sudo cp -rf ${TEMP_FILE3} ${DEST_FILE}
 }
 
 vhost_https() {
-    DOM="$1"
-    HOST="$2"
-    PORT="$3"
+    _DOM="$1"
+    _HOST="$2"
+    _PORT="$3"
 
-    echo_ "# ${DOM}:443 -> ${HOST}:${PORT}"
+    echo_ "# ${_DOM}:443 -> ${_HOST}:${_PORT}"
 
     # template
     TEMPLATE="${SHELL_DIR}/https.conf"
-    DEST_FILE="${HTTPD_CONF_DIR}/toast-${DOM}-https.conf"
+    DEST_FILE="${HTTPD_CONF_DIR}/toast-${_DOM}-https.conf"
 
     TEMP_FILE1="${TEMP_DIR}/toast-vhost1.tmp"
     TEMP_FILE2="${TEMP_DIR}/toast-vhost2.tmp"
     TEMP_FILE3="${TEMP_DIR}/toast-vhost3.tmp"
 
     # replace
-    sed "s/DOM/$DOM/g" ${TEMPLATE} > ${TEMP_FILE1}
-    sed "s/HOST/$HOST/g" ${TEMP_FILE1} > ${TEMP_FILE2}
-    sed "s/PORT/$PORT/g" ${TEMP_FILE2} > ${TEMP_FILE3}
+    sed "s/DOM/$_DOM/g" ${TEMPLATE} > ${TEMP_FILE1}
+    sed "s/HOST/$_HOST/g" ${TEMP_FILE1} > ${TEMP_FILE2}
+    sed "s/PORT/$_PORT/g" ${TEMP_FILE2} > ${TEMP_FILE3}
     sudo cp -rf ${TEMP_FILE3} ${DEST_FILE}
 }
 
@@ -97,10 +97,10 @@ httpd_restart() {
 }
 
 lets_encrypt() {
-    DOM="$1"
+    _DOM="$1"
 
-    if [ ! -f /etc/letsencrypt/renewal/${DOM}.conf ]; then
-        sudo ~/certbot/certbot-auto certonly --standalone --email me@nalbam.com -d ${DOM}
+    if [ ! -f /etc/letsencrypt/renewal/${_DOM}.conf ]; then
+        sudo ~/certbot/certbot-auto certonly --standalone --email me@nalbam.com -d ${_DOM}
     fi
 }
 
