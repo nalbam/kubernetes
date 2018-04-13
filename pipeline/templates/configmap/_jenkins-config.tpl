@@ -95,11 +95,8 @@ data:
       <noUsageStatistics>true</noUsageStatistics>
     </hudson>
   settings.xml: |-
-    <settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-              xmlns="http://maven.apache.org/SETTINGS/1.0.0"
-              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
-                          https://maven.apache.org/xsd/settings-1.0.0.xsd">
-      <localRepository>/var/jenkins_home/.m2/repository</localRepository>
+    <?xml version='1.0' encoding='UTF-8'?>
+    <settings>
       <servers>
         <server>
           <id>nexus-releases</id>
