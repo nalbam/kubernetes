@@ -14,7 +14,7 @@ jenkins:
       - credentials-binding:latest
     CustomConfigMap: true
   Agent:
-    Image: nalbam/jnlp-slave
+    Image: jenkins/jnlp-slave
     ImageTag: alpine
     AlwaysPullImage: true
   Persistence:
