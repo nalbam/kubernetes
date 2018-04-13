@@ -3,7 +3,7 @@ image: gitlab/gitlab-ce:9.4.1-ce.0
 
 externalUrl: http://gitlab.apps.nalbam.com
 
-#gitlabRootPassword: ""
+gitlabRootPassword: "password"
 
 serviceType: NodePort
 

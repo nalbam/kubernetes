@@ -73,7 +73,7 @@ kubectl exec -it $(kubectl get pod | grep pp-sonatype-nexus | awk '{print $1}') 
 ```
 helm delete --purge pp
 kubectl delete -f volume/pv.yml
-sudo rm -rf /data/00*
+sudo rm -rf /data/0*
 
 docker rmi -f $(docker images -q)
 ```
