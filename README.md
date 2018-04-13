@@ -5,7 +5,7 @@ cat ~/.kube/config
 kubectl config view
 
 # watch all namespaces
-watch kubectl get deploy,pod,svc,ing,job,pvc,pv --all-namespaces
+watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
 
 # get tunnel ip
 ifconfig tunl0 | grep inet | awk '{print $2}'
@@ -25,6 +25,28 @@ kubectl describe clusterrolebindings cluster-admin:default:default
 kubectl describe clusterrolebindings cluster-admin:default:nalbam
 ```
 
+## sample
+```
+kubectl apply -f sample/sample-node.yml
+kubectl apply -f sample/sample-spring.yml
+kubectl apply -f sample/sample-web.yml
+
+kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv -n default
+
+kubectl describe pod sample-web
+```
+
+## jobs
+```
+kubectl apply -f jobs/docker-clean.yml
+```
+
+## volume
+```
+kubectl apply -f volume/pv-5g.yml
+kubectl apply -f volume/pv-10g.yml
+```
+
 ## helm
 ```
 helm init
@@ -32,23 +54,6 @@ helm ls
 
 cd pipeline
 helm dependency build
-```
-
-## sample
-```
-kubectl apply -f sample/sample-node.yml
-kubectl apply -f sample/sample-spring.yml
-kubectl apply -f sample/sample-web.yml
-
-kubectl get deploy,pod,svc,ing,job,pvc,pv -n default
-
-kubectl describe pod sample-web
-```
-
-## volume
-```
-kubectl apply -f volume/pv-5g.yml
-kubectl apply -f volume/pv-10g.yml
 ```
 
 ## gitlab-ce (helm)
