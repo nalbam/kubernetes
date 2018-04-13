@@ -5,7 +5,7 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean
 spec:
-  schedule: "* 3 * * *"
+  schedule: "45 * * * *"
   jobTemplate:
     spec:
       template:
@@ -16,5 +16,5 @@ spec:
             args:
             - sh
             - -C
-            - 'docker rmi -f $(docker images -q)'
+            - "docker rmi -f $(docker images | grep ' <none> ' | awk '{print $3}')"
           restartPolicy: OnFailure
