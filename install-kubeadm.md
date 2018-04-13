@@ -39,12 +39,6 @@ kubeadm reset
 kubeadm init
 
 systemctl status kubelet
-
-# Installing a pod network
-kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
-
-# Master Isolation
-kubectl taint nodes --all node-role.kubernetes.io/master-
 ```
 * To start using your cluster, you need to run the following as a regular user:
 ```
@@ -52,9 +46,14 @@ mkdir -p $HOME/.kube
 sudo cp -rf /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
 
-sudo systemctl status kubelet -l
+# Installing a pod network
+kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
 
-watch kubectl get deploy,pod,svc,ing --all-namespaces
+# Master Isolation
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+# watch
+watch kubectl get all --all-namespaces
 
 ifconfig tunl0 | grep inet | awk '{print $2}'
 ```

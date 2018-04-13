@@ -17,12 +17,21 @@ kubectl apply -f role/default.yml
 kubectl apply -f role/nalbam.yml
 
 kubectl get sa --all-namespaces | grep -E 'default|nalbam'
-kubectl get clusterrole
+kubectl get clusterrole | grep cluster-admin
 kubectl get clusterrolebindings | grep -E 'default|nalbam'
 
 kubectl describe clusterrole cluster-admin
 kubectl describe clusterrolebindings cluster-admin:default:default
 kubectl describe clusterrolebindings cluster-admin:default:nalbam
+```
+
+## helm
+```
+helm init
+helm ls
+
+cd pipeline
+helm dependency build
 ```
 
 ## sample
@@ -40,15 +49,6 @@ kubectl describe pod sample-web
 ```
 kubectl apply -f volume/pv-5g.yml
 kubectl apply -f volume/pv-10g.yml
-```
-
-## helm
-```
-helm init
-helm ls
-
-cd pipeline
-helm dependency build
 ```
 
 ## gitlab-ce (helm)
