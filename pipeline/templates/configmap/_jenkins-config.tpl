@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{.Release.Name}}-jenkins
+  name: {{ .Release.Name }}-jenkins
   labels:
     app: {{ template "jenkins.fullname" . }}
 data:
@@ -60,6 +60,11 @@ data:
                   <mountPath>/var/run/docker.sock</mountPath>
                   <hostPath>/var/run/docker.sock</hostPath>
                 </org.csanchez.jenkins.plugins.kubernetes.PodVolumes_-HostPathVolume>
+                <org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
+                  <mountPath>/home/jenkins/jenkins_home</mountPath>
+                  <claimName>{{ .Release.Name }}-jenkins</claimName>
+                  <readOnly>false</readOnly>
+                </org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
               </volumes>
               <envVars/>
               <annotations/>
@@ -114,8 +119,8 @@ data:
     mkdir -p /usr/share/jenkins/ref/secrets/;
     echo "false" > /usr/share/jenkins/ref/secrets/slave-to-master-security-kill-switch;
     cp -n /var/jenkins_config/config.xml /var/jenkins_home/;
-    mkdir /var/jenkins_home/.m2/;
-cp -n /var/jenkins_config/settings.xml /var/jenkins_home/.m2/settings.xml;
+    mkdir -p /var/jenkins_home/.m2/;
+    cp -n /var/jenkins_config/settings.xml /var/jenkins_home/.m2/settings.xml;
 {{- if .Values.Master.InstallPlugins }}
     cp -n /var/jenkins_config/plugins.txt /var/jenkins_home/;
     /usr/local/bin/install-plugins.sh `echo $(cat /var/jenkins_home/plugins.txt)`;
