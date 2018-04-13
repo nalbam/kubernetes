@@ -36,12 +36,12 @@ data:
             <hudson.model.StringParameterDefinition>
               <name>EXECUTOR_IMAGE</name>
               <description></description>
-              <defaultValue>node:alpine</defaultValue>
+              <defaultValue>nalbam/builder:alpine</defaultValue>
             </hudson.model.StringParameterDefinition>
             <hudson.model.StringParameterDefinition>
               <name>REPOSITORY_URL</name>
               <description></description>
-              <defaultValue>https://github.com/nalbam/sample-node</defaultValue>
+              <defaultValue>https://github.com/nalbam/sample-web</defaultValue>
             </hudson.model.StringParameterDefinition>
             <hudson.model.StringParameterDefinition>
               <name>BRANCH</name>
@@ -51,7 +51,7 @@ data:
             <hudson.model.StringParameterDefinition>
               <name>COMMAND</name>
               <description></description>
-              <defaultValue>cd src/main/node &amp;&amp; npm install</defaultValue>
+              <defaultValue>whoami && pwd && ls -al</defaultValue>
             </hudson.model.StringParameterDefinition>
           </parameterDefinitions>
         </hudson.model.ParametersDefinitionProperty>
@@ -105,12 +105,12 @@ data:
             <hudson.model.StringParameterDefinition>
               <name>EXECUTOR_IMAGE</name>
               <description></description>
-              <defaultValue>nalbam/builder:alpine</defaultValue>
+              <defaultValue>nalbam/builder:node</defaultValue>
             </hudson.model.StringParameterDefinition>
             <hudson.model.StringParameterDefinition>
               <name>REPOSITORY_URL</name>
               <description></description>
-              <defaultValue>https://github.com/nalbam/sample-web</defaultValue>
+              <defaultValue>https://github.com/nalbam/sample-node</defaultValue>
             </hudson.model.StringParameterDefinition>
             <hudson.model.StringParameterDefinition>
               <name>BRANCH</name>
@@ -125,7 +125,7 @@ data:
             <hudson.model.StringParameterDefinition>
               <name>IMAGE_NAME</name>
               <description></description>
-              <defaultValue>sample-web</defaultValue>
+              <defaultValue>sample-node</defaultValue>
             </hudson.model.StringParameterDefinition>
             <hudson.model.StringParameterDefinition>
               <name>IMAGE_TAG</name>
@@ -189,7 +189,7 @@ data:
             <hudson.model.StringParameterDefinition>
               <name>EXECUTOR_IMAGE</name>
               <description></description>
-              <defaultValue>maven:alpine</defaultValue>
+              <defaultValue>nalbam/builder:maven</defaultValue>
             </hudson.model.StringParameterDefinition>
             <hudson.model.StringParameterDefinition>
               <name>REPOSITORY_URL</name>
