@@ -1,0 +1,43 @@
+# ------------------- Deployment ------------------- #
+
+kind: Deployment
+apiVersion: apps/v1beta2
+metadata:
+  labels:
+    k8s-app: {DEPLOY_NAME}
+  name: {DEPLOY_NAME}
+  namespace: {NAMESPACE}
+spec:
+  replicas: {REPLICAS}
+  selector:
+    matchLabels:
+      k8s-app: {DEPLOY_NAME}
+  template:
+    metadata:
+      labels:
+        k8s-app: {DEPLOY_NAME}
+    spec:
+      containers:
+      - name: {DEPLOY_NAME}
+        image: {IMAGE_REPO}/{IMAGE_NAME}:{IMAGE_TAG}
+        ports:
+        - containerPort: {CONTANER_PORT}
+          protocol: TCP
+
+---
+# ------------------- Service ------------------- #
+
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    k8s-app: {DEPLOY_NAME}
+  name: {DEPLOY_NAME}
+  namespace: {NAMESPACE}
+spec:
+  type: {SERVICE_TYPE}
+  ports:
+    - port: {SERVICE_PORT}
+      targetPort: {CONTANER_PORT}
+  selector:
+    k8s-app: {DEPLOY_NAME}
