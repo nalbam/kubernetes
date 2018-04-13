@@ -42,23 +42,25 @@ kubectl apply -f volume/pv-5g.yml
 kubectl apply -f volume/pv-10g.yml
 ```
 
-## gitlab-ce
-```
-helm install -n gg -f charts/gitlab-ce.yaml stable/gitlab-ce
-
-helm upgrade gg -f charts/gitlab-ce.yaml stable/gitlab-ce
-
-helm delete --purge gg
-```
-
-## pipeline (helm)
+## helm
 ```
 helm init
 helm ls
 
 cd pipeline
 helm dependency build
+```
 
+## gitlab-ce (helm)
+```
+helm install -n gg -f charts/gitlab-ce.yaml stable/gitlab-ce
+helm history gg
+helm upgrade gg -f charts/gitlab-ce.yaml stable/gitlab-ce
+helm delete --purge gg
+```
+
+## pipeline (helm)
+```
 helm install -n pp -f pipeline/values.yaml pipeline
 helm history pp
 helm upgrade pp -f pipeline/values.yaml pipeline
@@ -92,8 +94,8 @@ kubectl apply -f ${ADDON}
 watch kubectl top pod -n kube-system
 watch kubectl top pod --all-namespaces
 ```
- * https://github.com/kubernetes/heapster/
- * https://github.com/kubernetes/kops/blob/master/docs/addons.md
+* https://github.com/kubernetes/heapster/
+* https://github.com/kubernetes/kops/blob/master/docs/addons.md
 
 ## dashboard
 ```
@@ -114,8 +116,8 @@ kubectl proxy --port=8080 &
 http://localhost:8080/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 http://master.nalbam.com:8080/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 ```
- * https://github.com/kubernetes/dashboard/
- * https://github.com/kubernetes/kops/blob/master/docs/addons.md
+* https://github.com/kubernetes/dashboard/
+* https://github.com/kubernetes/kops/blob/master/docs/addons.md
 
 ## ingress-nginx
 ```
@@ -152,8 +154,8 @@ sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 # Route53 의 Record Set 에 입력/수정
 aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://./${RECORD}
 ```
- * https://github.com/kubernetes/ingress-nginx/
- * https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx
+* https://github.com/kubernetes/ingress-nginx/
+* https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx
 
 ## cluster-autoscaler
 ```
@@ -178,5 +180,5 @@ sed -i -e "s@{{SSL_CERT_PATH}}@${SSL_CERT_PATH}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
 ```
- * https://github.com/kubernetes/autoscaler/
- * https://github.com/kubernetes/kops/tree/master/addons/cluster-autoscaler
+* https://github.com/kubernetes/autoscaler/
+* https://github.com/kubernetes/kops/tree/master/addons/cluster-autoscaler
