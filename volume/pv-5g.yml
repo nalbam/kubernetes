@@ -1,0 +1,47 @@
+# ------------------- PersistentVolume ------------------- #
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-pv-001
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/001"
+  persistentVolumeReclaimPolicy: Recycle
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-pv-002
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/002"
+  persistentVolumeReclaimPolicy: Recycle
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-pv-003
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/003"
+  persistentVolumeReclaimPolicy: Recycle
