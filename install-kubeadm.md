@@ -34,9 +34,9 @@ Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=systemd --runtime-cgroups=/syst
 
 ## start
 ```
-kubeadm init
-
 kubeadm reset
+
+kubeadm init
 
 systemctl status kubelet
 
