@@ -40,3 +40,11 @@ persistence:
     size: 10Gi
     storageClass: standard
     accessMode: ReadWriteOnce
+
+postgresql:
+  persistence:
+    storageClass: standard
+
+redis:
+  persistence:
+    storageClass: standard

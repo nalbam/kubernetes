@@ -83,6 +83,22 @@ spec:
 kind: PersistentVolume
 apiVersion: v1
 metadata:
+  name: data-pv-006
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/006"
+  persistentVolumeReclaimPolicy: Recycle
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
   name: data-pv-011
 spec:
   storageClassName: standard
