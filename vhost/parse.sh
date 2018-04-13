@@ -123,7 +123,7 @@ KUBE_ING=/tmp/kube_ing_parse
 kubectl get ing --all-namespaces -o json \
  | grep -E '"namespace"|"host"|"serviceName"|"servicePort"' \
  | sed 's/[":,]/ /g' \
- | awk -F' ' '{print $1 " " $2}' > ${KUBE_ING}
+ | awk '{print $1 " " $2}' > ${KUBE_ING}
 
 md5sum ${KUBE_ING} > ${KUBE_ING}_sum_now
 

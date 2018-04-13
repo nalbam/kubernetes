@@ -56,7 +56,7 @@ sudo systemctl status kubelet -l
 
 watch kubectl get deploy,pod,svc,ing --all-namespaces
 
-ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
+ifconfig tunl0 | grep inet | awk '{print $2}'
 ```
  * https://kubernetes.io/docs/tasks/tools/install-kubectl/
  * https://kubernetes.io/docs/setup/independent/install-kubeadm/

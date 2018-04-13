@@ -8,7 +8,7 @@ kubectl config view
 watch kubectl get deploy,pod,svc,ing,job,pvc,pv --all-namespaces
 
 # get tunnel ip
-ifconfig tunl0 | grep inet | awk -F' ' '{print $2}'
+ifconfig tunl0 | grep inet | awk '{print $2}'
 ```
 
 ## role
@@ -59,7 +59,7 @@ helm history pp
 helm upgrade pp -f pipeline/values.yaml pipeline
 helm delete --purge pp
 
-kubectl exec -it $(kubectl get pod | grep pp-jenkins | awk -F' ' '{print $1}') -- /bin/bash
+kubectl exec -it $(kubectl get pod | grep pp-jenkins | awk '{print $1}') -- /bin/bash
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm
@@ -93,14 +93,14 @@ watch kubectl top pod --all-namespaces
 ADDON=addons/.temp.yml
 cp -rf addons/dashboard.yml ${ADDON}
 
-SSL_CERT_ARN=$(aws acm list-certificates | jq '.CertificateSummaryList[] | select(.DomainName=="nalbam.com")' | grep CertificateArn | cut -d '"' -f 4)
+SSL_CERT_ARN=$(aws acm list-certificates | jq '.CertificateSummaryList[] | select(.DomainName=="nalbam.com")' | grep CertificateArn | cut -d'"' -f4)
 
 sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
 
 # get dashboard token
-kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk -F' ' '{print $1}')
+kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk '{print $1}')
 
 kubectl proxy --port=8080 &
 
@@ -115,21 +115,21 @@ http://master.nalbam.com:8080/api/v1/namespaces/kube-system/services/https:kuber
 ADDON=addons/.temp.yml
 cp -rf addons/ingress-nginx.yml ${ADDON}
 
-SSL_CERT_ARN=$(aws acm list-certificates | jq '.CertificateSummaryList[] | select(.DomainName=="nalbam.com")' | grep CertificateArn | cut -d '"' -f 4)
+SSL_CERT_ARN=$(aws acm list-certificates | jq '.CertificateSummaryList[] | select(.DomainName=="nalbam.com")' | grep CertificateArn | cut -d'"' -f4)
 
 sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
 
 # ingress-nginx 에서 ELB Name 을 획득
-ELB_NAME=$(kubectl get svc -n kube-ingress -owide | grep ingress-nginx | awk -F' ' '{print $4}' | cut -d '-' -f 1)
+ELB_NAME=$(kubectl get svc -n kube-ingress -owide | grep ingress-nginx | awk '{print $4}' | cut -d'-' -f1)
 
 # ELB 에서 Hosted Zone ID, DNS Name 을 획득
-ELB_ZONE_ID=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep CanonicalHostedZoneNameID | cut -d '"' -f 4)
-ELB_DNS_NAME=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep '"DNSName"' | cut -d '"' -f 4)
+ELB_ZONE_ID=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep CanonicalHostedZoneNameID | cut -d'"' -f4)
+ELB_DNS_NAME=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep '"DNSName"' | cut -d'"' -f4)
 
 # Route53 에서 해당 도메인의 Hosted Zone ID 를 획득
-ZONE_ID=$(aws route53 list-hosted-zones | jq '.HostedZones[] | select(.Name=="nalbam.com.")' | grep '"Id"' | cut -d '"' -f 4 | cut -d '/' -f 3)
+ZONE_ID=$(aws route53 list-hosted-zones | jq '.HostedZones[] | select(.Name=="nalbam.com.")' | grep '"Id"' | cut -d'"' -f4 | cut -d'/' -f3)
 
 DOMAIN="sample-web.nalbam.com."
 
