@@ -36,7 +36,8 @@ kubectl describe pod sample-web
 
 ## volume
 ```
-kubectl apply -f volume/pv.yml
+kubectl apply -f volume/pv-5g.yml
+kubectl apply -f volume/pv-10g.yml
 ```
 
 ## gitlab-ce
@@ -72,7 +73,8 @@ kubectl exec -it $(kubectl get pod | grep pp-sonatype-nexus | awk '{print $1}') 
 ## cleanup
 ```
 helm delete --purge pp
-kubectl delete -f volume/pv.yml
+kubectl delete -f volume/pv-5g.yml
+kubectl delete -f volume/pv-10g.yml
 sudo rm -rf /data/0*
 
 docker rmi -f $(docker images -q)
