@@ -13,7 +13,7 @@ spec:
           containers:
           - name: docker-clean
             image: nalbam/builder:alpine
-            args:
+            command:
             - sh
             - -C
             - "docker rmi -f $(docker images | grep ' <none> ' | awk '{print $3}')"
