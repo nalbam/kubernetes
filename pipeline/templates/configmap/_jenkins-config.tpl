@@ -60,11 +60,10 @@ data:
                   <mountPath>/var/run/docker.sock</mountPath>
                   <hostPath>/var/run/docker.sock</hostPath>
                 </org.csanchez.jenkins.plugins.kubernetes.PodVolumes_-HostPathVolume>
-                <org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
-                  <mountPath>/root/jenkins_home</mountPath>
-                  <claimName>{{ .Release.Name }}-jenkins</claimName>
-                  <readOnly>false</readOnly>
-                </org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
+                <org.csanchez.jenkins.plugins.kubernetes.PodVolumes_-HostPathVolume>
+                  <mountPath>/root/.m2</mountPath>
+                  <hostPath>/root/.m2</hostPath>
+                </org.csanchez.jenkins.plugins.kubernetes.PodVolumes_-HostPathVolume>
               </volumes>
               <envVars/>
               <annotations/>
