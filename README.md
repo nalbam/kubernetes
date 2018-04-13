@@ -71,6 +71,7 @@ kubectl exec -it $(kubectl get pod | grep pp-jenkins | awk -F' ' '{print $1}') -
 helm delete --purge pp
 kubectl delete -f volume/pv.yml
 sudo rm -rf /data/00*
+
 docker rmi -f $(docker images -q)
 ```
 
