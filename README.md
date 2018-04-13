@@ -39,11 +39,11 @@ kubectl describe pod sample-web
 kubectl apply -f volume/pv.yml
 ```
 
-## nginx-ingress
+## gitlab-ce
 ```
-helm install -n rr stable/nginx-ingress
+helm install -n gg -f charts/gitlab-ce.yaml stable/gitlab-ce
 
-helm delete --purge rr
+helm delete --purge gg
 ```
 
 ## pipeline (helm)
@@ -59,7 +59,8 @@ helm history pp
 helm upgrade pp -f pipeline/values.yaml pipeline
 helm delete --purge pp
 
-kubectl exec -it $(kubectl get pod | grep pp-jenkins | awk '{print $1}') -- /bin/bash
+kubectl exec -it $(kubectl get pod | grep pp-jenkins | awk '{print $1}') -- sh
+kubectl exec -it $(kubectl get pod | grep pp-sonatype-nexus | awk '{print $1}') -- sh
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm

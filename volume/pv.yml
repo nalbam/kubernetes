@@ -77,3 +77,35 @@ spec:
   hostPath:
     path: "/data/005"
   persistentVolumeReclaimPolicy: Recycle
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-pv-011
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/011"
+  persistentVolumeReclaimPolicy: Recycle
+
+---
+
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: data-pv-012
+spec:
+  storageClassName: standard
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/data/012"
+  persistentVolumeReclaimPolicy: Recycle
