@@ -94,6 +94,25 @@ data:
       <globalNodeProperties/>
       <noUsageStatistics>true</noUsageStatistics>
     </hudson>
+  settings.xml: |-
+    <settings xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                          https://maven.apache.org/xsd/settings-1.0.0.xsd">
+      <localRepository>/var/jenkins_home/.m2/repository</localRepository>
+      <servers>
+        <server>
+          <id>nexus-releases</id>
+          <username>admin</username>
+          <password>admin123</password>
+        </server>
+        <server>
+          <id>nexus-snapshots</id>
+          <username>admin</username>
+          <password>admin123</password>
+        </server>
+      </servers>
+    </settings>
   apply_config.sh: |-
     mkdir -p /usr/share/jenkins/ref/secrets/;
     echo "false" > /usr/share/jenkins/ref/secrets/slave-to-master-security-kill-switch;
