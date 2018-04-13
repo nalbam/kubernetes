@@ -5,7 +5,7 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean
 spec:
-  schedule: "40 * * * *"
+  schedule: "* 3 * * *"
   jobTemplate:
     spec:
       template:
