@@ -60,11 +60,6 @@ data:
                   <mountPath>/var/run/docker.sock</mountPath>
                   <hostPath>/var/run/docker.sock</hostPath>
                 </org.csanchez.jenkins.plugins.kubernetes.PodVolumes_-HostPathVolume>
-                <org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
-                  <mountPath>/home/jenkins/.m2</mountPath>
-                  <claimName>jenkins-maven-repo</claimName>
-                  <readOnly>false</readOnly>
-                </org.csanchez.jenkins.plugins.kubernetes.volumes.PersistentVolumeClaim>
               </volumes>
               <envVars/>
               <annotations/>
