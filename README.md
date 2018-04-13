@@ -43,6 +43,8 @@ kubectl apply -f volume/pv.yml
 ```
 helm install -n gg -f charts/gitlab-ce.yaml stable/gitlab-ce
 
+helm upgrade gg -f charts/gitlab-ce.yaml stable/gitlab-ce
+
 helm delete --purge gg
 ```
 
