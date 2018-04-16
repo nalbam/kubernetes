@@ -6,6 +6,7 @@ kubectl config view
 
 # watch all namespaces
 watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
+watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv -n default
 
 # get tunnel ip
 ifconfig tunl0 | grep inet | awk '{print $2}'
@@ -30,8 +31,6 @@ kubectl describe clusterrolebindings cluster-admin:default:nalbam
 kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
-
-kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv -n default
 
 kubectl describe pod sample-web
 ```
