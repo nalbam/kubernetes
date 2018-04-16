@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}-create-jobs
   labels:
     app: {{ template "fullname" . }}
-    component: jenkins
+    component: {{ .Release.Name }}
   annotations:
     "helm.sh/hook": post-install
 spec:
@@ -13,7 +13,7 @@ spec:
     metadata:
       labels:
         app: {{ template "fullname" . }}
-        component: jenkins
+        component: {{ .Release.Name }}
     spec:
       {{- if .Values.nodeSelector }}
       nodeSelector:
