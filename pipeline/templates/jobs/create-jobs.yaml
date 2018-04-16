@@ -5,7 +5,7 @@ metadata:
   name: {{ .Release.Name }}-create-jobs
   labels:
     app: {{ template "fullname" . }}
-    component: {{ .Release.Name }}
+    component: jenkins
   annotations:
     "helm.sh/hook": post-install
 spec:
@@ -13,7 +13,7 @@ spec:
     metadata:
       labels:
         app: {{ template "fullname" . }}
-        component: {{ .Release.Name }}
+        component: jenkins
     spec:
       {{- if .Values.nodeSelector }}
       nodeSelector:
@@ -26,7 +26,7 @@ spec:
           name: {{ .Release.Name }}-jenkins-jobs
       containers:
       - name: post-install-job
-        image: "viglesiasce/minio-client:v0.4.0"
+        image: "nalbam/builder:alpine"
         command:
         - sh
         - -C
