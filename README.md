@@ -87,6 +87,7 @@ kubectl delete -f volume/pv-10g.yml
 sudo rm -rf /data/0*
 
 docker rmi -f $(docker images -q)
+docker rmi -f $(docker images | grep ' <none> ' | awk '{print $3}')
 ```
 
 ## heapster
