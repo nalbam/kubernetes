@@ -2,7 +2,7 @@ jenkins:
   enabled: true
   Master:
     Image: jenkins/jenkins
-    ImageTag: 2.116-alpine
+    ImageTag: alpine
     AdminUser: admin
     AdminPassword: password
     ServiceType: NodePort
