@@ -2,7 +2,7 @@ jenkins:
   enabled: true
   Master:
     Image: jenkins/jenkins
-    ImageTag: alpine
+    ImageTag: 2.116-alpine
     AdminUser: admin
     AdminPassword: password
     ServiceType: NodePort
@@ -15,7 +15,7 @@ jenkins:
     CustomConfigMap: true
   Agent:
     Image: jenkins/jnlp-slave
-    ImageTag: alpine
+    ImageTag: 3.19-1-alpine
     AlwaysPullImage: true
 #  Persistence:
 #    Enabled: true
