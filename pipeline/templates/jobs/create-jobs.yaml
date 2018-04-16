@@ -29,7 +29,7 @@ spec:
         image: "nalbam/builder:alpine"
         command:
         - sh
-        - -C
+        - -c
         - '/jobs/create-jobs.sh'
         volumeMounts:
         - name: jenkins-jobs
