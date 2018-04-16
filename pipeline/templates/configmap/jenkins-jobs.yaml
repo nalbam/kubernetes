@@ -14,7 +14,7 @@ data:
       URL="http://{{ .Release.Name }}-jenkins:8080/job/${NAME}/api/json"
       STATUS="$(curl -Is ${URL} 2>/dev/null | head -n 1 | awk '{print $2}')"
       if [ "${STATUS}" != "200" ]; then
-        echo "### create... [${LINE}] [${NAME}]"
+        echo "### create.. [${LINE}] [${NAME}]"
         curl -X POST -H "Content-Type: application/xml" \
           --retry "20" \
           --retry-delay "20" \
