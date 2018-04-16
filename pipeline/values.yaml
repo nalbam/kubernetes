@@ -24,7 +24,7 @@ jenkins:
 sonatype-nexus:
   enabled: true
   image:
-    repository: sonatype/nexus3
+    repository: cavemandaveman/nexus
     tag: latest
   service:
     type: ClusterIP
