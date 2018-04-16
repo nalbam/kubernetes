@@ -29,7 +29,7 @@ spec:
         image: "viglesiasce/minio-client:v0.4.0"
         command:
         - sh
-        - -c
+        - -C
         - '/jobs/create-jobs.sh'
         volumeMounts:
         - name: jenkins-jobs
