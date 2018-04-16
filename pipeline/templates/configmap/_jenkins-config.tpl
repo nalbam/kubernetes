@@ -97,7 +97,7 @@ data:
   apply_config.sh: |-
     mkdir -p /usr/share/jenkins/ref/secrets/;
     echo "false" > /usr/share/jenkins/ref/secrets/slave-to-master-security-kill-switch;
-    cp -n /var/jenkins_config/settings.xml /root/.m2/settings.xml;
+    cp -n /var/jenkins_config/config.xml /var/jenkins_home/;
 {{- if .Values.Master.InstallPlugins }}
     cp -n /var/jenkins_config/plugins.txt /var/jenkins_home/;
     /usr/local/bin/install-plugins.sh `echo $(cat /var/jenkins_home/plugins.txt)`;
