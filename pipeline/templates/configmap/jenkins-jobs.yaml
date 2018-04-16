@@ -14,14 +14,14 @@ data:
       URL="http://{{ .Release.Name }}-jenkins:8080/job/${NAME}/api/json"
       STATUS="$(curl -Is ${URL} 2>/dev/null | head -n 1 | awk '{print $2}')"
       if [ "${STATUS}" != "200" ]; then
-        echo "# create... ${LINE}"
+        echo "### create... [${LINE}] [${NAME}]"
         curl -X POST -H "Content-Type: application/xml" \
           --retry "20" \
           --retry-delay "20" \
           --max-time "15" \
           --data-binary "@/jobs/${LINE}" \
           "http://{{ .Release.Name }}-jenkins:8080/createItem?name=${NAME}"
-        echo "# created. ${LINE}"
+        echo "### created. [${LINE}] [${NAME}]"
       fi
     done < /tmp/jobs.txt
   build-command.xml: |-
