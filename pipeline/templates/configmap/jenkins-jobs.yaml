@@ -8,11 +8,10 @@ metadata:
 data:
   create-jobs.sh: |-
     #!/bin/bash
-    JOBS=/tmp/jobs.txt
-    ls /jobs/ | grep ".xml" > ${JOBS}
+    ls /jobs/ | grep "[.]xml" > /tmp/jobs.txt
     while read LINE; do
-      JOB=$(echo ${LINE} | awk -F'.xml' '{print $1}')
-      URL="http://{{ .Release.Name }}-jenkins:8080/job/${JOB}/api/json"
+      NAME=$(echo ${LINE} | awk -F'[.]xml' '{print $1}')
+      URL="http://{{ .Release.Name }}-jenkins:8080/job/${NAME}/api/json"
       STATUS="$(curl -Is ${URL} 2>/dev/null | head -n 1 | awk '{print $2}')"
       if [ "${STATUS}" != "200" ]; then
         echo "# create... ${LINE}"
@@ -21,10 +20,10 @@ data:
           --retry-delay "20" \
           --max-time "15" \
           --data-binary "@/jobs/${LINE}" \
-          "http://{{ .Release.Name }}-jenkins:8080/createItem?name=${JOB}"
+          "http://{{ .Release.Name }}-jenkins:8080/createItem?name=${NAME}"
         echo "# created. ${LINE}"
       fi
-    done < ${JOBS}
+    done < /tmp/jobs.txt
   build-command.xml: |-
     <?xml version='1.0' encoding='UTF-8'?>
     <flow-definition plugin="workflow-job@2.17">
