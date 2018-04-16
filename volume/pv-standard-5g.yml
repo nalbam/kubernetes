@@ -5,6 +5,7 @@ apiVersion: v1
 metadata:
   name: data-pv-001
 spec:
+  storageClassName: standard
   capacity:
     storage: 5Gi
   accessModes:
@@ -20,6 +21,7 @@ apiVersion: v1
 metadata:
   name: data-pv-002
 spec:
+  storageClassName: standard
   capacity:
     storage: 5Gi
   accessModes:
@@ -35,6 +37,7 @@ apiVersion: v1
 metadata:
   name: data-pv-003
 spec:
+  storageClassName: standard
   capacity:
     storage: 5Gi
   accessModes:

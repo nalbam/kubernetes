@@ -55,14 +55,6 @@ cd pipeline
 helm dependency build
 ```
 
-## gitlab-ce (helm)
-```
-helm install -n gg -f charts/gitlab-ce.yaml stable/gitlab-ce
-helm history gg
-helm upgrade gg -f charts/gitlab-ce.yaml stable/gitlab-ce
-helm delete --purge gg
-```
-
 ## pipeline (helm)
 ```
 helm install -n pp -f pipeline/values.yaml pipeline
