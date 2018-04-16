@@ -60,10 +60,6 @@ data:
                   <mountPath>/var/run/docker.sock</mountPath>
                   <hostPath>/var/run/docker.sock</hostPath>
                 </org.csanchez.jenkins.plugins.kubernetes.PodVolumes_-HostPathVolume>
-                <org.csanchez.jenkins.plugins.kubernetes.PodVolumes_-HostPathVolume>
-                  <mountPath>/root/.m2</mountPath>
-                  <hostPath>/root/.m2</hostPath>
-                </org.csanchez.jenkins.plugins.kubernetes.PodVolumes_-HostPathVolume>
               </volumes>
               <envVars/>
               <annotations/>
@@ -98,27 +94,9 @@ data:
       <globalNodeProperties/>
       <noUsageStatistics>true</noUsageStatistics>
     </hudson>
-  settings.xml: |-
-    <?xml version='1.0' encoding='UTF-8'?>
-    <settings>
-      <servers>
-        <server>
-          <id>nexus-releases</id>
-          <username>admin</username>
-          <password>admin123</password>
-        </server>
-        <server>
-          <id>nexus-snapshots</id>
-          <username>admin</username>
-          <password>admin123</password>
-        </server>
-      </servers>
-    </settings>
   apply_config.sh: |-
     mkdir -p /usr/share/jenkins/ref/secrets/;
     echo "false" > /usr/share/jenkins/ref/secrets/slave-to-master-security-kill-switch;
-    cp -n /var/jenkins_config/config.xml /var/jenkins_home/;
-    mkdir -p /root/.m2/;
     cp -n /var/jenkins_config/settings.xml /root/.m2/settings.xml;
 {{- if .Values.Master.InstallPlugins }}
     cp -n /var/jenkins_config/plugins.txt /var/jenkins_home/;

@@ -59,6 +59,17 @@ docker-registry:
 #    enabled: true
 #    storageClass: standard
 
+redis:
+  enabled: true
+  image:
+    repository: redis
+    tag: alpine
+  service:
+    type: ClusterIP
+#  persistence:
+#    enabled: true
+#    storageClass: standard
+
 ingress:
   jenkins:
     enabled: true

@@ -9,7 +9,7 @@ data:
   create-jobs.sh: |-
     #!/bin/bash
     JOBS=/tmp/jobs.txt
-    ls /jobs/ | grep ".xml" > /tmp/jobs.txt
+    ls /jobs/ | grep ".xml" > ${JOBS}
     while read LINE; do
       JOB=$(echo ${LINE} | awk -F'.xml' '{print $1}')
       URL="http://{{ .Release.Name }}-jenkins:8080/job/${JOB}/api/json"
