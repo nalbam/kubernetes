@@ -12,7 +12,8 @@ EOF
 
 setenforce 0
 yum install -y kubelet kubeadm kubectl
-systemctl enable kubelet && systemctl start kubelet
+systemctl enable kubelet
+systemctl start kubelet
 
 cat <<EOF > /etc/sysctl.d/k8s.conf
 net.bridge.bridge-nf-call-ip6tables = 1
@@ -42,6 +43,7 @@ systemctl status kubelet
 ```
 * regular user:
 ```
+rm -rf $HOME/.kube
 mkdir -p $HOME/.kube
 sudo cp -rf /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
