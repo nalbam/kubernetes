@@ -33,14 +33,14 @@ Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=systemd --runtime-cgroups=/syst
 ```
 
 ## start
+* root
 ```
 kubeadm reset
-
 kubeadm init
 
 systemctl status kubelet
 ```
-* To start using your cluster, you need to run the following as a regular user:
+* regular user:
 ```
 mkdir -p $HOME/.kube
 sudo cp -rf /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -62,3 +62,11 @@ ifconfig tunl0 | grep inet | awk '{print $2}'
  * https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
  * https://www.linuxtechi.com/install-kubernetes-1-7-centos7-rhel7/
  * https://amasucci.com/post/2017/10/22/how-to-install-kubernetes-1.8.1-on-centos-7.3/
+
+## stop
+```
+sudo systemctl disable kubelet
+sudo systemctl stop kubelet
+
+sudo yum remove -y kubelet kubeadm kubectl
+```

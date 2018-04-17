@@ -8,7 +8,7 @@ kubectl config view
 # change namespace
 kubectl config set-context $(kubectl config current-context) --namespace=default
 
-# watch all namespaces
+# kubectl get
 watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
 watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv -n default
 
