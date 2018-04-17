@@ -2,7 +2,11 @@
 ```
 cat ~/.kube/config
 
+# kubectl config
 kubectl config view
+
+# change namespace
+kubectl config set-context $(kubectl config current-context) --namespace=default
 
 # watch all namespaces
 watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
