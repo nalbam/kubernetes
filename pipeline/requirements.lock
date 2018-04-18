@@ -1,12 +1,12 @@
 dependencies:
 - name: jenkins
   repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 0.14.3
+  version: 0.14.4
 - name: sonatype-nexus
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 0.2.0
 - name: docker-registry
   repository: https://kubernetes-charts.storage.googleapis.com/
   version: 1.1.1
-digest: sha256:d49c35f9a1fdc2d75a146335eb1d3f158ab1b2db17d8baa6d3bcc64a11d4101f
-generated: 2018-04-12T18:38:35.655114588+09:00
+digest: sha256:90c7163b11976bbb51b4af2bb85ce9ba41205452eae82b4c9c62762a9b3cb816
+generated: 2018-04-18T14:45:57.73531856+09:00
