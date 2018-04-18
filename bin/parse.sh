@@ -20,7 +20,7 @@ PORT=
 
 vhost_local() {
     # localhost
-    TEMPLATE="${SHELL_DIR}/localhost.conf"
+    TEMPLATE="${SHELL_DIR}/vhost/localhost.conf"
     if [ -f "${TEMPLATE}" ]; then
         sudo cp -rf ${TEMPLATE} ${HTTPD_CONF_DIR}/localhost.conf
     fi
@@ -42,10 +42,10 @@ vhost_http() {
     _HOST="$2"
     _PORT="$3"
 
-    echo_ "# ${_DOM}:80  -> ${_HOST}:${_PORT}"
+    echo "# ${_DOM}:80  -> ${_HOST}:${_PORT}"
 
     # template
-    TEMPLATE="${SHELL_DIR}/http.conf"
+    TEMPLATE="${SHELL_DIR}/vhost/http.conf"
     DEST_FILE="${HTTPD_CONF_DIR}/toast-${_DOM}-http.conf"
 
     TEMP_FILE1="${TEMP_DIR}/toast-vhost1.tmp"
@@ -64,10 +64,10 @@ vhost_https() {
     _HOST="$2"
     _PORT="$3"
 
-    echo_ "# ${_DOM}:443 -> ${_HOST}:${_PORT}"
+    echo "# ${_DOM}:443 -> ${_HOST}:${_PORT}"
 
     # template
-    TEMPLATE="${SHELL_DIR}/https.conf"
+    TEMPLATE="${SHELL_DIR}/vhost/https.conf"
     DEST_FILE="${HTTPD_CONF_DIR}/toast-${_DOM}-https.conf"
 
     TEMP_FILE1="${TEMP_DIR}/toast-vhost1.tmp"
