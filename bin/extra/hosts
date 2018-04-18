@@ -2,3 +2,5 @@
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
 
 192.168.110.0 $(hostname)
+
+10.96.0.10 cluster cluster-svc cluster.local
