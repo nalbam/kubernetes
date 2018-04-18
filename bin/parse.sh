@@ -114,7 +114,7 @@ if [ -f ${KUBE_ING}_sum_old ]; then
     KUBE_ING_SIZE=$(du -k ${KUBE_ING}_diff | cut -f1)
 
     if [ "${KUBE_ING_SIZE}" == "0" ]; then
-        echo "no change"
+        echo "not changed."
         exit
     fi
 fi
