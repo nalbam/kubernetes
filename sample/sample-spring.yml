@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - name: sample-spring
-        image: nalbam/sample-spring:slim
+        image: nalbam/sample-spring:alpine
         ports:
         - containerPort: 8080
           protocol: TCP
