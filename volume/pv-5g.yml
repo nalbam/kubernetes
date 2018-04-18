@@ -11,7 +11,7 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/001"
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Delete
 
 ---
 
@@ -26,7 +26,7 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/002"
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Delete
 
 ---
 
@@ -41,4 +41,4 @@ spec:
     - ReadWriteOnce
   hostPath:
     path: "/data/003"
-  persistentVolumeReclaimPolicy: Recycle
+  persistentVolumeReclaimPolicy: Delete
