@@ -207,7 +207,7 @@ data:
               <defaultValue>mvn test</defaultValue>
             </hudson.model.StringParameterDefinition>
             <hudson.model.StringParameterDefinition>
-              <name>COMMAND</name>
+              <name>BUILD</name>
               <description></description>
               <defaultValue>mvn deploy -DskipTests</defaultValue>
             </hudson.model.StringParameterDefinition>
@@ -245,7 +245,7 @@ data:
         }
         stage(&quot;Build&quot;) {
           container(&quot;executor&quot;) {
-            sh &quot;$COMMAND&quot;
+            sh &quot;$BUILD&quot;
           }
         }
         stage(&quot;Result&quot;) {
