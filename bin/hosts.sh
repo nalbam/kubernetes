@@ -1,33 +1,8 @@
 #!/bin/bash
 
-echo_() {
-    echo -e "$1"
-    echo "$1" >> /tmp/toast.log
-}
-
-success() {
-    echo -e "$(tput setaf 2)$1$(tput sgr0)"
-    echo "$1" >> /tmp/toast.log
-}
-
-warning() {
-    echo -e "$(tput setaf 1)$1$(tput sgr0)"
-    echo "$1" >> /tmp/toast.log
-}
-
-################################################################################
-
 SHELL_DIR=$(dirname "$0")
 
-HTTPD_CONF_DIR="/etc/httpd/conf.d"
-
-DATA_DIR="/data"
-APPS_DIR="${DATA_DIR}/apps"
-LOGS_DIR="${DATA_DIR}/logs"
-SITE_DIR="${DATA_DIR}/site"
-TEMP_DIR="/tmp"
-
-################################################################################
+KUBE_ING=/tmp/kube_svc_hosts
 
 NS=
 IP=
@@ -35,9 +10,9 @@ HOST=
 NAME=
 PORT=
 
-date
+################################################################################
 
-KUBE_ING=/tmp/kube_svc_hosts
+echo "# $(date)"
 
 kubectl get svc --all-namespaces | awk '{print $1 " " $2 " " $4}' > ${KUBE_ING}
 
@@ -49,14 +24,14 @@ if [ -f ${KUBE_ING}_sum_old ]; then
     KUBE_ING_SIZE=$(du -k ${KUBE_ING}_diff | cut -f1)
 
     if [ "${KUBE_ING_SIZE}" == "0" ]; then
-        echo "no change"
+        echo "not changed"
         exit
     fi
 fi
 
 TMP_HOSTS=/tmp/hosts
 
-cat ${SHELL_DIR}/hosts > ${TMP_HOSTS}
+cat ${SHELL_DIR}/extra/hosts > ${TMP_HOSTS}
 echo "" >> ${TMP_HOSTS}
 echo "# $(date)" >> ${TMP_HOSTS}
 

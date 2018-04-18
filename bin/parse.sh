@@ -1,31 +1,20 @@
 #!/bin/bash
 
-echo_() {
-    echo -e "$1"
-    echo "$1" >> /tmp/toast.log
-}
-
-success() {
-    echo -e "$(tput setaf 2)$1$(tput sgr0)"
-    echo "$1" >> /tmp/toast.log
-}
-
-warning() {
-    echo -e "$(tput setaf 1)$1$(tput sgr0)"
-    echo "$1" >> /tmp/toast.log
-}
-
-################################################################################
-
 SHELL_DIR=$(dirname "$0")
 
 HTTPD_CONF_DIR="/etc/httpd/conf.d"
 
 DATA_DIR="/data"
-APPS_DIR="${DATA_DIR}/apps"
-LOGS_DIR="${DATA_DIR}/logs"
 SITE_DIR="${DATA_DIR}/site"
 TEMP_DIR="/tmp"
+
+KUBE_ING=/tmp/kube_ing_parse
+
+NS=
+IP=
+HOST=
+NAME=
+PORT=
 
 ################################################################################
 
@@ -110,15 +99,7 @@ lets_renew() {
 
 ################################################################################
 
-NS=
-IP=
-HOST=
-NAME=
-PORT=
-
-date
-
-KUBE_ING=/tmp/kube_ing_parse
+echo "# $(date)"
 
 kubectl get ing --all-namespaces -o json \
  | grep -E '"namespace"|"host"|"serviceName"|"servicePort"' \
