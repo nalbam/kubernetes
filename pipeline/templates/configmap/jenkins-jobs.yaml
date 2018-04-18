@@ -209,7 +209,7 @@ data:
             <hudson.model.StringParameterDefinition>
               <name>COMMAND</name>
               <description></description>
-              <defaultValue>mvn package -DskipTests</defaultValue>
+              <defaultValue>mvn deploy -DskipTests</defaultValue>
             </hudson.model.StringParameterDefinition>
           </parameterDefinitions>
         </hudson.model.ParametersDefinitionProperty>
