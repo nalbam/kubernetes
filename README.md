@@ -61,13 +61,13 @@ helm dependency build
 
 ## pipeline (helm)
 ```
-helm install -n pp -f pipeline/values.yaml pipeline
-helm history pp
-helm upgrade pp -f pipeline/values.yaml pipeline
-helm delete --purge pp
+helm install -n demo -f pipeline/values.yaml pipeline
+helm history demo
+helm upgrade demo -f pipeline/values.yaml pipeline
+helm delete --purge demo
 
-kubectl exec -it $(kubectl get pod | grep pp-jenkins | awk '{print $1}') -- sh
-kubectl exec -it $(kubectl get pod | grep pp-sonatype-nexus | awk '{print $1}') -- sh
+kubectl exec -it $(kubectl get pod | grep demo-jenkins | awk '{print $1}') -- sh
+kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}') -- sh
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm
@@ -76,7 +76,7 @@ kubectl exec -it $(kubectl get pod | grep pp-sonatype-nexus | awk '{print $1}') 
 
 ## cleanup
 ```
-helm delete --purge pp
+helm delete --purge demo
 kubectl delete -f volume/pv-5g.yml
 kubectl delete -f volume/pv-10g.yml
 sudo rm -rf /data/0*
