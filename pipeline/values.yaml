@@ -6,6 +6,7 @@ jenkins:
     AdminUser: admin
     AdminPassword: password
     ServiceType: NodePort
+    HostName: jenkins.apps.nalbam.com
     InstallPlugins:
       - git:latest
       - kubernetes:latest
