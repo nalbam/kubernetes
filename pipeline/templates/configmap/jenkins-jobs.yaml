@@ -202,14 +202,29 @@ data:
               <defaultValue>master</defaultValue>
             </hudson.model.StringParameterDefinition>
             <hudson.model.StringParameterDefinition>
+              <name>BUILD</name>
+              <description></description>
+              <defaultValue>mvn deploy -DskipTests</defaultValue>
+            </hudson.model.StringParameterDefinition>
+            <hudson.model.StringParameterDefinition>
               <name>TEST</name>
               <description></description>
               <defaultValue>mvn test</defaultValue>
             </hudson.model.StringParameterDefinition>
             <hudson.model.StringParameterDefinition>
-              <name>BUILD</name>
+              <name>IMAGE_REPO</name>
               <description></description>
-              <defaultValue>mvn deploy -DskipTests</defaultValue>
+              <defaultValue>{{ .Release.Name }}-docker-registry:5000/sample</defaultValue>
+            </hudson.model.StringParameterDefinition>
+            <hudson.model.StringParameterDefinition>
+              <name>IMAGE_NAME</name>
+              <description></description>
+              <defaultValue>sample-spring</defaultValue>
+            </hudson.model.StringParameterDefinition>
+            <hudson.model.StringParameterDefinition>
+              <name>IMAGE_TAG</name>
+              <description></description>
+              <defaultValue>latest</defaultValue>
             </hudson.model.StringParameterDefinition>
           </parameterDefinitions>
         </hudson.model.ParametersDefinitionProperty>
@@ -238,19 +253,30 @@ data:
             userRemoteConfigs: [[url: &quot;$REPOSITORY_URL&quot;]]]
           )
         }
-        stage(&quot;Test&quot;) {
-          container(&quot;executor&quot;) {
-            sh &quot;$TEST&quot;
-          }
-        }
         stage(&quot;Build&quot;) {
           container(&quot;executor&quot;) {
             sh &quot;$BUILD&quot;
           }
         }
+        stage(&quot;Test&quot;) {
+          container(&quot;executor&quot;) {
+            sh &quot;$TEST&quot;
+          }
+        }
         stage(&quot;Result&quot;) {
           junit &quot;**/target/surefire-reports/TEST-*.xml&quot;
           archive &quot;target/*.jar&quot;
+          sh &quot;cp -rf target/*.jar ROOT.jar&quot;
+        }
+        stage(&quot;Build Image&quot;) {
+          container(&quot;executor&quot;) {
+            sh &quot;docker build -t $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG .&quot;
+          }
+        }
+        stage(&quot;Push Image&quot;) {
+          container(&quot;executor&quot;) {
+            sh &quot;docker push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
+          }
         }
       }
     }
