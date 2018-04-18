@@ -133,11 +133,9 @@ while read LINE; do
     fi
     if [ "${ARR[0]}" == "host" ]; then
         HOST="${ARR[1]}"
-        continue
     fi
     if [ "${ARR[0]}" == "serviceName" ]; then
         NAME="${ARR[1]}"
-        continue
     fi
     if [ "${ARR[0]}" == "servicePort" ]; then
         PORT="${ARR[1]}"
