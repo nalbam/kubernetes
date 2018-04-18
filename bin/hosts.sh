@@ -42,8 +42,8 @@ while read LINE; do
         continue
     fi
 
-    echo "${ARR[2]} ${ARR[1]} ${ARR[1]}.local"
-    echo "${ARR[2]} ${ARR[1]} ${ARR[1]}.local" >> ${TMP_HOSTS}
+    echo "${ARR[2]} ${ARR[1]} ${ARR[1]}-svc ${ARR[1]}.local"
+    echo "${ARR[2]} ${ARR[1]} ${ARR[1]}-svc ${ARR[1]}.local" >> ${TMP_HOSTS}
 done < ${KUBE_ING}
 
 sudo cp -rf ${TMP_HOSTS} /etc/hosts
