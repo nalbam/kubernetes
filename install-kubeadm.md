@@ -67,6 +67,9 @@ ifconfig tunl0 | grep inet | awk '{print $2}'
 
 ## stop
 ```
+sudo systemctl disable httpd
+sudo systemctl stop httpd
+
 sudo systemctl disable kubelet
 sudo systemctl stop kubelet
 
