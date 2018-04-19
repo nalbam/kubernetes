@@ -71,4 +71,9 @@ sudo systemctl disable kubelet
 sudo systemctl stop kubelet
 
 sudo yum remove -y kubelet kubeadm kubectl
+
+rm -rf $HOME/.kube
+
+ls -al /usr/bin/ | grep kube
+ls -al /usr/local/bin/ | grep kube
 ```
