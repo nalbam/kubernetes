@@ -222,4 +222,4 @@ spec:
         - name: ssl-certs
           hostPath:
             path: {{SSL_CERT_PATH}}
-dnsPolicy: "Default"
+      dnsPolicy: "Default"

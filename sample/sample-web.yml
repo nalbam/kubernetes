@@ -54,6 +54,12 @@ metadata:
   namespace: default
   labels:
     app: sample-web
+    dns: route53
+  annotations:
+    domainName: "sample-web.apps.nalbam.com"
+    #service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    #service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{SSL_CERT_ARN}}"
+    #service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
 spec:
   type: NodePort
   ports:

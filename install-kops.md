@@ -1,5 +1,9 @@
 ## install
 ```
+# OSX
+brew update && brew install kops
+
+# Linux
 export VERSION=$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d'"' -f4)
 curl -LO https://github.com/kubernetes/kops/releases/download/${VERSION}/kops-linux-amd64
 chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
@@ -18,6 +22,7 @@ aws route53 create-hosted-zone --name ${KOPS_CLUSTER_NAME} --caller-reference ${
 
 # create cluster
 kops create cluster \
+    --cloud=aws \
     --name=${KOPS_CLUSTER_NAME} \
     --state=${KOPS_STATE_STORE} \
     --master-size=t2.small \
@@ -40,7 +45,7 @@ kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 ```
  * https://github.com/kubernetes/kops
  * https://kubernetes.io/docs/getting-started-guides/kops/
- * http://woowabros.github.io/experience/2018/03/13/k8s-test.html
+ * https://woowabros.github.io/experience/2018/03/13/k8s-test.html
 
 ## kubectl
 ```
