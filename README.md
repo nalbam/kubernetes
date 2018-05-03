@@ -56,6 +56,8 @@ kubectl delete -f volume/pv-5g.yml
 kubectl delete -f volume/pv-10g.yml
 sudo rm -rf /data/0*
 
+docker rm $(sudo docker ps -a -q)
+
 docker rmi -f $(docker images -q)
 docker rmi -f $(docker images | grep ' <none> ' | awk '{print $3}')
 ```

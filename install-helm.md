@@ -36,5 +36,4 @@ kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}'
 ## addons (charts)
 ```
 helm install stable/kubernetes-dashboard --name my-release
-
 ```
