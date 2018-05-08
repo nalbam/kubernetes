@@ -14,7 +14,7 @@
 
 ### OSX
 ```
-brew update && brew upgrage
+brew update && brew upgrade
 brew install kops kubectl kubernetes-helm awscli jq
 ```
 * https://brew.sh/index_ko
@@ -39,13 +39,13 @@ kubectl version
 # kops
 export VERSION=$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d'"' -f4)
 curl -LO https://github.com/kubernetes/kops/releases/download/${VERSION}/kops-linux-amd64
-chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
+chmod +x kops-linux-amd64 && mv kops-linux-amd64 /usr/local/bin/kops
 kops version
 
 # helm
 export VERSION=$(curl -s https://api.github.com/repos/kubernetes/helm/releases/latest | grep tag_name | cut -d'"' -f4)
 curl -LO https://storage.googleapis.com/kubernetes-helm/helm-${VERSION}-linux-amd64.tar.gz
-tar -xvf helm-${VERSION}-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/local/bin/helm
+tar -xvf helm-${VERSION}-linux-amd64.tar.gz && mv linux-amd64/helm /usr/local/bin/helm
 helm version
 
 # awscli
