@@ -127,12 +127,9 @@ kubectl get deploy,pod,svc -n default
 ```
 
 ## sample
-``
-git clone https://github.com/nalbam/kubernetes
-``
-
-### sample-node
 ```
+git clone https://github.com/nalbam/kubernetes
+
 kubectl apply -f kubernetes/hands-on-201806/sample-node.yml
 kubectl apply -f kubernetes/hands-on-201806/sample-spring.yml
 kubectl apply -f kubernetes/hands-on-201806/sample-web.yml
@@ -142,6 +139,8 @@ kubectl apply -f kubernetes/hands-on-201806/sample-web.yml
 #kubectl delete -f kubernetes/hands-on-201806/sample-web.yml
 ```
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
+
+## Addons
 
 ### dashboard
 ```
