@@ -134,14 +134,22 @@ git clone https://github.com/nalbam/kubernetes
 ### sample-node
 ```
 kubectl apply -f kubernetes/hands-on-201806/sample-node.yml
-kubectl delete -f kubernetes/hands-on-201806/sample-node.yml
+kubectl apply -f kubernetes/hands-on-201806/sample-spring.yml
+kubectl apply -f kubernetes/hands-on-201806/sample-web.yml
 ```
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
 
 ### dashboard
 ```
 kubectl apply -f kubernetes/hands-on-201806/dashboard.yml
-kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
+
+kubectl create clusterrolebinding cluster-admin:kube-system:kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
+
+# get dashboard token
+kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk '{print $1}')
+
+# get elb list
+aws elb describe-load-balancers | jq '.LoadBalancerDescriptions[] | {CanonicalHostedZoneName: .CanonicalHostedZoneName}'
 ```
 * https://github.com/kubernetes/dashboard/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
@@ -150,7 +158,6 @@ kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
 ### heapster
 ```
 kubectl apply -f kubernetes/hands-on-201806/heapster.yml
-kubectl delete -f kubernetes/hands-on-201806/heapster.yml
 
 kubectl top pod --all-namespaces
 kubectl top pod -n kube-system

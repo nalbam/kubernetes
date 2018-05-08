@@ -21,8 +21,8 @@
 
 # ------------------- Dashboard Secret ------------------- #
 
-apiVersion: v1
 kind: Secret
+apiVersion: v1
 metadata:
   labels:
     k8s-app: kubernetes-dashboard
@@ -33,8 +33,8 @@ type: Opaque
 ---
 # ------------------- Dashboard Service Account ------------------- #
 
-apiVersion: v1
 kind: ServiceAccount
+apiVersion: v1
 metadata:
   labels:
     k8s-app: kubernetes-dashboard
@@ -79,8 +79,9 @@ rules:
   verbs: ["get"]
 
 ---
-apiVersion: rbac.authorization.k8s.io/v1
+
 kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: kubernetes-dashboard-minimal
   namespace: kube-system
