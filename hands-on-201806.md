@@ -58,23 +58,26 @@ aws --version
 mkdir -p ~/.aws
 mkdir -p ~/.ssh
 
+# ssh key
 pushd ~/.ssh
 ssh-keygen -f id_rsa -N ''
 popd
 
+# aws credentials
 cat <<EOF > ~/.aws/credentials
 [default]
 aws_access_key_id=
 aws_secret_access_key=
 EOF
 
+# aws config
 cat <<EOF > ~/.aws/config
 [default]
 region=ap-northeast-2
 output=json
 EOF
 
-# test
+# get ec2 list
 aws ec2 describe-instances | jq '.Reservations[].Instances[] | {InstanceId: .InstanceId, InstanceType: .InstanceType, State: .State.Name}'
 ```
 
@@ -104,6 +107,7 @@ kops edit cluster --name=${KOPS_CLUSTER_NAME}
 
 kops update cluster --name=${KOPS_CLUSTER_NAME} --yes
 
+# validate cluster
 kops validate cluster
 
 #kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
