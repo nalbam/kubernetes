@@ -15,20 +15,25 @@
 ### OSX
 ```
 brew update && brew upgrage
-brew install kops kubectl kubernetes-helm
+brew install kops kubectl kubernetes-helm awscli jq
 ```
 * https://brew.sh/index_ko
 
 ### Ubuntu
 ```
-# kubectl
+ssh -i path_of_key_pair.pem ubuntu@<IP-ADDRESS>
+sudo passwd
+su -
+
+# prepare (root)
 apt-get update && apt-get install -y apt-transport-https python-pip jq
+
+# kubectl
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 cat <<EOF > /etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
-apt-get update
-apt-get install -y kubectl
+apt-get update && apt-get install -y kubectl
 kubectl version
 
 # kops
@@ -65,24 +70,21 @@ EOF
 
 cat <<EOF > ~/.aws/config
 [default]
-region = ap-northeast-2
-output = json
+region=ap-northeast-2
+output=json
 EOF
 
 # test
 aws ec2 describe-instances | jq '.Reservations[].Instances[] | {InstanceId: .InstanceId, InstanceType: .InstanceType, State: .State.Name}'
 ```
 
-## Create Kubernetes Cluster with kops
+## Create Kubernetes Cluster with kops (10m)
 ```
-export KOPS_CLUSTER_NAME=kube-hans-on.nalbam.com
-export KOPS_STATE_STORE=s3://clusters.${KOPS_CLUSTER_NAME}
+export KOPS_STATE_STORE=s3://kops-state-store-nalbam-seoul
+export KOPS_CLUSTER_NAME=kube-hans-on-nalbam-seoul.k8s.local
 
-# make bucket
+# make state store
 aws s3 mb ${KOPS_STATE_STORE}
-
-# create hosted zone
-aws route53 create-hosted-zone --name ${KOPS_CLUSTER_NAME} --caller-reference ${KOPS_CLUSTER_NAME}
 
 # create cluster
 kops create cluster \
@@ -93,7 +95,6 @@ kops create cluster \
     --node-size=t2.medium \
     --node-count=2 \
     --zones=ap-northeast-2a,ap-northeast-2c \
-    --dns-zone=nalbam.com \
     --network-cidr=10.20.0.0/16 \
     --networking=calico
 
@@ -105,5 +106,27 @@ kops update cluster --name=${KOPS_CLUSTER_NAME} --yes
 
 kops validate cluster
 
-kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
+#kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
+```
+* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#Instances:search=running;sort=tag:Name
+* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
+* https://ap-northeast-2.console.aws.amazon.com/ec2/autoscaling/home?region=ap-northeast-2#LaunchConfigurations:
+* https://ap-northeast-2.console.aws.amazon.com/ec2/autoscaling/home?region=ap-northeast-2#AutoScalingGroups:view=details
+
+## kubectl basic
+```
+cat ~/.kube/config
+
+# kubectl config
+kubectl config view
+
+# kubectl get
+kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv
+
+# kubectl watch
+watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
+watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv -n default
+
+# sample
+git clone https://github.com/nalbam/kubernetes
 ```
