@@ -125,13 +125,27 @@ kubectl get deploy,pod,svc
 
 # kubectl get watch
 watch kubectl get deploy,pod,svc --all-namespaces
+watch kubectl get deploy,pod,svc -n kube-system
 watch kubectl get deploy,pod,svc -n default
 ```
 
 ## sample
-```
+``
 git clone https://github.com/nalbam/kubernetes
-kubectl apply -f kubernetes/sample/sample-node-lb.yml
-kubectl delete -f kubernetes/sample/sample-node-lb.yml
+``
+
+### sample-node
+```
+kubectl apply -f kubernetes/hands-on-201806/sample-node.yml
+kubectl delete -f kubernetes/hands-on-201806/sample-node.yml
 ```
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
+
+## dashboard
+```
+kubectl apply -f kubernetes/hands-on-201806/dashboard.yml
+kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
+```
+* https://github.com/kubernetes/dashboard/
+* https://github.com/kubernetes/kops/blob/master/docs/addons.md
+* https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard
