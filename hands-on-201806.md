@@ -136,6 +136,10 @@ git clone https://github.com/nalbam/kubernetes
 kubectl apply -f kubernetes/hands-on-201806/sample-node.yml
 kubectl apply -f kubernetes/hands-on-201806/sample-spring.yml
 kubectl apply -f kubernetes/hands-on-201806/sample-web.yml
+
+#kubectl delete -f kubernetes/hands-on-201806/sample-node.yml
+#kubectl delete -f kubernetes/hands-on-201806/sample-spring.yml
+#kubectl delete -f kubernetes/hands-on-201806/sample-web.yml
 ```
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
 
@@ -150,6 +154,8 @@ kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | gre
 
 # get elb list
 aws elb describe-load-balancers | jq '.LoadBalancerDescriptions[] | {CanonicalHostedZoneName: .CanonicalHostedZoneName}'
+
+#kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
 ```
 * https://github.com/kubernetes/dashboard/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
@@ -161,6 +167,8 @@ kubectl apply -f kubernetes/hands-on-201806/heapster.yml
 
 kubectl top pod --all-namespaces
 kubectl top pod -n kube-system
+
+#kubectl delete -f kubernetes/hands-on-201806/heapster.yml
 ```
 * https://github.com/kubernetes/heapster/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
