@@ -138,6 +138,15 @@ kubectl delete -f kubernetes/hands-on-201806/sample-node.yml
 ```
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
 
+### dashboard
+```
+kubectl apply -f kubernetes/hands-on-201806/dashboard.yml
+kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
+```
+* https://github.com/kubernetes/dashboard/
+* https://github.com/kubernetes/kops/blob/master/docs/addons.md
+* https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard
+
 ### heapster
 ```
 kubectl apply -f kubernetes/hands-on-201806/heapster.yml
@@ -149,12 +158,3 @@ kubectl top pod -n kube-system
 * https://github.com/kubernetes/heapster/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
-
-### dashboard
-```
-kubectl apply -f kubernetes/hands-on-201806/dashboard.yml
-kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
-```
-* https://github.com/kubernetes/dashboard/
-* https://github.com/kubernetes/kops/blob/master/docs/addons.md
-* https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard
