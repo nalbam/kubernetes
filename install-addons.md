@@ -25,8 +25,8 @@ http://master.nalbam.com:8080/api/v1/namespaces/kube-system/services/https:kuber
 ```
 kubectl apply -f addons/heapster-v1.7.0.yml
 
-watch kubectl top pod -n kube-system
 watch kubectl top pod --all-namespaces
+watch kubectl top pod -n kube-system
 ```
 * https://github.com/kubernetes/heapster/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md

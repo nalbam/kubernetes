@@ -149,3 +149,15 @@ kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
 * https://github.com/kubernetes/dashboard/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard
+
+## heapster
+```
+kubectl apply -f kubernetes/hands-on-201806/heapster.yml
+kubectl delete -f kubernetes/hands-on-201806/heapster.yml
+
+watch kubectl top pod --all-namespaces
+watch kubectl top pod -n kube-system
+```
+* https://github.com/kubernetes/heapster/
+* https://github.com/kubernetes/kops/blob/master/docs/addons.md
+* https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
