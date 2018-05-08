@@ -171,6 +171,6 @@ spec:
       targetPort: 9090
     - name: https
       port: 443
-      targetPort: 9090
+      targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard

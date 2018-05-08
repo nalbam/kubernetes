@@ -121,12 +121,9 @@ cat ~/.kube/config
 kubectl config view
 
 # kubectl get
-kubectl get deploy,pod,svc
-
-# kubectl get watch
-watch kubectl get deploy,pod,svc --all-namespaces
-watch kubectl get deploy,pod,svc -n kube-system
-watch kubectl get deploy,pod,svc -n default
+kubectl get deploy,pod,svc --all-namespaces
+kubectl get deploy,pod,svc -n kube-system
+kubectl get deploy,pod,svc -n default
 ```
 
 ## sample
@@ -141,7 +138,19 @@ kubectl delete -f kubernetes/hands-on-201806/sample-node.yml
 ```
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
 
-## dashboard
+### heapster
+```
+kubectl apply -f kubernetes/hands-on-201806/heapster.yml
+kubectl delete -f kubernetes/hands-on-201806/heapster.yml
+
+kubectl top pod --all-namespaces
+kubectl top pod -n kube-system
+```
+* https://github.com/kubernetes/heapster/
+* https://github.com/kubernetes/kops/blob/master/docs/addons.md
+* https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
+
+### dashboard
 ```
 kubectl apply -f kubernetes/hands-on-201806/dashboard.yml
 kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
@@ -149,15 +158,3 @@ kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
 * https://github.com/kubernetes/dashboard/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard
-
-## heapster
-```
-kubectl apply -f kubernetes/hands-on-201806/heapster.yml
-kubectl delete -f kubernetes/hands-on-201806/heapster.yml
-
-watch kubectl top pod --all-namespaces
-watch kubectl top pod -n kube-system
-```
-* https://github.com/kubernetes/heapster/
-* https://github.com/kubernetes/kops/blob/master/docs/addons.md
-* https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
