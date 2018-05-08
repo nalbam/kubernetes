@@ -12,7 +12,7 @@ chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
 ## usage
 ```
 export KOPS_CLUSTER_NAME=kube.nalbam.com
-export KOPS_STATE_STORE=s3://clusters.kube.nalbam.com
+export KOPS_STATE_STORE=s3://clusters.${KOPS_CLUSTER_NAME}
 
 # make bucket
 aws s3 mb ${KOPS_STATE_STORE}
