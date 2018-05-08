@@ -121,12 +121,17 @@ cat ~/.kube/config
 kubectl config view
 
 # kubectl get
-kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv
+kubectl get deploy,pod,svc
 
-# kubectl watch
-watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
-watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv -n default
-
-# sample
-git clone https://github.com/nalbam/kubernetes
+# kubectl get watch
+watch kubectl get deploy,pod,svc --all-namespaces
+watch kubectl get deploy,pod,svc -n default
 ```
+
+## sample
+```
+git clone https://github.com/nalbam/kubernetes
+kubectl apply -f kubernetes/sample/sample-node-lb.yml
+kubectl delete -f kubernetes/sample/sample-node-lb.yml
+```
+* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
