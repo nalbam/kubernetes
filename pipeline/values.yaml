@@ -111,7 +111,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_REPO</name>
                   <description></description>
-                  <defaultValue>docker-registry:5000/sample</defaultValue>
+                  <defaultValue>demo-docker-registry:5000/sample</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_NAME</name>
@@ -195,7 +195,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>BUILD</name>
                   <description></description>
-                  <defaultValue>mvn deploy -DskipTests</defaultValue>
+                  <defaultValue>mvn package -DskipTests</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>TEST</name>
@@ -205,7 +205,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_REPO</name>
                   <description></description>
-                  <defaultValue>docker-registry:5000/sample</defaultValue>
+                  <defaultValue>demo-docker-registry:5000/sample</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_NAME</name>
@@ -294,7 +294,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_REPO</name>
                   <description></description>
-                  <defaultValue>docker-registry:5000/sample</defaultValue>
+                  <defaultValue>demo-docker-registry:5000/sample</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_NAME</name>
