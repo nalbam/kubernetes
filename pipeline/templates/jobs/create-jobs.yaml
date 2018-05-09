@@ -1,4 +1,4 @@
-{{ if .Values.jenkins.enabled -}}
+{{ if .Values.jenkins.enabled }}
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -35,4 +35,4 @@ spec:
         volumeMounts:
         - name: jenkins-jobs
           mountPath: /jobs
-{{ end -}}
+{{ end }}

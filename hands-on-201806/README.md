@@ -106,7 +106,7 @@ kops update cluster --name=${KOPS_CLUSTER_NAME} --yes
 # validate cluster
 kops validate cluster
 
-#kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
+kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 ```
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#Instances:search=running;sort=tag:Name
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
@@ -137,9 +137,9 @@ kubectl apply -f kubernetes/hands-on-201806/sample-node.yml
 kubectl apply -f kubernetes/hands-on-201806/sample-spring.yml
 kubectl apply -f kubernetes/hands-on-201806/sample-web.yml
 
-#kubectl delete -f kubernetes/hands-on-201806/sample-node.yml
-#kubectl delete -f kubernetes/hands-on-201806/sample-spring.yml
-#kubectl delete -f kubernetes/hands-on-201806/sample-web.yml
+kubectl delete -f kubernetes/hands-on-201806/sample-node.yml
+kubectl delete -f kubernetes/hands-on-201806/sample-spring.yml
+kubectl delete -f kubernetes/hands-on-201806/sample-web.yml
 ```
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
 
@@ -160,7 +160,7 @@ kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | gre
 # get elb list
 aws elb describe-load-balancers | jq '.LoadBalancerDescriptions[] | {CanonicalHostedZoneName: .CanonicalHostedZoneName}'
 
-#kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
+kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
 ```
 * https://github.com/kubernetes/dashboard/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
@@ -174,7 +174,7 @@ kubectl apply -f kubernetes/hands-on-201806/heapster.yml
 kubectl top pod --all-namespaces
 kubectl top pod -n kube-system
 
-#kubectl delete -f kubernetes/hands-on-201806/heapster.yml
+kubectl delete -f kubernetes/hands-on-201806/heapster.yml
 ```
 * https://github.com/kubernetes/heapster/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
@@ -191,10 +191,10 @@ helm init --service-account default
 helm search
 helm list
 
-#kubectl edit deploy tiller-deploy -n kube-system
+kubectl edit deploy tiller-deploy -n kube-system
 
-#kubectl delete deploy tiller-deploy -n kube-system
-#kubectl delete service tiller-deploy -n kube-system
+kubectl delete deploy tiller-deploy -n kube-system
+kubectl delete service tiller-deploy -n kube-system
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm
@@ -205,9 +205,14 @@ helm list
 cd ~/kubernetes
 
 helm install -n demo -f pipeline/values.yaml pipeline
+
 helm history demo
+
 helm upgrade demo -f pipeline/values.yaml pipeline
+
 helm delete --purge demo
+kubectl delete job.batch/demo-create-jobs
+kubectl delete job.batch/demo-delete-jobs
 
 kubectl exec -it $(kubectl get pod | grep demo-jenkins | awk '{print $1}') -- sh
 kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}') -- sh
