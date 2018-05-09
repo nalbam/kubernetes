@@ -1,11 +1,11 @@
 jenkins:
   enabled: true
   Master:
-    Image: jenkins/jenkins
-    ImageTag: alpine
+#    Image: jenkins/jenkins
+#    ImageTag: alpine
     AdminUser: admin
     AdminPassword: password
-    ServiceType: LoadBalancer
+#    ServiceType: LoadBalancer
 #    HostName: jenkins.apps.nalbam.com
     InstallPlugins:
       - git:latest
@@ -15,20 +15,21 @@ jenkins:
       - credentials-binding:latest
     CustomConfigMap: true
   Agent:
-    Image: jenkins/jnlp-slave
-    ImageTag: alpine
-    AlwaysPullImage: true
-#  Persistence:
-#    Enabled: true
+    Enabled: true
+#    Image: jenkins/jnlp-slave
+#    ImageTag: alpine
+#    AlwaysPullImage: true
+  Persistence:
+    Enabled: false
 #    StorageClass: standard
 
 sonatype-nexus:
   enabled: true
-  image:
-    repository: cavemandaveman/nexus
-    tag: latest
-  service:
-    type: ClusterIP
+#  image:
+#    repository: cavemandaveman/nexus
+#    tag: latest
+#  service:
+#    type: ClusterIP
 #  docker:
 #    enabled: true
 #    port: 5000
@@ -45,11 +46,11 @@ sonatype-nexus:
 
 docker-registry:
   enabled: true
-  image:
-    repository: registry
-    tag: latest
-  service:
-    type: ClusterIP
+#  image:
+#    repository: registry
+#    tag: latest
+#  service:
+#    type: ClusterIP
 #  ingress:
 #    enabled: false
 #    hosts:
