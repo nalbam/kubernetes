@@ -1,8 +1,8 @@
 jenkins:
   enabled: true
   Master:
-#    Image: jenkins/jenkins
-#    ImageTag: alpine
+    Image: jenkins/jenkins
+    ImageTag: alpine
     AdminUser: admin
     AdminPassword: password
 #    ServiceType: LoadBalancer
@@ -16,8 +16,8 @@ jenkins:
     CustomConfigMap: true
   Agent:
     Enabled: true
-#    Image: jenkins/jnlp-slave
-#    ImageTag: alpine
+    Image: jenkins/jnlp-slave
+    ImageTag: alpine
 #    AlwaysPullImage: true
 #  Persistence:
 #    Enabled: true
