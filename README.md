@@ -23,7 +23,7 @@ kubectl apply -f role/nalbam.yml
 
 kubectl get sa --all-namespaces | grep -E 'default|nalbam'
 kubectl get clusterrole | grep cluster-admin
-kubectl get clusterrolebindings | grep -E 'default|nalbam'
+kubectl get clusterrolebindings | grep cluster-admin
 
 kubectl describe clusterrole cluster-admin
 kubectl describe clusterrolebindings cluster-admin:default:default

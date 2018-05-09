@@ -5,8 +5,8 @@ jenkins:
     ImageTag: alpine
     AdminUser: admin
     AdminPassword: password
-    ServiceType: NodePort
-    HostName: jenkins.apps.nalbam.com
+    ServiceType: LoadBalancer
+#    HostName: jenkins.apps.nalbam.com
     InstallPlugins:
       - git:latest
       - kubernetes:latest
@@ -60,21 +60,10 @@ docker-registry:
 #    enabled: true
 #    storageClass: standard
 
-#redis:
-#  enabled: true
-#  image:
-#    repository: redis
-#    tag: alpine
-#  service:
-#    type: ClusterIP
-#  persistence:
+#ingress:
+#  jenkins:
 #    enabled: true
-#    storageClass: standard
-
-ingress:
-  jenkins:
-    enabled: true
-    host: jenkins.apps.nalbam.com
-    port: 8080
+#    host: jenkins.apps.nalbam.com
+#    port: 8080
 #    annotations:
 #      kubernetes.io/ingress.class: nginx

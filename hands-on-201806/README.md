@@ -12,45 +12,41 @@
 ### Amazon KeyPairs
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#KeyPairs:sort=keyName
 
-### OSX
+### OSX (5m)
 ```
 brew update && brew upgrade
 brew install kops kubectl kubernetes-helm awscli jq
 ```
 * https://brew.sh/index_ko
 
-### Ubuntu
+### Ubuntu (5m)
 ```
 ssh -i path_of_key_pair.pem ubuntu@<IP-ADDRESS>
 sudo passwd
 su -
 
-# prepare (root)
+# prepare (1m)
 apt-get update && apt-get install -y apt-transport-https python-pip jq
 
-# kubectl
+# kubectl (1m)
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
 cat <<EOF > /etc/apt/sources.list.d/kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 apt-get update && apt-get install -y kubectl
-kubectl version
 
-# kops
+# kops (2m)
 export VERSION=$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d'"' -f4)
 curl -LO https://github.com/kubernetes/kops/releases/download/${VERSION}/kops-linux-amd64
 chmod +x kops-linux-amd64 && mv kops-linux-amd64 /usr/local/bin/kops
-kops version
 
-# helm
+# helm (1m)
 export VERSION=$(curl -s https://api.github.com/repos/kubernetes/helm/releases/latest | grep tag_name | cut -d'"' -f4)
 curl -LO https://storage.googleapis.com/kubernetes-helm/helm-${VERSION}-linux-amd64.tar.gz
 tar -xvf helm-${VERSION}-linux-amd64.tar.gz && mv linux-amd64/helm /usr/local/bin/helm
-helm version
 
-# awscli
+# awscli (1m)
 pip install awscli --upgrade
-aws --version
 ```
 
 ### Amazon AccessKeys
@@ -81,7 +77,7 @@ EOF
 aws ec2 describe-instances | jq '.Reservations[].Instances[] | {InstanceId: .InstanceId, InstanceType: .InstanceType, State: .State.Name}'
 ```
 
-## Create Kubernetes Cluster with kops (10m)
+## Create Kubernetes Cluster with kops (15m)
 ```
 export KOPS_STATE_STORE=s3://kops-state-store-nalbam-seoul
 export KOPS_CLUSTER_NAME=kube-hans-on-nalbam-seoul.k8s.local
@@ -128,6 +124,9 @@ kubectl config view
 kubectl get deploy,pod,svc --all-namespaces
 kubectl get deploy,pod,svc -n kube-system
 kubectl get deploy,pod,svc -n default
+
+# ssh to the master
+ssh -i ~/.ssh/id_rsa admin@api.${KOPS_CLUSTER_NAME}
 ```
 
 ## sample
@@ -147,10 +146,13 @@ kubectl apply -f kubernetes/hands-on-201806/sample-web.yml
 ## Addons
 
 ### dashboard
+Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 ```
 kubectl apply -f kubernetes/hands-on-201806/dashboard.yml
 
+# create role binding for kubernetes-dashboard
 kubectl create clusterrolebinding cluster-admin:kube-system:kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
+kubectl get clusterrolebindings | grep cluster-admin
 
 # get dashboard token
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk '{print $1}')
@@ -165,6 +167,7 @@ aws elb describe-load-balancers | jq '.LoadBalancerDescriptions[] | {CanonicalHo
 * https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard
 
 ### heapster
+Heapster enables Container Cluster Monitoring and Performance Analysis for Kubernetes
 ```
 kubectl apply -f kubernetes/hands-on-201806/heapster.yml
 
@@ -176,3 +179,33 @@ kubectl top pod -n kube-system
 * https://github.com/kubernetes/heapster/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
+
+## Helm
+```
+kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
+
+helm init --service-account default
+
+helm search
+helm list
+
+#kubectl delete deploy tiller-deploy -n kube-system
+#kubectl delete service tiller-deploy -n kube-system
+```
+* https://helm.sh/
+* https://github.com/kubernetes/helm
+* https://github.com/kubernetes/charts
+
+## pipeline (helm)
+```
+cd ~/kubernetes
+
+helm install -n demo -f pipeline/values.yaml pipeline
+helm history demo
+helm upgrade demo -f pipeline/values.yaml pipeline
+helm delete --purge demo
+
+kubectl exec -it $(kubectl get pod | grep demo-jenkins | awk '{print $1}') -- sh
+kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}') -- sh
+```
+* https://github.com/CenterForOpenScience/helm-charts

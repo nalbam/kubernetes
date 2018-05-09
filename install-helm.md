@@ -12,14 +12,19 @@ tar -xvf helm-${VERSION}-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/loc
 ## usage
 ```
 helm init
+helm search
 helm ls
-
-cd pipeline
-helm dependency build
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm
 * https://github.com/kubernetes/charts
+
+## dependency build
+```
+pushd pipeline
+helm dependency build
+popd
+```
 
 ## pipeline (helm)
 ```
