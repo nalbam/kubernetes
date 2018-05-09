@@ -111,7 +111,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_REPO</name>
                   <description></description>
-                  <defaultValue>{{ .Release.Name }}-docker-registry:5000/sample</defaultValue>
+                  <defaultValue>docker-registry:5000/sample</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_NAME</name>
@@ -205,7 +205,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_REPO</name>
                   <description></description>
-                  <defaultValue>{{ .Release.Name }}-docker-registry:5000/sample</defaultValue>
+                  <defaultValue>docker-registry:5000/sample</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_NAME</name>
@@ -294,7 +294,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_REPO</name>
                   <description></description>
-                  <defaultValue>{{ .Release.Name }}-docker-registry:5000/sample</defaultValue>
+                  <defaultValue>docker-registry:5000/sample</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_NAME</name>
@@ -478,7 +478,7 @@ sonatype-nexus:
   nexus:
 #    imageName: quay.io/travelaudience/docker-nexus
 #    imageTag: 3.9.0
-    serviceType: LoadBalancer
+#    serviceType: LoadBalancer
 #  persistence:
 #    enabled: true
 #    storageClass: standard

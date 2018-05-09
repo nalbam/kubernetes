@@ -150,7 +150,7 @@ Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 ```
 kubectl apply -f kubernetes/hands-on-201806/dashboard.yml
 
-# create role binding for kubernetes-dashboard
+# create role binding for kube-system:kubernetes-dashboard
 kubectl create clusterrolebinding cluster-admin:kube-system:kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
 kubectl get clusterrolebindings | grep cluster-admin
 
@@ -182,7 +182,7 @@ kubectl delete -f kubernetes/hands-on-201806/heapster.yml
 
 ## Helm
 ```
-# create role binding for default
+# create role binding for kube-system:default
 kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
 # init
@@ -211,6 +211,9 @@ helm history demo
 helm upgrade demo -f pipeline/values.yaml pipeline
 
 helm delete --purge demo
+
+# create role binding for default:default
+kubectl create clusterrolebinding cluster-admin:default:default --clusterrole=cluster-admin --serviceaccount=default:default
 
 kubectl exec -it $(kubectl get pod | grep demo-jenkins | awk '{print $1}') -- sh
 kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}') -- sh
