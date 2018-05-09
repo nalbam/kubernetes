@@ -3,8 +3,9 @@ jenkins:
   Master:
     Image: jenkins/jenkins
     ImageTag: alpine
-    AdminUser: admin
-    AdminPassword: password
+    UseSecurity: false
+#    AdminUser: admin
+#    AdminPassword: password
 #    ServiceType: LoadBalancer
 #    HostName: jenkins.apps.nalbam.com
     InstallPlugins:
