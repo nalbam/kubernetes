@@ -19,9 +19,9 @@ jenkins:
 #    Image: jenkins/jnlp-slave
 #    ImageTag: alpine
 #    AlwaysPullImage: true
-  Persistence:
-    Enabled: true
-    StorageClass: gp2
+#  Persistence:
+#    Enabled: true
+#    StorageClass: standard
 
 sonatype-nexus:
   enabled: true
