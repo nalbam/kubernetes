@@ -1,0 +1,22 @@
+# ------------------- dev ------------------- #
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: sample-spring-dev
+data:
+  PROFILE: "dev"
+  SLACK_WEBHOOK: ""
+  SLACK_CHANNEL: "sandbox"
+
+---
+# ------------------- prod ------------------- #
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: sample-spring-prod
+data:
+  PROFILE: "prod"
+  SLACK_WEBHOOK: ""
+  SLACK_CHANNEL: "sandbox"

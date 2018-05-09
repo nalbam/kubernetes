@@ -32,6 +32,8 @@ kubectl describe clusterrolebindings cluster-admin:default:nalbam
 
 ## sample
 ```
+kubectl apply -f sample/confog-map.yml
+
 kubectl apply -f sample/sample-node.yml
 kubectl apply -f sample/sample-spring.yml
 kubectl apply -f sample/sample-web.yml
