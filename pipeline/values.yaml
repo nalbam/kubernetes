@@ -13,7 +13,7 @@ jenkins:
       - workflow-job:latest
       - workflow-aggregator:latest
       - credentials-binding:latest
-    CustomConfigMap: true
+#    CustomConfigMap: true
   Agent:
     Enabled: true
     Image: jenkins/jnlp-slave
