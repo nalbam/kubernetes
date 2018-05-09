@@ -20,8 +20,8 @@ jenkins:
 #    ImageTag: alpine
 #    AlwaysPullImage: true
   Persistence:
-    Enabled: false
-#    StorageClass: standard
+    Enabled: true
+    StorageClass: gp2
 
 sonatype-nexus:
   enabled: true

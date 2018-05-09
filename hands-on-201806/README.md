@@ -121,9 +121,9 @@ cat ~/.kube/config
 kubectl config view
 
 # kubectl get
-kubectl get deploy,pod,svc --all-namespaces
-kubectl get deploy,pod,svc -n kube-system
-kubectl get deploy,pod,svc -n default
+kubectl get deploy,pod,svc,job --all-namespaces
+kubectl get deploy,pod,svc,job -n kube-system
+kubectl get deploy,pod,svc,job -n default
 
 # ssh to the master
 ssh -i ~/.ssh/id_rsa admin@api.${KOPS_CLUSTER_NAME}
@@ -182,12 +182,16 @@ kubectl top pod -n kube-system
 
 ## Helm
 ```
+# create role binding for default
 kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
+# init
 helm init --service-account default
 
 helm search
 helm list
+
+#kubectl edit deploy tiller-deploy -n kube-system
 
 #kubectl delete deploy tiller-deploy -n kube-system
 #kubectl delete service tiller-deploy -n kube-system
