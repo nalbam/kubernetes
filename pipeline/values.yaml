@@ -475,7 +475,7 @@ jenkins:
 
 sonatype-nexus:
   enabled: true
-  nexus:
+#  nexus:
 #    imageName: quay.io/travelaudience/docker-nexus
 #    imageTag: 3.9.0
 #    serviceType: LoadBalancer
