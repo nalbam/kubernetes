@@ -29,7 +29,7 @@ brew install kops kubectl kubernetes-helm awscli jq
 ### Ubuntu (5m)
 ```
 # connect bastion
-ssh -i path_of_key_pair.pem ubuntu@<IP-ADDRESS>
+ssh -i ~/.ssh/handson.pem ubuntu@<IP-ADDRESS>
 
 # kubectl (1m)
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
@@ -53,6 +53,7 @@ tar -xvf helm-${VERSION}-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/loc
 sudo apt-get install -y apt-transport-https python-pip jq
 pip install awscli --upgrade
 ```
+* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#Instances:search=running;sort=tag:Name
 
 ### Amazon AccessKeys
 ```
@@ -75,16 +76,16 @@ EOF
 aws configure set default.region ap-northeast-2
 
 # aws ec2 list
-aws ec2 describe-instances | jq '.Reservations[].Instances[] | {Id: .InstanceId, Ip: .PublicIpAddress, Type: .InstanceType, State: .State.Name}'
+aws ec2 describe-instances | jq '.Reservations[].Instances[] | select(.State.Name == "running") | {Id: .InstanceId, Ip: .PublicIpAddress, Type: .InstanceType}'
 
 # aws elb list
-aws elb describe-load-balancers | jq '.LoadBalancerDescriptions[] | {DNSName: .DNSName, Healthy: .HealthCheck.HealthyThreshold}'
+aws elb describe-load-balancers | jq '.LoadBalancerDescriptions[] | {DNSName: .DNSName, Count: .Instances | length}'
 ```
 
 ## Kubernetes Cluster
 ```
 export KOPS_STATE_STORE=s3://kops-state-store-nalbam-seoul
-export KOPS_CLUSTER_NAME=kube-hans-on-nalbam-seoul.k8s.local
+export KOPS_CLUSTER_NAME=nalbam-seoul.k8s.local
 
 # aws s3 bucket for state store
 aws s3 mb ${KOPS_STATE_STORE} --region ap-northeast-2
@@ -94,28 +95,31 @@ kops create cluster \
     --cloud=aws \
     --name=${KOPS_CLUSTER_NAME} \
     --state=${KOPS_STATE_STORE} \
-    --master-size=t2.small \
-    --node-size=t2.medium \
+    --master-size=t2.medium \
+    --node-size=t2.large \
     --node-count=2 \
     --zones=ap-northeast-2a,ap-northeast-2c \
-    --network-cidr=10.20.0.0/16 \
+    --network-cidr=10.10.0.0/16 \
     --networking=calico
 
-kops get cluster
+kops get cluster --name=${KOPS_CLUSTER_NAME}
 
 kops edit cluster --name=${KOPS_CLUSTER_NAME}
 
 kops update cluster --name=${KOPS_CLUSTER_NAME} --yes
 
-# validate cluster
-kops validate cluster
+kops validate cluster --name=${KOPS_CLUSTER_NAME}
 
 kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 ```
-* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#Instances:search=running;sort=tag:Name
-* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
-* https://ap-northeast-2.console.aws.amazon.com/ec2/autoscaling/home?region=ap-northeast-2#LaunchConfigurations:
-* https://ap-northeast-2.console.aws.amazon.com/ec2/autoscaling/home?region=ap-northeast-2#AutoScalingGroups:view=details
+
+### Modify for Jenkins-x
+```
+spec:
+  docker:
+    insecureRegistry: 100.64.0.0/10
+    logDriver: ""
+```
 
 ### kubectl
 ```
@@ -126,15 +130,6 @@ kubectl config view
 kubectl get deploy,pod,svc,job --all-namespaces
 kubectl get deploy,pod,svc,job -n kube-system
 kubectl get deploy,pod,svc,job -n default
-
-# ssh to master
-ssh -i ~/.ssh/id_rsa admin@13.125.209.87
-
-# connect to cluster
-scp admin@13.125.209.87:~/.kube/config ~/.kube/config
-
-kubectl config set-cluster ${KOPS_CLUSTER_NAME} --server=https://${KOPS_CLUSTER_API}
-kubectl config use-context ${KOPS_CLUSTER_NAME}
 ```
 
 ### sample
@@ -185,35 +180,19 @@ kubectl delete -f kubernetes/hands-on-201806/heapster.yml
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
 
-### Helm
-```
-# create role binding for kube-system:default
-kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
-
-# init
-helm init --service-account default
-
-helm search
-helm list
-
-kubectl edit deploy tiller-deploy -n kube-system
-
-kubectl delete deploy tiller-deploy -n kube-system
-kubectl delete service tiller-deploy -n kube-system
-```
-* https://helm.sh/
-* https://github.com/kubernetes/helm
-* https://github.com/kubernetes/charts
-
 ### Jenkins-X
 ```
 export VERSION=$(curl -s https://api.github.com/repos/jenkins-x/jx/releases/latest | grep tag_name | cut -d'"' -f4)
 curl -L https://github.com/jenkins-x/jx/releases/download/${VERSION}/jx-darwin-amd64.tar.gz | tar xzv 
 sudo mv jx /usr/local/bin/
 
+jx install --provider=aws
+
+jx create spring -d web -d actuator
 ```
 * https://jenkins-x.io/
 * https://github.com/jenkins-x/jx
+* https://jenkins-x.io/getting-started/install-on-cluster/
 
 ## Pipeline
 ```
