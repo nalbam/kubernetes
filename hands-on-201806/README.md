@@ -46,9 +46,14 @@ export VERSION=$(curl -s https://api.github.com/repos/kubernetes/kops/releases/l
 curl -LO https://github.com/kubernetes/kops/releases/download/${VERSION}/kops-linux-amd64
 chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
 
+# helm (1m)
+export VERSION=$(curl -s https://api.github.com/repos/kubernetes/helm/releases/latest | grep tag_name | cut -d'"' -f4)
+curl -L https://storage.googleapis.com/kubernetes-helm/helm-${VERSION}-linux-amd64.tar.gz | tar xzv
+sudo mv linux-amd64/helm /usr/local/bin/helm
+
 # jenkins-x (1m)
 export VERSION=$(curl -s https://api.github.com/repos/jenkins-x/jx/releases/latest | grep tag_name | cut -d'"' -f4)
-curl -LO https://github.com/jenkins-x/jx/releases/download/${VERSION}/jx-darwin-amd64.tar.gz | tar xzv 
+curl -L https://github.com/jenkins-x/jx/releases/download/${VERSION}/jx-linux-amd64.tar.gz | tar xzv 
 sudo mv jx /usr/local/bin/jx
 
 # awscli (1m)
@@ -187,28 +192,6 @@ jx create spring -d web -d actuator
 * https://jenkins-x.io/
 * https://github.com/jenkins-x/jx
 * https://jenkins-x.io/getting-started/install-on-cluster/
-
-## Pipeline
-```
-cd ~/kubernetes
-
-helm install -n demo -f pipeline/values.yaml pipeline
-
-helm history demo
-
-helm upgrade demo -f pipeline/values.yaml pipeline
-
-helm delete --purge demo
-
-# create role binding for default:default
-kubectl create clusterrolebinding cluster-admin:default:default --clusterrole=cluster-admin --serviceaccount=default:default
-
-kubectl exec -it $(kubectl get pod | grep demo-jenkins | awk '{print $1}') -- sh
-kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}') -- sh
-```
-* https://github.com/CenterForOpenScience/helm-charts
-
-## Build
 
 ## Clear
 ```
