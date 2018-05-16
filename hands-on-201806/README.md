@@ -22,14 +22,16 @@
 
 ### OSX (5m)
 ```
-brew install kops kubectl kubernetes-helm awscli jq
+brew tap jenkins-x/jx
+brew install awscli kubectl kops jx jq
 ```
 * https://brew.sh/index_ko
 
 ### Ubuntu (5m)
 ```
-# connect bastion
-ssh -i ~/.ssh/handson.pem ubuntu@<IP-ADDRESS>
+# connect
+BASTION=
+ssh -i ~/.ssh/hands-on.pem ubuntu@${BASTION}
 
 # kubectl (1m)
 curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
@@ -37,33 +39,32 @@ cat <<EOF > kubernetes.list
 deb http://apt.kubernetes.io/ kubernetes-xenial main
 EOF
 sudo mv kubernetes.list /etc/apt/sources.list.d/kubernetes.list
-sudo apt-get update && sudo apt-get install -y kubectl
+sudo apt update && sudo apt install -y kubectl
 
 # kops (2m)
 export VERSION=$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d'"' -f4)
 curl -LO https://github.com/kubernetes/kops/releases/download/${VERSION}/kops-linux-amd64
 chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
 
-# helm (1m)
-export VERSION=$(curl -s https://api.github.com/repos/kubernetes/helm/releases/latest | grep tag_name | cut -d'"' -f4)
-curl -LO https://storage.googleapis.com/kubernetes-helm/helm-${VERSION}-linux-amd64.tar.gz
-tar -xvf helm-${VERSION}-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/local/bin/helm
+# jenkins-x (1m)
+export VERSION=$(curl -s https://api.github.com/repos/jenkins-x/jx/releases/latest | grep tag_name | cut -d'"' -f4)
+curl -LO https://github.com/jenkins-x/jx/releases/download/${VERSION}/jx-darwin-amd64.tar.gz | tar xzv 
+sudo mv jx /usr/local/bin/jx
 
 # awscli (1m)
-sudo apt-get install -y apt-transport-https python-pip jq
-pip install awscli --upgrade
+sudo apt install -y awscli jq
 ```
 * https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#Instances:search=running;sort=tag:Name
 
 ### Amazon AccessKeys
 ```
-mkdir -p ~/.aws
-mkdir -p ~/.ssh
-
 # ssh key
 pushd ~/.ssh
 ssh-keygen -f id_rsa -N ''
 popd
+
+# aws region
+aws configure set default.region ap-northeast-2
 
 # aws credentials
 cat <<EOF > ~/.aws/credentials
@@ -71,9 +72,6 @@ cat <<EOF > ~/.aws/credentials
 aws_access_key_id=
 aws_secret_access_key=
 EOF
-
-# aws set region
-aws configure set default.region ap-northeast-2
 
 # aws ec2 list
 aws ec2 describe-instances | jq '.Reservations[].Instances[] | select(.State.Name == "running") | {Id: .InstanceId, Ip: .PublicIpAddress, Type: .InstanceType}'
@@ -182,10 +180,6 @@ kubectl delete -f kubernetes/hands-on-201806/heapster.yml
 
 ### Jenkins-X
 ```
-export VERSION=$(curl -s https://api.github.com/repos/jenkins-x/jx/releases/latest | grep tag_name | cut -d'"' -f4)
-curl -L https://github.com/jenkins-x/jx/releases/download/${VERSION}/jx-darwin-amd64.tar.gz | tar xzv 
-sudo mv jx /usr/local/bin/
-
 jx install --provider=aws
 
 jx create spring -d web -d actuator
@@ -215,3 +209,10 @@ kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}'
 * https://github.com/CenterForOpenScience/helm-charts
 
 ## Build
+
+## Clear
+```
+kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
+rm -rf ~/.kube
+rm -rf ~/.jx
+```
