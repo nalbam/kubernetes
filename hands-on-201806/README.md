@@ -1,11 +1,19 @@
-## agenda
-* Prepare (kubectl, kops, helm)
-* Create Kubernetes Cluster with kops
-* Create pipeline with helm (jenkins, nexus, registry)
-* Setup addons (dashboard, heapster)
-* Build spring boot application
+# Kubernetes Hands-on
 
-## prepare
+<!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
+
+**Index**
+
+* [Prerequisites](#prerequisites)
+* [Kubernetes Cluster](#kubernetes-cluster)
+* [Addons](#addons)
+* [Pipeline](#pipeline)
+* [Build](#build) 
+
+<!-- /TOC -->
+
+## Prerequisites
+
 ### Amazon AccessKey
 * https://console.aws.amazon.com/iam/home?region=ap-northeast-2#/home
 
@@ -63,20 +71,23 @@ aws_access_key_id=
 aws_secret_access_key=
 EOF
 
-# aws region
+# aws set region
 aws configure set default.region ap-northeast-2
 
 # aws ec2 list
-aws ec2 describe-instances | jq '.Reservations[].Instances[] | {InstanceId: .InstanceId, InstanceType: .InstanceType, State: .State.Name}'
+aws ec2 describe-instances | jq '.Reservations[].Instances[] | {Id: .InstanceId, Ip: .PublicIpAddress, Type: .InstanceType, State: .State.Name}'
+
+# aws elb list
+aws elb describe-load-balancers | jq '.LoadBalancerDescriptions[] | {DNSName: .DNSName, Healthy: .HealthCheck.HealthyThreshold}'
 ```
 
-## Create Kubernetes Cluster with kops (15m)
+## Kubernetes Cluster
 ```
 export KOPS_STATE_STORE=s3://kops-state-store-nalbam-seoul
 export KOPS_CLUSTER_NAME=kube-hans-on-nalbam-seoul.k8s.local
 
-# make state store
-aws s3 mb ${KOPS_STATE_STORE}
+# aws s3 bucket for state store
+aws s3 mb ${KOPS_STATE_STORE} --region ap-northeast-2
 
 # create cluster
 kops create cluster \
@@ -106,10 +117,8 @@ kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 * https://ap-northeast-2.console.aws.amazon.com/ec2/autoscaling/home?region=ap-northeast-2#LaunchConfigurations:
 * https://ap-northeast-2.console.aws.amazon.com/ec2/autoscaling/home?region=ap-northeast-2#AutoScalingGroups:view=details
 
-## kubectl basic
+### kubectl
 ```
-cat ~/.kube/config
-
 # kubectl config
 kubectl config view
 
@@ -118,11 +127,17 @@ kubectl get deploy,pod,svc,job --all-namespaces
 kubectl get deploy,pod,svc,job -n kube-system
 kubectl get deploy,pod,svc,job -n default
 
-# ssh to the master
-ssh -i ~/.ssh/id_rsa admin@api.${KOPS_CLUSTER_NAME}
+# ssh to master
+ssh -i ~/.ssh/id_rsa admin@13.125.209.87
+
+# connect to cluster
+scp admin@13.125.209.87:~/.kube/config ~/.kube/config
+
+kubectl config set-cluster ${KOPS_CLUSTER_NAME} --server=https://${KOPS_CLUSTER_API}
+kubectl config use-context ${KOPS_CLUSTER_NAME}
 ```
 
-## sample
+### sample
 ```
 git clone https://github.com/nalbam/kubernetes
 
@@ -138,7 +153,7 @@ kubectl delete -f kubernetes/hands-on-201806/sample-web.yml
 
 ## Addons
 
-### dashboard
+### Dashboard
 Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
 ```
 kubectl apply -f kubernetes/hands-on-201806/dashboard.yml
@@ -150,16 +165,13 @@ kubectl get clusterrolebindings | grep cluster-admin
 # get dashboard token
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk '{print $1}')
 
-# get elb list
-aws elb describe-load-balancers | jq '.LoadBalancerDescriptions[] | {CanonicalHostedZoneName: .CanonicalHostedZoneName}'
-
 kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
 ```
 * https://github.com/kubernetes/dashboard/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard
 
-### heapster
+### Heapster
 Heapster enables Container Cluster Monitoring and Performance Analysis for Kubernetes
 ```
 kubectl apply -f kubernetes/hands-on-201806/heapster.yml
@@ -173,7 +185,7 @@ kubectl delete -f kubernetes/hands-on-201806/heapster.yml
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
 
-## Helm
+### Helm
 ```
 # create role binding for kube-system:default
 kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
@@ -193,7 +205,17 @@ kubectl delete service tiller-deploy -n kube-system
 * https://github.com/kubernetes/helm
 * https://github.com/kubernetes/charts
 
-## pipeline (helm)
+### Jenkins-X
+```
+export VERSION=$(curl -s https://api.github.com/repos/jenkins-x/jx/releases/latest | grep tag_name | cut -d'"' -f4)
+curl -L https://github.com/jenkins-x/jx/releases/download/${VERSION}/jx-darwin-amd64.tar.gz | tar xzv 
+sudo mv jx /usr/local/bin/
+
+```
+* https://jenkins-x.io/
+* https://github.com/jenkins-x/jx
+
+## Pipeline
 ```
 cd ~/kubernetes
 
@@ -212,3 +234,5 @@ kubectl exec -it $(kubectl get pod | grep demo-jenkins | awk '{print $1}') -- sh
 kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}') -- sh
 ```
 * https://github.com/CenterForOpenScience/helm-charts
+
+## Build
