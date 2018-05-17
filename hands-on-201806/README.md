@@ -214,6 +214,7 @@ jx get pipelines
 jx get activity -f jx-demo -w
 jx get build logs nalbam/jx-demo/master
 jx get build logs nalbam/jx-demo/dev
+
 jx promote jx-demo --env production
 ```
 * https://jenkins-x.io/
