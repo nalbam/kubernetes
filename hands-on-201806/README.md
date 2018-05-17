@@ -1,5 +1,7 @@
 # Kubernetes Hands-on
 
+* Moved: https://github.com/awskrug/handson-labs-2018
+
 <!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 **Index**
