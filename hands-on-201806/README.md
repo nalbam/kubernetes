@@ -1,18 +1,30 @@
 # Kubernetes Hands-on
 
-* Moved: https://github.com/awskrug/handson-labs-2018
-
 <!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
 **Index**
 
+* [Info](#info)
 * [Prerequisites](#prerequisites)
 * [Kubernetes Cluster](#kubernetes-cluster)
 * [Addons](#addons)
 * [Pipeline](#pipeline)
-* [Build](#build) 
 
 <!-- /TOC -->
+
+## Info
+
+### Kubernetes
+컨테이너 작업을 자동화하는 오픈소스 플랫폼 (컨테이너 오케스트레이션)
+
+### Kops
+쿠버네티스 클러스터를 쉽게 설치 운영 할수 있도록 도와주는 툴
+
+### Helm
+쿠버네티스 패키지 매니저
+
+### Jenkins X
+쿠버네티스에서 Application 을 쉽게 빌드/배포 할수 있도록 도와주는 툴
 
 ## Prerequisites
 
@@ -100,8 +112,8 @@ kops create cluster \
     --cloud=aws \
     --name=${KOPS_CLUSTER_NAME} \
     --state=${KOPS_STATE_STORE} \
-    --master-size=t2.medium \
-    --node-size=t2.large \
+    --master-size=m4.large \
+    --node-size=m4.xlarge \
     --node-count=2 \
     --zones=ap-northeast-2a,ap-northeast-2c \
     --network-cidr=10.10.0.0/16 \
@@ -139,7 +151,7 @@ kubectl get deploy,pod,svc,job -n default
 
 ### sample
 ```
-git clone https://github.com/nalbam/kubernetes
+git clone https://github.com/awskrug/handson-labs-2018
 
 kubectl apply -f kubernetes/hands-on-201806/sample-node.yml
 kubectl apply -f kubernetes/hands-on-201806/sample-spring.yml
@@ -185,19 +197,26 @@ kubectl delete -f kubernetes/hands-on-201806/heapster.yml
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
 
-### Jenkins-X
+## Pipeline
+
+### Jenkins X
 ```
 jx install --provider=aws
 
+jx console
+
+jx import
 jx create spring -d web -d actuator
+
+jx get applications
+jx get pipelines
+
+jx get activity -f jx-demo -w
+jx get build logs nalbam/jx-demo/master
+jx get build logs nalbam/jx-demo/dev
+jx promote jx-demo --env production
 ```
 * https://jenkins-x.io/
 * https://github.com/jenkins-x/jx
-* https://jenkins-x.io/getting-started/install-on-cluster/
 
-## Clear
-```
-kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
-rm -rf ~/.kube
-rm -rf ~/.jx
-```
+![Jenkins X Pipeline](https://jenkins-x.io/images/overview.png)
