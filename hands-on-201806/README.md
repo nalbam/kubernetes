@@ -1,4 +1,5 @@
 # Kubernetes Hands-on
+* https://github.com/awskrug/handson-labs-2018/tree/master/3_Kubernetes
 
 ---
 
