@@ -1,10 +1,12 @@
 # Kubernetes Hands-on
 
+---
+
+## Index
+
 <!-- TOC depthFrom:2 depthTo:6 withLinks:1 updateOnSave:1 orderedList:0 -->
 
-**Index**
-
-* [Info](#info)
+* [Information](#information)
 * [Prerequisites](#prerequisites)
 * [Kubernetes Cluster](#kubernetes-cluster)
 * [Addons](#addons)
@@ -12,37 +14,85 @@
 
 <!-- /TOC -->
 
-## Info
+---
+
+## Information
+
+* Kubernetes
+* Kops
+* Jenkins X
+* Helm
+
+---
 
 ### Kubernetes
-컨테이너 작업을 자동화하는 오픈소스 플랫폼 (컨테이너 오케스트레이션)
+- 컨테이너 작업을 자동화하는 오픈소스 플랫폼
+- Container Orchestration
+- Cluster 는 Master 와 Node 로 구성 
+
+<img src="images/kubernetes.png" height="300">
+
+---
 
 ### Kops
-쿠버네티스 클러스터를 쉽게 설치 운영 할수 있도록 도와주는 툴
+- Kubernetes cluster up and running
+- AWS is officially supported
+- GCE is beta supported
+- 1 Master, 2 Nodes
 
-### Helm
-쿠버네티스 패키지 매니저
+<img src="images/kops.png" height="300">
+
+---
 
 ### Jenkins X
-쿠버네티스에서 Application 을 쉽게 빌드/배포 할수 있도록 도와주는 툴
+- Jenkins Pipeline Tool
+- Jenkins + Kubernetes Plugins + CLI
+- Jenkins 를 제외한 UI 는 제공되지 않음
+
+<img src="images/jenkins-x.png" height="300">
+
+---
+
+### Helm
+- Kubernetes Package Manager
+- Used in Jenkins X
+
+---
 
 ## Prerequisites
 
-### Amazon AccessKey
+* AWS IAM - Access keys
+* AWS EC2 - Key Pairs
+* AWS EC2 - Ubuntu Instance
+
+---
+
+### AWS IAM - Access keys
 * https://console.aws.amazon.com/iam/home?region=ap-northeast-2#/home
 
-### Amazon KeyPairs
-* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#KeyPairs:sort=keyName
+---
+
+### AWS EC2 - Key Pairs
+* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#KeyPairs
+
+---
+
+### AWS EC2 - Ubuntu Instance
+* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#Instances
+
+---
 
 ### OSX (5m)
-```
+```bash
 brew tap jenkins-x/jx
 brew install awscli kubectl kops jx jq
 ```
 * https://brew.sh/index_ko
 
+---
+
 ### Ubuntu (5m)
-```
+```bash
 # connect
 BASTION=
 ssh -i ~/.ssh/hands-on.pem ubuntu@${BASTION}
@@ -73,10 +123,11 @@ sudo mv jx /usr/local/bin/jx
 # awscli (1m)
 sudo apt install -y awscli jq
 ```
-* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#Instances:search=running;sort=tag:Name
 
-### Amazon AccessKeys
-```
+---
+
+### Access Keys
+```bash
 # ssh key
 pushd ~/.ssh
 ssh-keygen -f id_rsa -N ''
@@ -99,10 +150,12 @@ aws ec2 describe-instances | jq '.Reservations[].Instances[] | select(.State.Nam
 aws elb describe-load-balancers | jq '.LoadBalancerDescriptions[] | {DNSName: .DNSName, Count: .Instances | length}'
 ```
 
+---
+
 ## Kubernetes Cluster
-```
+```bash
 export KOPS_STATE_STORE=s3://kops-state-store-nalbam-seoul
-export KOPS_CLUSTER_NAME=nalbam-seoul.k8s.local
+export KOPS_CLUSTER_NAME=hands-on.k8s.local
 
 # aws s3 bucket for state store
 aws s3 mb ${KOPS_STATE_STORE} --region ap-northeast-2
@@ -130,16 +183,20 @@ kops validate cluster --name=${KOPS_CLUSTER_NAME}
 kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 ```
 
+---
+
 ### Modify for Jenkins-x
-```
+```yaml
 spec:
   docker:
     insecureRegistry: 100.64.0.0/10
     logDriver: ""
 ```
 
+---
+
 ### kubectl
-```
+```bash
 # kubectl config
 kubectl config view
 
@@ -149,26 +206,39 @@ kubectl get deploy,pod,svc,job -n kube-system
 kubectl get deploy,pod,svc,job -n default
 ```
 
+---
+
 ### sample
-```
+```bash
+# get source
 git clone https://github.com/awskrug/handson-labs-2018
 
-kubectl apply -f kubernetes/hands-on-201806/sample-node.yml
-kubectl apply -f kubernetes/hands-on-201806/sample-spring.yml
-kubectl apply -f kubernetes/hands-on-201806/sample-web.yml
+# install
+kubectl apply -f handson-labs-2018/3_Kubernetes/sample-node.yml
+kubectl apply -f handson-labs-2018/3_Kubernetes/sample-spring.yml
+kubectl apply -f handson-labs-2018/3_Kubernetes/sample-web.yml
 
-kubectl delete -f kubernetes/hands-on-201806/sample-node.yml
-kubectl delete -f kubernetes/hands-on-201806/sample-spring.yml
-kubectl delete -f kubernetes/hands-on-201806/sample-web.yml
+# delete
+kubectl delete -f handson-labs-2018/3_Kubernetes/sample-node.yml
+kubectl delete -f handson-labs-2018/3_Kubernetes/sample-spring.yml
+kubectl delete -f handson-labs-2018/3_Kubernetes/sample-web.yml
 ```
-* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers:sort=loadBalancerName
+* https://ap-northeast-2.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-2#LoadBalancers
+
+---
 
 ## Addons
 
+* Dashboard
+* Heapster
+
+---
+
 ### Dashboard
 Kubernetes Dashboard is a general purpose, web-based UI for Kubernetes clusters.
-```
-kubectl apply -f kubernetes/hands-on-201806/dashboard.yml
+```bash
+# install
+kubectl apply -f handson-labs-2018/3_Kubernetes/dashboard.yml
 
 # create role binding for kube-system:kubernetes-dashboard
 kubectl create clusterrolebinding cluster-admin:kube-system:kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
@@ -177,30 +247,38 @@ kubectl get clusterrolebindings | grep cluster-admin
 # get dashboard token
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk '{print $1}')
 
-kubectl delete -f kubernetes/hands-on-201806/dashboard.yml
+# delete
+kubectl delete -f handson-labs-2018/3_Kubernetes/dashboard.yml
 ```
 * https://github.com/kubernetes/dashboard/
-* https://github.com/kubernetes/kops/blob/master/docs/addons.md
-* https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard
+
+---
 
 ### Heapster
-Heapster enables Container Cluster Monitoring and Performance Analysis for Kubernetes
-```
-kubectl apply -f kubernetes/hands-on-201806/heapster.yml
+Heapster enables Container Cluster Monitoring and Performance Analysis for Kubernetes - DEPRECATED
+```bash
+# install
+kubectl apply -f handson-labs-2018/3_Kubernetes/heapster.yml
 
+# monitoring
 kubectl top pod --all-namespaces
 kubectl top pod -n kube-system
 
-kubectl delete -f kubernetes/hands-on-201806/heapster.yml
+# delete
+kubectl delete -f handson-labs-2018/3_Kubernetes/heapster.yml
 ```
 * https://github.com/kubernetes/heapster/
-* https://github.com/kubernetes/kops/blob/master/docs/addons.md
-* https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
+
+---
 
 ## Pipeline
 
+* Jenkins X
+
+---
+
 ### Jenkins X
-```
+```bash
 jx install --provider=aws
 
 jx console
@@ -218,6 +296,7 @@ jx get build logs nalbam/jx-demo/dev
 jx promote jx-demo --env production
 ```
 * https://jenkins-x.io/
-* https://github.com/jenkins-x/jx
 
-![Jenkins X Pipeline](https://jenkins-x.io/images/overview.png)
+---
+
+## Thank You
