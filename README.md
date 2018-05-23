@@ -1,5 +1,5 @@
 ## basic
-```
+```bash
 cat ~/.kube/config
 
 # kubectl config
@@ -17,7 +17,7 @@ ifconfig tunl0 | grep inet | awk '{print $2}'
 ```
 
 ## role
-```
+```bash
 kubectl apply -f role/default.yml
 kubectl apply -f role/nalbam.yml
 
@@ -31,7 +31,7 @@ kubectl describe clusterrolebindings cluster-admin:default:nalbam
 ```
 
 ## sample
-```
+```bash
 kubectl apply -f sample/confog-map.yml
 
 kubectl apply -f sample/sample-node.yml
@@ -42,18 +42,18 @@ kubectl describe pod sample-web
 ```
 
 ## jobs
-```
+```bash
 kubectl apply -f jobs/docker-clean.yml
 ```
 
 ## volume
-```
+```bash
 kubectl apply -f volume/pv-5g.yml
 kubectl apply -f volume/pv-10g.yml
 ```
 
 ## cleanup
-```
+```bash
 kubectl delete -f volume/pv-5g.yml
 kubectl delete -f volume/pv-10g.yml
 sudo rm -rf /data/0*
