@@ -1,5 +1,4 @@
 # Kubernetes Hands-on
-* https://github.com/awskrug/handson-labs-2018/tree/master/3_Kubernetes
 
 ---
 
@@ -172,7 +171,7 @@ aws elb describe-load-balancers | jq '.LoadBalancerDescriptions[] | {DNSName: .D
 
 ## Kubernetes Cluster
 ```bash
-export KOPS_STATE_STORE=s3://kops-state-store-nalbam-seoul
+export KOPS_STATE_STORE=s3://terraform-nalbam-seoul
 export KOPS_CLUSTER_NAME=hands-on.k8s.local
 
 # aws s3 bucket for state store
