@@ -1,5 +1,5 @@
 ## install
-```
+```bash
 # OSX
 brew update && brew install kubernetes-helm
 
@@ -10,7 +10,7 @@ tar -xvf helm-${VERSION}-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/loc
 ```
 
 ## usage
-```
+```bash
 helm init
 helm search
 helm ls
@@ -20,14 +20,14 @@ helm ls
 * https://github.com/kubernetes/charts
 
 ## dependency build
-```
+```bash
 pushd pipeline
 helm dependency build
 popd
 ```
 
 ## pipeline (helm)
-```
+```bash
 helm install -n demo -f pipeline/values.yaml pipeline
 helm history demo
 helm upgrade demo -f pipeline/values.yaml pipeline
@@ -39,6 +39,6 @@ kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}'
 * https://github.com/CenterForOpenScience/helm-charts
 
 ## addons (charts)
-```
+```bash
 helm install stable/kubernetes-dashboard --name my-release
 ```

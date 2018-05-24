@@ -1,5 +1,5 @@
 ## dashboard
-```
+```bash
 ADDON=addons/.temp.yml
 cp -rf addons/dashboard-v1.8.3.yml ${ADDON}
 
@@ -22,7 +22,7 @@ http://master.nalbam.com:8080/api/v1/namespaces/kube-system/services/https:kuber
 * https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard
 
 ## heapster
-```
+```bash
 kubectl apply -f addons/heapster-v1.7.0.yml
 
 watch kubectl top pod --all-namespaces
@@ -33,7 +33,7 @@ watch kubectl top pod -n kube-system
 * https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
 
 ## route53-mapper (ExternalDNS)
-```
+```bash
 kubectl apply -f addons/route53-mapper-v1.3.0.yml
 
 watch kubectl top pod -n kube-system
@@ -44,7 +44,7 @@ watch kubectl top pod --all-namespaces
 * https://github.com/kubernetes-incubator/external-dns
 
 ## ingress-nginx
-```
+```bash
 ADDON=addons/.temp.yml
 cp -rf addons/ingress-nginx-v1.6.0.yml ${ADDON}
 
@@ -82,7 +82,7 @@ aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-bat
 * https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx
 
 ## cluster-autoscaler
-```
+```bash
 ADDON=addons/.temp.yml
 cp -rf addons/cluster-autoscaler-v1.8.0.yml ${ADDON}
 

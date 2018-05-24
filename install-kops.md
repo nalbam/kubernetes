@@ -1,5 +1,5 @@
 ## install
-```
+```bash
 # OSX
 brew update && brew install kops
 
@@ -10,7 +10,7 @@ chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
 ```
 
 ## usage
-```
+```bash
 export KOPS_CLUSTER_NAME=kube.nalbam.com
 export KOPS_STATE_STORE=s3://clusters.${KOPS_CLUSTER_NAME}
 
@@ -48,7 +48,7 @@ kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
  * https://woowabros.github.io/experience/2018/03/13/k8s-test.html
 
 ## kubectl
-```
+```bash
 # watch all namespaces
 watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
 ```

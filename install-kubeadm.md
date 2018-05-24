@@ -1,5 +1,5 @@
 ## install
-```
+```bash
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
 name=Kubernetes
@@ -35,14 +35,14 @@ Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=systemd --runtime-cgroups=/syst
 
 ## start
 * root
-```
+```bash
 kubeadm reset
 kubeadm init
 
 systemctl status kubelet
 ```
 * regular user:
-```
+```bash
 rm -rf $HOME/.kube
 mkdir -p $HOME/.kube
 sudo cp -rf /etc/kubernetes/admin.conf $HOME/.kube/config
@@ -66,7 +66,7 @@ ifconfig tunl0 | grep inet | awk '{print $2}'
  * https://amasucci.com/post/2017/10/22/how-to-install-kubernetes-1.8.1-on-centos-7.3/
 
 ## stop
-```
+```bash
 sudo systemctl disable httpd
 sudo systemctl stop httpd
 
