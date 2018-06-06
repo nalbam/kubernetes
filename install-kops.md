@@ -14,11 +14,14 @@ chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
 export KOPS_CLUSTER_NAME=kube.nalbam.com
 export KOPS_STATE_STORE=s3://clusters.${KOPS_CLUSTER_NAME}
 
+# region
+aws configure set default.region ap-northeast-2
+
 # make bucket
 aws s3 mb ${KOPS_STATE_STORE}
 
 # create hosted zone
-aws route53 create-hosted-zone --name ${KOPS_CLUSTER_NAME} --caller-reference ${KOPS_CLUSTER_NAME}
+# aws route53 create-hosted-zone --name ${KOPS_CLUSTER_NAME} --caller-reference 1
 
 # create cluster
 kops create cluster \
@@ -33,6 +36,9 @@ kops create cluster \
     --network-cidr=10.20.0.0/16 \
     --networking=calico
 
+#    --target=terraform \
+#    --out=.
+
 kops get cluster
 
 kops edit cluster --name=${KOPS_CLUSTER_NAME}
@@ -45,7 +51,6 @@ kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 ```
  * https://github.com/kubernetes/kops
  * https://kubernetes.io/docs/getting-started-guides/kops/
- * https://woowabros.github.io/experience/2018/03/13/k8s-test.html
 
 ## kubectl
 ```bash
