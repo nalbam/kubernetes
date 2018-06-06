@@ -32,6 +32,13 @@ build/
 .idea/
 *.iml
 
+# Terraform
+.terraform/
+.terraform.tfstate.lock.info
+terraform.tfstate.backup
+terraform.tfstate
+terraform.tfplan
+
 # log
 *.log
 
