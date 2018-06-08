@@ -24,7 +24,7 @@ spec:
           volumes:
           - name: docker-socket
             hostPath:
-            path: /var/run/docker.sock
+              path: /var/run/docker.sock
 
 # ------------------- CronJob ------------------- #
 ---
@@ -52,7 +52,7 @@ spec:
           volumes:
           - name: docker-socket
             hostPath:
-            path: /var/run/docker.sock
+              path: /var/run/docker.sock
 
 # ------------------- CronJob ------------------- #
 ---
@@ -80,7 +80,7 @@ spec:
           volumes:
           - name: docker-socket
             hostPath:
-            path: /var/run/docker.sock
+              path: /var/run/docker.sock
 
 # docker ps -a | awk '/Exited|Dead/ {print $1}' | xargs --no-run-if-empty docker rm
 # docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi
