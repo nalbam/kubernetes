@@ -9,9 +9,6 @@ spec:
   schedule: "*/3 * * * *"
   jobTemplate:
     spec:
-      backoffLimit: 1
-#      completions: 1
-#      parallelism: 1
       template:
         spec:
           containers:
@@ -23,79 +20,80 @@ spec:
             - -C
             - "docker rm $(docker ps -q -f status=exited)"
             volumeMounts:
-            - name: docker-socket
+            - name: docker-sock
               mountPath: /var/run/docker.sock
+              readOnly: false
+            - name: docker-dir
+              mountPath: /var/lib/docker
+              readOnly: false
           restartPolicy: OnFailure
           volumes:
-          - name: docker-socket
+          - name: docker-sock
             hostPath:
               path: /var/run/docker.sock
+          - name: docker-dir
+            hostPath:
+              path: /var/lib/docker
 
 # ------------------- CronJob ------------------- #
----
-
-kind: CronJob
-apiVersion: batch/v1beta1
-metadata:
-  name: docker-clean-images
-spec:
-  schedule: "*/3 * * * *"
-  jobTemplate:
-    spec:
-      backoffLimit: 1
-#      completions: 1
-#      parallelism: 1
-      template:
-        spec:
-          containers:
-          - name: docker-clean-images
-            image: nalbam/builder:alpine
-            imagePullPolicy: Always
-            command:
-            - sh
-            - -C
-            - "docker rmi $(docker images -q -f dangling=true --no-trunc)"
-            volumeMounts:
-            - name: docker-socket
-              mountPath: /var/run/docker.sock
-          restartPolicy: OnFailure
-          volumes:
-          - name: docker-socket
-            hostPath:
-              path: /var/run/docker.sock
+#---
+#
+#kind: CronJob
+#apiVersion: batch/v1beta1
+#metadata:
+#  name: docker-clean-images
+#spec:
+#  schedule: "*/3 * * * *"
+#  jobTemplate:
+#    spec:
+#      template:
+#        spec:
+#          containers:
+#          - name: docker-clean-images
+#            image: nalbam/builder:alpine
+#            imagePullPolicy: Always
+#            command:
+#            - sh
+#            - -C
+#            - "docker rmi $(docker images -q -f dangling=true --no-trunc)"
+#            volumeMounts:
+#            - name: docker-socket
+#              mountPath: /var/run/docker.sock
+#          restartPolicy: OnFailure
+#          volumes:
+#          - name: docker-socket
+#            hostPath:
+#              path: /var/run/docker.sock
 
 # ------------------- CronJob ------------------- #
----
-
-kind: CronJob
-apiVersion: batch/v1beta1
-metadata:
-  name: docker-clean-volume
-spec:
-  schedule: "*/3 * * * *"
-  jobTemplate:
-    spec:
-      backoffLimit: 1
-#      completions: 1
-#      parallelism: 1
-      template:
-        spec:
-          containers:
-          - name: docker-clean-volume
-            image: nalbam/builder:alpine
-            imagePullPolicy: Always
-            command:
-            - sh
-            - -C
-            - "docker volume rm $(docker volume ls -q -f dangling=true)"
-            volumeMounts:
-            - name: docker-socket
-              mountPath: /var/run/docker.sock
-          restartPolicy: OnFailure
-          volumes:
-          - name: docker-socket
-            hostPath:
-              path: /var/run/docker.sock
+#---
+#
+#kind: CronJob
+#apiVersion: batch/v1beta1
+#metadata:
+#  name: docker-clean-volume
+#spec:
+#  schedule: "*/3 * * * *"
+#  jobTemplate:
+#    spec:
+#      template:
+#        spec:
+#          containers:
+#          - name: docker-clean-volume
+#            image: nalbam/builder:alpine
+#            imagePullPolicy: Always
+#            command:
+#            - sh
+#            - -C
+#            - "docker volume rm $(docker volume ls -q -f dangling=true)"
+#            volumeMounts:
+#            - name: docker-socket
+#              mountPath: /var/run/docker.sock
+#          restartPolicy: OnFailure
+#          volumes:
+#          - name: docker-socket
+#            hostPath:
+#              path: /var/run/docker.sock
 
 # docker ps -a | awk '/Exited|Dead/ {print $1}' | xargs --no-run-if-empty docker rm
 # docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi
