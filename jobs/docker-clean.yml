@@ -17,10 +17,10 @@ spec:
           - name: docker-clean-process
             image: nalbam/builder:alpine
             imagePullPolicy: Always
-            command:
-            - sh
-            - -C
-            - "docker rm $(docker ps -q -f status=exited)"
+            command: ["/bin/bash", "docker rm $(docker ps -q -f status=exited)"]
+#            - sh
+#            - -C
+#            - "docker rm $(docker ps -q -f status=exited)"
             volumeMounts:
             - name: docker-sock
               mountPath: /var/run/docker.sock
