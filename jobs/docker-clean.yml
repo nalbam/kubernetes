@@ -6,7 +6,7 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-rm-job
 spec:
-  schedule: "13 * * * *"
+  schedule: "*/10 * * * *"
   jobTemplate:
     spec:
       template:
@@ -14,10 +14,9 @@ spec:
           containers:
           - name: docker-clean-rm-job
             image: nalbam/builder:alpine
+            imagePullPolicy: Always
             command:
-            - sh
-            - -C
-            - "docker ps -a | awk '/Exited|Dead/ {print $1}' | xargs --no-run-if-empty docker rm"
+            - docker ps -a | awk '/Exited|Dead/ {print $1}' | xargs --no-run-if-empty docker rm
           restartPolicy: OnFailure
 
 # ------------------- CronJob ------------------- #
@@ -28,7 +27,7 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-rmi-job
 spec:
-  schedule: "16 * * * *"
+  schedule: "*/10 * * * *"
   jobTemplate:
     spec:
       template:
@@ -36,10 +35,9 @@ spec:
           containers:
           - name: docker-clean-rmi-job
             image: nalbam/builder:alpine
+            imagePullPolicy: Always
             command:
-            - sh
-            - -C
-            - "docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi"
+            - docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi
           restartPolicy: OnFailure
 
 # ------------------- CronJob ------------------- #
@@ -50,7 +48,7 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-volume-job
 spec:
-  schedule: "19 * * * *"
+  schedule: "*/10 * * * *"
   jobTemplate:
     spec:
       template:
@@ -58,10 +56,9 @@ spec:
           containers:
           - name: docker-clean-volume-job
             image: nalbam/builder:alpine
+            imagePullPolicy: Always
             command:
-            - sh
-            - -C
-            - "docker volume ls -q -f dangling=true | xargs --no-run-if-empty docker volume rmi"
+            - docker volume ls -q -f dangling=true | xargs --no-run-if-empty docker volume rmi
           restartPolicy: OnFailure
 
 # docker ps -a | awk '/Exited|Dead/ {print $1}' | xargs --no-run-if-empty docker rm
