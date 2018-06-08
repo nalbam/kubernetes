@@ -18,7 +18,7 @@ spec:
             command:
             - sh
             - -C
-            - "docker ps -a | awk '/Exited|Dead/ {print $1}' | xargs --no-run-if-empty docker rm"
+            - "docker rm $(docker ps -q -f status=exited)"
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
@@ -48,7 +48,7 @@ spec:
             command:
             - sh
             - -C
-            - "docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi"
+            - "docker rmi $(docker images -q -f dangling=true --no-trunc)"
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
@@ -78,7 +78,7 @@ spec:
             command:
             - sh
             - -C
-            - "docker volume ls -q -f dangling=true | xargs --no-run-if-empty docker volume rmi"
+            - "docker volume rm $(docker volume ls -q -f dangling=true)"
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
