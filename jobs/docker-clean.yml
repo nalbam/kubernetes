@@ -6,12 +6,12 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-process
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/3 * * * *"
   jobTemplate:
     spec:
       backoffLimit: 1
-      completions: 1
-      parallelism: 1
+#      completions: 1
+#      parallelism: 1
       template:
         spec:
           containers:
@@ -25,7 +25,7 @@ spec:
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
-          restartPolicy: Never
+          restartPolicy: OnFailure
           volumes:
           - name: docker-socket
             hostPath:
@@ -39,12 +39,12 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-images
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/3 * * * *"
   jobTemplate:
     spec:
       backoffLimit: 1
-      completions: 1
-      parallelism: 1
+#      completions: 1
+#      parallelism: 1
       template:
         spec:
           containers:
@@ -58,7 +58,7 @@ spec:
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
-          restartPolicy: Never
+          restartPolicy: OnFailure
           volumes:
           - name: docker-socket
             hostPath:
@@ -72,12 +72,12 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-volume
 spec:
-  schedule: "*/5 * * * *"
+  schedule: "*/3 * * * *"
   jobTemplate:
     spec:
       backoffLimit: 1
-      completions: 1
-      parallelism: 1
+#      completions: 1
+#      parallelism: 1
       template:
         spec:
           containers:
@@ -91,7 +91,7 @@ spec:
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
-          restartPolicy: Never
+          restartPolicy: OnFailure
           volumes:
           - name: docker-socket
             hostPath:
