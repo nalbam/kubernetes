@@ -56,10 +56,10 @@ kubectl apply -f volume/pv-10g.yml
 ```bash
 kubectl delete -f volume/pv-5g.yml
 kubectl delete -f volume/pv-10g.yml
+
 sudo rm -rf /data/0*
 
-docker rm $(sudo docker ps -a -q)
-
-docker rmi -f $(docker images -q)
-docker rmi -f $(docker images | grep ' <none> ' | awk '{print $3}')
+docker ps -a | awk '/Exited|Dead/ {print $1}' | xargs --no-run-if-empty docker rm
+docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi
+docker volume ls -q -f dangling=true | xargs --no-run-if-empty docker volume rmi
 ```

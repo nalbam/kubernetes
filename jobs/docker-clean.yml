@@ -22,7 +22,7 @@ spec:
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
-          restartPolicy: OnFailure
+          restartPolicy: Never
           volumes:
           - name: docker-socket
             hostPath:
@@ -52,7 +52,7 @@ spec:
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
-          restartPolicy: OnFailure
+          restartPolicy: Never
           volumes:
           - name: docker-socket
             hostPath:
@@ -82,7 +82,7 @@ spec:
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
-          restartPolicy: OnFailure
+          restartPolicy: Never
           volumes:
           - name: docker-socket
             hostPath:
