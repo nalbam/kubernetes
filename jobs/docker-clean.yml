@@ -90,8 +90,8 @@ spec:
             image: nalbam/builder:alpine
             imagePullPolicy: Always
             command:
-            - sh
-            - -C
+            - bash
+            - -c
             - "docker volume rm $(docker volume ls -q -f dangling=true)"
             volumeMounts:
             - name: docker-sock
