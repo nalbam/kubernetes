@@ -7,7 +7,9 @@ metadata:
   name: docker-clean-process
 spec:
   schedule: "10 * * * *"
+  concurrencyPolicy: Replace
   successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
@@ -45,7 +47,9 @@ metadata:
   name: docker-clean-images
 spec:
   schedule: "20 * * * *"
+  concurrencyPolicy: Replace
   successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
@@ -83,7 +87,9 @@ metadata:
   name: docker-clean-volume
 spec:
   schedule: "30 * * * *"
+  concurrencyPolicy: Replace
   successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
