@@ -16,7 +16,9 @@ spec:
             image: nalbam/builder:alpine
             imagePullPolicy: Always
             command:
-            - docker ps -a | awk '/Exited|Dead/ {print $1}' | xargs --no-run-if-empty docker rm
+            - sh
+            - -C
+            - "docker ps -a | awk '/Exited|Dead/ {print $1}' | xargs --no-run-if-empty docker rm"
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
@@ -44,7 +46,9 @@ spec:
             image: nalbam/builder:alpine
             imagePullPolicy: Always
             command:
-            - docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi
+            - sh
+            - -C
+            - "docker images -q -f dangling=true | xargs --no-run-if-empty docker rmi"
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
@@ -72,7 +76,9 @@ spec:
             image: nalbam/builder:alpine
             imagePullPolicy: Always
             command:
-            - docker volume ls -q -f dangling=true | xargs --no-run-if-empty docker volume rmi
+            - sh
+            - -C
+            - "docker volume ls -q -f dangling=true | xargs --no-run-if-empty docker volume rmi"
             volumeMounts:
             - name: docker-socket
               mountPath: /var/run/docker.sock
