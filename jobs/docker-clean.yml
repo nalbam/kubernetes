@@ -5,6 +5,8 @@ kind: CronJob
 apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-process
+  labels:
+    application: docker-clean-cronjob
 spec:
   schedule: "*/3 * * * *"
   jobTemplate:
@@ -42,6 +44,8 @@ spec:
 #apiVersion: batch/v1beta1
 #metadata:
 #  name: docker-clean-images
+#  labels:
+#    application: docker-clean-cronjob
 #spec:
 #  schedule: "*/3 * * * *"
 #  jobTemplate:
@@ -72,6 +76,8 @@ spec:
 #apiVersion: batch/v1beta1
 #metadata:
 #  name: docker-clean-volume
+#  labels:
+#    application: docker-clean-cronjob
 #spec:
 #  schedule: "*/3 * * * *"
 #  jobTemplate:
