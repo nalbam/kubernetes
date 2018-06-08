@@ -6,7 +6,8 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-process
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "10 * * * *"
+  successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
@@ -43,7 +44,8 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-images
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "20 * * * *"
+  successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
@@ -80,7 +82,8 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-volume
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "30 * * * *"
+  successfulJobsHistoryLimit: 1
   jobTemplate:
     spec:
       template:
