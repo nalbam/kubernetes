@@ -6,7 +6,7 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-rm-job
 spec:
-  schedule: "53 * * * *"
+  schedule: "13 * * * *"
   jobTemplate:
     spec:
       template:
@@ -28,7 +28,7 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-rmi-job
 spec:
-  schedule: "56 * * * *"
+  schedule: "16 * * * *"
   jobTemplate:
     spec:
       template:
@@ -50,7 +50,7 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-volume-job
 spec:
-  schedule: "59 * * * *"
+  schedule: "19 * * * *"
   jobTemplate:
     spec:
       template:
