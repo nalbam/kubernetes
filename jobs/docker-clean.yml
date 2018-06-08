@@ -4,7 +4,7 @@
 kind: CronJob
 apiVersion: batch/v1beta1
 metadata:
-  name: docker-clean
+  name: docker-clean-rm-job
 spec:
   schedule: "10 * * * *"
   jobTemplate:
@@ -26,7 +26,7 @@ spec:
 kind: CronJob
 apiVersion: batch/v1beta1
 metadata:
-  name: docker-clean
+  name: docker-clean-rmi-job
 spec:
   schedule: "20 * * * *"
   jobTemplate:
@@ -48,7 +48,7 @@ spec:
 kind: CronJob
 apiVersion: batch/v1beta1
 metadata:
-  name: docker-clean
+  name: docker-clean-volume-job
 spec:
   schedule: "30 * * * *"
   jobTemplate:
