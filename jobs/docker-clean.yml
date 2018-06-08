@@ -6,9 +6,11 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-process
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "*/5 * * * *"
   jobTemplate:
     spec:
+      parallelism: 1
+      completions: 1
       template:
         spec:
           containers:
@@ -36,9 +38,11 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-images
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "*/5 * * * *"
   jobTemplate:
     spec:
+      parallelism: 1
+      completions: 1
       template:
         spec:
           containers:
@@ -66,9 +70,11 @@ apiVersion: batch/v1beta1
 metadata:
   name: docker-clean-volume
 spec:
-  schedule: "*/10 * * * *"
+  schedule: "*/5 * * * *"
   jobTemplate:
     spec:
+      parallelism: 1
+      completions: 1
       template:
         spec:
           containers:
