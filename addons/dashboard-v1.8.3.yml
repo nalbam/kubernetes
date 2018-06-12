@@ -17,8 +17,6 @@
 #
 # Example usage: kubectl create -f <this_file>
 
-# https://github.com/kubernetes/dashboard/releases
-
 # ------------------- Dashboard Secret ------------------- #
 
 apiVersion: v1
@@ -120,8 +118,6 @@ spec:
         ports:
         - containerPort: 8443
           protocol: TCP
-        - containerPort: 9090
-          protocol: TCP
         args:
           - --auto-generate-certificates
           # Uncomment the following line to manually specify Kubernetes API server Host
@@ -163,37 +159,9 @@ metadata:
     k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
-  annotations:
-    #service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
-    #service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{SSL_CERT_ARN}}"
 spec:
-  type: NodePort
   ports:
-    - name: http
-      port: 80
-      targetPort: 9090
-    - name: https
-      port: 443
-      targetPort: 9090
+    - port: 443
+      targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard
-
----
-# ------------------- Dashboard Ingress ------------------- #
-
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kube-system
-spec:
-  rules:
-  - host: kubernetes-dashboard.apps.nalbam.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: kubernetes-dashboard
-          servicePort: 80
