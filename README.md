@@ -9,8 +9,8 @@ kubectl config view
 kubectl config set-context $(kubectl config current-context) --namespace=default
 
 # kubectl get
-watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
-watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv -n default
+kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
+kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv -n default
 
 # get tunnel ip
 ifconfig tunl0 | grep inet | awk '{print $2}'

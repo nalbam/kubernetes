@@ -1,13 +1,6 @@
 ## dashboard
 ```bash
-ADDON=addons/.temp.yml
-cp -rf addons/dashboard-v1.8.3.yml ${ADDON}
-
-SSL_CERT_ARN=$(aws acm list-certificates | jq '.CertificateSummaryList[] | select(.DomainName=="nalbam.com")' | grep CertificateArn | cut -d'"' -f4)
-
-sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
-
-kubectl apply -f ${ADDON}
+kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
 
 # get dashboard token
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk '{print $1}')
@@ -15,7 +8,6 @@ kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | gre
 kubectl proxy --port=8080 &
 
 http://localhost:8080/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
-http://master.nalbam.com:8080/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 ```
 * https://github.com/kubernetes/dashboard/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
@@ -23,10 +15,10 @@ http://master.nalbam.com:8080/api/v1/namespaces/kube-system/services/https:kuber
 
 ## heapster
 ```bash
-kubectl apply -f addons/heapster-v1.7.0.yml
+kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml
 
-watch kubectl top pod --all-namespaces
-watch kubectl top pod -n kube-system
+kubectl top pod --all-namespaces
+kubectl top pod -n kube-system
 ```
 * https://github.com/kubernetes/heapster/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
@@ -36,8 +28,8 @@ watch kubectl top pod -n kube-system
 ```bash
 kubectl apply -f addons/route53-mapper-v1.3.0.yml
 
-watch kubectl top pod -n kube-system
-watch kubectl top pod --all-namespaces
+kubectl top pod -n kube-system
+kubectl top pod --all-namespaces
 ```
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/tree/master/addons/route53-mapper
