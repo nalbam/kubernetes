@@ -98,6 +98,8 @@ metadata:
   namespace: default
   labels:
     app: sample-spring
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
   - host: sample-spring.apps.nalbam.com
