@@ -82,6 +82,8 @@ metadata:
   namespace: default
   labels:
     app: sample-web
+  annotations:
+    kubernetes.io/ingress.class: nginx
 spec:
   rules:
   - host: sample-web.apps.nalbam.com
