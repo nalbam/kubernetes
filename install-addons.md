@@ -9,6 +9,8 @@ sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
 
+#kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml
+
 # ingress-nginx 에서 ELB Name 을 획득
 ELB_NAME=$(kubectl get svc -n kube-ingress -owide | grep LoadBalancer | grep ingress-nginx | awk '{print $4}' | cut -d'-' -f1)
 
@@ -38,10 +40,22 @@ aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-bat
 
 ## dashboard
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
+ADDON=addons/.temp.yml
+cp -rf addons/dashboard-v1.8.3.yml ${ADDON}
+
+SSL_CERT_ARN=$(aws acm list-certificates | jq '.CertificateSummaryList[] | select(.DomainName=="nalbam.com")' | grep CertificateArn | cut -d'"' -f4)
+
+sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
+
+kubectl apply -f ${ADDON}
+
+#kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
 
 # get dashboard token
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk '{print $1}')
+
+# set cluster role binding
+kubectl create clusterrolebinding cluster-admin:kube-system:kubernetes-dashboard --clusterrole=cluster-admin --serviceaccount=kube-system:kubernetes-dashboard
 
 kubectl proxy --port=8080 &
 
