@@ -1,5 +1,4 @@
 ingress:
   enabled: true
-  path: /
   hosts:
     - dashboard.apps.nalbam.com
