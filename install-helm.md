@@ -38,11 +38,17 @@ kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}'
 ```
 * https://github.com/CenterForOpenScience/helm-charts
 
-## addons (charts)
+## charts
 ```bash
-helm install stable/kubernetes-dashboard --name dashboard
-
 helm install stable/nginx-ingress --name ingress
+
+kubectl get svc ingress-nginx-ingress-controller -n default -o wide
+kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-node.yml
+kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-spring.yml
+kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-web.yml
+
+
+helm install stable/kubernetes-dashboard --name dashboard
 
 
 ```

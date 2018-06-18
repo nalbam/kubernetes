@@ -24,22 +24,22 @@ spec:
         ports:
         - containerPort: 8080
           protocol: TCP
-        env:
-        - name: PROFILE
-          valueFrom:
-            configMapKeyRef:
-              name: sample-spring-dev
-              key: PROFILE
-        - name: SLACK_WEBHOOK
-          valueFrom:
-            configMapKeyRef:
-              name: sample-spring-dev
-              key: SLACK_WEBHOOK
-        - name: SLACK_CHANNEL
-          valueFrom:
-            configMapKeyRef:
-              name: sample-spring-dev
-              key: SLACK_CHANNEL
+#        env:
+#        - name: PROFILE
+#          valueFrom:
+#            configMapKeyRef:
+#              name: sample-spring-dev
+#              key: PROFILE
+#        - name: SLACK_WEBHOOK
+#          valueFrom:
+#            configMapKeyRef:
+#              name: sample-spring-dev
+#              key: SLACK_WEBHOOK
+#        - name: SLACK_CHANNEL
+#          valueFrom:
+#            configMapKeyRef:
+#              name: sample-spring-dev
+#              key: SLACK_CHANNEL
 
 ---
 # ------------------- HorizontalPodAutoscaler ------------------- #
