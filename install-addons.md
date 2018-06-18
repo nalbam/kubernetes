@@ -40,16 +40,7 @@ aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-bat
 
 ## dashboard
 ```bash
-ADDON=addons/.temp.yml
-cp -rf addons/dashboard-v1.8.3.yml ${ADDON}
-
-SSL_CERT_ARN=$(aws acm list-certificates | jq '.CertificateSummaryList[] | select(.DomainName=="nalbam.com")' | grep CertificateArn | cut -d'"' -f4)
-
-sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
-
-kubectl apply -f ${ADDON}
-
-#kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
+kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
 
 # get dashboard token
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk '{print $1}')

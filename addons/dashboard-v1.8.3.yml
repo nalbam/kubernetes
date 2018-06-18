@@ -159,10 +159,10 @@ metadata:
     k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
-    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
-    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{SSL_CERT_ARN}}"
+#  annotations:
+#    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
+#    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+#    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{SSL_CERT_ARN}}"
 spec:
   type: LoadBalancer
   ports:
