@@ -3,7 +3,7 @@
 ```bash
 kubectl create namespace monitoring
 
-kubectl create -f 
+kubectl create -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/prometheus.yml -n monitoring
 
 ```
 
