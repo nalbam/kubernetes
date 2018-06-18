@@ -3,16 +3,16 @@
 kind: ServiceAccount
 apiVersion: v1
 metadata:
-  name: nalbam
   namespace: kube-system
+  name: nalbam
 
 ---
 
 kind: ServiceAccount
 apiVersion: v1
 metadata:
-  name: nalbam
   namespace: default
+  name: nalbam
 
 ---
 # ------------------- ClusterRoleBinding ------------------- #
@@ -23,8 +23,8 @@ metadata:
   name: cluster-admin:kube-system:nalbam
 subjects:
 - kind: ServiceAccount
-  name: nalbam
   namespace: kube-system
+  name: nalbam
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -38,8 +38,8 @@ metadata:
   name: cluster-admin:default:nalbam
 subjects:
 - kind: ServiceAccount
-  name: nalbam
   namespace: default
+  name: nalbam
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

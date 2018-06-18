@@ -6,8 +6,8 @@ metadata:
   name: cluster-admin:kube-system:default
 subjects:
 - kind: ServiceAccount
-  name: default
   namespace: kube-system
+  name: default
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -21,8 +21,8 @@ metadata:
   name: cluster-admin:default:default
 subjects:
 - kind: ServiceAccount
-  name: default
   namespace: default
+  name: default
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

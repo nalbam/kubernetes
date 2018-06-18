@@ -40,5 +40,9 @@ kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}'
 
 ## addons (charts)
 ```bash
-helm install stable/kubernetes-dashboard --name my-release
+helm install stable/kubernetes-dashboard --name dashboard
+
+helm install stable/nginx-ingress --name ingress
+
+
 ```
