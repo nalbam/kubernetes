@@ -1,5 +1,12 @@
 ## prometheus
 
+```bash
+kubectl create namespace monitoring
+
+kubectl create -f 
+
+```
+
 * https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/
 
 * https://itnext.io/kubernetes-monitoring-with-prometheus-in-15-minutes-8e54d1de2e13
