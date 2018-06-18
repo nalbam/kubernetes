@@ -31,7 +31,7 @@ kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/samp
 
 ## kubernetes-dashboard
 ```bash
-helm install stable/kubernetes-dashboard --name dashboard
+helm install stable/kubernetes-dashboard -f ./charts/dashboard.yml --name dashboard
 ```
 
 ## heapster
