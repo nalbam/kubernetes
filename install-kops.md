@@ -11,14 +11,18 @@ chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
 
 ## usage
 ```bash
+# ssh-key
+ssh-keygen -q -f ~/.ssh/id_rsa -N ''
+
+# name
 export KOPS_CLUSTER_NAME=kube.nalbam.com
-export KOPS_STATE_STORE=s3://clusters.${KOPS_CLUSTER_NAME}
+export KOPS_STATE_STORE=s3://kops-nalbam-seoul
 
 # region
 aws configure set default.region ap-northeast-2
 
 # make bucket
-aws s3 mb ${KOPS_STATE_STORE}
+aws s3 mb ${KOPS_STATE_STORE} --region ap-northeast-2
 
 # create hosted zone
 # aws route53 create-hosted-zone --name ${KOPS_CLUSTER_NAME} --caller-reference 1
@@ -28,8 +32,8 @@ kops create cluster \
     --cloud=aws \
     --name=${KOPS_CLUSTER_NAME} \
     --state=${KOPS_STATE_STORE} \
-    --master-size=t2.small \
-    --node-size=t2.medium \
+    --master-size=t2.large \
+    --node-size=t2.large \
     --node-count=2 \
     --zones=ap-northeast-2a,ap-northeast-2c \
     --dns-zone=nalbam.com \
@@ -54,6 +58,5 @@ kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 
 ## kubectl
 ```bash
-# watch all namespaces
-watch kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
+kubectl get deploy,pod,svc --all-namespaces
 ```
