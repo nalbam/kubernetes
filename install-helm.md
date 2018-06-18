@@ -19,6 +19,33 @@ helm ls
 * https://github.com/kubernetes/helm
 * https://github.com/kubernetes/charts
 
+## nginx-ingress
+```bash
+helm install stable/nginx-ingress --name ingress
+
+kubectl get svc ingress-nginx-ingress-controller -n default -o wide
+kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-node.yml
+kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-spring.yml
+kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-web.yml
+```
+
+## kubernetes-dashboard
+```bash
+helm install stable/kubernetes-dashboard --name dashboard
+```
+
+## heapster
+```bash
+helm install stable/heapster --name heapster
+```
+
+## prometheus
+```bash
+helm install stable/prometheus -f ./charts/prometheus.yml --name prometheus
+```
+
+
+
 ## dependency build
 ```bash
 pushd pipeline
@@ -37,18 +64,3 @@ kubectl exec -it $(kubectl get pod | grep demo-jenkins | awk '{print $1}') -- sh
 kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}') -- sh
 ```
 * https://github.com/CenterForOpenScience/helm-charts
-
-## charts
-```bash
-helm install stable/nginx-ingress --name ingress
-
-kubectl get svc ingress-nginx-ingress-controller -n default -o wide
-kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-node.yml
-kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-spring.yml
-kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-web.yml
-
-
-helm install stable/kubernetes-dashboard --name dashboard
-
-
-```
