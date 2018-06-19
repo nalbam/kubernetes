@@ -8,7 +8,7 @@ metadata:
   labels:
     app: sample-web
 spec:
-  replicas: 2
+  replicas: 5
   revisionHistoryLimit: 10
   selector:
     matchLabels:
