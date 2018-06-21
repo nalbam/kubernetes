@@ -46,40 +46,13 @@ kubectl get svc -o wide --all-namespaces
 ADDON=addons/.temp.yml
 cp -rf addons/dashboard-v1.8.3.yml ${ADDON}
 
-SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | select(.DomainName=="nalbam.com")][0]' | grep CertificateArn | cut -d'"' -f4)
+#SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | select(.DomainName=="nalbam.com")][0]' | grep CertificateArn | cut -d'"' -f4)
 
-sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
+#sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
 
 #kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
-
-# ingress-nginx 의 ELB Name 을 획득
-ELB_NAME=$(kubectl get svc -n kube-system -owide | grep kubernetes-dashboard | grep LoadBalancer | awk '{print $4}' | cut -d'-' -f1)
-
-# ELB 에서 Hosted Zone ID, DNS Name 을 획득
-ELB_ZONE_ID=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep CanonicalHostedZoneNameID | cut -d'"' -f4)
-ELB_DNS_NAME=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep '"DNSName"' | cut -d'"' -f4)
-
-# Route53 에서 해당 도메인의 Hosted Zone ID 를 획득
-ZONE_ID=$(aws route53 list-hosted-zones | jq '.HostedZones[] | select(.Name=="nalbam.com.")' | grep '"Id"' | cut -d'"' -f4 | cut -d'/' -f3)
-
-DOMAIN="kubernetes-dashboard.nalbam.com."
-
-# temp file
-RECORD=sample/.temp.json
-cp -rf sample/record-sets.json ${RECORD}
-
-# replace
-sed -i -e "s@{{DOMAIN}}@${DOMAIN}@g" "${RECORD}"
-sed -i -e "s@{{ELB_ZONE_ID}}@${ELB_ZONE_ID}@g" "${RECORD}"
-sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
-
-# Route53 의 Record Set 에 입력/수정
-aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://./${RECORD}
-
-# elb
-kubectl get svc -o wide --all-namespaces
 
 # get dashboard token
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk '{print $1}')
