@@ -176,6 +176,7 @@ spec:
 # kubectl create clusterrolebinding cluster-admin:kube-system:kubernetes-dashboard \
 #         --clusterrole=cluster-admin \
 #         --serviceaccount=kube-system:kubernetes-dashboard
+# kubectl describe clusterrolebindings cluster-admin:kube-system:kubernetes-dashboard
 
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1beta1
