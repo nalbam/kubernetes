@@ -3,7 +3,7 @@
 ADDON=addons/.temp.yml
 cp -rf addons/ingress-nginx-v1.6.0.yml ${ADDON}
 
-SSL_CERT_ARN=$(aws acm list-certificates | jq '.CertificateSummaryList[] | select(.DomainName=="*.apps.nalbam.com")' | grep CertificateArn | cut -d'"' -f4)
+SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | select(.DomainName=="*.apps.nalbam.com")][0]' | grep CertificateArn | cut -d'"' -f4)
 
 sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
@@ -46,7 +46,7 @@ kubectl get ing -o wide -n kube-ingress
 ADDON=addons/.temp.yml
 cp -rf addons/dashboard-v1.8.3.yml ${ADDON}
 
-SSL_CERT_ARN=$(aws acm list-certificates | jq '.CertificateSummaryList[] | select(.DomainName=="nalbam.com")' | grep CertificateArn | cut -d'"' -f4)
+SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | select(.DomainName=="nalbam.com")][0]' | grep CertificateArn | cut -d'"' -f4)
 
 sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
