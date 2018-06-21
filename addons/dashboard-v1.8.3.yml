@@ -159,10 +159,10 @@ metadata:
     k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
-#  annotations:
-#    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
-#    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
-#    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{SSL_CERT_ARN}}"
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
+    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{SSL_CERT_ARN}}"
 spec:
   type: LoadBalancer
   ports:
@@ -170,28 +170,6 @@ spec:
       targetPort: 8443
   selector:
     k8s-app: kubernetes-dashboard
-
----
-# ------------------- Dashboard Ingress ------------------- #
-
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  labels:
-    k8s-app: kubernetes-dashboard
-  name: kubernetes-dashboard
-  namespace: kube-system
-  annotations:
-    kubernetes.io/ingress.class: nginx
-spec:
-  rules:
-  - host: kubernetes-dashboard.apps.nalbam.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: kubernetes-dashboard
-          servicePort: 443
 
 ---
 # ------------------- Dashboard RoleBinding ------------------- #
@@ -211,3 +189,25 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
   name: cluster-admin
+
+---
+# ------------------- Dashboard Ingress ------------------- #
+
+#apiVersion: extensions/v1beta1
+#kind: Ingress
+#metadata:
+#  labels:
+#    k8s-app: kubernetes-dashboard
+#  name: kubernetes-dashboard
+#  namespace: kube-system
+#  annotations:
+#    kubernetes.io/ingress.class: nginx
+#spec:
+#  rules:
+#  - host: kubernetes-dashboard.nalbam.com
+#    http:
+#      paths:
+#      - path: /
+#        backend:
+#          serviceName: kubernetes-dashboard
+#          servicePort: 443
