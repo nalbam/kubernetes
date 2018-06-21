@@ -67,7 +67,12 @@ http://localhost:8080/api/v1/namespaces/kube-system/services/https:kubernetes-da
 
 ## heapster
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml
+ADDON=addons/.temp.yml
+cp -rf addons/heapster-v1.7.0.yml ${ADDON}
+
+kubectl apply -f ${ADDON}
+
+#kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml
 
 kubectl top pod --all-namespaces
 kubectl top pod -n kube-system

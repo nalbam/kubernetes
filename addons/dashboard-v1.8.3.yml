@@ -192,9 +192,6 @@ spec:
         backend:
           serviceName: kubernetes-dashboard
           servicePort: 443
-  tls:
-  - hosts:
-    - kubernetes-dashboard.apps.nalbam.com
 
 ---
 # ------------------- Dashboard RoleBinding ------------------- #
