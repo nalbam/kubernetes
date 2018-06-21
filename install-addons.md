@@ -12,7 +12,7 @@ kubectl apply -f ${ADDON}
 #kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml
 
 # ingress-nginx 에서 ELB Name 을 획득
-ELB_NAME=$(kubectl get svc -n kube-ingress -owide | grep LoadBalancer | grep ingress-nginx | awk '{print $4}' | cut -d'-' -f1)
+ELB_NAME=$(kubectl get svc -n kube-ingress -owide | grep ingress-nginx | grep LoadBalancer | awk '{print $4}' | cut -d'-' -f1)
 
 # ELB 에서 Hosted Zone ID, DNS Name 을 획득
 ELB_ZONE_ID=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep CanonicalHostedZoneNameID | cut -d'"' -f4)
