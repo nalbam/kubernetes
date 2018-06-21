@@ -55,8 +55,8 @@ kubectl apply -f ${ADDON}
 #kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
 
 # admin
-kubectl apply -f role/default-admin.yml
-kubectl describe secret -n default $(kubectl get secret -n default | grep admin-token | awk '{print $1}')
+kubectl apply -f role/admin.yml
+kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep admin-token | awk '{print $1}')
 ```
 * https://github.com/kubernetes/dashboard/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
