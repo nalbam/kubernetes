@@ -16,7 +16,7 @@ metadata:
 subjects:
 - kind: ServiceAccount
   namespace: default
-  name: nalbam
+  name: admin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
