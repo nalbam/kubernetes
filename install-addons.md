@@ -36,7 +36,7 @@ sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://./${RECORD}
 
 # elb
-kubectl get ing -o wide -n kube-ingress
+kubectl get svc -o wide --all-namespaces
 ```
 * https://github.com/kubernetes/ingress-nginx/
 * https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx
@@ -77,6 +77,9 @@ sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 
 # Route53 의 Record Set 에 입력/수정
 aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://./${RECORD}
+
+# elb
+kubectl get svc -o wide --all-namespaces
 
 # get dashboard token
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep kubernetes-dashboard-token | awk '{print $1}')
