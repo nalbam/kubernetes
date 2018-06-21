@@ -18,16 +18,14 @@ ifconfig tunl0 | grep inet | awk '{print $2}'
 
 ## role
 ```bash
-kubectl apply -f role/default.yml
-kubectl apply -f role/nalbam.yml
+kubectl apply -f role/default-admin.yml
 
-kubectl get sa --all-namespaces | grep -E 'default|nalbam'
+kubectl get sa --all-namespaces | grep -E 'default|admin'
 kubectl get clusterrole | grep cluster-admin
 kubectl get clusterrolebindings | grep cluster-admin
 
 kubectl describe clusterrole cluster-admin
-kubectl describe clusterrolebindings cluster-admin:default:default
-kubectl describe clusterrolebindings cluster-admin:default:nalbam
+kubectl describe clusterrolebindings cluster-admin:default:admin
 ```
 
 ## sample
