@@ -36,7 +36,7 @@ sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://./${RECORD}
 
 # elb
-kubectl get svc -o wide --all-namespaces
+kubectl get svc -o wide -n kube-ingress
 ```
 * https://github.com/kubernetes/ingress-nginx/
 * https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx
@@ -55,8 +55,14 @@ kubectl apply -f ${ADDON}
 #kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
 
 # admin
-kubectl apply -f role/admin.yml
+kubectl create serviceaccount admin -n kube-system
+kubectl create clusterrolebinding cluster-admin:kube-system:admin --clusterrole=cluster-admin --serviceaccount=kube-system:admin
+
+# get token
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep admin-token | awk '{print $1}')
+
+# elb
+kubectl get svc -o wide -n kube-system
 ```
 * https://github.com/kubernetes/dashboard/
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
