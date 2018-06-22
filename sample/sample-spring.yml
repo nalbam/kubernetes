@@ -42,25 +42,6 @@ spec:
 #              key: SLACK_CHANNEL
 
 ---
-# ------------------- HorizontalPodAutoscaler ------------------- #
-
-kind: HorizontalPodAutoscaler
-apiVersion: autoscaling/v1
-metadata:
-  name: sample-spring
-  namespace: default
-  labels:
-    app: sample-spring
-spec:
-  scaleTargetRef:
-    kind: Deployment
-    name: sample-spring
-    apiVersion: apps/v1beta1
-  minReplicas: 1
-  maxReplicas: 5
-  targetCPUUtilizationPercentage: 50
-
----
 # ------------------- Service ------------------- #
 
 kind: Service
@@ -109,3 +90,22 @@ spec:
         backend:
           serviceName: sample-spring
           servicePort: 80
+
+---
+# ------------------- HorizontalPodAutoscaler ------------------- #
+
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v1
+metadata:
+  name: sample-spring
+  namespace: default
+  labels:
+    app: sample-spring
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: sample-spring
+    apiVersion: apps/v1beta1
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50

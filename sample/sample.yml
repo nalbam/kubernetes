@@ -25,25 +25,6 @@ spec:
           protocol: TCP
 
 ---
-# ------------------- HorizontalPodAutoscaler ------------------- #
-
-kind: HorizontalPodAutoscaler
-apiVersion: autoscaling/v1
-metadata:
-  name: {DEPLOY_NAME}
-  namespace: {NAMESPACE}
-  labels:
-    app: {DEPLOY_NAME}
-spec:
-  scaleTargetRef:
-    kind: Deployment
-    name: {DEPLOY_NAME}
-    apiVersion: apps/v1beta1
-  minReplicas: {REPLICAS_MIN}
-  maxReplicas: {REPLICAS_MAX}
-  targetCPUUtilizationPercentage: {TARGET_PER}
-
----
 # ------------------- Service ------------------- #
 
 kind: Service
@@ -62,3 +43,44 @@ spec:
       targetPort: {CONTANER_PORT}
   selector:
     k8s-app: {DEPLOY_NAME}
+
+---
+# ------------------- Ingress ------------------- #
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {DEPLOY_NAME}
+  namespace: {NAMESPACE}
+  labels:
+    app: {DEPLOY_NAME}
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: {DEPLOY_NAME}.apps.nalbam.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: {DEPLOY_NAME}
+          servicePort: {SERVICE_PORT}
+
+---
+# ------------------- HorizontalPodAutoscaler ------------------- #
+
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v1
+metadata:
+  name: {DEPLOY_NAME}
+  namespace: {NAMESPACE}
+  labels:
+    app: {DEPLOY_NAME}
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: {DEPLOY_NAME}
+    apiVersion: apps/v1beta1
+  minReplicas: {REPLICAS_MIN}
+  maxReplicas: {REPLICAS_MAX}
+  targetCPUUtilizationPercentage: {TARGET_PER}
