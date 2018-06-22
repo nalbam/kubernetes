@@ -46,3 +46,25 @@ spec:
       targetPort: 3000
   selector:
     k8s-app: sample-node
+
+---
+# ------------------- Ingress ------------------- #
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sample-node
+  namespace: default
+  labels:
+    app: sample-node
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: sample-node.apps.nalbam.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: sample-node
+          servicePort: 80
