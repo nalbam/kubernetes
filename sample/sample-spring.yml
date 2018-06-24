@@ -26,11 +26,18 @@ spec:
           protocol: TCP
         livenessProbe:
           httpGet:
-            scheme: HTTPS
             path: /live
             port: 8080
           initialDelaySeconds: 30
           timeoutSeconds: 3
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /read
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 3
+          periodSeconds: 15
 #        env:
 #        - name: PROFILE
 #          valueFrom:

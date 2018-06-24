@@ -24,6 +24,13 @@ spec:
         ports:
         - containerPort: 80
           protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 80
+          initialDelaySeconds: 30
+          timeoutSeconds: 3
+          periodSeconds: 15
 
 ---
 # ------------------- Service ------------------- #
