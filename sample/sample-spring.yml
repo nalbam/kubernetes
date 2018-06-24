@@ -30,14 +30,14 @@ spec:
             path: /live
             port: 8080
           initialDelaySeconds: 30
-          timeoutSeconds: 30
+          timeoutSeconds: 3
         readnessProbe:
           httpGet:
             scheme: HTTPS
             path: /read
             port: 8080
           initialDelaySeconds: 30
-          timeoutSeconds: 30
+          timeoutSeconds: 3
 #        env:
 #        - name: PROFILE
 #          valueFrom:
