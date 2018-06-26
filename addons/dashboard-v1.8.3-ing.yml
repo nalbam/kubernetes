@@ -122,10 +122,6 @@ spec:
           - --enable-insecure-login=true
           - --insecure-bind-address=0.0.0.0
           - --insecure-port=9090
-          # Uncomment the following line to manually specify Kubernetes API server Host
-          # If not specified, Dashboard will attempt to auto discover the API server and connect
-          # to it. Uncomment only if the default does not work.
-          # - --apiserver-host=http://my-address:port
         volumeMounts:
         - name: kubernetes-dashboard-certs
           mountPath: /certs
