@@ -90,7 +90,7 @@ spec:
   - host: sample-back.apps.nalbam.com
     http:
       paths:
-      - path: /spring/
+      - path: /read/
         backend:
           serviceName: sample-back
           servicePort: 8080
