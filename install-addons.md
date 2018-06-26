@@ -1,7 +1,7 @@
 ## ingress-nginx
 ```bash
 ADDON=addons/.temp.yml
-cp -rf addons/ingress-nginx-v1.6.0.yml ${ADDON}
+cp -rf addons/ingress-nginx-v1.6.0-ing.yml ${ADDON}
 
 SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | select(.DomainName=="*.apps.nalbam.com")][0]' | grep CertificateArn | cut -d'"' -f4)
 
@@ -44,11 +44,11 @@ kubectl get svc -o wide -n kube-ingress
 ## dashboard
 ```bash
 ADDON=addons/.temp.yml
-cp -rf addons/dashboard-v1.8.3.yml ${ADDON}
+cp -rf addons/dashboard-v1.8.3-ing.yml ${ADDON}
 
-#SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | select(.DomainName=="nalbam.com")][0]' | grep CertificateArn | cut -d'"' -f4)
+SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | select(.DomainName=="*.apps.nalbam.com")][0]' | grep CertificateArn | cut -d'"' -f4)
 
-#sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
+sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
 
