@@ -116,14 +116,9 @@ spec:
       - name: kubernetes-dashboard
         image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3
         ports:
-        - name: http
-          containerPort: 9090
-          protocol: TCP
-        - name: https
-          containerPort: 8443
+        - containerPort: 9090
           protocol: TCP
         args:
-          - --auto-generate-certificates
           - --enable-insecure-login=true
           - --insecure-bind-address=0.0.0.0
           - --insecure-port=9090
@@ -139,11 +134,11 @@ spec:
           name: tmp-volume
         livenessProbe:
           httpGet:
-            scheme: HTTPS
+            scheme: HTTP
             path: /
-            port: 8443
+            port: 9090
           initialDelaySeconds: 30
-          timeoutSeconds: 30
+          timeoutSeconds: 3
       volumes:
       - name: kubernetes-dashboard-certs
         secret:
@@ -166,10 +161,6 @@ metadata:
     k8s-app: kubernetes-dashboard
   name: kubernetes-dashboard
   namespace: kube-system
-#  annotations:
-#    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
-#    service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
-#    service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{SSL_CERT_ARN}}"
 spec:
   type: NodePort
   ports:

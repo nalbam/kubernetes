@@ -136,7 +136,7 @@ spec:
             path: /
             port: 8443
           initialDelaySeconds: 30
-          timeoutSeconds: 30
+          timeoutSeconds: 3
       volumes:
       - name: kubernetes-dashboard-certs
         secret:
