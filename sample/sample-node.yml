@@ -10,6 +10,10 @@ metadata:
 spec:
   replicas: 2
   revisionHistoryLimit: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
   selector:
     matchLabels:
       k8s-app: sample-node
