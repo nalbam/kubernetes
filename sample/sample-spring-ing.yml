@@ -99,5 +99,5 @@ spec:
     name: sample-spring
     apiVersion: apps/v1beta1
   minReplicas: 1
-  maxReplicas: 5
+  maxReplicas: 10
   targetCPUUtilizationPercentage: 50
