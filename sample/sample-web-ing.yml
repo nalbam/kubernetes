@@ -91,7 +91,7 @@ spec:
   scaleTargetRef:
     kind: Deployment
     name: sample-web
-    apiVersion: apps/v1beta1
+    apiVersion: apps/v1
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 30
