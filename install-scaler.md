@@ -6,6 +6,12 @@ kubectl apply -f metrics-server/deploy/1.8+/
 ```
 
 ```bash
+kubectl apply -f kubernetes/sample/sample-node-ing.yml
+kubectl apply -f kubernetes/sample/sample-spring-ing.yml
+kubectl apply -f kubernetes/sample/sample-web-ing.yml
+```
+
+```bash
 ab -n 1000000 -c 1 https://sample-spring.apps.nalbam.com/stress
 
 ab -n 1000000 -c 10 https://sample-spring.apps.nalbam.com/stress
