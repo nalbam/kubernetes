@@ -43,13 +43,17 @@ kops create cluster \
 
 kops get cluster
 
-kops edit cluster --name=${KOPS_CLUSTER_NAME}
+# edit cluster
+kops edit cluster
+
+# edit instance group
+kops edit ig nodes
 
 kops update cluster --name=${KOPS_CLUSTER_NAME} --yes
 
 kops rolling-update cluster --name=${KOPS_CLUSTER_NAME} --yes
 
-kops validate cluster --name=${KOPS_CLUSTER_NAME}
+kops validate cluster
 
 kops export kubecfg --name ${KOPS_CLUSTER_NAME}
 
