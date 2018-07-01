@@ -29,7 +29,6 @@ kops create cluster \
     --cloud=aws \
     --name=${KOPS_CLUSTER_NAME} \
     --state=${KOPS_STATE_STORE} \
-    --kubernetes-version=1.11.0 \
     --master-size=m4.large \
     --node-size=m4.large \
     --node-count=2 \
@@ -38,6 +37,7 @@ kops create cluster \
     --network-cidr=10.10.0.0/16 \
     --networking=calico
 
+#    --kubernetes-version=1.11.0 \
 #    --target=terraform \
 #    --out=.
 
