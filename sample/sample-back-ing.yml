@@ -21,6 +21,7 @@ spec:
       containers:
       - name: sample-spring
         image: nalbam/sample-spring:alpine
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           protocol: TCP
