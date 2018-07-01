@@ -32,6 +32,13 @@ spec:
           initialDelaySeconds: 30
           timeoutSeconds: 3
           periodSeconds: 15
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "100m"
+          limits:
+            memory: "512Mi"
+            cpu: "300m"
 
 ---
 # ------------------- Service ------------------- #
