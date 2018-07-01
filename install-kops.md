@@ -32,8 +32,8 @@ kops create cluster \
     --cloud=aws \
     --name=${KOPS_CLUSTER_NAME} \
     --state=${KOPS_STATE_STORE} \
-    --master-size=t2.large \
-    --node-size=t2.large \
+    --master-size=m4.large \
+    --node-size=m4.large \
     --node-count=2 \
     --zones=ap-northeast-2a,ap-northeast-2c \
     --dns-zone=nalbam.com \
