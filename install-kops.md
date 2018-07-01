@@ -49,7 +49,9 @@ kops edit cluster --name=${KOPS_CLUSTER_NAME}
 
 kops update cluster --name=${KOPS_CLUSTER_NAME} --yes
 
-kops validate cluster
+kops validate cluster --name=${KOPS_CLUSTER_NAME}
+
+kops export kubecfg --name ${KOPS_CLUSTER_NAME}
 
 kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 ```
