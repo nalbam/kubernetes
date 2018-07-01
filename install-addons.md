@@ -105,7 +105,7 @@ IMAGE=k8s.gcr.io/cluster-autoscaler:v1.1.2
 MIN_NODES=2
 MAX_NODES=5
 AWS_REGION=ap-northeast-2
-GROUP_NAME="nodes.kube.nalbam.com"
+GROUP_NAME="nodes.apps.nalbam.com"
 SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
 
 sed -i -e "s@{{CLOUD_PROVIDER}}@${CLOUD_PROVIDER}@g" "${ADDON}"

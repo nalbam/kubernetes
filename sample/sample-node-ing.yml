@@ -75,3 +75,22 @@ spec:
         backend:
           serviceName: sample-node
           servicePort: 80
+
+---
+# ------------------- HorizontalPodAutoscaler ------------------- #
+
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v1
+metadata:
+  name: sample-node
+  namespace: default
+  labels:
+    app: sample-node
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: sample-node
+    apiVersion: apps/v1beta1
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
