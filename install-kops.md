@@ -24,20 +24,18 @@ aws configure set default.region ap-northeast-2
 # make bucket
 aws s3 mb ${KOPS_STATE_STORE} --region ap-northeast-2
 
-# create hosted zone
-# aws route53 create-hosted-zone --name ${KOPS_CLUSTER_NAME} --caller-reference 1
-
 # create cluster
 kops create cluster \
     --cloud=aws \
     --name=${KOPS_CLUSTER_NAME} \
     --state=${KOPS_STATE_STORE} \
+    --kubernetes-version=1.11.0 \
     --master-size=m4.large \
     --node-size=m4.large \
     --node-count=2 \
     --zones=ap-northeast-2a,ap-northeast-2c \
     --dns-zone=nalbam.com \
-    --network-cidr=10.20.0.0/16 \
+    --network-cidr=10.10.0.0/16 \
     --networking=calico
 
 #    --target=terraform \
