@@ -9,7 +9,7 @@ metadata:
     app: sample-spring
 spec:
   replicas: 1
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 30
   strategy:
     type: RollingUpdate
     rollingUpdate:
