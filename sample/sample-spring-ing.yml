@@ -112,7 +112,7 @@ spec:
     apiVersion: apps/v1
   minReplicas: 1
   maxReplicas: 30
-  targetCPUUtilizationPercentage: 30
+  targetCPUUtilizationPercentage: 50
 
 #apiVersion: autoscaling/v2beta1
 #kind: HorizontalPodAutoscaler
