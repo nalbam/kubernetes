@@ -84,24 +84,13 @@ kubectl top pod -n kube-system
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
 
-## route53-mapper (ExternalDNS)
-```bash
-kubectl apply -f addons/route53-mapper-v1.3.0.yml
-
-kubectl top pod -n kube-system
-kubectl top pod --all-namespaces
-```
-* https://github.com/kubernetes/kops/blob/master/docs/addons.md
-* https://github.com/kubernetes/kops/tree/master/addons/route53-mapper
-* https://github.com/kubernetes-incubator/external-dns
-
 ## cluster-autoscaler
 ```bash
 ADDON=addons/.temp.yml
 cp -rf addons/cluster-autoscaler-v1.8.0.yml ${ADDON}
 
 CLOUD_PROVIDER=aws
-IMAGE=k8s.gcr.io/cluster-autoscaler:v1.1.2
+IMAGE=k8s.gcr.io/cluster-autoscaler:v1.2.2
 MIN_NODES=2
 MAX_NODES=8
 AWS_REGION=ap-northeast-2
@@ -120,3 +109,14 @@ kubectl apply -f ${ADDON}
 ```
 * https://github.com/kubernetes/autoscaler/
 * https://github.com/kubernetes/kops/tree/master/addons/cluster-autoscaler
+
+## route53-mapper (ExternalDNS)
+```bash
+kubectl apply -f addons/route53-mapper-v1.3.0.yml
+
+kubectl top pod -n kube-system
+kubectl top pod --all-namespaces
+```
+* https://github.com/kubernetes/kops/blob/master/docs/addons.md
+* https://github.com/kubernetes/kops/tree/master/addons/route53-mapper
+* https://github.com/kubernetes-incubator/external-dns
