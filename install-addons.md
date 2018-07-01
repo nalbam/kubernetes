@@ -103,9 +103,9 @@ cp -rf addons/cluster-autoscaler-v1.8.0.yml ${ADDON}
 CLOUD_PROVIDER=aws
 IMAGE=k8s.gcr.io/cluster-autoscaler:v1.1.2
 MIN_NODES=2
-MAX_NODES=5
+MAX_NODES=8
 AWS_REGION=ap-northeast-2
-GROUP_NAME="nodes.apps.nalbam.com"
+GROUP_NAME="nodes.kube.nalbam.com"
 SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
 
 sed -i -e "s@{{CLOUD_PROVIDER}}@${CLOUD_PROVIDER}@g" "${ADDON}"

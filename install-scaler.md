@@ -7,7 +7,7 @@ kubectl apply -f deploy/1.8+/
 ```
 
 ```bash
-ab -n 100000 -c 10 https://sample-spring.apps.nalbam.com/stress
+ab -n 10000 -c 1 https://sample-spring.apps.nalbam.com/stress
 ```
 
 ```bash
