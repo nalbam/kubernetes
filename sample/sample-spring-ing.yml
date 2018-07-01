@@ -9,7 +9,7 @@ metadata:
     app: sample-spring
 spec:
   replicas: 1
-  revisionHistoryLimit: 30
+  revisionHistoryLimit: 10
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -111,7 +111,7 @@ spec:
     name: sample-spring
     apiVersion: apps/v1
   minReplicas: 1
-  maxReplicas: 10
+  maxReplicas: 30
   targetCPUUtilizationPercentage: 30
 
 #apiVersion: autoscaling/v2beta1
@@ -125,7 +125,7 @@ spec:
 #    kind: Deployment
 #    name: sample-spring
 #  minReplicas: 1
-#  maxReplicas: 10
+#  maxReplicas: 30
 #  metrics:
 #  - type: Resource
 #    resource:
