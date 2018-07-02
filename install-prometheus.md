@@ -1,10 +1,8 @@
 ## prometheus
 
 ```bash
-kubectl create namespace monitoring
-
-kubectl create -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/prometheus.yml -n monitoring
-
+kubectl apply -f prometheus/config.yml
+kubectl apply -f prometheus/deploy.yml
 ```
 
 * https://github.com/camilb/prometheus-kubernetes
