@@ -1,3 +1,9 @@
+## git clone
+```bash
+git clone https://github.com/nalbam/kubernetes
+cd kubernetes
+```
+
 ## ingress-nginx
 ```bash
 ADDON=addons/.temp.yml
