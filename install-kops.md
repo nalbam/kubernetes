@@ -66,5 +66,5 @@ kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 
 ## kubectl
 ```bash
-kubectl get deploy,pod,svc --all-namespaces
+kubectl get node,deploy,pod,svc --all-namespaces
 ```

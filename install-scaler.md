@@ -9,6 +9,8 @@ kubectl apply -f metrics-server/deploy/1.8+/
 kubectl apply -f kubernetes/sample/sample-node-ing.yml
 kubectl apply -f kubernetes/sample/sample-spring-ing.yml
 kubectl apply -f kubernetes/sample/sample-web-ing.yml
+
+kubectl get svc,ing -o wide -n default
 ```
 
 ## stress
