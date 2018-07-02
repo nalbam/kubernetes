@@ -53,8 +53,10 @@ kops update cluster --name=${KOPS_CLUSTER_NAME} --yes
 
 kops rolling-update cluster --name=${KOPS_CLUSTER_NAME} --yes
 
+# validate cluster
 kops validate cluster
 
+# export kube config
 kops export kubecfg --name ${KOPS_CLUSTER_NAME}
 
 kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
