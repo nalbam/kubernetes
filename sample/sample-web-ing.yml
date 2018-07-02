@@ -87,13 +87,6 @@ spec:
         backend:
           serviceName: sample-web
           servicePort: 80
-  - host: sample-web.apps.13.124.245.56.nip.io
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: sample-web
-          servicePort: 80
 
 ---
 # ------------------- HorizontalPodAutoscaler ------------------- #
