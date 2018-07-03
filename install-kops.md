@@ -15,7 +15,7 @@ chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
 ssh-keygen -q -f ~/.ssh/id_rsa -N ''
 
 # name
-export KOPS_CLUSTER_NAME=kube.nalbam.com
+export KOPS_CLUSTER_NAME=nalbam.k8s.local
 export KOPS_STATE_STORE=s3://kops-nalbam-seoul
 
 # region
@@ -33,10 +33,10 @@ kops create cluster \
     --node-size=m4.large \
     --node-count=2 \
     --zones=ap-northeast-2a,ap-northeast-2c \
-    --dns-zone=nalbam.com \
     --network-cidr=10.10.0.0/16 \
     --networking=calico
 
+#    --dns-zone=nalbam.com \
 #    --kubernetes-version=1.11.0 \
 #    --target=terraform \
 #    --out=.
