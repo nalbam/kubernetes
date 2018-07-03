@@ -68,6 +68,7 @@ kubectl create clusterrolebinding cluster-admin:kube-system:admin --clusterrole=
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep admin-token | awk '{print $1}')
 
 # elb
+kubectl get pod,svc -n kube-system
 kubectl get svc,ing -o wide -n kube-system
 ```
 * https://github.com/kubernetes/dashboard/
