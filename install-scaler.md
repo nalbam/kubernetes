@@ -10,7 +10,7 @@ kubectl apply -f kubernetes/sample/sample-node-ing.yml
 kubectl apply -f kubernetes/sample/sample-spring-ing.yml
 kubectl apply -f kubernetes/sample/sample-web-ing.yml
 
-kubectl get pod,svc,ing -o wide -n default
+kubectl get pod,svc,ing -n default
 ```
 
 ## stress

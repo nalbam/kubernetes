@@ -6,7 +6,7 @@ cd prometheus-kubernetes
 
 ./deploy
 
-kubectl get deploy,pod,svc,ing -n monitoring
+kubectl get pod,svc,ing -n monitoring
 ```
 
 * https://github.com/camilb/prometheus-kubernetes

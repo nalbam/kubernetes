@@ -110,9 +110,6 @@ kubectl apply -f ${ADDON}
 ## route53-mapper (ExternalDNS)
 ```bash
 kubectl apply -f addons/route53-mapper-v1.3.0.yml
-
-kubectl top pod -n kube-system
-kubectl top pod --all-namespaces
 ```
 * https://github.com/kubernetes/kops/blob/master/docs/addons.md
 * https://github.com/kubernetes/kops/tree/master/addons/route53-mapper
