@@ -10,7 +10,7 @@ kubectl apply -f kubernetes/sample/sample-node-ing.yml
 kubectl apply -f kubernetes/sample/sample-spring-ing.yml
 kubectl apply -f kubernetes/sample/sample-web-ing.yml
 
-kubectl get svc,ing -o wide -n default
+kubectl get pod,svc,ing -o wide -n default
 ```
 
 ## stress
@@ -29,6 +29,10 @@ NAME            REFERENCE                  TARGETS   MINPODS   MAXPODS   REPLICA
 sample-node     Deployment/sample-node     0%/50%    1         10        1          1h
 sample-spring   Deployment/sample-spring   47%/50%   1         30        6          1h
 sample-web      Deployment/sample-web      0%/50%    1         10        1          1h
+```
+
+```bash
+kubectl describe hpa sample-spring
 ```
 
 * https://github.com/kubernetes-incubator/metrics-server

@@ -1,8 +1,12 @@
 ## prometheus
 
 ```bash
-kubectl apply -f prometheus/config.yml
-kubectl apply -f prometheus/deploy.yml
+git clone https://github.com/nalbam/prometheus-kubernetes
+cd prometheus-kubernetes
+
+./deploy
+
+kubectl get deploy,pod,svc,ing -n monitoring
 ```
 
 * https://github.com/camilb/prometheus-kubernetes
