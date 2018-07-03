@@ -107,6 +107,6 @@ spec:
     kind: Deployment
     name: sample-spring
     apiVersion: apps/v1
-  minReplicas: 2
+  minReplicas: 1
   maxReplicas: 100
   targetCPUUtilizationPercentage: 50
