@@ -49,14 +49,7 @@ kubectl get svc -o wide -n kube-ingress
 
 ## dashboard
 ```bash
-ADDON=addons/.temp.yml
-cp -rf addons/dashboard-v1.8.3-ing.yml ${ADDON}
-
-#SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | select(.DomainName=="*.apps.nalbam.com")][0]' | grep CertificateArn | cut -d'"' -f4)
-
-#sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
-
-kubectl apply -f ${ADDON}
+kubectl apply -f addons/dashboard-v1.8.3-ing.yml
 
 #kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
 
@@ -68,7 +61,7 @@ kubectl create clusterrolebinding cluster-admin:kube-system:admin --clusterrole=
 kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | grep admin-token | awk '{print $1}')
 
 # elb
-kubectl get pod,svc -n kube-system
+kubectl get pod,svc,ing -n kube-system
 kubectl get svc,ing -o wide -n kube-system
 ```
 * https://github.com/kubernetes/dashboard/
@@ -77,10 +70,7 @@ kubectl get svc,ing -o wide -n kube-system
 
 ## heapster
 ```bash
-ADDON=addons/.temp.yml
-cp -rf addons/heapster-v1.7.0.yml ${ADDON}
-
-kubectl apply -f ${ADDON}
+kubectl apply -f addons/heapster-v1.7.0.yml
 
 #kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml
 
