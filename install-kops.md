@@ -27,7 +27,7 @@ kops create cluster \
     --cloud=aws \
     --name=${KOPS_CLUSTER_NAME} \
     --state=${KOPS_STATE_STORE} \
-    --node-size=m4.large \
+    --node-size=m4.xlarge \
     --zones=ap-northeast-2a,ap-northeast-2c \
     --network-cidr=10.10.0.0/16 \
     --networking=calico
