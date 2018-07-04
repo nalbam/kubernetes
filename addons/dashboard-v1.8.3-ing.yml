@@ -162,7 +162,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: kubernetes-dashboard.apps.nalbam.com
+  - host: dashboard.apps.nalbam.com
     http:
       paths:
       - path: /
