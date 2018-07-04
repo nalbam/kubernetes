@@ -5,5 +5,5 @@ cd kubernetes-efk
 
 ./ctl.sh -i logging.apps.nalbam.com
 
-kubectl get pod,svc,ing -n logging
+kubectl get pod,svc,ing -n kube-logging
 ```
