@@ -3,7 +3,7 @@
 git clone https://github.com/nalbam/kubernetes-efk
 cd kubernetes-efk
 
-./deploy.sh
+./ctl.sh -i logging.apps.nalbam.com
 
-kubectl get pod,svc,ing -n kube-logging
+kubectl get pod,svc,ing -n logging
 ```
