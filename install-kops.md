@@ -4,9 +4,7 @@
 brew update && brew install kops
 
 # Linux
-export VERSION=$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d'"' -f4)
-curl -LO https://github.com/kubernetes/kops/releases/download/${VERSION}/kops-linux-amd64
-chmod +x kops-linux-amd64 && sudo mv kops-linux-amd64 /usr/local/bin/kops
+curl -sL toast.sh/helper/bastion.sh | bash
 ```
 
 ## usage
@@ -29,13 +27,15 @@ kops create cluster \
     --cloud=aws \
     --name=${KOPS_CLUSTER_NAME} \
     --state=${KOPS_STATE_STORE} \
-    --master-size=m4.large \
     --node-size=m4.large \
-    --node-count=2 \
     --zones=ap-northeast-2a,ap-northeast-2c \
     --network-cidr=10.10.0.0/16 \
     --networking=calico
 
+#    --master-size=c4.large \
+#    --master-count=3 \
+#    --master-zones=ap-northeast-2a,ap-northeast-2c \
+#    --node-count=2 \
 #    --dns-zone=nalbam.com \
 #    --kubernetes-version=1.11.0 \
 #    --target=terraform \

@@ -1,5 +1,4 @@
-## prometheus
-
+## install
 ```bash
 git clone https://github.com/nalbam/prometheus-kubernetes
 cd prometheus-kubernetes

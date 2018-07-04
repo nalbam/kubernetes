@@ -12,38 +12,25 @@ tar -xvf helm-${VERSION}-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/loc
 ## usage
 ```bash
 helm init
+
 helm search
-helm ls
+helm list
+
+# incubator
+helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
 ```
 * https://helm.sh/
 * https://github.com/kubernetes/helm
 * https://github.com/kubernetes/charts
 
-## nginx-ingress
+## elasticsearch
 ```bash
-helm install stable/nginx-ingress --name ingress
+kubectl create namespace logging
 
-kubectl get svc ingress-nginx-ingress-controller -n default -o wide
-kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-node.yml
-kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-spring.yml
-kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-web.yml
+helm install incubator/elasticsearch --name es --namespace logging
+
+helm install stable/kibana --name kb --namespace logging
 ```
-
-## kubernetes-dashboard
-```bash
-helm install stable/kubernetes-dashboard -f ./charts/dashboard.yml --name dashboard
-```
-
-## heapster
-```bash
-helm install stable/heapster --name heapster
-```
-
-## prometheus
-```bash
-helm install stable/prometheus -f ./charts/prometheus.yml --name prometheus
-```
-
 
 
 ## dependency build

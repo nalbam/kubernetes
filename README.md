@@ -18,14 +18,14 @@ ifconfig tunl0 | grep inet | awk '{print $2}'
 
 ## role
 ```bash
-kubectl apply -f role/default-admin.yml
+kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
 kubectl get sa --all-namespaces | grep -E 'default|admin'
 kubectl get clusterrole | grep cluster-admin
 kubectl get clusterrolebindings | grep cluster-admin
 
 kubectl describe clusterrole cluster-admin
-kubectl describe clusterrolebindings cluster-admin:default:admin
+kubectl describe clusterrolebindings cluster-admin:kube-system:default
 ```
 
 ## sample

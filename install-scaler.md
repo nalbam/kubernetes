@@ -13,6 +13,11 @@ kubectl apply -f kubernetes/sample/sample-web-ing.yml
 kubectl get pod,svc,ing -n default
 ```
 
+## auto scale
+```bash
+kubectl autoscale deployment sample-spring --min=2 --max=50 --cpu-percent=50
+```
+
 ## stress
 ```bash
 ab -n 1000000 -c 1 https://sample-spring.apps.nalbam.com/stress
