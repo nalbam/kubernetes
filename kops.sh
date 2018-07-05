@@ -1,5 +1,8 @@
 #!/bin/bash
 
+T_PAD=2
+L_PAD=6
+
 CHOICE=
 CLUSTER=
 
@@ -7,6 +10,9 @@ REGION=
 
 KOPS_STATE_STORE=
 KOPS_CLUSTER_NAME=
+
+ROOT_DOMAIN=
+BASE_DOMAIN=
 
 cloud=aws
 master_size=c4.large
@@ -17,9 +23,6 @@ node_count=2
 zones=ap-northeast-2a,ap-northeast-2c
 network_cidr=10.10.0.0/16
 networking=calico
-
-T_PAD=2
-L_PAD=6
 
 CONFIG=~/.kops/config
 if [ -f ${CONFIG} ]; then
@@ -84,12 +87,18 @@ prepare() {
 
     read_cluster_no
 
-#    echo "# kops config" > ${CONFIG}
-#    echo "KOPS_STATE_STORE=${KOPS_STATE_STORE}" >> ${CONFIG}
-#    echo "KOPS_CLUSTER_NAME=${KOPS_CLUSTER_NAME}" >> ${CONFIG}
+    save_kops_config
 
     CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
     cluster_menu
+}
+
+save_kops_config() {
+    echo "# kops config" > ${CONFIG}
+    echo "KOPS_STATE_STORE=${KOPS_STATE_STORE}" >> ${CONFIG}
+    echo "KOPS_CLUSTER_NAME=${KOPS_CLUSTER_NAME}" >> ${CONFIG}
+    echo "ROOT_DOMAIN=${ROOT_DOMAIN}" >> ${CONFIG}
+    echo "BASE_DOMAIN=${BASE_DOMAIN}" >> ${CONFIG}
 }
 
 cluster_menu() {
@@ -335,6 +344,7 @@ read_cluster_no() {
 
                 if [ "${IDX}" == "${CHOICE}" ]; then
                     KOPS_CLUSTER_NAME="${ARR[0]}"
+                    break
                 fi
 
                 IDX=$(( ${IDX} + 1 ))
@@ -469,17 +479,47 @@ apply_metrics_server() {
     addons_menu
 }
 
+get_ingress_elb() {
+    ELB_NAME=
+
+    IDX=0
+    while [ 1 ]; do
+        # ingress-nginx 의 ELB Name 을 획득
+        ELB_NAME=$(kubectl get svc -n kube-ingress -o wide | grep ingress-nginx | grep LoadBalancer | awk '{print $4}')
+
+        if [ "${ELB_NAME}" != "" ]; then
+            break
+        fi
+
+        IDX=$(( ${IDX} + 1 ))
+
+        if [ "${IDX}" == "50" ]; then
+            break
+        fi
+
+        sleep 1
+    done
+}
+
+get_base_domain() {
+    get_ingress_elb
+
+    ELB_IP=$(dig +short ${ELB_NAME} | head -n 1)
+
+    BASE_DOMAIN="${ELB_IP}.nip.io"
+}
+
 apply_ingress_nginx() {
     ADDON=/tmp/ingress-nginx.yml
 
-    read -p "Enter your ingress domain (ex: *.apps.nalbam.com) : " DOMAIN
+    read -p "Enter your ingress domain (ex: apps.nalbam.com) : " BASE_DOMAIN
 
-    if [ "${DOMAIN}" == "" ]; then
-        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml
+    if [ "${BASE_DOMAIN}" == "" ]; then
+        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml > ${ADDON}
     else
-        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0-ssl.yml
+        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0-ssl.yml > ${ADDON}
 
-        SSL_CERT_ARN=$(aws acm list-certificates | DOMAIN="${DOMAIN}" jq '[.CertificateSummaryList[] | select(.DomainName==env.DOMAIN)][0]' | grep CertificateArn | cut -d'"' -f4)
+        SSL_CERT_ARN=$(aws acm list-certificates | DOMAIN="*.${BASE_DOMAIN}" jq '[.CertificateSummaryList[] | select(.DomainName==env.DOMAIN)][0]' | grep CertificateArn | cut -d'"' -f4)
 
         if [ "${SSL_CERT_ARN}" == "" ]; then
             error "Empty CertificateArn."
@@ -494,7 +534,16 @@ apply_ingress_nginx() {
     kubectl apply -f ${ADDON}
     echo_ ""
 
-    if [ "${DOMAIN}" != "" ]; then
+    if [ "${BASE_DOMAIN}" == "" ]; then
+        echo_ "Pending ELB..."
+        sleep 3
+
+        get_base_domain
+
+        echo_ ""
+        echo_ ${BASE_DOMAIN}
+        echo_ ""
+    else
         read -p "Enter your root domain (ex: nalbam.com) : " ROOT_DOMAIN
 
         while [ 1 ]; do
@@ -517,10 +566,10 @@ apply_ingress_nginx() {
 
         # record sets
         RECORD=/tmp/record-sets.json
-        curl -so ${RECORD} https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/record-sets.json
+        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/record-sets.json > ${RECORD}
 
         # replace
-        sed -i -e "s@{{DOMAIN}}@${DOMAIN}@g" "${RECORD}"
+        sed -i -e "s@{{DOMAIN}}@*.${BASE_DOMAIN}@g" "${RECORD}"
         sed -i -e "s@{{ELB_ZONE_ID}}@${ELB_ZONE_ID}@g" "${RECORD}"
         sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 
@@ -532,6 +581,8 @@ apply_ingress_nginx() {
         echo_ ""
     fi
 
+    save_kops_config
+
     read -p "Press Enter to continue..."
     addons_menu
 }
@@ -539,14 +590,24 @@ apply_ingress_nginx() {
 apply_dashboard() {
     ADDON=/tmp/dashboard.yml
 
-    read -p "Enter your ingress domain (ex: dashboard.apps.nalbam.com) : " DOMAIN
+    if [ "${BASE_DOMAIN}" == "" ]; then
+        get_base_domain
+    fi
 
-    if [ "${DOMAIN}" == "" ]; then
-        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
+    if [ "${BASE_DOMAIN}" == "" ]; then
+        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml > ${ADDON}
     else
-        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3-ing.yml
+        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3-ing.yml > ${ADDON}
+
+        read -p "Enter your ingress domain [dashboard.${BASE_DOMAIN}] : " DOMAIN
+
+        if [ "${DOMAIN}" == "" ]; then
+            DOMAIN="dashboard.${BASE_DOMAIN}"
+        fi
 
         sed -i -e "s@dashboard.apps.nalbam.com@${DOMAIN}@g" ${ADDON}
+
+        echo_ "${DOMAIN}"
     fi
 
     echo_ ""
@@ -560,7 +621,7 @@ apply_dashboard() {
 apply_heapster() {
     ADDON=/tmp/heapster.yml
 
-    curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml
+    curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml > ${ADDON}
 
     echo_ ""
     kubectl apply -f ${ADDON}
@@ -573,7 +634,7 @@ apply_heapster() {
 apply_cluster_autoscaler() {
     ADDON=/tmp/cluster_autoscaler.yml
 
-    curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/cluster-autoscaler-v1.8.0.yml
+    curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/cluster-autoscaler-v1.8.0.yml> ${ADDON}
 
     CLOUD_PROVIDER=aws
     IMAGE=k8s.gcr.io/cluster-autoscaler:v1.2.2
