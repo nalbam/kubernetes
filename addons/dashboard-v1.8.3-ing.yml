@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 # Configuration to deploy release version of the Dashboard UI compatible with
 # Kubernetes 1.8.
 #
@@ -117,10 +116,11 @@ spec:
           name: tmp-volume
         livenessProbe:
           httpGet:
+            scheme: HTTP
             path: /
             port: 9090
           initialDelaySeconds: 30
-          timeoutSeconds: 3
+          timeoutSeconds: 30
       volumes:
       - name: tmp-volume
         emptyDir: {}
