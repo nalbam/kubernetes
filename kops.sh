@@ -515,20 +515,22 @@ apply_ingress_nginx() {
         # Route53 에서 해당 도메인의 Hosted Zone ID 를 획득
         ZONE_ID=$(aws route53 list-hosted-zones | ROOT_DOMAIN="${ROOT_DOMAIN}." jq '.HostedZones[] | select(.Name==env.ROOT_DOMAIN)' | grep '"Id"' | cut -d'"' -f4 | cut -d'/' -f3)
 
-        # temp file
+        # record sets
         RECORD=/tmp/record-sets.json
-        curl -so ${RECORD} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/record-sets.json
+        curl -so ${RECORD} https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/record-sets.json
 
         # replace
         sed -i -e "s@{{DOMAIN}}@${DOMAIN}@g" "${RECORD}"
         sed -i -e "s@{{ELB_ZONE_ID}}@${ELB_ZONE_ID}@g" "${RECORD}"
         sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 
+        echo_ ""
+        cat ${RECORD}
+
         # Route53 의 Record Set 에 입력/수정
         aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://${RECORD}
+        echo_ ""
     fi
-
-    echo_ ""
 
     read -p "Press Enter to continue..."
     addons_menu
