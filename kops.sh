@@ -3,12 +3,15 @@
 CHOICE=
 CLUSTER=
 
+REGION=
+
 KOPS_CLUSTER_NAME=
 KOPS_STATE_STORE=
 
 node_size=m4.xlarge
 node_count=2
 
+T_PAD=2
 L_PAD=5
 
 CONFIG=~/.kops/config
@@ -18,7 +21,6 @@ fi
 
 echo_() {
     echo -e "$1"
-    echo "$1" >> /tmp/toast.log
 }
 
 success() {
@@ -201,6 +203,7 @@ create_cluster() {
                 --zones=ap-northeast-2a,ap-northeast-2c \
                 --network-cidr=10.10.0.0/16 \
                 --networking=calico
+
             CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
             read -p "Press Enter to continue..."
             cluster_menu
@@ -215,8 +218,13 @@ read_state_store() {
     # username
     USER=${USER:=$(whoami)}
 
+    if [ "${KOPS_STATE_STORE}" == "" ]; then
+        DEFAULT="kops-state-${USER}"
+    else
+        DEFAULT="${KOPS_STATE_STORE}"
+    fi
+
     # state store
-    DEFAULT="kops-state-${USER}"
     if [ "${KOPS_STATE_STORE}" == "" ]; then
         read -p "Enter your cluster store [${DEFAULT}] : " KOPS_STATE_STORE
     fi
@@ -227,8 +235,6 @@ read_state_store() {
     # S3 Bucket
     BUCKET=$(aws s3api get-bucket-acl --bucket ${KOPS_STATE_STORE} | jq '.Owner.ID')
     if [ "${BUCKET}" == "" ]; then
-        REGION=$(aws configure get profile.default.region)
-
         aws s3 mb s3://${KOPS_STATE_STORE} --region ${REGION}
 
         BUCKET=$(aws s3api get-bucket-acl --bucket ${KOPS_STATE_STORE} | jq '.Owner.ID')
@@ -300,83 +306,6 @@ read_cluster_name() {
     fi
 }
 
-apply_metrics_server() {
-    if [ ! -d /tmp/metrics-server ]; then
-        git clone https://github.com/kubernetes-incubator/metrics-server /tmp/metrics-server
-    fi
-    cd /tmp/metrics-server
-    git pull
-    kubectl apply -f metrics-server/deploy/1.8+/
-}
-
-apply_ingress_nginx() {
-    ADDON=/tmp/ingress-nginx.yml
-
-    read -p "Enter your ingress domain (ex: *.apps.nalbam.com) " DOMAIN
-
-    if [ "${DOMAIN}" == "" ]; then
-        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml
-    else
-        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0-ssl.yml
-
-        SSL_CERT_ARN=$(aws acm list-certificates | DOMAIN="${DOMAIN}" jq '[.CertificateSummaryList[] | select(.DomainName==env.DOMAIN)][0]' | grep CertificateArn | cut -d'"' -f4)
-
-        if [ "${SSL_CERT_ARN}" == "" ]; then
-            error "Empty CertificateArn."
-        fi
-
-        echo "CertificateArn: ${SSL_CERT_ARN}"
-
-        sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" ${ADDON}
-    fi
-
-    kubectl apply -f ${ADDON}
-}
-
-apply_dashboard() {
-    ADDON=/tmp/dashboard.yml
-
-    read -p "Enter your ingress domain (ex: dashboard.apps.nalbam.com) " DOMAIN
-
-    if [ "${DOMAIN}" == "" ]; then
-        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
-    else
-        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3-ing.yml
-
-        sed -i -e "s@dashboard.apps.nalbam.com@${DOMAIN}@g" ${ADDON}
-    fi
-
-    kubectl apply -f ${ADDON}
-}
-
-apply_heapster() {
-    kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml
-}
-
-apply_cluster_autoscaler() {
-    ADDON=/tmp/cluster_autoscaler.yml
-
-    curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/cluster-autoscaler-v1.8.0.yml
-
-    CLOUD_PROVIDER=aws
-    IMAGE=k8s.gcr.io/cluster-autoscaler:v1.2.2
-    MIN_NODES=2
-    MAX_NODES=8
-    AWS_REGION=ap-northeast-2
-    GROUP_NAME="nodes.kube.nalbam.com"
-    SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
-
-    sed -i -e "s@{{CLOUD_PROVIDER}}@${CLOUD_PROVIDER}@g" "${ADDON}"
-    sed -i -e "s@{{IMAGE}}@${IMAGE}@g" "${ADDON}"
-    sed -i -e "s@{{MIN_NODES}}@${MIN_NODES}@g" "${ADDON}"
-    sed -i -e "s@{{MAX_NODES}}@${MAX_NODES}@g" "${ADDON}"
-    sed -i -e "s@{{GROUP_NAME}}@${GROUP_NAME}@g" "${ADDON}"
-    sed -i -e "s@{{AWS_REGION}}@${AWS_REGION}@g" "${ADDON}"
-    sed -i -e "s@{{SSL_CERT_PATH}}@${SSL_CERT_PATH}@g" "${ADDON}"
-
-    kubectl apply -f ${ADDON}
-}
-
 prepare() {
 	tput cup  7 ${L_PAD} && echo "Check configure..."
 	tput cup 10 0
@@ -399,13 +328,15 @@ prepare() {
         fi
     fi
 
+    REGION=$(aws configure get profile.default.region)
+
     read_state_store
 
     read_cluster_no
 
-#    echo "# kops config" > ${CONFIG}
-#    echo "KOPS_CLUSTER_NAME=${KOPS_CLUSTER_NAME}" >> ${CONFIG}
-#    echo "KOPS_STATE_STORE=${KOPS_STATE_STORE}" >> ${CONFIG}
+    echo "# kops config" > ${CONFIG}
+    echo "KOPS_CLUSTER_NAME=${KOPS_CLUSTER_NAME}" >> ${CONFIG}
+    echo "KOPS_STATE_STORE=${KOPS_STATE_STORE}" >> ${CONFIG}
 
     CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
     cluster_menu
@@ -462,6 +393,9 @@ rolling_update_cluster() {
 
 validate_cluster() {
     kops validate cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
+    echo_ ""
+    kubectl get deploy --all-namespaces
+    echo_ ""
     read -p "Press Enter to continue..."
     cluster_menu
 }
@@ -474,6 +408,109 @@ export_kubecfg() {
 
 delete_cluster() {
     kops delete cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
+}
+
+apply_metrics_server() {
+    if [ ! -d /tmp/metrics-server ]; then
+        git clone https://github.com/kubernetes-incubator/metrics-server /tmp/metrics-server
+    fi
+
+    cd /tmp/metrics-server
+    git pull
+
+    echo_ ""
+    kubectl apply -f /tmp/metrics-server/deploy/1.8+/
+    echo_ ""
+    read -p "Press Enter to continue..."
+    addons_menu
+}
+
+apply_ingress_nginx() {
+    ADDON=/tmp/ingress-nginx.yml
+
+    read -p "Enter your ingress domain (ex: *.apps.nalbam.com) " DOMAIN
+
+    if [ "${DOMAIN}" == "" ]; then
+        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml
+    else
+        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0-ssl.yml
+
+        SSL_CERT_ARN=$(aws acm list-certificates | DOMAIN="${DOMAIN}" jq '[.CertificateSummaryList[] | select(.DomainName==env.DOMAIN)][0]' | grep CertificateArn | cut -d'"' -f4)
+
+        if [ "${SSL_CERT_ARN}" == "" ]; then
+            error "Empty CertificateArn."
+        fi
+
+        echo "CertificateArn: ${SSL_CERT_ARN}"
+
+        sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" ${ADDON}
+    fi
+
+    echo_ ""
+    kubectl apply -f ${ADDON}
+    echo_ ""
+    read -p "Press Enter to continue..."
+    addons_menu
+}
+
+apply_dashboard() {
+    ADDON=/tmp/dashboard.yml
+
+    read -p "Enter your ingress domain (ex: dashboard.apps.nalbam.com) " DOMAIN
+
+    if [ "${DOMAIN}" == "" ]; then
+        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
+    else
+        curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3-ing.yml
+
+        sed -i -e "s@dashboard.apps.nalbam.com@${DOMAIN}@g" ${ADDON}
+    fi
+
+    echo_ ""
+    kubectl apply -f ${ADDON}
+    echo_ ""
+    read -p "Press Enter to continue..."
+    addons_menu
+}
+
+apply_heapster() {
+    ADDON=/tmp/heapster.yml
+
+    curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml
+
+    echo_ ""
+    kubectl apply -f ${ADDON}
+    echo_ ""
+    read -p "Press Enter to continue..."
+    addons_menu
+}
+
+apply_cluster_autoscaler() {
+    ADDON=/tmp/cluster_autoscaler.yml
+
+    curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/cluster-autoscaler-v1.8.0.yml
+
+    CLOUD_PROVIDER=aws
+    IMAGE=k8s.gcr.io/cluster-autoscaler:v1.2.2
+    MIN_NODES=2
+    MAX_NODES=8
+    AWS_REGION=${REGION}
+    GROUP_NAME="nodes.${KOPS_CLUSTER_NAME}"
+    SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
+
+    sed -i -e "s@{{CLOUD_PROVIDER}}@${CLOUD_PROVIDER}@g" "${ADDON}"
+    sed -i -e "s@{{IMAGE}}@${IMAGE}@g" "${ADDON}"
+    sed -i -e "s@{{MIN_NODES}}@${MIN_NODES}@g" "${ADDON}"
+    sed -i -e "s@{{MAX_NODES}}@${MAX_NODES}@g" "${ADDON}"
+    sed -i -e "s@{{GROUP_NAME}}@${GROUP_NAME}@g" "${ADDON}"
+    sed -i -e "s@{{AWS_REGION}}@${AWS_REGION}@g" "${ADDON}"
+    sed -i -e "s@{{SSL_CERT_PATH}}@${SSL_CERT_PATH}@g" "${ADDON}"
+
+    echo_ ""
+    kubectl apply -f ${ADDON}
+    echo_ ""
+    read -p "Press Enter to continue..."
+    addons_menu
 }
 
 clear() {
