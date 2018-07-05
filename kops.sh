@@ -8,11 +8,18 @@ REGION=
 KOPS_STATE_STORE=
 KOPS_CLUSTER_NAME=
 
+cloud=aws
+master_size=c4.large
+master_count=1
+master_zones=ap-northeast-2a
 node_size=m4.large
 node_count=2
+zones=ap-northeast-2a,ap-northeast-2c
+network_cidr=10.10.0.0/16
+networking=calico
 
 T_PAD=2
-L_PAD=5
+L_PAD=6
 
 CONFIG=~/.kops/config
 if [ -f ${CONFIG} ]; then
@@ -46,6 +53,43 @@ title() {
 	tput rev
 	tput cup  5 ${L_PAD} && echo " ${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME} "
 	tput sgr0
+}
+
+prepare() {
+    title
+
+	echo_
+
+    mkdir -p ~/.kops
+
+    if [ ! -f ~/.ssh/id_rsa ]; then
+        ssh-keygen -q -f ~/.ssh/id_rsa -N ''
+    fi
+
+    # iam user
+    IAM_USER=$(aws iam get-user | grep Arn | cut -d'"' -f4 | cut -d':' -f5)
+    if [ "${IAM_USER}" == "" ]; then
+        aws configure
+
+        IAM_USER=$(aws iam get-user | grep Arn | cut -d'"' -f4 | cut -d':' -f5)
+        if [ "${IAM_USER}" == "" ]; then
+            clear
+            error
+        fi
+    fi
+
+    REGION=$(aws configure get profile.default.region)
+
+    read_state_store
+
+    read_cluster_no
+
+#    echo "# kops config" > ${CONFIG}
+#    echo "KOPS_STATE_STORE=${KOPS_STATE_STORE}" >> ${CONFIG}
+#    echo "KOPS_CLUSTER_NAME=${KOPS_CLUSTER_NAME}" >> ${CONFIG}
+
+    CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
+    cluster_menu
 }
 
 cluster_menu() {
@@ -197,17 +241,17 @@ create_cluster() {
             ;;
         0)
             kops create cluster \
-                --cloud=aws \
+                --cloud=${cloud} \
                 --name=${KOPS_CLUSTER_NAME} \
                 --state=s3://${KOPS_STATE_STORE} \
-                --master-size=c4.large \
-                --master-count=1 \
-                --master-zones=ap-northeast-2a \
+                --master-size=${master_size} \
+                --master-count=${master_count} \
+                --master-zones=${master_zones} \
                 --node-size=${node_size} \
                 --node-count=${node_count} \
-                --zones=ap-northeast-2a,ap-northeast-2c \
-                --network-cidr=10.10.0.0/16 \
-                --networking=calico
+                --zones=${zones} \
+                --network-cidr=${network_cidr} \
+                --networking=${networking}
 
             CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
             read -p "Press Enter to continue..."
@@ -311,43 +355,6 @@ read_cluster_name() {
     if [ "${KOPS_CLUSTER_NAME}" == "" ]; then
         KOPS_CLUSTER_NAME="${DEFAULT}"
     fi
-}
-
-prepare() {
-    title
-
-	tput cup 8 0
-
-    mkdir -p ~/.kops
-
-    if [ ! -f ~/.ssh/id_rsa ]; then
-        ssh-keygen -q -f ~/.ssh/id_rsa -N ''
-    fi
-
-    # iam user
-    IAM_USER=$(aws iam get-user | grep Arn | cut -d'"' -f4 | cut -d':' -f5)
-    if [ "${IAM_USER}" == "" ]; then
-        aws configure
-
-        IAM_USER=$(aws iam get-user | grep Arn | cut -d'"' -f4 | cut -d':' -f5)
-        if [ "${IAM_USER}" == "" ]; then
-            clear
-            error
-        fi
-    fi
-
-    REGION=$(aws configure get profile.default.region)
-
-    read_state_store
-
-    read_cluster_no
-
-#    echo "# kops config" > ${CONFIG}
-#    echo "KOPS_STATE_STORE=${KOPS_STATE_STORE}" >> ${CONFIG}
-#    echo "KOPS_CLUSTER_NAME=${KOPS_CLUSTER_NAME}" >> ${CONFIG}
-
-    CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
-    cluster_menu
 }
 
 get_cluster() {
