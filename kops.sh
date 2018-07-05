@@ -464,6 +464,7 @@ apply_metrics_server() {
     echo_ ""
     kubectl apply -f /tmp/metrics-server/deploy/1.8+/
     echo_ ""
+
     read -p "Press Enter to continue..."
     addons_menu
 }
@@ -492,6 +493,43 @@ apply_ingress_nginx() {
     echo_ ""
     kubectl apply -f ${ADDON}
     echo_ ""
+
+    if [ "${DOMAIN}" != "" ]; then
+        read -p "Enter your root domain (ex: nalbam.com) : " ROOT_DOMAIN
+
+        while [ 1 ]; do
+            # ingress-nginx 의 ELB Name 을 획득
+            ELB_NAME=$(kubectl get svc -n kube-ingress -o wide | grep ingress-nginx | grep LoadBalancer | awk '{print $4}' | cut -d'-' -f1)
+
+            if [ "${ELB_NAME}" != "" ]; then
+                break
+            fi
+
+            sleep 1
+        done
+
+        # ELB 에서 Hosted Zone ID, DNS Name 을 획득
+        ELB_ZONE_ID=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep CanonicalHostedZoneNameID | cut -d'"' -f4)
+        ELB_DNS_NAME=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep '"DNSName"' | cut -d'"' -f4)
+
+        # Route53 에서 해당 도메인의 Hosted Zone ID 를 획득
+        ZONE_ID=$(aws route53 list-hosted-zones | ROOT_DOMAIN="${ROOT_DOMAIN}." jq '.HostedZones[] | select(.Name==env.ROOT_DOMAIN)' | grep '"Id"' | cut -d'"' -f4 | cut -d'/' -f3)
+
+        # temp file
+        RECORD=/tmp/record-sets.json
+        curl -so ${RECORD} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/record-sets.json
+
+        # replace
+        sed -i -e "s@{{DOMAIN}}@${DOMAIN}@g" "${RECORD}"
+        sed -i -e "s@{{ELB_ZONE_ID}}@${ELB_ZONE_ID}@g" "${RECORD}"
+        sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
+
+        # Route53 의 Record Set 에 입력/수정
+        aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://${RECORD}
+    fi
+
+    echo_ ""
+
     read -p "Press Enter to continue..."
     addons_menu
 }
@@ -512,6 +550,7 @@ apply_dashboard() {
     echo_ ""
     kubectl apply -f ${ADDON}
     echo_ ""
+
     read -p "Press Enter to continue..."
     addons_menu
 }
@@ -524,6 +563,7 @@ apply_heapster() {
     echo_ ""
     kubectl apply -f ${ADDON}
     echo_ ""
+
     read -p "Press Enter to continue..."
     addons_menu
 }
@@ -552,6 +592,7 @@ apply_cluster_autoscaler() {
     echo_ ""
     kubectl apply -f ${ADDON}
     echo_ ""
+
     read -p "Press Enter to continue..."
     addons_menu
 }
