@@ -5,10 +5,10 @@ CLUSTER=
 
 REGION=
 
-KOPS_CLUSTER_NAME=
 KOPS_STATE_STORE=
+KOPS_CLUSTER_NAME=
 
-node_size=m4.xlarge
+node_size=m4.large
 node_count=2
 
 T_PAD=2
@@ -53,6 +53,7 @@ cluster_menu() {
 
     if [ "${CLUSTER}" == "0" ]; then
     	tput cup  7 ${L_PAD} && echo "1. Create Cluster"
+        tput cup  8 ${L_PAD} && echo "2. Install Tools"
     else
         tput cup  7 ${L_PAD} && echo "1. Get Cluster"
         tput cup  8 ${L_PAD} && echo "2. Edit Cluster"
@@ -71,7 +72,7 @@ cluster_menu() {
     tput cup 18 ${L_PAD} && read -p "Enter your choice : " CHOICE
     tput sgr0
 
-	tput cup 21 0
+	echo_
 
     case ${CHOICE} in
         1)
@@ -82,7 +83,11 @@ cluster_menu() {
             fi
             ;;
         2)
-            edit_cluster
+            if [ "${CLUSTER}" == "0" ]; then
+                install_tools
+            else
+                edit_cluster
+            fi
             ;;
         3)
             edit_instance_group
@@ -127,7 +132,7 @@ addons_menu() {
     tput cup 18 ${L_PAD} && read -p "Enter your choice : " CHOICE
     tput sgr0
 
-	tput cup 21 0
+	echo_
 
     case ${CHOICE} in
         1)
@@ -173,7 +178,7 @@ create_cluster() {
     tput cup 21 ${L_PAD} && read -p "Enter your choice : " CHOICE
     tput sgr0
 
-	tput cup 24 0
+	echo_
 
     case ${CHOICE} in
         1)
@@ -222,11 +227,12 @@ read_state_store() {
         DEFAULT="kops-state-${USER}"
     else
         DEFAULT="${KOPS_STATE_STORE}"
+        KOPS_STATE_STORE=
     fi
 
     # state store
     if [ "${KOPS_STATE_STORE}" == "" ]; then
-        read -p "Enter your cluster store [${DEFAULT}] : " KOPS_STATE_STORE
+        read -p "Enter cluster store [${DEFAULT}] : " KOPS_STATE_STORE
     fi
     if [ "${KOPS_STATE_STORE}" == "" ]; then
         KOPS_STATE_STORE="${DEFAULT}"
@@ -240,15 +246,16 @@ read_state_store() {
         BUCKET=$(aws s3api get-bucket-acl --bucket ${KOPS_STATE_STORE} | jq '.Owner.ID')
         if [ "${BUCKET}" == "" ]; then
             clear
-            error ""
+            error
         fi
     fi
 }
 
 read_cluster_no() {
     CLUSTER_LIST=/tmp/kops-cluster-list
-
     kops get cluster --state=s3://${KOPS_STATE_STORE} > ${CLUSTER_LIST}
+
+    echo_
 
     IDX=0
     while read VAR; do
@@ -269,7 +276,7 @@ read_cluster_no() {
     else
         printf "\n%3s\t%s\n\n" "0." "new cluster"
 
-        read -p "Enter your cluster no (0-${IDX})[1] " CHOICE
+        read -p "Enter cluster (0-${IDX})[1] : " CHOICE
 
         if [ "${CHOICE}" == "" ]; then
             CHOICE="1"
@@ -293,13 +300,13 @@ read_cluster_no() {
 
     if [ "${KOPS_CLUSTER_NAME}" == "" ]; then
         clear
-        error ""
+        error
     fi
 }
 
 read_cluster_name() {
     DEFAULT="cluster.k8s.local"
-    read -p "Enter your cluster name [${DEFAULT}] " KOPS_CLUSTER_NAME
+    read -p "Enter your cluster name [${DEFAULT}] : " KOPS_CLUSTER_NAME
 
     if [ "${KOPS_CLUSTER_NAME}" == "" ]; then
         KOPS_CLUSTER_NAME="${DEFAULT}"
@@ -307,8 +314,9 @@ read_cluster_name() {
 }
 
 prepare() {
-	tput cup  7 ${L_PAD} && echo "Check configure..."
-	tput cup 10 0
+    title
+
+	tput cup 8 0
 
     mkdir -p ~/.kops
 
@@ -324,7 +332,7 @@ prepare() {
         IAM_USER=$(aws iam get-user | grep Arn | cut -d'"' -f4 | cut -d':' -f5)
         if [ "${IAM_USER}" == "" ]; then
             clear
-            error ""
+            error
         fi
     fi
 
@@ -334,9 +342,9 @@ prepare() {
 
     read_cluster_no
 
-    echo "# kops config" > ${CONFIG}
-    echo "KOPS_CLUSTER_NAME=${KOPS_CLUSTER_NAME}" >> ${CONFIG}
-    echo "KOPS_STATE_STORE=${KOPS_STATE_STORE}" >> ${CONFIG}
+#    echo "# kops config" > ${CONFIG}
+#    echo "KOPS_STATE_STORE=${KOPS_STATE_STORE}" >> ${CONFIG}
+#    echo "KOPS_CLUSTER_NAME=${KOPS_CLUSTER_NAME}" >> ${CONFIG}
 
     CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
     cluster_menu
@@ -344,12 +352,14 @@ prepare() {
 
 get_cluster() {
     kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
+    echo_
     read -p "Press Enter to continue..."
     cluster_menu
 }
 
 edit_cluster() {
     kops edit cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
+    echo_
     read -p "Press Enter to continue..."
     cluster_menu
 }
@@ -373,20 +383,41 @@ edit_instance_group() {
         printf "%3s\t%s\n" "$NO" "$VAR"
     done < ${IG_LIST}
 
+    echo_
+    read -p "Enter your choice : " CHOICE
 
-#    kops edit ig nodes --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-#    read -p "Press Enter to continue..."
-#    cluster_menu
+    IDX=0
+    IG_NAME=
+    while read VAR; do
+        ARR=(${VAR})
+
+        if [ "${IDX}" == "${CHOICE}" ]; then
+            IG_NAME="${ARR[0]}"
+            break
+        fi
+
+        IDX=$(( ${IDX} + 1 ))
+    done < ${IG_LIST}
+
+    if [ "${IG_NAME}" != "" ]; then
+        kops edit ig ${IG_NAME} --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
+        echo_
+        read -p "Press Enter to continue..."
+    fi
+
+    cluster_menu
 }
 
 update_cluster() {
     kops update cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
+    echo_
     read -p "Press Enter to continue..."
     cluster_menu
 }
 
 rolling_update_cluster() {
     kops rolling-update cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
+    echo_
     read -p "Press Enter to continue..."
     cluster_menu
 }
@@ -402,12 +433,17 @@ validate_cluster() {
 
 export_kubecfg() {
     kops export kubecfg --name ${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
+    echo_
     read -p "Press Enter to continue..."
     cluster_menu
 }
 
 delete_cluster() {
     kops delete cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
+    clear
+    echo_
+    read -p "Press Enter to continue..."
+    prepare
 }
 
 apply_metrics_server() {
@@ -428,7 +464,7 @@ apply_metrics_server() {
 apply_ingress_nginx() {
     ADDON=/tmp/ingress-nginx.yml
 
-    read -p "Enter your ingress domain (ex: *.apps.nalbam.com) " DOMAIN
+    read -p "Enter your ingress domain (ex: *.apps.nalbam.com) : " DOMAIN
 
     if [ "${DOMAIN}" == "" ]; then
         curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml
@@ -441,7 +477,7 @@ apply_ingress_nginx() {
             error "Empty CertificateArn."
         fi
 
-        echo "CertificateArn: ${SSL_CERT_ARN}"
+        echo_ "CertificateArn: ${SSL_CERT_ARN}"
 
         sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" ${ADDON}
     fi
@@ -456,7 +492,7 @@ apply_ingress_nginx() {
 apply_dashboard() {
     ADDON=/tmp/dashboard.yml
 
-    read -p "Enter your ingress domain (ex: dashboard.apps.nalbam.com) " DOMAIN
+    read -p "Enter your ingress domain (ex: dashboard.apps.nalbam.com) : " DOMAIN
 
     if [ "${DOMAIN}" == "" ]; then
         curl -so ${ADDON} https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
@@ -514,13 +550,16 @@ apply_cluster_autoscaler() {
 }
 
 clear() {
+    KOPS_STATE_STORE=
+    KOPS_CLUSTER_NAME=
     rm -rf ~/.kops
 }
 
-tools() {
+install_tools() {
     curl -sL toast.sh/helper/bastion.sh | bash
+    echo_ ""
+    read -p "Press Enter to continue..."
+    cluster_menu
 }
-
-title
 
 prepare
