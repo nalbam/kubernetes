@@ -480,33 +480,56 @@ apply_metrics_server() {
 }
 
 get_ingress_elb() {
-    ELB_NAME=
+    ELB_DOMAIN=
 
     IDX=0
     while [ 1 ]; do
         # ingress-nginx 의 ELB Name 을 획득
-        ELB_NAME=$(kubectl get svc -n kube-ingress -o wide | grep ingress-nginx | grep LoadBalancer | awk '{print $4}')
+        ELB_DOMAIN=$(kubectl get svc -n kube-ingress -o wide | grep ingress-nginx | grep amazonaws | awk '{print $4}')
 
-        if [ "${ELB_NAME}" != "" ]; then
+        if [ "${ELB_DOMAIN}" != "" ]; then
             break
         fi
 
         IDX=$(( ${IDX} + 1 ))
 
-        if [ "${IDX}" == "50" ]; then
+        if [ "${IDX}" == "30" ]; then
             break
         fi
 
-        sleep 1
+        sleep 3
     done
+
+    echo_ ${ELB_DOMAIN}
 }
 
 get_base_domain() {
+    ELB_IP=
+
     get_ingress_elb
 
-    ELB_IP=$(dig +short ${ELB_NAME} | head -n 1)
+    IDX=0
+    while [ 1 ]; do
+        ELB_IP=$(dig +short ${ELB_DOMAIN} | head -n 1)
 
-    BASE_DOMAIN="${ELB_IP}.nip.io"
+        if [ "${ELB_IP}" != "" ]; then
+            break
+        fi
+
+        IDX=$(( ${IDX} + 1 ))
+
+        if [ "${IDX}" == "30" ]; then
+            break
+        fi
+
+        sleep 3
+    done
+
+    if [ "${ELB_IP}" != "" ]; then
+        BASE_DOMAIN="${ELB_IP}.nip.io"
+    fi
+
+    echo_ ${BASE_DOMAIN}
 }
 
 apply_ingress_nginx() {
@@ -540,8 +563,6 @@ apply_ingress_nginx() {
 
         get_base_domain
 
-        echo_ ""
-        echo_ ${BASE_DOMAIN}
         echo_ ""
     else
         read -p "Enter your root domain (ex: nalbam.com) : " ROOT_DOMAIN
