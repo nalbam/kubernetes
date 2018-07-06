@@ -1,7 +1,8 @@
 #!/bin/bash
 
+CUR=0
 T_PAD=2
-L_PAD=6
+L_PAD=4
 
 CHOICE=
 CLUSTER=
@@ -29,39 +30,82 @@ if [ -f ${CONFIG} ]; then
     . ${CONFIG}
 fi
 
-echo_() {
-    echo -e "$1"
-}
-
 success() {
-    echo_ "$1"
+    put_2 "$@"
     exit 0
 }
 
 error() {
-    echo_ "$1"
+    put_1 "$@"
     exit 1
 }
 
-title() {
+put_() {
+    echo -e "$@"
+}
+
+put_1() {
+    tput setaf 1
+    put_ "$@"
+    tput sgr0
+}
+
+put_2() {
+    tput setaf 2
+    put_ "$@"
+    tput sgr0
+}
+
+put_t() {
+	tput cup ${CUR} ${L_PAD}
+    tput setaf 3
+	tput bold
+    put_ "$@"
+    tput sgr0
+    put_x
+}
+
+put_c() {
+	tput cup ${CUR} ${L_PAD}
+	put_ "$@"
+	tput sgr0
+    put_x
+}
+
+put_q() {
+    Q=$1
+    if [ "$Q" == "" ]; then
+        Q="Enter your choice : "
+    fi
+    tput cup ${CUR} ${L_PAD}
+	tput bold
+    read -p "$Q" CHOICE
+    tput sgr0
+    put_x
+}
+
+put_x() {
+    CUR=$(( ${CUR} + 1 ))
+}
+
+clear() {
     # clear the screen
     tput clear
 
-	# Set a foreground colour using ANSI escape
-	tput setaf 3
-	tput cup  3 ${L_PAD} && echo "KOPS UI"
-	tput sgr0
+    CUR=${T_PAD}
+}
 
-	# Set reverse video mode
-	tput rev
-	tput cup  5 ${L_PAD} && echo " ${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME} "
-	tput sgr0
+title() {
+    clear
+
+	put_t KOPS UI
+    put_x
+	put_c "${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME}"
+	put_x
 }
 
 prepare() {
     title
-
-	echo_
 
     mkdir -p ~/.kops
 
@@ -76,7 +120,7 @@ prepare() {
 
         IAM_USER=$(aws iam get-user | grep Arn | cut -d'"' -f4 | cut -d':' -f5)
         if [ "${IAM_USER}" == "" ]; then
-            clear
+            clear_kops_config
             error
         fi
     fi
@@ -101,31 +145,36 @@ save_kops_config() {
     echo "BASE_DOMAIN=${BASE_DOMAIN}" >> ${CONFIG}
 }
 
+clear_kops_config() {
+    KOPS_CLUSTER_NAME=
+    ROOT_DOMAIN=
+    BASE_DOMAIN=
+
+    save_kops_config
+    . ${CONFIG}
+}
+
 cluster_menu() {
     title
 
     if [ "${CLUSTER}" == "0" ]; then
-    	tput cup  7 ${L_PAD} && echo "1. Create Cluster"
-        tput cup  8 ${L_PAD} && echo "2. Install Tools"
+    	put_c "1. Create Cluster"
+        put_c "2. Install Tools"
     else
-        tput cup  7 ${L_PAD} && echo "1. Get Cluster"
-        tput cup  8 ${L_PAD} && echo "2. Edit Cluster"
-        tput cup  9 ${L_PAD} && echo "3. Edit Instance Group"
-        tput cup 10 ${L_PAD} && echo "4. Update Cluster"
-        tput cup 11 ${L_PAD} && echo "5. Rolling Update Cluster"
-        tput cup 12 ${L_PAD} && echo "6. Validate Cluster"
-        tput cup 13 ${L_PAD} && echo "7. Export Kubernetes Config"
-        tput cup 14 ${L_PAD} && echo "8. Addons"
-        tput cup 15 ${L_PAD} && echo " "
-        tput cup 16 ${L_PAD} && echo "0. Delete Cluster"
+        put_c "1. Get Cluster"
+        put_c "2. Edit Cluster"
+        put_c "3. Edit Instance Group"
+        put_c "4. Update Cluster"
+        put_c "5. Rolling Update Cluster"
+        put_c "6. Validate Cluster"
+        put_c "7. Export Kubernetes Config"
+        put_c "8. Addons"
+        put_c "9. Delete Cluster"
     fi
 
-	# Set bold mode
-	tput bold
-    tput cup 18 ${L_PAD} && read -p "Enter your choice : " CHOICE
-    tput sgr0
-
-	echo_
+    put_x
+    put_q
+	put_
 
     case ${CHOICE} in
         1)
@@ -160,8 +209,12 @@ cluster_menu() {
         8)
             addons_menu
             ;;
-        0)
+        9)
+
             delete_cluster
+            ;;
+        *)
+            cluster_menu
             ;;
     esac
 }
@@ -169,23 +222,15 @@ cluster_menu() {
 addons_menu() {
     title
 
-	tput cup  7 ${L_PAD} && echo "1. Metrics Server"
-	tput cup  8 ${L_PAD} && echo "2. Ingress Nginx"
-	tput cup  9 ${L_PAD} && echo "3. Dashboard"
-	tput cup 10 ${L_PAD} && echo "4. Heapster (deprecated)"
-	tput cup 11 ${L_PAD} && echo "5. Cluster Autoscaler"
-	tput cup 12 ${L_PAD} && echo " "
-	tput cup 13 ${L_PAD} && echo " "
-	tput cup 14 ${L_PAD} && echo " "
-    tput cup 15 ${L_PAD} && echo " "
-	tput cup 16 ${L_PAD} && echo " "
+	put_c "1. Metrics Server"
+	put_c "2. Ingress Nginx"
+	put_c "3. Dashboard"
+	put_c "4. Heapster (deprecated)"
+	put_c "5. Cluster Autoscaler"
 
-	# Set bold mode
-	tput bold
-    tput cup 18 ${L_PAD} && read -p "Enter your choice : " CHOICE
-    tput sgr0
-
-	echo_
+    put_x
+    put_q
+	put_
 
     case ${CHOICE} in
         1)
@@ -212,39 +257,57 @@ addons_menu() {
 create_cluster() {
     title
 
-	tput cup  7 ${L_PAD} && echo "   cloud=aws"
-	tput cup  8 ${L_PAD} && echo "   name=${KOPS_CLUSTER_NAME}"
-	tput cup  9 ${L_PAD} && echo "   state=s3://${KOPS_STATE_STORE}"
-	tput cup 10 ${L_PAD} && echo "   master-size=c4.large"
-	tput cup 11 ${L_PAD} && echo "   master-count=1"
-	tput cup 12 ${L_PAD} && echo "   master-zones=ap-northeast-2a"
-	tput cup 13 ${L_PAD} && echo "1. node-size=${node_size}"
-	tput cup 14 ${L_PAD} && echo "2. node-count=${node_count}"
-	tput cup 15 ${L_PAD} && echo "   zones=ap-northeast-2a,ap-northeast-2c"
-	tput cup 16 ${L_PAD} && echo "   network-cidr=10.10.0.0/16"
-	tput cup 17 ${L_PAD} && echo "   networking=calico"
+	put_c "   cloud=aws"
+	put_c "   name=${KOPS_CLUSTER_NAME}"
+	put_c "   state=s3://${KOPS_STATE_STORE}"
+	put_c "1. master-size=c4.large"
+	put_c "   master-count=1"
+	put_c "   master-zones=ap-northeast-2a"
+	put_c "4. node-size=${node_size}"
+	put_c "5. node-count=${node_count}"
+	put_c "   zones=ap-northeast-2a,ap-northeast-2c"
+	put_c "7. network-cidr=10.10.0.0/16"
+	put_c "8. networking=calico"
+    put_x
+	put_c "0. create"
 
-	tput cup 19 ${L_PAD} && echo "0. create"
-
-	# Set bold mode
-	tput bold
-    tput cup 21 ${L_PAD} && read -p "Enter your choice : " CHOICE
-    tput sgr0
-
-	echo_
+    put_x
+    put_q
+	put_
 
     case ${CHOICE} in
         1)
+            read -p "master_size [${master_size}] : " VAL
+            if [ "${VAL}" != "" ]; then
+                master_size=${VAL}
+            fi
+            create_cluster
+            ;;
+        4)
             read -p "node_size [${node_size}] : " VAL
             if [ "${VAL}" != "" ]; then
                 node_size=${VAL}
             fi
             create_cluster
             ;;
-        2)
+        5)
             read -p "node_count [${node_count}] : " VAL
             if [ "${VAL}" != "" ]; then
                 node_count=${VAL}
+            fi
+            create_cluster
+            ;;
+        7)
+            read -p "network_cidr [${network_cidr}] : " VAL
+            if [ "${VAL}" != "" ]; then
+                network_cidr=${VAL}
+            fi
+            create_cluster
+            ;;
+        8)
+            read -p "networking [${networking}] : " VAL
+            if [ "${VAL}" != "" ]; then
+                networking=${VAL}
             fi
             create_cluster
             ;;
@@ -285,7 +348,9 @@ read_state_store() {
 
     # state store
     if [ "${KOPS_STATE_STORE}" == "" ]; then
+        put_
         read -p "Enter cluster store [${DEFAULT}] : " KOPS_STATE_STORE
+        put_
     fi
     if [ "${KOPS_STATE_STORE}" == "" ]; then
         KOPS_STATE_STORE="${DEFAULT}"
@@ -298,7 +363,7 @@ read_state_store() {
 
         BUCKET=$(aws s3api get-bucket-acl --bucket ${KOPS_STATE_STORE} | jq '.Owner.ID')
         if [ "${BUCKET}" == "" ]; then
-            clear
+            clear_kops_config
             error
         fi
     fi
@@ -308,7 +373,7 @@ read_cluster_no() {
     CLUSTER_LIST=/tmp/kops-cluster-list
     kops get cluster --state=s3://${KOPS_STATE_STORE} > ${CLUSTER_LIST}
 
-    echo_
+    put_
 
     IDX=0
     while read VAR; do
@@ -321,15 +386,18 @@ read_cluster_no() {
             NO="${IDX}."
         fi
 
-        printf "%3s\t%s\n" "$NO" "$VAR"
+        printf "%5s\t%s\n" "$NO" "$VAR"
     done < ${CLUSTER_LIST}
 
     if [ "${IDX}" == "0" ]; then
         read_cluster_name
     else
-        printf "\n%3s\t%s\n\n" "0." "new cluster"
+        put_
+        printf "%5s\t%s\n" "0." "new cluster"
 
+        put_
         read -p "Enter cluster (0-${IDX})[1] : " CHOICE
+        put_
 
         if [ "${CHOICE}" == "" ]; then
             CHOICE="1"
@@ -353,7 +421,7 @@ read_cluster_no() {
     fi
 
     if [ "${KOPS_CLUSTER_NAME}" == "" ]; then
-        clear
+        clear_kops_config
         error
     fi
 }
@@ -369,14 +437,14 @@ read_cluster_name() {
 
 get_cluster() {
     kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-    echo_
+    put_
     read -p "Press Enter to continue..."
     cluster_menu
 }
 
 edit_cluster() {
     kops edit cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-    echo_
+    put_
     read -p "Press Enter to continue..."
     cluster_menu
 }
@@ -400,7 +468,7 @@ edit_instance_group() {
         printf "%3s\t%s\n" "$NO" "$VAR"
     done < ${IG_LIST}
 
-    echo_
+    put_
     read -p "Enter your choice : " CHOICE
 
     IDX=0
@@ -418,7 +486,7 @@ edit_instance_group() {
 
     if [ "${IG_NAME}" != "" ]; then
         kops edit ig ${IG_NAME} --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-        echo_
+        put_
         read -p "Press Enter to continue..."
     fi
 
@@ -427,38 +495,38 @@ edit_instance_group() {
 
 update_cluster() {
     kops update cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
-    echo_
+    put_
     read -p "Press Enter to continue..."
     cluster_menu
 }
 
 rolling_update_cluster() {
     kops rolling-update cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
-    echo_
+    put_
     read -p "Press Enter to continue..."
     cluster_menu
 }
 
 validate_cluster() {
     kops validate cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-    echo_ ""
+    put_ ""
     kubectl get deploy --all-namespaces
-    echo_ ""
+    put_ ""
     read -p "Press Enter to continue..."
     cluster_menu
 }
 
 export_kubecfg() {
     kops export kubecfg --name ${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-    echo_
+    put_
     read -p "Press Enter to continue..."
     cluster_menu
 }
 
 delete_cluster() {
     kops delete cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
-    clear
-    echo_
+    clear_kops_config
+    put_
     read -p "Press Enter to continue..."
     prepare
 }
@@ -471,9 +539,9 @@ apply_metrics_server() {
     cd /tmp/metrics-server
     git pull
 
-    echo_ ""
+    put_ ""
     kubectl apply -f /tmp/metrics-server/deploy/1.8+/
-    echo_ ""
+    put_ ""
 
     read -p "Press Enter to continue..."
     addons_menu
@@ -500,7 +568,7 @@ get_ingress_elb() {
         sleep 3
     done
 
-    echo_ ${ELB_DOMAIN}
+    put_ ${ELB_DOMAIN}
 }
 
 get_base_domain() {
@@ -529,7 +597,7 @@ get_base_domain() {
         BASE_DOMAIN="${ELB_IP}.nip.io"
     fi
 
-    echo_ ${BASE_DOMAIN}
+    put_ ${BASE_DOMAIN}
 }
 
 apply_ingress_nginx() {
@@ -548,22 +616,22 @@ apply_ingress_nginx() {
             error "Empty CertificateArn."
         fi
 
-        echo_ "CertificateArn: ${SSL_CERT_ARN}"
+        put_ "CertificateArn: ${SSL_CERT_ARN}"
 
         sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" ${ADDON}
     fi
 
-    echo_ ""
+    put_ ""
     kubectl apply -f ${ADDON}
-    echo_ ""
+    put_ ""
 
     if [ "${BASE_DOMAIN}" == "" ]; then
-        echo_ "Pending ELB..."
+        put_ "Pending ELB..."
         sleep 3
 
         get_base_domain
 
-        echo_ ""
+        put_ ""
     else
         read -p "Enter your root domain (ex: nalbam.com) : " ROOT_DOMAIN
 
@@ -594,12 +662,12 @@ apply_ingress_nginx() {
         sed -i -e "s@{{ELB_ZONE_ID}}@${ELB_ZONE_ID}@g" "${RECORD}"
         sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 
-        echo_ ""
+        put_ ""
         cat ${RECORD}
 
         # Route53 의 Record Set 에 입력/수정
         aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://${RECORD}
-        echo_ ""
+        put_ ""
     fi
 
     save_kops_config
@@ -628,12 +696,12 @@ apply_dashboard() {
 
         sed -i -e "s@dashboard.apps.nalbam.com@${DOMAIN}@g" ${ADDON}
 
-        echo_ "${DOMAIN}"
+        put_ "${DOMAIN}"
     fi
 
-    echo_ ""
+    put_ ""
     kubectl apply -f ${ADDON}
-    echo_ ""
+    put_ ""
 
     read -p "Press Enter to continue..."
     addons_menu
@@ -644,9 +712,9 @@ apply_heapster() {
 
     curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml > ${ADDON}
 
-    echo_ ""
+    put_ ""
     kubectl apply -f ${ADDON}
-    echo_ ""
+    put_ ""
 
     read -p "Press Enter to continue..."
     addons_menu
@@ -673,23 +741,17 @@ apply_cluster_autoscaler() {
     sed -i -e "s@{{AWS_REGION}}@${AWS_REGION}@g" "${ADDON}"
     sed -i -e "s@{{SSL_CERT_PATH}}@${SSL_CERT_PATH}@g" "${ADDON}"
 
-    echo_ ""
+    put_ ""
     kubectl apply -f ${ADDON}
-    echo_ ""
+    put_ ""
 
     read -p "Press Enter to continue..."
     addons_menu
 }
 
-clear() {
-    KOPS_STATE_STORE=
-    KOPS_CLUSTER_NAME=
-    rm -rf ~/.kops
-}
-
 install_tools() {
     curl -sL toast.sh/helper/bastion.sh | bash
-    echo_ ""
+    put_ ""
     read -p "Press Enter to continue..."
     cluster_menu
 }
