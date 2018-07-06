@@ -1,8 +1,8 @@
 #!/bin/bash
 
-SHELL_DIR=$(dirname $(dirname "$0"))
+SHELL_DIR=$(dirname "$0")
 
-L_PAD="   "
+L_PAD="$(printf %5s)"
 
 ANSWER=
 CLUSTER=
