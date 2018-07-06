@@ -30,46 +30,27 @@ if [ -f ${CONFIG} ]; then
     . ${CONFIG}
 fi
 
-error() {
-    put_
-    put_1 "$@"
-    put_
-    exit 1
-}
-
 put_() {
     echo -e "${L_PAD}$@"
 }
 
-put_1() {
+put_e() {
+    put_
     tput setaf 1
     put_ "$@"
     tput sgr0
-}
-
-put_2() {
-    tput setaf 2
-    put_ "$@"
-    tput sgr0
+    put_
+    exit 1
 }
 
 put_t() {
-    tput setaf 3
+    put_
+    put_
 	tput bold
+    tput setaf 3
     put_ "$@"
     tput sgr0
     put_
-}
-
-put_c() {
-	put_ "$@"
-}
-
-put_w() {
-    put_
-	tput bold
-    read -p "${L_PAD}Press Enter to continue..."
-    tput sgr0
 }
 
 put_q() {
@@ -78,20 +59,26 @@ put_q() {
         Q="Enter your choice : "
     fi
 
-	tput bold
+    tput setaf 2
     read -p "${L_PAD}$Q" ANSWER
     tput sgr0
+}
+
+put_w() {
+    put_
+    tput setaf 4
+    read -p "${L_PAD}Press Enter to continue..."
+    tput sgr0
+    put_
 }
 
 title() {
     # clear the screen
     tput clear
 
-    put_
-    put_
 	put_t KOPS UI
     put_
-	put_c "${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME}"
+	put_ "${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME}"
 	put_
 }
 
@@ -112,7 +99,7 @@ prepare() {
         IAM_USER=$(aws iam get-user | grep Arn | cut -d'"' -f4 | cut -d':' -f5)
         if [ "${IAM_USER}" == "" ]; then
             clear_kops_config
-            error
+            put_e
         fi
     fi
 
@@ -149,18 +136,18 @@ cluster_menu() {
     title
 
     if [ "${CLUSTER}" == "0" ]; then
-    	put_c "1. Create Cluster"
-        put_c "2. Install Tools"
+    	put_ "1. Create Cluster"
+        put_ "2. Install Tools"
     else
-        put_c "1. Get Cluster"
-        put_c "2. Edit Cluster"
-        put_c "3. Edit Instance Group"
-        put_c "4. Update Cluster"
-        put_c "5. Rolling Update Cluster"
-        put_c "6. Validate Cluster"
-        put_c "7. Export Kubernetes Config"
-        put_c "8. Addons"
-        put_c "9. Delete Cluster"
+        put_ "1. Get Cluster"
+        put_ "2. Edit Cluster"
+        put_ "3. Update Cluster"
+        put_ "4. Rolling Update Cluster"
+        put_ "5. Validate Cluster"
+        put_ "6. Export Kubernetes Config"
+        put_ "7. Addons"
+        put_
+        put_ "9. Delete Cluster"
     fi
 
     put_
@@ -183,25 +170,22 @@ cluster_menu() {
             fi
             ;;
         3)
-            edit_instance_group
-            ;;
-        4)
             update_cluster
             ;;
-        5)
+        4)
             rolling_update_cluster
             ;;
-        6)
+        5)
             validate_cluster
             ;;
-        7)
+        6)
             export_kubecfg
             ;;
-        8)
+        7)
             addons_menu
             ;;
         9)
-            put_q ""
+            put_q "Are you sure? (YES/[no]) : "
 
             if [ "${ANSWER}" == "YES" ]; then
                 delete_cluster
@@ -218,13 +202,13 @@ cluster_menu() {
 addons_menu() {
     title
 
-	put_c "1. Metrics Server"
-	put_c "2. Ingress Nginx"
-	put_c "3. Dashboard"
-	put_c "4. Heapster (deprecated)"
-	put_c "5. Cluster Autoscaler"
+	put_ "1. Metrics Server"
+	put_ "2. Ingress Nginx"
+	put_ "3. Dashboard"
+	put_ "4. Heapster (deprecated)"
+	put_ "5. Cluster Autoscaler"
 	put_
-	put_c "7. Sample Spring App"
+	put_ "7. Sample Spring App"
 
     put_
     put_q
@@ -258,19 +242,19 @@ addons_menu() {
 create_cluster() {
     title
 
-	put_c "   cloud=${cloud}"
-	put_c "   name=${KOPS_CLUSTER_NAME}"
-	put_c "   state=s3://${KOPS_STATE_STORE}"
-	put_c "1. master-size=${master_size}"
-	put_c "   master-count=${master_count}"
-	put_c "   master-zones=${master_zones}"
-	put_c "4. node-size=${node_size}"
-	put_c "5. node-count=${node_count}"
-	put_c "   zones=${zones}"
-	put_c "7. network-cidr=${network_cidr}"
-	put_c "8. networking=${networking}"
+	put_ "   cloud=${cloud}"
+	put_ "   name=${KOPS_CLUSTER_NAME}"
+	put_ "   state=s3://${KOPS_STATE_STORE}"
+	put_ "1. master-size=${master_size}"
+	put_ "   master-count=${master_count}"
+	put_ "   master-zones=${master_zones}"
+	put_ "4. node-size=${node_size}"
+	put_ "5. node-count=${node_count}"
+	put_ "   zones=${zones}"
+	put_ "7. network-cidr=${network_cidr}"
+	put_ "8. networking=${networking}"
     put_
-	put_c "0. create"
+	put_ "0. create"
 
     put_
     put_q
@@ -368,7 +352,7 @@ read_state_store() {
         if [ "${BUCKET}" == "" ]; then
             KOPS_STATE_STORE=
             clear_kops_config
-            error
+            put_e
         fi
     fi
 }
@@ -387,14 +371,14 @@ read_cluster_no() {
 
         IDX=$(( ${IDX} + 1 ))
 
-        put_c "${IDX}. ${ARR[0]}"
+        put_ "${IDX}. ${ARR[0]}"
     done < ${CLUSTER_LIST}
 
     if [ "${IDX}" == "0" ]; then
         read_cluster_name
     else
         put_
-        put_c "0. new"
+        put_ "0. new"
 
         put_
         put_q "Enter cluster (0-${IDX})[1] : "
@@ -423,7 +407,7 @@ read_cluster_no() {
 
     if [ "${KOPS_CLUSTER_NAME}" == "" ]; then
         clear_kops_config
-        error
+        put_e
     fi
 }
 
@@ -450,14 +434,6 @@ get_cluster() {
 }
 
 edit_cluster() {
-    kops edit cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-
-    put_w
-
-    cluster_menu
-}
-
-edit_instance_group() {
     IG_LIST=/tmp/kops-ig-list
 
     kops get ig --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} > ${IG_LIST}
@@ -472,29 +448,41 @@ edit_instance_group() {
 
         IDX=$(( ${IDX} + 1 ))
 
-        put_c "${IDX}. ${ARR[0]}"
+        put_ "${IDX}. ${ARR[0]}"
     done < ${IG_LIST}
+
+    put_
+    put_ "0. cluster"
 
     put_
     put_q
     put_
 
-    IDX=0
-    IG_NAME=
-    while read VAR; do
-        ARR=(${VAR})
+    SELECTED=
 
-        if [ "${IDX}" == "${ANSWER}" ]; then
-            IG_NAME="${ARR[0]}"
-            break
+    if [ "${ANSWER}" == "0" ]; then
+        SELECTED="cluster"
+
+        kops edit ${SELECTED} --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
+    else
+        IDX=0
+        while read VAR; do
+            ARR=(${VAR})
+
+            if [ "${IDX}" == "${ANSWER}" ]; then
+                SELECTED="${ARR[0]}"
+                break
+            fi
+
+            IDX=$(( ${IDX} + 1 ))
+        done < ${IG_LIST}
+
+        if [ "${SELECTED}" != "" ]; then
+            kops edit ig ${SELECTED} --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
         fi
+    fi
 
-        IDX=$(( ${IDX} + 1 ))
-    done < ${IG_LIST}
-
-    if [ "${IG_NAME}" != "" ]; then
-        kops edit ig ${IG_NAME} --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-
+    if [ "${SELECTED}" != "" ]; then
         put_w
     fi
 
@@ -616,7 +604,7 @@ get_template() {
         curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/${1} > ${2}
     fi
     if [ ! -f ${2} ]; then
-        error "Template does not exists."
+        put_e "Template does not exists."
     fi
 }
 
@@ -636,10 +624,10 @@ apply_ingress_nginx() {
         SSL_CERT_ARN=$(aws acm list-certificates | DOMAIN="*.${BASE_DOMAIN}" jq '[.CertificateSummaryList[] | select(.DomainName==env.DOMAIN)][0]' | grep CertificateArn | cut -d'"' -f4)
 
         if [ "${SSL_CERT_ARN}" == "" ]; then
-            error "Empty CertificateArn."
+            put_e "Empty CertificateArn."
         fi
 
-        put_c "CertificateArn: ${SSL_CERT_ARN}"
+        put_ "CertificateArn: ${SSL_CERT_ARN}"
 
         sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" ${ADDON}
     fi
@@ -661,7 +649,7 @@ apply_ingress_nginx() {
         ROOT_DOMAIN="${ANSWER}"
 
         if [ "${ROOT_DOMAIN}" == "" ]; then
-            error "Empty Root Domain."
+            put_e "Empty Root Domain."
         fi
 
         while [ 1 ]; do
