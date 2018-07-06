@@ -64,7 +64,7 @@ title() {
     echo
     echo -e "${L_PAD}$(tput setaf 3)$(tput bold)KOPS CUI$(tput sgr0)"
     echo
-	print "${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME}"
+    echo -e "${L_PAD}${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME}"
 	echo
 }
 
@@ -506,7 +506,7 @@ kops_rolling_update() {
 kops_validate() {
     kops validate cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
     echo
-    kubectl get deploy --all-namespaces
+    kubectl get pod --all-namespaces
 
     waiting
     cluster_menu
@@ -631,7 +631,7 @@ get_template() {
         curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/${1} > ${2}
     fi
     if [ ! -f ${2} ]; then
-        error "Template does not exists."
+        error "Template does not exists. [${1}]"
     fi
 }
 
@@ -698,7 +698,7 @@ apply_ingress_controller() {
         SSL_CERT_ARN=$(aws acm list-certificates | DOMAIN="*.${BASE_DOMAIN}" jq '[.CertificateSummaryList[] | select(.DomainName==env.DOMAIN)][0]' | grep CertificateArn | cut -d'"' -f4)
 
         if [ "${SSL_CERT_ARN}" == "" ]; then
-            error "Certificate ARN does not exists."
+            error "Certificate ARN does not exists. [*.${BASE_DOMAIN}][${REGION}]"
         fi
 
         print "CertificateArn: ${SSL_CERT_ARN}"
