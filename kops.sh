@@ -91,31 +91,21 @@ prepare() {
 
     REGION=$(aws configure get profile.default.region)
 
+    state_store
+}
+
+state_store() {
+    title
+
     read_state_store
 
-    read_cluster_no
+    read_cluster_list
 
     save_kops_config
 
-    CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
+    get_kops_cluster
+
     cluster_menu
-}
-
-save_kops_config() {
-    echo "# kops config" > ${CONFIG}
-    echo "KOPS_STATE_STORE=${KOPS_STATE_STORE}" >> ${CONFIG}
-    echo "KOPS_CLUSTER_NAME=${KOPS_CLUSTER_NAME}" >> ${CONFIG}
-    echo "ROOT_DOMAIN=${ROOT_DOMAIN}" >> ${CONFIG}
-    echo "BASE_DOMAIN=${BASE_DOMAIN}" >> ${CONFIG}
-}
-
-clear_kops_config() {
-    KOPS_CLUSTER_NAME=
-    ROOT_DOMAIN=
-    BASE_DOMAIN=
-
-    save_kops_config
-    . ${CONFIG}
 }
 
 cluster_menu() {
@@ -145,27 +135,27 @@ cluster_menu() {
             if [ "${CLUSTER}" == "0" ]; then
                 create_cluster
             else
-                get_cluster
+                kops_get
             fi
             ;;
         2)
             if [ "${CLUSTER}" == "0" ]; then
                 install_tools
             else
-                edit_cluster
+                kops_edit
             fi
             ;;
         3)
-            update_cluster
+            kops_update
             ;;
         4)
-            rolling_update_cluster
+            kops_rolling_update
             ;;
         5)
-            validate_cluster
+            kops_validate
             ;;
         6)
-            export_kubecfg
+            kops_export
             ;;
         7)
             addons_menu
@@ -175,7 +165,7 @@ cluster_menu() {
             echo
 
             if [ "${ANSWER}" == "YES" ]; then
-                delete_cluster
+                kops_delete
             else
                 cluster_menu
             fi
@@ -299,13 +289,37 @@ create_cluster() {
 
             waiting
 
-            CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
+            get_kops_cluster
+
             cluster_menu
             ;;
         *)
+            get_kops_cluster
+
             cluster_menu
             ;;
     esac
+}
+
+get_kops_cluster() {
+    CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
+}
+
+save_kops_config() {
+    echo "# kops config" > ${CONFIG}
+    echo "KOPS_STATE_STORE=${KOPS_STATE_STORE}" >> ${CONFIG}
+    echo "KOPS_CLUSTER_NAME=${KOPS_CLUSTER_NAME}" >> ${CONFIG}
+    echo "ROOT_DOMAIN=${ROOT_DOMAIN}" >> ${CONFIG}
+    echo "BASE_DOMAIN=${BASE_DOMAIN}" >> ${CONFIG}
+}
+
+clear_kops_config() {
+    KOPS_CLUSTER_NAME=
+    ROOT_DOMAIN=
+    BASE_DOMAIN=
+
+    save_kops_config
+    . ${CONFIG}
 }
 
 read_state_store() {
@@ -344,7 +358,7 @@ read_state_store() {
     fi
 }
 
-read_cluster_no() {
+read_cluster_list() {
     CLUSTER_LIST=/tmp/kops-cluster-list
     kops get cluster --state=s3://${KOPS_STATE_STORE} > ${CLUSTER_LIST}
 
@@ -412,15 +426,14 @@ read_cluster_name() {
     fi
 }
 
-get_cluster() {
+kops_get() {
     kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
 
     waiting
-
     cluster_menu
 }
 
-edit_cluster() {
+kops_edit() {
     IG_LIST=/tmp/kops-ig-list
 
     kops get ig --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} > ${IG_LIST}
@@ -476,21 +489,21 @@ edit_cluster() {
     cluster_menu
 }
 
-update_cluster() {
+kops_update() {
     kops update cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
 
     waiting
     cluster_menu
 }
 
-rolling_update_cluster() {
+kops_rolling_update() {
     kops rolling-update cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
 
     waiting
     cluster_menu
 }
 
-validate_cluster() {
+kops_validate() {
     kops validate cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
     echo
     kubectl get deploy --all-namespaces
@@ -499,20 +512,20 @@ validate_cluster() {
     cluster_menu
 }
 
-export_kubecfg() {
+kops_export() {
     kops export kubecfg --name ${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
 
     waiting
     cluster_menu
 }
 
-delete_cluster() {
+kops_delete() {
     kops delete cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
 
     clear_kops_config
 
     waiting
-    prepare
+    state_store
 }
 
 apply_metrics_server() {
