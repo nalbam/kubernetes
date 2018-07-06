@@ -35,22 +35,17 @@ put_() {
 }
 
 put_e() {
-    put_
-    tput setaf 1
-    put_ "$@"
-    tput sgr0
-    put_
+    echo
+    echo -e "${L_PAD}$(tput setaf 1)$@$(tput sgr0)"
+    echo
     exit 1
 }
 
 put_t() {
-    put_
-    put_
-	tput bold
-    tput setaf 3
-    put_ "$@"
-    tput sgr0
-    put_
+    echo
+    echo
+    echo -e "${L_PAD}$(tput setaf 3)$(tput bold)$@$(tput sgr0)"
+    echo
 }
 
 put_q() {
@@ -59,17 +54,13 @@ put_q() {
         Q="Enter your choice : "
     fi
 
-    tput setaf 2
-    read -p "${L_PAD}$Q" ANSWER
-    tput sgr0
+    read -p "${L_PAD}$(tput setaf 2)$Q$(tput sgr0)" ANSWER
 }
 
 put_w() {
-    put_
-    tput setaf 4
-    read -p "${L_PAD}Press Enter to continue..."
-    tput sgr0
-    put_
+    echo
+    read -p "${L_PAD}$(tput setaf 4)Press Enter to continue...$(tput sgr0)"
+    echo
 }
 
 title() {
@@ -77,9 +68,9 @@ title() {
     tput clear
 
 	put_t KOPS UI
-    put_
+    echo
 	put_ "${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME}"
-	put_
+	echo
 }
 
 prepare() {
@@ -146,13 +137,13 @@ cluster_menu() {
         put_ "5. Validate Cluster"
         put_ "6. Export Kubernetes Config"
         put_ "7. Addons"
-        put_
+        echo
         put_ "9. Delete Cluster"
     fi
 
-    put_
+    echo
     put_q
-	put_
+	echo
 
     case ${ANSWER} in
         1)
@@ -186,6 +177,7 @@ cluster_menu() {
             ;;
         9)
             put_q "Are you sure? (YES/[no]) : "
+            echo
 
             if [ "${ANSWER}" == "YES" ]; then
                 delete_cluster
@@ -207,12 +199,12 @@ addons_menu() {
 	put_ "3. Dashboard"
 	put_ "4. Heapster (deprecated)"
 	put_ "5. Cluster Autoscaler"
-	put_
+	echo
 	put_ "7. Sample Spring App"
 
-    put_
+    echo
     put_q
-	put_
+	echo
 
     case ${ANSWER} in
         1)
@@ -253,12 +245,12 @@ create_cluster() {
 	put_ "   zones=${zones}"
 	put_ "7. network-cidr=${network_cidr}"
 	put_ "8. networking=${networking}"
-    put_
+    echo
 	put_ "0. create"
 
-    put_
+    echo
     put_q
-	put_
+	echo
 
     case ${ANSWER} in
         1)
@@ -333,9 +325,9 @@ read_state_store() {
 
     KOPS_STATE_STORE=
 
-    put_
+    echo
     put_q "Enter cluster store [${DEFAULT}] : "
-    put_
+    echo
 
     if [ "${ANSWER}" == "" ]; then
         KOPS_STATE_STORE="${DEFAULT}"
@@ -377,12 +369,12 @@ read_cluster_no() {
     if [ "${IDX}" == "0" ]; then
         read_cluster_name
     else
-        put_
+        echo
         put_ "0. new"
 
-        put_
+        echo
         put_q "Enter cluster (0-${IDX})[1] : "
-        put_
+        echo
 
         if [ "${ANSWER}" == "" ]; then
             ANSWER="1"
@@ -414,9 +406,9 @@ read_cluster_no() {
 read_cluster_name() {
     DEFAULT="cluster.k8s.local"
 
-    put_
+    echo
     put_q "Enter your cluster name [${DEFAULT}] : "
-    put_
+    echo
 
     if [ "${ANSWER}" == "" ]; then
         KOPS_CLUSTER_NAME="${DEFAULT}"
@@ -451,12 +443,12 @@ edit_cluster() {
         put_ "${IDX}. ${ARR[0]}"
     done < ${IG_LIST}
 
-    put_
+    echo
     put_ "0. cluster"
 
-    put_
+    echo
     put_q
-    put_
+    echo
 
     SELECTED=
 
@@ -505,7 +497,7 @@ rolling_update_cluster() {
 
 validate_cluster() {
     kops validate cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-    put_
+    echo
     kubectl get deploy --all-namespaces
 
     put_w
@@ -536,7 +528,7 @@ apply_metrics_server() {
     cd /tmp/metrics-server
     git pull
 
-    put_
+    echo
     kubectl apply -f /tmp/metrics-server/deploy/1.8+/
 
     put_w
@@ -612,7 +604,7 @@ apply_ingress_nginx() {
     ADDON=/tmp/ingress-nginx.yml
 
     put_q "Enter your ingress domain (ex: apps.nalbam.com) : "
-    put_
+    echo
 
     BASE_DOMAIN="${ANSWER}"
 
@@ -632,11 +624,11 @@ apply_ingress_nginx() {
         sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" ${ADDON}
     fi
 
-    put_
+    echo
     kubectl apply -f ${ADDON}
-    put_
+    echo
     kubectl get pod,svc -n kube-ingress
-    put_
+    echo
 
     if [ "${BASE_DOMAIN}" == "" ]; then
         put_ "Pending ELB..."
@@ -644,7 +636,7 @@ apply_ingress_nginx() {
         get_ingress_domain
     else
         put_q "Enter your root domain (ex: nalbam.com) : "
-        put_
+        echo
 
         ROOT_DOMAIN="${ANSWER}"
 
@@ -706,7 +698,7 @@ apply_dashboard() {
 
         DEFAULT="dashboard.${BASE_DOMAIN}"
         put_q "Enter your dashboard domain [${DEFAULT}] : "
-        put_
+        echo
 
         DOMAIN="${ANSWER}"
 
@@ -719,9 +711,9 @@ apply_dashboard() {
         put_ "${DOMAIN}"
     fi
 
-    put_
+    echo
     kubectl apply -f ${ADDON}
-    put_
+    echo
     kubectl get pod,svc,ing -n kube-system
 
     put_w
@@ -733,9 +725,9 @@ apply_heapster() {
 
     get_template addons/heapster-v1.7.0.yml ${ADDON}
 
-    put_
+    echo
     kubectl apply -f ${ADDON}
-    put_
+    echo
     kubectl get pod,svc -n kube-system
 
     put_w
@@ -763,7 +755,7 @@ apply_cluster_autoscaler() {
     sed -i -e "s@{{AWS_REGION}}@${AWS_REGION}@g" "${ADDON}"
     sed -i -e "s@{{SSL_CERT_PATH}}@${SSL_CERT_PATH}@g" "${ADDON}"
 
-    put_
+    echo
     kubectl apply -f ${ADDON}
 
     put_w
@@ -784,7 +776,7 @@ apply_sample_spring() {
 
         DEFAULT="sample-spring.${BASE_DOMAIN}"
         put_q "Enter your sample-spring domain [${DEFAULT}] : "
-        put_
+        echo
 
         DOMAIN="${ANSWER}"
 
@@ -797,9 +789,9 @@ apply_sample_spring() {
         put_ "${DOMAIN}"
     fi
 
-    put_
+    echo
     kubectl apply -f ${ADDON}
-    put_
+    echo
     kubectl get pod,svc,ing -n default
 
     put_w
