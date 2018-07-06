@@ -62,7 +62,7 @@ title() {
 
     echo
     echo
-    echo -e "${L_PAD}$(tput setaf 3)$(tput bold)KOPS UI$(tput sgr0)"
+    echo -e "${L_PAD}$(tput setaf 3)$(tput bold)KOPS CUI$(tput sgr0)"
     echo
 	print "${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME}"
 	echo
