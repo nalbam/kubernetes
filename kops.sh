@@ -19,7 +19,7 @@ cloud=aws
 master_size=c4.large
 master_count=1
 master_zones=ap-northeast-2a
-node_size=m4.large
+node_size=t2.medium
 node_count=2
 zones=ap-northeast-2a,ap-northeast-2c
 network_cidr=10.10.0.0/16
@@ -180,7 +180,7 @@ addons_menu() {
     title
 
 	print "1. Metrics Server"
-	print "2. Ingress Nginx"
+	print "2. Ingress Controller"
 	print "3. Dashboard"
 	print "4. Heapster (deprecated)"
 	print "5. Cluster Autoscaler"
@@ -196,7 +196,7 @@ addons_menu() {
             apply_metrics_server
             ;;
         2)
-            apply_ingress_nginx
+            apply_ingress_controller
             ;;
         3)
             apply_dashboard
@@ -543,12 +543,37 @@ apply_metrics_server() {
     addons_menu
 }
 
-get_ingress_elb() {
-    ELB_DOMAIN=
+get_ingress_elb_name() {
+    ELB_NAME=
 
     IDX=0
     while [ 1 ]; do
         # ingress-nginx 의 ELB Name 을 획득
+        ELB_NAME=$(kubectl get svc -n kube-ingress -o wide | grep ingress-nginx | grep LoadBalancer | awk '{print $4}' | cut -d'-' -f1)
+
+        if [ "${ELB_NAME}" != "" ]; then
+            break
+        fi
+
+        IDX=$(( ${IDX} + 1 ))
+
+        if [ "${IDX}" == "20" ]; then
+            break
+        fi
+
+        sleep 3
+    done
+
+    print ${ELB_NAME}
+    echo
+}
+
+get_ingress_elb_domain() {
+    ELB_DOMAIN=
+
+    IDX=0
+    while [ 1 ]; do
+        # ingress-nginx 의 ELB Domain 을 획득
         ELB_DOMAIN=$(kubectl get svc -n kube-ingress -o wide | grep ingress-nginx | grep amazonaws | awk '{print $4}')
 
         if [ "${ELB_DOMAIN}" != "" ]; then
@@ -565,12 +590,13 @@ get_ingress_elb() {
     done
 
     print ${ELB_DOMAIN}
+    echo
 }
 
 get_ingress_domain() {
     ELB_IP=
 
-    get_ingress_elb
+    get_ingress_elb_domain
 
     IDX=0
     while [ 1 ]; do
@@ -594,6 +620,7 @@ get_ingress_domain() {
     fi
 
     print ${BASE_DOMAIN}
+    echo
 }
 
 get_template() {
@@ -608,13 +635,60 @@ get_template() {
     fi
 }
 
-apply_ingress_nginx() {
+read_root_domain() {
+    HOST_LIST=/tmp/hosted-zones
+
+    aws route53 list-hosted-zones | jq '.HostedZones[]' | grep Name | cut -d'"' -f4 > ${HOST_LIST}
+
+    IDX=0
+    while read VAR; do
+        IDX=$(( ${IDX} + 1 ))
+
+        print "${IDX}. ${VAR::-1}"
+    done < ${HOST_LIST}
+
+    ROOT_DOMAIN=
+
+    if [ "${IDX}" != "0" ]; then
+        echo
+        print "0. nip.io"
+
+        echo
+        question "Enter root domain (0-${IDX})[0] : "
+        echo
+
+        if [ "${ANSWER}" != "" ]; then
+            IDX=0
+            while read VAR; do
+                IDX=$(( ${IDX} + 1 ))
+
+                if [ "${IDX}" == "${ANSWER}" ]; then
+                    ROOT_DOMAIN="${VAR::-1}"
+                    break
+                fi
+            done < ${HOST_LIST}
+        fi
+    fi
+}
+
+apply_ingress_controller() {
+    read_root_domain
+
+    BASE_DOMAIN=
+
+    if [ "${ROOT_DOMAIN}" != "" ]; then
+        DEFAULT="apps.${ROOT_DOMAIN}"
+        question "Enter your ingress domain [${DEFAULT}] : "
+        echo
+
+        if [ "${ANSWER}" == "" ]; then
+            BASE_DOMAIN="${DEFAULT}"
+        else
+            BASE_DOMAIN="${ANSWER}"
+        fi
+    fi
+
     ADDON=/tmp/ingress-nginx.yml
-
-    question "Enter your ingress domain (ex: apps.nalbam.com) : "
-    echo
-
-    BASE_DOMAIN="${ANSWER}"
 
     if [ "${BASE_DOMAIN}" == "" ]; then
         get_template addons/ingress-nginx-v1.6.0.yml ${ADDON}
@@ -624,7 +698,7 @@ apply_ingress_nginx() {
         SSL_CERT_ARN=$(aws acm list-certificates | DOMAIN="*.${BASE_DOMAIN}" jq '[.CertificateSummaryList[] | select(.DomainName==env.DOMAIN)][0]' | grep CertificateArn | cut -d'"' -f4)
 
         if [ "${SSL_CERT_ARN}" == "" ]; then
-            error "Empty CertificateArn."
+            error "Certificate ARN does not exists."
         fi
 
         print "CertificateArn: ${SSL_CERT_ARN}"
@@ -638,30 +712,14 @@ apply_ingress_nginx() {
     kubectl get pod,svc -n kube-ingress
     echo
 
-    if [ "${BASE_DOMAIN}" == "" ]; then
-        print "Pending ELB..."
+    print "Pending ELB..."
+    sleep 3
+    echo
 
+    if [ "${BASE_DOMAIN}" == "" ]; then
         get_ingress_domain
     else
-        question "Enter your root domain (ex: nalbam.com) : "
-        echo
-
-        ROOT_DOMAIN="${ANSWER}"
-
-        if [ "${ROOT_DOMAIN}" == "" ]; then
-            error "Empty Root Domain."
-        fi
-
-        while [ 1 ]; do
-            # ingress-nginx 의 ELB Name 을 획득
-            ELB_NAME=$(kubectl get svc -n kube-ingress -o wide | grep ingress-nginx | grep LoadBalancer | awk '{print $4}' | cut -d'-' -f1)
-
-            if [ "${ELB_NAME}" != "" ]; then
-                break
-            fi
-
-            sleep 3
-        done
+        get_ingress_elb_name
 
         # ELB 에서 Hosted Zone ID, DNS Name 을 획득
         ELB_ZONE_ID=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep CanonicalHostedZoneNameID | cut -d'"' -f4)
@@ -693,11 +751,11 @@ apply_ingress_nginx() {
 }
 
 apply_dashboard() {
-    ADDON=/tmp/dashboard.yml
-
     if [ "${BASE_DOMAIN}" == "" ]; then
         get_ingress_domain
     fi
+
+    ADDON=/tmp/dashboard.yml
 
     if [ "${BASE_DOMAIN}" == "" ]; then
         get_template addons/dashboard-v1.8.3.yml ${ADDON}
@@ -771,11 +829,11 @@ apply_cluster_autoscaler() {
 }
 
 apply_sample_spring() {
-    ADDON=/tmp/sample-spring.yml
-
     if [ "${BASE_DOMAIN}" == "" ]; then
         get_ingress_domain
     fi
+
+    ADDON=/tmp/sample-spring.yml
 
     if [ "${BASE_DOMAIN}" == "" ]; then
         get_template sample/sample-spring.yml ${ADDON}
