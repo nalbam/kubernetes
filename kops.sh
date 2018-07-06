@@ -2,7 +2,7 @@
 
 SHELL_DIR=$(dirname "$0")
 
-L_PAD="$(printf %5s)"
+L_PAD="$(printf %3s)"
 
 ANSWER=
 CLUSTER=
@@ -201,8 +201,13 @@ cluster_menu() {
             addons_menu
             ;;
         9)
+            put_q ""
 
-            delete_cluster
+            if [ "${ANSWER}" == "YES" ]; then
+                delete_cluster
+            else
+                cluster_menu
+            fi
             ;;
         *)
             cluster_menu
@@ -253,17 +258,17 @@ addons_menu() {
 create_cluster() {
     title
 
-	put_c "   cloud=aws"
+	put_c "   cloud=${cloud}"
 	put_c "   name=${KOPS_CLUSTER_NAME}"
 	put_c "   state=s3://${KOPS_STATE_STORE}"
-	put_c "1. master-size=c4.large"
-	put_c "   master-count=1"
-	put_c "   master-zones=ap-northeast-2a"
+	put_c "1. master-size=${master_size}"
+	put_c "   master-count=${master_count}"
+	put_c "   master-zones=${master_zones}"
 	put_c "4. node-size=${node_size}"
 	put_c "5. node-count=${node_count}"
-	put_c "   zones=ap-northeast-2a,ap-northeast-2c"
-	put_c "7. network-cidr=10.10.0.0/16"
-	put_c "8. networking=calico"
+	put_c "   zones=${zones}"
+	put_c "7. network-cidr=${network_cidr}"
+	put_c "8. networking=${networking}"
     put_
 	put_c "0. create"
 
@@ -273,37 +278,37 @@ create_cluster() {
 
     case ${ANSWER} in
         1)
-            read -p "master_size [${master_size}] : " VAL
-            if [ "${VAL}" != "" ]; then
-                master_size=${VAL}
+            put_q "Enter master size [${master_size}] : "
+            if [ "${ANSWER}" != "" ]; then
+                master_size=${ANSWER}
             fi
             create_cluster
             ;;
         4)
-            read -p "node_size [${node_size}] : " VAL
-            if [ "${VAL}" != "" ]; then
-                node_size=${VAL}
+            put_q "Enter node size [${node_size}] : "
+            if [ "${ANSWER}" != "" ]; then
+                node_size=${ANSWER}
             fi
             create_cluster
             ;;
         5)
-            read -p "node_count [${node_count}] : " VAL
-            if [ "${VAL}" != "" ]; then
-                node_count=${VAL}
+            put_q "Enter node count [${node_count}] : "
+            if [ "${ANSWER}" != "" ]; then
+                node_count=${ANSWER}
             fi
             create_cluster
             ;;
         7)
-            read -p "network_cidr [${network_cidr}] : " VAL
-            if [ "${VAL}" != "" ]; then
-                network_cidr=${VAL}
+            put_q "Enter network cidr [${network_cidr}] : "
+            if [ "${ANSWER}" != "" ]; then
+                network_cidr=${ANSWER}
             fi
             create_cluster
             ;;
         8)
-            read -p "networking [${networking}] : " VAL
-            if [ "${VAL}" != "" ]; then
-                networking=${VAL}
+            put_q "Enter networking [${networking}] : "
+            if [ "${ANSWER}" != "" ]; then
+                networking=${ANSWER}
             fi
             create_cluster
             ;;
@@ -321,8 +326,9 @@ create_cluster() {
                 --network-cidr=${network_cidr} \
                 --networking=${networking}
 
-            CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
             put_w
+
+            CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
             cluster_menu
             ;;
         *)
@@ -339,18 +345,18 @@ read_state_store() {
         DEFAULT="kops-state-${USER}"
     else
         DEFAULT="${KOPS_STATE_STORE}"
-        KOPS_STATE_STORE=
     fi
 
-    # state store
-    if [ "${KOPS_STATE_STORE}" == "" ]; then
-        put_q "Enter cluster store [${DEFAULT}] : "
-        put_
+    KOPS_STATE_STORE=
 
-        KOPS_STATE_STORE="${ANSWER}"
-    fi
-    if [ "${KOPS_STATE_STORE}" == "" ]; then
+    put_
+    put_q "Enter cluster store [${DEFAULT}] : "
+    put_
+
+    if [ "${ANSWER}" == "" ]; then
         KOPS_STATE_STORE="${DEFAULT}"
+    else
+        KOPS_STATE_STORE="${ANSWER}"
     fi
 
     # S3 Bucket
@@ -423,10 +429,15 @@ read_cluster_no() {
 
 read_cluster_name() {
     DEFAULT="cluster.k8s.local"
-    read -p "Enter your cluster name [${DEFAULT}] : " KOPS_CLUSTER_NAME
 
-    if [ "${KOPS_CLUSTER_NAME}" == "" ]; then
+    put_
+    put_q "Enter your cluster name [${DEFAULT}] : "
+    put_
+
+    if [ "${ANSWER}" == "" ]; then
         KOPS_CLUSTER_NAME="${DEFAULT}"
+    else
+        KOPS_CLUSTER_NAME="${ANSWER}"
     fi
 }
 
