@@ -611,7 +611,7 @@ get_ingress_domain() {
 get_template() {
     rm -rf ${2}
     if [ -f "${SHELL_DIR}/${1}" ]; then
-        cp "${SHELL_DIR}/${1}" ${2}
+        cp -rf "${SHELL_DIR}/${1}" ${2}
     else
         curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/${1} > ${2}
     fi
