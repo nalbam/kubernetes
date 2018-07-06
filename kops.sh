@@ -227,6 +227,9 @@ addons_menu() {
 	put_c "3. Dashboard"
 	put_c "4. Heapster (deprecated)"
 	put_c "5. Cluster Autoscaler"
+	put_c "5. Cluster Autoscaler"
+	put_x
+	put_c "7. Sample Spring App"
 
     put_x
     put_q
@@ -247,6 +250,9 @@ addons_menu() {
             ;;
         5)
             apply_cluster_autoscaler
+            ;;
+        7)
+            apply_sample_spring
             ;;
         *)
             cluster_menu
@@ -509,9 +515,9 @@ rolling_update_cluster() {
 
 validate_cluster() {
     kops validate cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-    put_ ""
+    put_
     kubectl get deploy --all-namespaces
-    put_ ""
+    put_
     read -p "Press Enter to continue..."
     cluster_menu
 }
@@ -539,9 +545,9 @@ apply_metrics_server() {
     cd /tmp/metrics-server
     git pull
 
-    put_ ""
+    put_
     kubectl apply -f /tmp/metrics-server/deploy/1.8+/
-    put_ ""
+    put_
 
     read -p "Press Enter to continue..."
     addons_menu
@@ -561,7 +567,7 @@ get_ingress_elb() {
 
         IDX=$(( ${IDX} + 1 ))
 
-        if [ "${IDX}" == "30" ]; then
+        if [ "${IDX}" == "20" ]; then
             break
         fi
 
@@ -571,7 +577,7 @@ get_ingress_elb() {
     put_ ${ELB_DOMAIN}
 }
 
-get_base_domain() {
+get_ingress_domain() {
     ELB_IP=
 
     get_ingress_elb
@@ -586,7 +592,7 @@ get_base_domain() {
 
         IDX=$(( ${IDX} + 1 ))
 
-        if [ "${IDX}" == "30" ]; then
+        if [ "${IDX}" == "50" ]; then
             break
         fi
 
@@ -594,7 +600,7 @@ get_base_domain() {
     done
 
     if [ "${ELB_IP}" != "" ]; then
-        BASE_DOMAIN="${ELB_IP}.nip.io"
+        BASE_DOMAIN="apps.${ELB_IP}.nip.io"
     fi
 
     put_ ${BASE_DOMAIN}
@@ -621,17 +627,18 @@ apply_ingress_nginx() {
         sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" ${ADDON}
     fi
 
-    put_ ""
+    put_
     kubectl apply -f ${ADDON}
-    put_ ""
+    put_
+    kubectl get pod,svc -n kube-ingress
+    put_
 
     if [ "${BASE_DOMAIN}" == "" ]; then
         put_ "Pending ELB..."
-        sleep 3
 
-        get_base_domain
+        get_ingress_domain
 
-        put_ ""
+        put_
     else
         read -p "Enter your root domain (ex: nalbam.com) : " ROOT_DOMAIN
 
@@ -662,12 +669,12 @@ apply_ingress_nginx() {
         sed -i -e "s@{{ELB_ZONE_ID}}@${ELB_ZONE_ID}@g" "${RECORD}"
         sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 
-        put_ ""
+        put_
         cat ${RECORD}
 
         # Route53 의 Record Set 에 입력/수정
         aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://${RECORD}
-        put_ ""
+        put_
     fi
 
     save_kops_config
@@ -680,7 +687,7 @@ apply_dashboard() {
     ADDON=/tmp/dashboard.yml
 
     if [ "${BASE_DOMAIN}" == "" ]; then
-        get_base_domain
+        get_ingress_domain
     fi
 
     if [ "${BASE_DOMAIN}" == "" ]; then
@@ -688,10 +695,11 @@ apply_dashboard() {
     else
         curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3-ing.yml > ${ADDON}
 
-        read -p "Enter your ingress domain [dashboard.${BASE_DOMAIN}] : " DOMAIN
+        DEFAULT="dashboard.${BASE_DOMAIN}"
+        read -p "Enter your ingress domain [${DEFAULT}] : " DOMAIN
 
         if [ "${DOMAIN}" == "" ]; then
-            DOMAIN="dashboard.${BASE_DOMAIN}"
+            DOMAIN="${DEFAULT}"
         fi
 
         sed -i -e "s@dashboard.apps.nalbam.com@${DOMAIN}@g" ${ADDON}
@@ -699,9 +707,11 @@ apply_dashboard() {
         put_ "${DOMAIN}"
     fi
 
-    put_ ""
+    put_
     kubectl apply -f ${ADDON}
-    put_ ""
+    put_
+    kubectl get pod,svc,ing -n kube-system
+    put_
 
     read -p "Press Enter to continue..."
     addons_menu
@@ -712,9 +722,11 @@ apply_heapster() {
 
     curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml > ${ADDON}
 
-    put_ ""
+    put_
     kubectl apply -f ${ADDON}
-    put_ ""
+    put_
+    kubectl get pod,svc -n kube-system
+    put_
 
     read -p "Press Enter to continue..."
     addons_menu
@@ -741,9 +753,43 @@ apply_cluster_autoscaler() {
     sed -i -e "s@{{AWS_REGION}}@${AWS_REGION}@g" "${ADDON}"
     sed -i -e "s@{{SSL_CERT_PATH}}@${SSL_CERT_PATH}@g" "${ADDON}"
 
-    put_ ""
+    put_
     kubectl apply -f ${ADDON}
-    put_ ""
+    put_
+
+    read -p "Press Enter to continue..."
+    addons_menu
+}
+
+apply_sample_spring() {
+    ADDON=/tmp/sample-spring.yml
+
+    if [ "${BASE_DOMAIN}" == "" ]; then
+        get_ingress_domain
+    fi
+
+    if [ "${BASE_DOMAIN}" == "" ]; then
+        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-spring.yml > ${ADDON}
+    else
+        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-spring-ing.yml > ${ADDON}
+
+        DEFAULT="sample-spring.${BASE_DOMAIN}"
+        read -p "Enter your ingress domain [${DEFAULT}] : " DOMAIN
+
+        if [ "${DOMAIN}" == "" ]; then
+            DOMAIN="${DEFAULT}"
+        fi
+
+        sed -i -e "s@sample-spring.apps.nalbam.com@${DOMAIN}@g" ${ADDON}
+
+        put_ "${DOMAIN}"
+    fi
+
+    put_
+    kubectl apply -f ${ADDON}
+    put_
+    kubectl get pod,svc,ing -n default
+    put_
 
     read -p "Press Enter to continue..."
     addons_menu
@@ -751,7 +797,7 @@ apply_cluster_autoscaler() {
 
 install_tools() {
     curl -sL toast.sh/helper/bastion.sh | bash
-    put_ ""
+    put_
     read -p "Press Enter to continue..."
     cluster_menu
 }
