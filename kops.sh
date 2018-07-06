@@ -34,19 +34,11 @@ print() {
     echo -e "${L_PAD}$@"
 }
 
-error() {
-    echo
-    echo -e "${L_PAD}$(tput setaf 1)$@$(tput sgr0)"
-    echo
-    exit 1
-}
-
 question() {
     Q=$1
     if [ "$Q" == "" ]; then
         Q="Enter your choice : "
     fi
-
     read -p "${L_PAD}$(tput setaf 2)$Q$(tput sgr0)" ANSWER
 }
 
@@ -56,20 +48,45 @@ waiting() {
     echo
 }
 
-title() {
-    # clear the screen
+error() {
+    echo
+    tput setaf 1
+    print "$@"
+    tput sgr0
+    echo
+    exit 1
+}
+
+logo() {
     tput clear
 
     echo
     echo
-    echo -e "${L_PAD}$(tput setaf 3)$(tput bold)KOPS CUI$(tput sgr0)"
+    tput setaf 3
+    print "  _  _____  ____  ____     ____ _   _ ___  "
+    print " | |/ / _ \|  _ \/ ___|   / ___| | | |_ _| "
+    print " | ' / | | | |_) \___ \  | |   | | | || |  "
+    print " | . \ |_| |  __/ ___) | | |___| |_| || |  "
+    print " |_|\_\___/|_|   |____/   \____|\___/|___|  by nalbam "
+    tput sgr0
     echo
-    echo -e "${L_PAD}${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME}"
+}
+
+title() {
+    tput clear
+
+    echo
+    echo
+    tput setaf 3 && tput bold
+    print "KOPS CUI"
+    tput sgr0
+    echo
+    print "${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME}"
 	echo
 }
 
 prepare() {
-    title
+    logo
 
     mkdir -p ~/.kops
 
@@ -95,7 +112,7 @@ prepare() {
 }
 
 state_store() {
-    title
+    logo
 
     read_state_store
 
@@ -121,7 +138,7 @@ cluster_menu() {
         print "4. Rolling Update Cluster"
         print "5. Validate Cluster"
         print "6. Export Kubernetes Config"
-        print "7. Addons"
+        print "7. Addons..."
         echo
         print "9. Delete Cluster"
     fi
@@ -383,7 +400,6 @@ read_cluster_list() {
 
         echo
         question "Enter cluster (0-${IDX})[1] : "
-        echo
 
         if [ "${ANSWER}" == "" ]; then
             ANSWER="1"
