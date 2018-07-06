@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SHELL_DIR=$(dirname $(dirname "$0"))
+
 CUR=0
 T_PAD=2
 L_PAD=4
@@ -606,15 +608,27 @@ get_ingress_domain() {
     put_ ${BASE_DOMAIN}
 }
 
+get_template() {
+    rm -rf ${2}
+    if [ -f "${SHELL_DIR}/${1}" ]; then
+        cp "${SHELL_DIR}/${1}" ${2}
+    else
+        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/${1} > ${2}
+    fi
+    if [ ! -f ${2} ]; then
+        error "Template does not exists."
+    fi
+}
+
 apply_ingress_nginx() {
     ADDON=/tmp/ingress-nginx.yml
 
     read -p "Enter your ingress domain (ex: apps.nalbam.com) : " BASE_DOMAIN
 
     if [ "${BASE_DOMAIN}" == "" ]; then
-        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml > ${ADDON}
+        get_template addons/ingress-nginx-v1.6.0.yml ${ADDON}
     else
-        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0-ssl.yml > ${ADDON}
+        get_template addons/ingress-nginx-v1.6.0-ssl.yml ${ADDON}
 
         SSL_CERT_ARN=$(aws acm list-certificates | DOMAIN="*.${BASE_DOMAIN}" jq '[.CertificateSummaryList[] | select(.DomainName==env.DOMAIN)][0]' | grep CertificateArn | cut -d'"' -f4)
 
@@ -662,7 +676,8 @@ apply_ingress_nginx() {
 
         # record sets
         RECORD=/tmp/record-sets.json
-        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/record-sets.json > ${RECORD}
+
+        get_template addons/record-sets.json ${RECORD}
 
         # replace
         sed -i -e "s@{{DOMAIN}}@*.${BASE_DOMAIN}@g" "${RECORD}"
@@ -691,9 +706,9 @@ apply_dashboard() {
     fi
 
     if [ "${BASE_DOMAIN}" == "" ]; then
-        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml > ${ADDON}
+        get_template addons/dashboard-v1.8.3.yml ${ADDON}
     else
-        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3-ing.yml > ${ADDON}
+        get_template addons/dashboard-v1.8.3-ing.yml ${ADDON}
 
         DEFAULT="dashboard.${BASE_DOMAIN}"
         read -p "Enter your ingress domain [${DEFAULT}] : " DOMAIN
@@ -720,7 +735,7 @@ apply_dashboard() {
 apply_heapster() {
     ADDON=/tmp/heapster.yml
 
-    curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml > ${ADDON}
+    get_template addons/heapster-v1.7.0.yml ${ADDON}
 
     put_
     kubectl apply -f ${ADDON}
@@ -735,7 +750,7 @@ apply_heapster() {
 apply_cluster_autoscaler() {
     ADDON=/tmp/cluster_autoscaler.yml
 
-    curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/cluster-autoscaler-v1.8.0.yml> ${ADDON}
+    get_template addons/cluster-autoscaler-v1.8.0.yml ${ADDON}
 
     CLOUD_PROVIDER=aws
     IMAGE=k8s.gcr.io/cluster-autoscaler:v1.2.2
@@ -769,9 +784,9 @@ apply_sample_spring() {
     fi
 
     if [ "${BASE_DOMAIN}" == "" ]; then
-        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-spring.yml > ${ADDON}
+        get_template sample/sample-spring.yml ${ADDON}
     else
-        curl -s https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/sample-spring-ing.yml > ${ADDON}
+        get_template sample/sample-spring-ing.yml ${ADDON}
 
         DEFAULT="sample-spring.${BASE_DOMAIN}"
         read -p "Enter your ingress domain [${DEFAULT}] : " DOMAIN
