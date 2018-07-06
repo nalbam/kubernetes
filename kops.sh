@@ -2,11 +2,9 @@
 
 SHELL_DIR=$(dirname $(dirname "$0"))
 
-CUR=0
-T_PAD=2
-L_PAD=4
+L_PAD="   "
 
-CHOICE=
+ANSWER=
 CLUSTER=
 
 REGION=
@@ -32,18 +30,15 @@ if [ -f ${CONFIG} ]; then
     . ${CONFIG}
 fi
 
-success() {
-    put_2 "$@"
-    exit 0
-}
-
 error() {
+    put_
     put_1 "$@"
+    put_
     exit 1
 }
 
 put_() {
-    echo -e "$@"
+    echo -e "${L_PAD}$@"
 }
 
 put_1() {
@@ -59,19 +54,22 @@ put_2() {
 }
 
 put_t() {
-	tput cup ${CUR} ${L_PAD}
     tput setaf 3
 	tput bold
     put_ "$@"
     tput sgr0
-    put_x
+    put_
 }
 
 put_c() {
-	tput cup ${CUR} ${L_PAD}
 	put_ "$@"
-	tput sgr0
-    put_x
+}
+
+put_w() {
+    put_
+	tput bold
+    read -p "${L_PAD}Press Enter to continue..."
+    tput sgr0
 }
 
 put_q() {
@@ -79,31 +77,22 @@ put_q() {
     if [ "$Q" == "" ]; then
         Q="Enter your choice : "
     fi
-    tput cup ${CUR} ${L_PAD}
+
 	tput bold
-    read -p "$Q" CHOICE
+    read -p "${L_PAD}$Q" ANSWER
     tput sgr0
-    put_x
-}
-
-put_x() {
-    CUR=$(( ${CUR} + 1 ))
-}
-
-clear() {
-    # clear the screen
-    tput clear
-
-    CUR=${T_PAD}
 }
 
 title() {
-    clear
+    # clear the screen
+    tput clear
 
+    put_
+    put_
 	put_t KOPS UI
-    put_x
+    put_
 	put_c "${KOPS_STATE_STORE} > ${KOPS_CLUSTER_NAME}"
-	put_x
+	put_
 }
 
 prepare() {
@@ -174,11 +163,11 @@ cluster_menu() {
         put_c "9. Delete Cluster"
     fi
 
-    put_x
+    put_
     put_q
 	put_
 
-    case ${CHOICE} in
+    case ${ANSWER} in
         1)
             if [ "${CLUSTER}" == "0" ]; then
                 create_cluster
@@ -229,15 +218,14 @@ addons_menu() {
 	put_c "3. Dashboard"
 	put_c "4. Heapster (deprecated)"
 	put_c "5. Cluster Autoscaler"
-	put_c "5. Cluster Autoscaler"
-	put_x
+	put_
 	put_c "7. Sample Spring App"
 
-    put_x
+    put_
     put_q
 	put_
 
-    case ${CHOICE} in
+    case ${ANSWER} in
         1)
             apply_metrics_server
             ;;
@@ -276,14 +264,14 @@ create_cluster() {
 	put_c "   zones=ap-northeast-2a,ap-northeast-2c"
 	put_c "7. network-cidr=10.10.0.0/16"
 	put_c "8. networking=calico"
-    put_x
+    put_
 	put_c "0. create"
 
-    put_x
+    put_
     put_q
 	put_
 
-    case ${CHOICE} in
+    case ${ANSWER} in
         1)
             read -p "master_size [${master_size}] : " VAL
             if [ "${VAL}" != "" ]; then
@@ -334,7 +322,7 @@ create_cluster() {
                 --networking=${networking}
 
             CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
-            read -p "Press Enter to continue..."
+            put_w
             cluster_menu
             ;;
         *)
@@ -356,9 +344,10 @@ read_state_store() {
 
     # state store
     if [ "${KOPS_STATE_STORE}" == "" ]; then
+        put_q "Enter cluster store [${DEFAULT}] : "
         put_
-        read -p "Enter cluster store [${DEFAULT}] : " KOPS_STATE_STORE
-        put_
+
+        KOPS_STATE_STORE="${ANSWER}"
     fi
     if [ "${KOPS_STATE_STORE}" == "" ]; then
         KOPS_STATE_STORE="${DEFAULT}"
@@ -371,6 +360,7 @@ read_state_store() {
 
         BUCKET=$(aws s3api get-bucket-acl --bucket ${KOPS_STATE_STORE} | jq '.Owner.ID')
         if [ "${BUCKET}" == "" ]; then
+            KOPS_STATE_STORE=
             clear_kops_config
             error
         fi
@@ -381,44 +371,41 @@ read_cluster_no() {
     CLUSTER_LIST=/tmp/kops-cluster-list
     kops get cluster --state=s3://${KOPS_STATE_STORE} > ${CLUSTER_LIST}
 
-    put_
-
     IDX=0
     while read VAR; do
         ARR=(${VAR})
 
         if [ "${ARR[0]}" == "NAME" ]; then
-            NO=""
-        else
-            IDX=$(( ${IDX} + 1 ))
-            NO="${IDX}."
+            continue
         fi
 
-        printf "%5s\t%s\n" "$NO" "$VAR"
+        IDX=$(( ${IDX} + 1 ))
+
+        put_c "${IDX}. ${ARR[0]}"
     done < ${CLUSTER_LIST}
 
     if [ "${IDX}" == "0" ]; then
         read_cluster_name
     else
         put_
-        printf "%5s\t%s\n" "0." "new cluster"
+        put_c "0. new"
 
         put_
-        read -p "Enter cluster (0-${IDX})[1] : " CHOICE
+        put_q "Enter cluster (0-${IDX})[1] : "
         put_
 
-        if [ "${CHOICE}" == "" ]; then
-            CHOICE="1"
+        if [ "${ANSWER}" == "" ]; then
+            ANSWER="1"
         fi
 
-        if [ "${CHOICE}" == "0" ]; then
+        if [ "${ANSWER}" == "0" ]; then
             read_cluster_name
         else
             IDX=0
             while read VAR; do
                 ARR=(${VAR})
 
-                if [ "${IDX}" == "${CHOICE}" ]; then
+                if [ "${IDX}" == "${ANSWER}" ]; then
                     KOPS_CLUSTER_NAME="${ARR[0]}"
                     break
                 fi
@@ -445,15 +432,17 @@ read_cluster_name() {
 
 get_cluster() {
     kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-    put_
-    read -p "Press Enter to continue..."
+
+    put_w
+
     cluster_menu
 }
 
 edit_cluster() {
     kops edit cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-    put_
-    read -p "Press Enter to continue..."
+
+    put_w
+
     cluster_menu
 }
 
@@ -467,24 +456,24 @@ edit_instance_group() {
         ARR=(${VAR})
 
         if [ "${ARR[0]}" == "NAME" ]; then
-            NO=""
-        else
-            IDX=$(( ${IDX} + 1 ))
-            NO="${IDX}."
+            continue
         fi
 
-        printf "%3s\t%s\n" "$NO" "$VAR"
+        IDX=$(( ${IDX} + 1 ))
+
+        put_c "${IDX}. ${ARR[0]}"
     done < ${IG_LIST}
 
     put_
-    read -p "Enter your choice : " CHOICE
+    put_q
+    put_
 
     IDX=0
     IG_NAME=
     while read VAR; do
         ARR=(${VAR})
 
-        if [ "${IDX}" == "${CHOICE}" ]; then
+        if [ "${IDX}" == "${ANSWER}" ]; then
             IG_NAME="${ARR[0]}"
             break
         fi
@@ -494,8 +483,8 @@ edit_instance_group() {
 
     if [ "${IG_NAME}" != "" ]; then
         kops edit ig ${IG_NAME} --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-        put_
-        read -p "Press Enter to continue..."
+
+        put_w
     fi
 
     cluster_menu
@@ -503,15 +492,15 @@ edit_instance_group() {
 
 update_cluster() {
     kops update cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
-    put_
-    read -p "Press Enter to continue..."
+
+    put_w
     cluster_menu
 }
 
 rolling_update_cluster() {
     kops rolling-update cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
-    put_
-    read -p "Press Enter to continue..."
+
+    put_w
     cluster_menu
 }
 
@@ -519,23 +508,24 @@ validate_cluster() {
     kops validate cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
     put_
     kubectl get deploy --all-namespaces
-    put_
-    read -p "Press Enter to continue..."
+
+    put_w
     cluster_menu
 }
 
 export_kubecfg() {
     kops export kubecfg --name ${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE}
-    put_
-    read -p "Press Enter to continue..."
+
+    put_w
     cluster_menu
 }
 
 delete_cluster() {
     kops delete cluster --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} --yes
+
     clear_kops_config
-    put_
-    read -p "Press Enter to continue..."
+
+    put_w
     prepare
 }
 
@@ -549,9 +539,8 @@ apply_metrics_server() {
 
     put_
     kubectl apply -f /tmp/metrics-server/deploy/1.8+/
-    put_
 
-    read -p "Press Enter to continue..."
+    put_w
     addons_menu
 }
 
@@ -623,7 +612,10 @@ get_template() {
 apply_ingress_nginx() {
     ADDON=/tmp/ingress-nginx.yml
 
-    read -p "Enter your ingress domain (ex: apps.nalbam.com) : " BASE_DOMAIN
+    put_q "Enter your ingress domain (ex: apps.nalbam.com) : "
+    put_
+
+    BASE_DOMAIN="${ANSWER}"
 
     if [ "${BASE_DOMAIN}" == "" ]; then
         get_template addons/ingress-nginx-v1.6.0.yml ${ADDON}
@@ -636,7 +628,7 @@ apply_ingress_nginx() {
             error "Empty CertificateArn."
         fi
 
-        put_ "CertificateArn: ${SSL_CERT_ARN}"
+        put_c "CertificateArn: ${SSL_CERT_ARN}"
 
         sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" ${ADDON}
     fi
@@ -651,10 +643,15 @@ apply_ingress_nginx() {
         put_ "Pending ELB..."
 
         get_ingress_domain
-
-        put_
     else
-        read -p "Enter your root domain (ex: nalbam.com) : " ROOT_DOMAIN
+        put_q "Enter your root domain (ex: nalbam.com) : "
+        put_
+
+        ROOT_DOMAIN="${ANSWER}"
+
+        if [ "${ROOT_DOMAIN}" == "" ]; then
+            error "Empty Root Domain."
+        fi
 
         while [ 1 ]; do
             # ingress-nginx 의 ELB Name 을 획득
@@ -664,7 +661,7 @@ apply_ingress_nginx() {
                 break
             fi
 
-            sleep 1
+            sleep 3
         done
 
         # ELB 에서 Hosted Zone ID, DNS Name 을 획득
@@ -684,17 +681,15 @@ apply_ingress_nginx() {
         sed -i -e "s@{{ELB_ZONE_ID}}@${ELB_ZONE_ID}@g" "${RECORD}"
         sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 
-        put_
         cat ${RECORD}
 
         # Route53 의 Record Set 에 입력/수정
         aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://${RECORD}
-        put_
     fi
 
     save_kops_config
 
-    read -p "Press Enter to continue..."
+    put_w
     addons_menu
 }
 
@@ -711,7 +706,10 @@ apply_dashboard() {
         get_template addons/dashboard-v1.8.3-ing.yml ${ADDON}
 
         DEFAULT="dashboard.${BASE_DOMAIN}"
-        read -p "Enter your ingress domain [${DEFAULT}] : " DOMAIN
+        put_q "Enter your dashboard domain [${DEFAULT}] : "
+        put_
+
+        DOMAIN="${ANSWER}"
 
         if [ "${DOMAIN}" == "" ]; then
             DOMAIN="${DEFAULT}"
@@ -726,9 +724,8 @@ apply_dashboard() {
     kubectl apply -f ${ADDON}
     put_
     kubectl get pod,svc,ing -n kube-system
-    put_
 
-    read -p "Press Enter to continue..."
+    put_w
     addons_menu
 }
 
@@ -741,9 +738,8 @@ apply_heapster() {
     kubectl apply -f ${ADDON}
     put_
     kubectl get pod,svc -n kube-system
-    put_
 
-    read -p "Press Enter to continue..."
+    put_w
     addons_menu
 }
 
@@ -770,9 +766,8 @@ apply_cluster_autoscaler() {
 
     put_
     kubectl apply -f ${ADDON}
-    put_
 
-    read -p "Press Enter to continue..."
+    put_w
     addons_menu
 }
 
@@ -789,7 +784,10 @@ apply_sample_spring() {
         get_template sample/sample-spring-ing.yml ${ADDON}
 
         DEFAULT="sample-spring.${BASE_DOMAIN}"
-        read -p "Enter your ingress domain [${DEFAULT}] : " DOMAIN
+        put_q "Enter your sample-spring domain [${DEFAULT}] : "
+        put_
+
+        DOMAIN="${ANSWER}"
 
         if [ "${DOMAIN}" == "" ]; then
             DOMAIN="${DEFAULT}"
@@ -804,16 +802,15 @@ apply_sample_spring() {
     kubectl apply -f ${ADDON}
     put_
     kubectl get pod,svc,ing -n default
-    put_
 
-    read -p "Press Enter to continue..."
+    put_w
     addons_menu
 }
 
 install_tools() {
     curl -sL toast.sh/helper/bastion.sh | bash
-    put_
-    read -p "Press Enter to continue..."
+
+    put_w
     cluster_menu
 }
 
