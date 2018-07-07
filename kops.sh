@@ -319,7 +319,7 @@ create_cluster() {
 }
 
 get_kops_cluster() {
-    CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l)
+    CLUSTER=$(kops get --name=${KOPS_CLUSTER_NAME} --state=s3://${KOPS_STATE_STORE} | wc -l | xargs)
 }
 
 save_kops_config() {
