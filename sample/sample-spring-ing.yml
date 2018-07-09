@@ -50,6 +50,22 @@ spec:
           limits:
             memory: "1Gi"
             cpu: "1000m"
+#        env:
+#        - name: PROFILE
+#          valueFrom:
+#            configMapKeyRef:
+#              name: sample-spring-dev
+#              key: PROFILE
+#        - name: SLACK_WEBHOOK
+#          valueFrom:
+#            configMapKeyRef:
+#              name: sample-spring-dev
+#              key: SLACK_WEBHOOK
+#        - name: SLACK_CHANNEL
+#          valueFrom:
+#            configMapKeyRef:
+#              name: sample-spring-dev
+#              key: SLACK_CHANNEL
 
 ---
 # ------------------- Service ------------------- #
