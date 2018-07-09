@@ -55,7 +55,7 @@ cp -rf addons/cluster-autoscaler-v1.8.0.yml ${ADDON}
 MIN_NODES=2
 MAX_NODES=8
 AWS_REGION=ap-northeast-2
-GROUP_NAME="nodes.kube.nalbam.com"
+GROUP_NAME="nodes.${KOPS_CLUSTER_NAME}"
 
 sed -i -e "s@{{MIN_NODES}}@${MIN_NODES}@g" "${ADDON}"
 sed -i -e "s@{{MAX_NODES}}@${MAX_NODES}@g" "${ADDON}"
