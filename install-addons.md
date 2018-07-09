@@ -52,21 +52,15 @@ kubectl get svc -o wide -n kube-ingress
 ADDON=addons/.temp.yml
 cp -rf addons/cluster-autoscaler-v1.8.0.yml ${ADDON}
 
-CLOUD_PROVIDER=aws
-IMAGE=k8s.gcr.io/cluster-autoscaler:v1.2.2
 MIN_NODES=2
 MAX_NODES=8
 AWS_REGION=ap-northeast-2
 GROUP_NAME="nodes.kube.nalbam.com"
-SSL_CERT_PATH="/etc/ssl/certs/ca-certificates.crt"
 
-sed -i -e "s@{{CLOUD_PROVIDER}}@${CLOUD_PROVIDER}@g" "${ADDON}"
-sed -i -e "s@{{IMAGE}}@${IMAGE}@g" "${ADDON}"
 sed -i -e "s@{{MIN_NODES}}@${MIN_NODES}@g" "${ADDON}"
 sed -i -e "s@{{MAX_NODES}}@${MAX_NODES}@g" "${ADDON}"
 sed -i -e "s@{{GROUP_NAME}}@${GROUP_NAME}@g" "${ADDON}"
 sed -i -e "s@{{AWS_REGION}}@${AWS_REGION}@g" "${ADDON}"
-sed -i -e "s@{{SSL_CERT_PATH}}@${SSL_CERT_PATH}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
 ```
