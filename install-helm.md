@@ -23,6 +23,13 @@ helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubato
 * https://github.com/kubernetes/helm
 * https://github.com/kubernetes/charts
 
+## jenkins
+```bash
+helm install stable/jenkins -n ops -f charts/jenkins.yaml
+
+kubectl get pod,svc,ing -n default
+```
+
 ## elasticsearch
 ```bash
 kubectl create namespace logging

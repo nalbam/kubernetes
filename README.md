@@ -41,7 +41,7 @@ kubectl describe pod sample-web
 
 ## jobs
 ```bash
-kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/jobs/docker-clean.yml
+kubectl apply -f jobs/docker-clean.yml
 ```
 
 ## volume
