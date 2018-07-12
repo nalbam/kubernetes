@@ -1,9 +1,5 @@
 ## install
 ```bash
-# OSX
-brew update && brew install kops
-
-# Linux
 curl -sL toast.sh/helper/bastion.sh | bash
 ```
 
@@ -13,8 +9,8 @@ curl -sL toast.sh/helper/bastion.sh | bash
 ssh-keygen -q -f ~/.ssh/id_rsa -N ''
 
 # name
-export KOPS_CLUSTER_NAME=nalbam.k8s.local
-export KOPS_STATE_STORE=s3://kops-nalbam-seoul
+export KOPS_CLUSTER_NAME=cluster.k8s.local
+export KOPS_STATE_STORE=s3://kops-state-nalbam
 
 # region
 aws configure set default.region ap-northeast-2
@@ -64,6 +60,14 @@ kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 ```
  * https://github.com/kubernetes/kops
  * https://kubernetes.io/docs/getting-started-guides/kops/
+
+## insecure registry
+```yaml
+spec:
+  docker:
+    insecureRegistry: 100.64.0.0/10
+    logDriver: ""
+```
 
 ## kubectl
 ```bash

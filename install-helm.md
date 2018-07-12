@@ -11,8 +11,6 @@ tar -xvf helm-${VERSION}-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/loc
 
 ## usage
 ```bash
-kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
-
 helm init
 
 helm search
@@ -24,20 +22,6 @@ helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubato
 * https://helm.sh/
 * https://github.com/kubernetes/helm
 * https://github.com/kubernetes/charts
-
-## jenkins
-```bash
-kubectl create namespace ops
-
-helm install stable/jenkins -f charts/jenkins.yaml --name ops --namespace ops
-
-helm history ops
-helm upgrade ops stable/jenkins -f charts/jenkins.yaml
-
-helm delete --purge ops
-
-kubectl get pod,svc,ing -n ops
-```
 
 ## elasticsearch
 ```bash
@@ -58,6 +42,7 @@ popd
 ## pipeline (helm)
 ```bash
 kubectl create namespace demo
+kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
 helm install pipeline -f pipeline/values.yaml --name demo --namespace demo
 
@@ -68,7 +53,9 @@ helm delete --purge demo
 
 kubectl get pod,svc,ing -n demo
 
-kubectl exec -it $(kubectl get pod | grep demo-jenkins | awk '{print $1}') -- sh
-kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}') -- sh
+kubectl logs $(kubectl get pod -n demo | grep demo-jenkins | awk '{print $1}') -n demo -f
+
+kubectl exec -it $(kubectl get pod -n demo | grep demo-jenkins | awk '{print $1}') -- sh
+kubectl exec -it $(kubectl get pod -n demo | grep demo-sonatype-nexus | awk '{print $1}') -- sh
 ```
 * https://github.com/CenterForOpenScience/helm-charts
