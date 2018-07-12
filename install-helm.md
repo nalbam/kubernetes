@@ -11,6 +11,8 @@ tar -xvf helm-${VERSION}-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/loc
 
 ## usage
 ```bash
+kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
+
 helm init
 
 helm search
@@ -25,9 +27,16 @@ helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubato
 
 ## jenkins
 ```bash
-helm install stable/jenkins -n ops -f charts/jenkins.yaml
+kubectl create namespace ops
 
-kubectl get pod,svc,ing -n default
+helm install stable/jenkins -f charts/jenkins.yaml --name ops --namespace ops
+
+helm history ops
+helm upgrade ops stable/jenkins -f charts/jenkins.yaml
+
+helm delete --purge ops
+
+kubectl get pod,svc,ing -n ops
 ```
 
 ## elasticsearch
@@ -39,7 +48,6 @@ helm install incubator/elasticsearch --name es --namespace logging
 helm install stable/kibana --name kb --namespace logging
 ```
 
-
 ## dependency build
 ```bash
 pushd pipeline
@@ -49,10 +57,16 @@ popd
 
 ## pipeline (helm)
 ```bash
-helm install -n demo -f pipeline/values.yaml pipeline
+kubectl create namespace demo
+
+helm install pipeline -f pipeline/values.yaml --name demo --namespace demo
+
 helm history demo
-helm upgrade demo -f pipeline/values.yaml pipeline
+helm upgrade demo pipeline -f pipeline/values.yaml
+
 helm delete --purge demo
+
+kubectl get pod,svc,ing -n demo
 
 kubectl exec -it $(kubectl get pod | grep demo-jenkins | awk '{print $1}') -- sh
 kubectl exec -it $(kubectl get pod | grep demo-sonatype-nexus | awk '{print $1}') -- sh

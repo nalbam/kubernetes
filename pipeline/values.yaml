@@ -1,13 +1,13 @@
 jenkins:
   enabled: true
   Master:
-    Image: jenkins/jenkins
+#    Image: jenkins/jenkins
 #    ImageTag: alpine
 #    UseSecurity: false
     AdminUser: admin
     AdminPassword: password
-    ServiceType: LoadBalancer
-#    HostName: jenkins.apps.nalbam.com
+    ServiceType: NodePort
+    HostName: jenkins.apps.opspresso.com
     InstallPlugins:
       - git:latest
       - kubernetes:latest
@@ -15,10 +15,9 @@ jenkins:
       - workflow-aggregator:latest
       - credentials-binding:latest
     Jobs: |-
-
       build-command: |-
         <?xml version='1.0' encoding='UTF-8'?>
-        <flow-definition plugin="workflow-job@2.17">
+        <flow-definition plugin="workflow-job@2.23">
           <actions/>
           <description></description>
           <keepDependencies>false</keepDependencies>
@@ -51,7 +50,7 @@ jenkins:
               <triggers/>
             </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
           </properties>
-          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.54">
             <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
         properties([
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
@@ -87,7 +86,7 @@ jenkins:
         </flow-definition>
       build-image: |-
         <?xml version='1.0' encoding='UTF-8'?>
-        <flow-definition plugin="workflow-job@2.17">
+        <flow-definition plugin="workflow-job@2.23">
           <actions/>
           <description></description>
           <keepDependencies>false</keepDependencies>
@@ -130,7 +129,7 @@ jenkins:
               <triggers/>
             </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
           </properties>
-          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.54">
             <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
         properties([
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
@@ -171,7 +170,7 @@ jenkins:
         </flow-definition>
       build-maven: |-
         <?xml version='1.0' encoding='UTF-8'?>
-        <flow-definition plugin="workflow-job@2.17">
+        <flow-definition plugin="workflow-job@2.23">
           <actions/>
           <description></description>
           <keepDependencies>false</keepDependencies>
@@ -224,7 +223,7 @@ jenkins:
               <triggers/>
             </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
           </properties>
-          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.54">
             <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
         properties([
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
@@ -280,7 +279,7 @@ jenkins:
         </flow-definition>
       deploy-image: |-
         <?xml version='1.0' encoding='UTF-8'?>
-        <flow-definition plugin="workflow-job@2.17">
+        <flow-definition plugin="workflow-job@2.23">
           <actions/>
           <description></description>
           <keepDependencies>false</keepDependencies>
@@ -325,7 +324,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>SERVICE_TYPE</name>
                   <description></description>
-                  <defaultValue>ClusterIP</defaultValue>
+                  <defaultValue>NodePort</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>CONTANER_PORT</name>
@@ -343,7 +342,7 @@ jenkins:
               <triggers/>
             </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
           </properties>
-          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.54">
             <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
         properties([
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
@@ -370,7 +369,7 @@ jenkins:
         </flow-definition>
       run-command: |-
         <?xml version='1.0' encoding='UTF-8'?>
-        <flow-definition plugin="workflow-job@2.17">
+        <flow-definition plugin="workflow-job@2.23">
           <actions/>
           <description></description>
           <keepDependencies>false</keepDependencies>
@@ -393,7 +392,7 @@ jenkins:
               <triggers/>
             </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
           </properties>
-          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.54">
             <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
         properties([
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
@@ -420,11 +419,11 @@ jenkins:
         </flow-definition>
       sample: |-
         <?xml version='1.0' encoding='UTF-8'?>
-        <flow-definition plugin="workflow-job@2.17">
+        <flow-definition plugin="workflow-job@2.23">
           <actions/>
           <description></description>
           <keepDependencies>false</keepDependencies>
-          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.45">
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.54">
             <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
         properties([
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
@@ -465,32 +464,42 @@ jenkins:
           <disabled>false</disabled>
         </flow-definition>
 #    CustomConfigMap: true
-  Agent:
-    Enabled: true
+#  Agent:
+#    Enabled: true
 #    Image: jenkins/jnlp-slave
 #    ImageTag: alpine
 #    AlwaysPullImage: true
 #  Persistence:
 #    Enabled: true
 #    StorageClass: standard
+  rbac:
+    install: true
 
 sonatype-nexus:
   enabled: true
 #  nexus:
 #    imageName: quay.io/travelaudience/docker-nexus
-#    imageTag: 3.9.0
-#    serviceType: LoadBalancer
+#    imageTag: 3.12.1
+#    serviceType: NodePort
+#  nexusProxy:
+#    env:
+#      nexusHttpHost: nexus.apps.opspresso.com
+#      nexusDockerHost: nexus-docker.apps.opspresso.com
 #  persistence:
 #    enabled: true
 #    storageClass: standard
+#  ingress:
+#    enabled: true
+#    tls:
+#      enabled: false
 
 docker-registry:
   enabled: true
 #  image:
 #    repository: registry
 #    tag: latest
-#  service:
-#    type: ClusterIP
+  service:
+    type: NodePort
 #  persistence:
 #    enabled: true
 #    storageClass: standard
