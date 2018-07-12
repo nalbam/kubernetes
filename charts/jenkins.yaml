@@ -1,0 +1,22 @@
+Master:
+  Image: jenkins/jenkins
+#  ImageTag: alpine
+#  UseSecurity: false
+  AdminUser: admin
+  AdminPassword: password
+  ServiceType: NodePort
+  HostName: jenkins.apps.opspresso.com
+  InstallPlugins:
+    - kubernetes:latest
+    - workflow-aggregator:latest
+    - workflow-job:latest
+    - credentials-binding:latest
+    - git:latest
+#Agent:
+#  Enabled: true
+#  Image: jenkins/jnlp-slave
+#  ImageTag: alpine
+#  AlwaysPullImage: true
+#Persistence:
+#  Enabled: true
+#  StorageClass: standard

@@ -36,6 +36,7 @@ kops create cluster \
 #    --master-count=3 \
 #    --master-zones=ap-northeast-2a,ap-northeast-2c \
 #    --node-count=2 \
+#    --topology=private \
 #    --dns-zone=nalbam.com \
 #    --kubernetes-version=1.11.0 \
 #    --target=terraform \
