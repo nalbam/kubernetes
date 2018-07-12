@@ -2,11 +2,11 @@ jenkins:
   enabled: true
   Master:
     Image: jenkins/jenkins
-    ImageTag: alpine
-    UseSecurity: false
-#    AdminUser: admin
-#    AdminPassword: password
-#    ServiceType: LoadBalancer
+#    ImageTag: alpine
+#    UseSecurity: false
+    AdminUser: admin
+    AdminPassword: password
+    ServiceType: LoadBalancer
 #    HostName: jenkins.apps.nalbam.com
     InstallPlugins:
       - git:latest
@@ -467,8 +467,8 @@ jenkins:
 #    CustomConfigMap: true
   Agent:
     Enabled: true
-    Image: jenkins/jnlp-slave
-    ImageTag: alpine
+#    Image: jenkins/jnlp-slave
+#    ImageTag: alpine
 #    AlwaysPullImage: true
 #  Persistence:
 #    Enabled: true

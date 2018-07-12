@@ -2,4 +2,4 @@ apiVersion: v1
 name: pipeline
 icon: https://pbs.twimg.com/profile_images/925890129322848256/kIgiuOxP_400x400.jpg
 description: A Helm chart for Kubernetes
-version: 0.0.2
+version: 0.0.3
