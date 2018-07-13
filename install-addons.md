@@ -1,10 +1,14 @@
+# Addons
+
 ## git clone
+
 ```bash
 git clone https://github.com/nalbam/kubernetes
 cd kubernetes
 ```
 
 ## ingress-nginx
+
 ```bash
 ADDON=addons/.temp.yml
 cp -rf addons/ingress-nginx-v1.6.0-ssl.yml ${ADDON}
@@ -44,10 +48,12 @@ aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-bat
 # elb
 kubectl get svc -o wide -n kube-ingress
 ```
-* https://github.com/kubernetes/ingress-nginx/
-* https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx
+
+* <https://github.com/kubernetes/ingress-nginx/>
+* <https://github.com/kubernetes/kops/tree/master/addons/ingress-nginx>
 
 ## cluster-autoscaler
+
 ```bash
 ADDON=addons/.temp.yml
 cp -rf addons/cluster-autoscaler-v1.8.0.yml ${ADDON}
@@ -64,10 +70,12 @@ sed -i -e "s@{{AWS_REGION}}@${AWS_REGION}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
 ```
-* https://github.com/kubernetes/autoscaler/
-* https://github.com/kubernetes/kops/tree/master/addons/cluster-autoscaler
+
+* <https://github.com/kubernetes/autoscaler/>
+* <https://github.com/kubernetes/kops/tree/master/addons/cluster-autoscaler>
 
 ## dashboard
+
 ```bash
 kubectl apply -f addons/dashboard-v1.8.3-ing.yml
 
@@ -84,11 +92,13 @@ kubectl describe secret -n kube-system $(kubectl get secret -n kube-system | gre
 kubectl get pod,svc,ing -n kube-system
 kubectl get svc,ing -o wide -n kube-system
 ```
-* https://github.com/kubernetes/dashboard/
-* https://github.com/kubernetes/kops/blob/master/docs/addons.md
-* https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard
+
+* <https://github.com/kubernetes/dashboard/>
+* <https://github.com/kubernetes/kops/blob/master/docs/addons.md>
+* <https://github.com/kubernetes/kops/tree/master/addons/kubernetes-dashboard>
 
 ## heapster
+
 ```bash
 kubectl apply -f addons/heapster-v1.7.0.yml
 
@@ -97,14 +107,17 @@ kubectl apply -f addons/heapster-v1.7.0.yml
 kubectl top pod --all-namespaces
 kubectl top pod -n kube-system
 ```
-* https://github.com/kubernetes/heapster/
-* https://github.com/kubernetes/kops/blob/master/docs/addons.md
-* https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/
+
+* <https://github.com/kubernetes/heapster/>
+* <https://github.com/kubernetes/kops/blob/master/docs/addons.md>
+* <https://github.com/kubernetes/kops/blob/master/addons/monitoring-standalone/>
 
 ## route53-mapper (ExternalDNS)
+
 ```bash
 kubectl apply -f addons/route53-mapper-v1.3.0.yml
 ```
-* https://github.com/kubernetes/kops/blob/master/docs/addons.md
-* https://github.com/kubernetes/kops/tree/master/addons/route53-mapper
-* https://github.com/kubernetes-incubator/external-dns
+
+* <https://github.com/kubernetes/kops/blob/master/docs/addons.md>
+* <https://github.com/kubernetes/kops/tree/master/addons/route53-mapper>
+* <https://github.com/kubernetes-incubator/external-dns>

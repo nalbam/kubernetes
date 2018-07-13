@@ -1,4 +1,7 @@
+# Helm
+
 ## install
+
 ```bash
 # OSX
 brew update && brew install kubernetes-helm
@@ -10,6 +13,7 @@ tar -xvf helm-${VERSION}-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/loc
 ```
 
 ## usage
+
 ```bash
 helm init
 
@@ -19,11 +23,13 @@ helm list
 # incubator
 helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
 ```
-* https://helm.sh/
-* https://github.com/kubernetes/helm
-* https://github.com/kubernetes/charts
+
+* <https://helm.sh/>
+* <https://github.com/kubernetes/helm>
+* <https://github.com/kubernetes/charts>
 
 ## elasticsearch
+
 ```bash
 kubectl create namespace logging
 
@@ -33,6 +39,7 @@ helm install stable/kibana --name kb --namespace logging
 ```
 
 ## dependency build
+
 ```bash
 pushd pipeline
 helm dependency build
@@ -40,6 +47,7 @@ popd
 ```
 
 ## pipeline (helm)
+
 ```bash
 kubectl create namespace demo
 kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
@@ -58,4 +66,5 @@ kubectl logs $(kubectl get pod -n demo | grep demo-jenkins | awk '{print $1}') -
 kubectl exec -it $(kubectl get pod -n demo | grep demo-jenkins | awk '{print $1}') -- sh
 kubectl exec -it $(kubectl get pod -n demo | grep demo-sonatype-nexus | awk '{print $1}') -- sh
 ```
-* https://github.com/CenterForOpenScience/helm-charts
+
+* <https://github.com/CenterForOpenScience/helm-charts>

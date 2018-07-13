@@ -1,9 +1,13 @@
+# KOPS
+
 ## install
+
 ```bash
 curl -sL toast.sh/helper/bastion.sh | bash
 ```
 
 ## usage
+
 ```bash
 # ssh-key
 ssh-keygen -q -f ~/.ssh/id_rsa -N ''
@@ -58,10 +62,12 @@ kops export kubecfg --name ${KOPS_CLUSTER_NAME}
 
 kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
 ```
- * https://github.com/kubernetes/kops
- * https://kubernetes.io/docs/getting-started-guides/kops/
+
+* <https://github.com/kubernetes/kops>
+* <https://kubernetes.io/docs/getting-started-guides/kops/>
 
 ## insecure registry
+
 ```yaml
 spec:
   docker:
@@ -70,6 +76,7 @@ spec:
 ```
 
 ## kubectl
+
 ```bash
 kubectl get node,deploy,pod,svc --all-namespaces
 ```

@@ -1,4 +1,7 @@
+# Kubeadm
+
 ## install
+
 ```bash
 cat <<EOF > /etc/yum.repos.d/kubernetes.repo
 [kubernetes]
@@ -34,14 +37,18 @@ Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=systemd --runtime-cgroups=/syst
 ```
 
 ## start
+
 * root
+
 ```bash
 kubeadm reset
 kubeadm init
 
 systemctl status kubelet
 ```
+
 * regular user:
+
 ```bash
 rm -rf $HOME/.kube
 mkdir -p $HOME/.kube
@@ -59,13 +66,15 @@ watch kubectl get all --all-namespaces
 
 ifconfig tunl0 | grep inet | awk '{print $2}'
 ```
- * https://kubernetes.io/docs/tasks/tools/install-kubectl/
- * https://kubernetes.io/docs/setup/independent/install-kubeadm/
- * https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/
- * https://www.linuxtechi.com/install-kubernetes-1-7-centos7-rhel7/
- * https://amasucci.com/post/2017/10/22/how-to-install-kubernetes-1.8.1-on-centos-7.3/
+
+* <https://kubernetes.io/docs/tasks/tools/install-kubectl/>
+* <https://kubernetes.io/docs/setup/independent/install-kubeadm/>
+* <https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/>
+* <https://www.linuxtechi.com/install-kubernetes-1-7-centos7-rhel7/>
+* <https://amasucci.com/post/2017/10/22/how-to-install-kubernetes-1.8.1-on-centos-7.3/>
 
 ## stop
+
 ```bash
 sudo systemctl disable httpd
 sudo systemctl stop httpd

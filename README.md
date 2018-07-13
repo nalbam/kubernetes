@@ -1,4 +1,7 @@
+# Kubernetes
+
 ## basic
+
 ```bash
 cat ~/.kube/config
 
@@ -17,6 +20,7 @@ ifconfig tunl0 | grep inet | awk '{print $2}'
 ```
 
 ## role
+
 ```bash
 kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
@@ -29,6 +33,7 @@ kubectl describe clusterrolebindings cluster-admin:kube-system:default
 ```
 
 ## sample
+
 ```bash
 kubectl apply -f sample/confog-map.yml
 
@@ -44,17 +49,20 @@ kubectl describe pod sample-spring
 ```
 
 ## jobs
+
 ```bash
 kubectl apply -f jobs/docker-clean.yml
 ```
 
 ## volume
+
 ```bash
 kubectl apply -f volume/pv-5g.yml
 kubectl apply -f volume/pv-10g.yml
 ```
 
 ## cleanup
+
 ```bash
 kubectl delete -f volume/pv-5g.yml
 kubectl delete -f volume/pv-10g.yml

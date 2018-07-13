@@ -1,4 +1,7 @@
-## minikube
+# minikube
+
+## install
+
 ```bash
 curl -oL minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 chmod +x minikube && sudo mv minikube /usr/local/bin/
@@ -21,5 +24,6 @@ kubectl get deploy,pod,svc,ing,job,pvc,pv -n default
 minikube stop
 minikube delete
 ```
- * https://kubernetes.io/docs/tasks/tools/install-minikube/
- * https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/
+
+* <https://kubernetes.io/docs/tasks/tools/install-minikube/>
+* <https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/>
