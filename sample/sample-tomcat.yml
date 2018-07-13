@@ -1,0 +1,128 @@
+# ------------------- Deployment ------------------- #
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: sample-tomcat
+  namespace: default
+  labels:
+    app: sample-tomcat
+spec:
+  replicas: 2
+  revisionHistoryLimit: 10
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+  selector:
+    matchLabels:
+      k8s-app: sample-tomcat
+  template:
+    metadata:
+      labels:
+        k8s-app: sample-tomcat
+    spec:
+      containers:
+      - name: sample-tomcat
+        image: nalbam/sample-tomcat:alpine
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 3
+          periodSeconds: 15
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 30
+          timeoutSeconds: 3
+          periodSeconds: 15
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+
+---
+# ------------------- Service ------------------- #
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: sample-tomcat
+  namespace: default
+  labels:
+    app: sample-tomcat
+    dns: route53
+  annotations:
+    domainName: "sample-tomcat.apps.nalbam.com"
+    #service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
+    #service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{SSL_CERT_ARN}}"
+    #service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+    - name: https
+      port: 443
+      targetPort: 8080
+  selector:
+    k8s-app: sample-tomcat
+
+---
+# ------------------- HorizontalPodAutoscaler ------------------- #
+
+kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v1
+metadata:
+  name: sample-tomcat
+  namespace: default
+  labels:
+    app: sample-tomcat
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: sample-tomcat
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 50
+
+#apiVersion: autoscaling/v2beta1
+#kind: HorizontalPodAutoscaler
+#metadata:
+#  name: sample-tomcat
+#  namespace: default
+#spec:
+#  scaleTargetRef:
+#    apiVersion: apps/v1
+#    kind: Deployment
+#    name: sample-tomcat
+#  minReplicas: 1
+#  maxReplicas: 100
+#  metrics:
+#  - type: Resource
+#    resource:
+#      name: cpu
+#      targetAverageUtilization: 50
+#status:
+#  observedGeneration: 1
+#  lastScaleTime: <some-time>
+#  currentReplicas: 1
+#  desiredReplicas: 1
+#  currentMetrics:
+#  - type: Resource
+#    resource:
+#      name: cpu
+#      currentAverageUtilization: 0
+#      currentAverageValue: 0

@@ -36,6 +36,7 @@ kubectl apply -f sample/sample-redis.yml
 
 kubectl apply -f sample/sample-node-ing.yml
 kubectl apply -f sample/sample-spring-ing.yml
+kubectl apply -f sample/sample-tomcat-ing.yml
 kubectl apply -f sample/sample-web-ing.yml
 
 kubectl get deploy,pod,svc,ing -n default
