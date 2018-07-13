@@ -32,11 +32,14 @@ kubectl describe clusterrolebindings cluster-admin:kube-system:default
 ```bash
 kubectl apply -f sample/confog-map.yml
 
+kubectl apply -f sample/sample-redis.yml
+
 kubectl apply -f sample/sample-node-ing.yml
 kubectl apply -f sample/sample-spring-ing.yml
 kubectl apply -f sample/sample-web-ing.yml
 
-kubectl describe pod sample-web
+kubectl get deploy,pod,svc,ing -n default
+kubectl describe pod sample-spring
 ```
 
 ## jobs
