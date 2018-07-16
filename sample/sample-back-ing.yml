@@ -51,6 +51,9 @@ spec:
           initialDelaySeconds: 30
           timeoutSeconds: 3
           periodSeconds: 15
+        env:
+        - name: REDIS_URL
+          value: "redis://redis-master:6379"
 
 ---
 # ------------------- Service ------------------- #
