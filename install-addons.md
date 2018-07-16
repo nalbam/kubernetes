@@ -10,6 +10,8 @@ cd kubernetes
 ## ingress-nginx
 
 ```bash
+#kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml
+
 ADDON=addons/.temp.yml
 cp -rf addons/ingress-nginx-v1.6.0-ssl.yml ${ADDON}
 
@@ -18,8 +20,6 @@ SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | sele
 sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
 kubectl apply -f ${ADDON}
-
-#kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml
 
 # ingress-nginx 의 ELB Name 을 획득
 ELB_NAME=$(kubectl get svc -n kube-ingress -owide | grep ingress-nginx | grep LoadBalancer | awk '{print $4}' | cut -d'-' -f1)
@@ -77,9 +77,9 @@ kubectl apply -f ${ADDON}
 ## dashboard
 
 ```bash
-kubectl apply -f addons/dashboard-v1.8.3-ing.yml
-
 #kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/dashboard-v1.8.3.yml
+
+kubectl apply -f addons/dashboard-v1.8.3-ing.yml
 
 # admin
 kubectl create serviceaccount admin -n kube-system
@@ -100,12 +100,13 @@ kubectl get svc,ing -o wide -n kube-system
 ## heapster
 
 ```bash
-kubectl apply -f addons/heapster-v1.7.0.yml
-
 #kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/heapster-v1.7.0.yml
 
-kubectl top pod --all-namespaces
-kubectl top pod -n kube-system
+kubectl apply -f addons/heapster/
+
+kubectl get pod,svc -n kube-system -o wide
+kubectl top node
+kubectl top pod
 ```
 
 * <https://github.com/kubernetes/heapster/>
