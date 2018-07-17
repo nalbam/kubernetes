@@ -1,5 +1,8 @@
 # Addons
 
+* <https://github.com/nalbam/kubernetes>
+* <https://github.com/kubernetes/kops/tree/master/addons>
+
 ## git clone
 
 ```bash
@@ -16,6 +19,9 @@ ADDON=addons/.temp.yml
 cp -rf addons/ingress-nginx-v1.6.0-ssl.yml ${ADDON}
 
 SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | select(.DomainName=="*.apps.nalbam.com")][0]' | grep CertificateArn | cut -d'"' -f4)
+
+#SSL_CERT_ARN=$(aws acm request-certificate --domain-name *.demo.nalbam.com --validation-method DNS | grep CertificateArn | cut -d'"' -f4)
+#aws acm describe-certificate --certificate-arn ${SSL_CERT_ARN} | jq '.Certificate.DomainValidationOptions'
 
 sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 

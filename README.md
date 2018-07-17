@@ -5,6 +5,9 @@
 ```bash
 cat ~/.kube/config
 
+# kubectl cluster info
+kubectl cluster-info
+
 # kubectl config
 kubectl config view
 

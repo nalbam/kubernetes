@@ -69,18 +69,28 @@ spec:
 ---
 # ------------------- HorizontalPodAutoscaler ------------------- #
 
-apiVersion: autoscaling/v1
+apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
   name: {DEPLOY_NAME}
   namespace: {NAMESPACE}
-  labels:
-    app: {DEPLOY_NAME}
 spec:
   scaleTargetRef:
+    apiVersion: apps/v1
     kind: Deployment
     name: {DEPLOY_NAME}
-    apiVersion: apps/v1beta1
   minReplicas: {REPLICAS_MIN}
   maxReplicas: {REPLICAS_MAX}
-  targetCPUUtilizationPercentage: {TARGET_PER}
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      targetAverageUtilization: {TARGET_PER}
+  - type: Resource
+    resource:
+      name: memory
+      targetAverageUtilization: {TARGET_PER}
+  # - type: Pods
+  #   pods:
+  #     metricName: packets-per-second
+  #     targetAverageValue: 1k
