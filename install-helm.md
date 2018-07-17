@@ -28,29 +28,26 @@ helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubato
 * <https://github.com/kubernetes/helm>
 * <https://github.com/kubernetes/charts>
 
-## elasticsearch
-
-```bash
-kubectl create namespace logging
-
-helm install incubator/elasticsearch --name es --namespace logging
-
-helm install stable/kibana --name kb --namespace logging
-```
-
 ## dependency build
 
 ```bash
 pushd pipeline
 helm dependency build
 popd
+
+helm search jenkins
+helm search nexus
+helm search docker-registry
+helm search chartmuseum
 ```
 
 ## pipeline (helm)
 
 ```bash
-kubectl create namespace demo
 kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
+
+kubectl create namespace demo
+kubectl create clusterrolebinding cluster-admin:demo:default --clusterrole=cluster-admin --serviceaccount=demo:default
 
 helm install pipeline -f pipeline/values.yaml --name demo --namespace demo
 
