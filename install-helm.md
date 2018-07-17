@@ -51,6 +51,8 @@ kubectl create clusterrolebinding cluster-admin:demo:default --clusterrole=clust
 
 helm install pipeline -f pipeline/values.yaml --name demo --namespace demo
 
+helm repo add chartmuseum http://demo-chartmuseum:8080
+
 helm history demo
 helm upgrade demo pipeline -f pipeline/values.yaml
 
