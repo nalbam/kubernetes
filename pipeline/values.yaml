@@ -14,7 +14,7 @@ jenkins:
       - workflow-job:latest
       - workflow-aggregator:latest
       - credentials-binding:latest
-    Jobs: |-
+    Jobs:
       build-command: |-
         <?xml version='1.0' encoding='UTF-8'?>
         <flow-definition plugin="workflow-job@2.23">
@@ -56,7 +56,8 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
           hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
@@ -135,7 +136,8 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
           hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
@@ -151,12 +153,12 @@ jenkins:
               )
             }
             stage(&quot;Build Image&quot;) {
-              container(&quot;executor&quot;) {
+              container(&quot;docker&quot;) {
                 sh &quot;docker build -t $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG .&quot;
               }
             }
             stage(&quot;Push Image&quot;) {
-              container(&quot;executor&quot;) {
+              container(&quot;docker&quot;) {
                 sh &quot;docker push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
               }
             }
@@ -229,7 +231,8 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
           hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
@@ -260,12 +263,12 @@ jenkins:
               sh &quot;cp -rf target/*.jar ROOT.jar&quot;
             }
             stage(&quot;Build Image&quot;) {
-              container(&quot;executor&quot;) {
+              container(&quot;docker&quot;) {
                 sh &quot;docker build -t $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG .&quot;
               }
             }
             stage(&quot;Push Image&quot;) {
-              container(&quot;executor&quot;) {
+              container(&quot;docker&quot;) {
                 sh &quot;docker push $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG&quot;
               }
             }
@@ -348,7 +351,8 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
           hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
@@ -398,7 +402,8 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
           hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
@@ -429,7 +434,7 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:alpine&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true),
           containerTemplate(name: &quot;kubectl&quot;, image: &quot;lachlanevenson/k8s-kubectl:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
           containerTemplate(name: &quot;helm&quot;, image: &quot;lachlanevenson/k8s-helm:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
@@ -441,7 +446,7 @@ jenkins:
               sh &quot;uname -a&quot;
             }
             stage(&quot;Run docker&quot;) {
-              container(&quot;builder&quot;) {
+              container(&quot;docker&quot;) {
                 sh &quot;docker images&quot;
               }
             }
