@@ -27,7 +27,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>EXECUTOR_IMAGE</name>
                   <description></description>
-                  <defaultValue>nalbam/builder:latest</defaultValue>
+                  <defaultValue>nalbam/builder:python</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>REPOSITORY_URL</name>
@@ -56,7 +56,9 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
           hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
@@ -132,6 +134,7 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
+          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
           containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
@@ -231,6 +234,7 @@ jenkins:
         ])
         podTemplate(label: label, containers: [
           containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
           containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
@@ -297,11 +301,6 @@ jenkins:
             <hudson.model.ParametersDefinitionProperty>
               <parameterDefinitions>
                 <hudson.model.StringParameterDefinition>
-                  <name>EXECUTOR_IMAGE</name>
-                  <description></description>
-                  <defaultValue>nalbam/builder:latest</defaultValue>
-                </hudson.model.StringParameterDefinition>
-                <hudson.model.StringParameterDefinition>
                   <name>IMAGE_REPO</name>
                   <description></description>
                   <defaultValue>demo-docker-registry:5000/sample</defaultValue>
@@ -358,14 +357,15 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
           hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
         ]) {
           node(label) {
             stage(&quot;Pull Image&quot;) {
-              container(&quot;executor&quot;) {
+              container(&quot;docker&quot;) {
                 sh &quot;&quot;&quot;
                   docker pull $IMAGE_REPO/$IMAGE_NAME:$IMAGE_TAG
                 &quot;&quot;&quot;
@@ -410,7 +410,9 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
           hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
@@ -443,7 +445,8 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
           hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
@@ -453,7 +456,7 @@ jenkins:
               sh &quot;uname -a&quot;
             }
             stage(&quot;Run docker&quot;) {
-              container(&quot;builder&quot;) {
+              container(&quot;docker&quot;) {
                 sh &quot;&quot;&quot;
                   docker images
                 &quot;&quot;&quot;

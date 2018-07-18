@@ -57,6 +57,8 @@ kubectl get pod,svc,ing -n devops
 helm history devops
 helm upgrade devops charts/devops -f charts/devops/values.yaml
 
+helm rollback devops 1
+
 helm delete --purge devops
 
 kubectl logs $(kubectl get pod -n devops | grep devops-jenkins | awk '{print $1}') -n devops -f
