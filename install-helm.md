@@ -3,13 +3,7 @@
 ## install
 
 ```bash
-# OSX
-brew update && brew install kubernetes-helm
-
-# Linux
-export VERSION=$(curl -s https://api.github.com/repos/kubernetes/helm/releases/latest | grep tag_name | cut -d'"' -f4)
-curl -LO https://storage.googleapis.com/kubernetes-helm/helm-${VERSION}-linux-amd64.tar.gz
-tar -xvf helm-${VERSION}-linux-amd64.tar.gz && sudo mv linux-amd64/helm /usr/local/bin/helm
+curl -sL toast.sh/helper/bastion.sh | bash
 ```
 
 ## usage

@@ -14,7 +14,7 @@ jenkins:
       - workflow-job:latest
       - workflow-aggregator:latest
       - credentials-binding:latest
-    Jobs:
+    Jobs: |-
       build-command: |-
         <?xml version='1.0' encoding='UTF-8'?>
         <flow-definition plugin="workflow-job@2.23">
