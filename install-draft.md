@@ -18,7 +18,12 @@ draft init
 ## pipeline (helm)
 
 ```bash
-draft create -n sample
+draft create --app sample-node
 
 draft up
+
+kubectl get pod,svc,ing -n default
+
+helm ls
+helm delete --purge sample-node
 ```
