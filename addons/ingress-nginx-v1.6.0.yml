@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: kube-ingress
+  name: kube-system
   labels:
     k8s-addon: ingress-nginx.addons.k8s.io
 
@@ -11,7 +11,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: nginx-ingress-controller
-  namespace: kube-ingress
+  namespace: kube-system
   labels:
     k8s-addon: ingress-nginx.addons.k8s.io
 
@@ -23,7 +23,7 @@ metadata:
   labels:
     k8s-addon: ingress-nginx.addons.k8s.io
   name: nginx-ingress-controller
-  namespace: kube-ingress
+  namespace: kube-system
 rules:
   - apiGroups:
       - ""
@@ -80,7 +80,7 @@ metadata:
   labels:
     k8s-addon: ingress-nginx.addons.k8s.io
   name: nginx-ingress-controller
-  namespace: kube-ingress
+  namespace: kube-system
 rules:
   - apiGroups:
       - ""
@@ -126,7 +126,7 @@ metadata:
   labels:
     k8s-addon: ingress-nginx.addons.k8s.io
   name: nginx-ingress-controller
-  namespace: kube-ingress
+  namespace: kube-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -144,7 +144,7 @@ metadata:
   labels:
     k8s-addon: ingress-nginx.addons.k8s.io
   name: nginx-ingress-controller
-  namespace: kube-ingress
+  namespace: kube-system
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
@@ -152,7 +152,7 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: nginx-ingress-controller
-    namespace: kube-ingress
+    namespace: kube-system
 
 ---
 
@@ -160,7 +160,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: nginx-default-backend
-  namespace: kube-ingress
+  namespace: kube-system
   labels:
     k8s-app: default-http-backend
     k8s-addon: ingress-nginx.addons.k8s.io
@@ -177,7 +177,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   name: nginx-default-backend
-  namespace: kube-ingress
+  namespace: kube-system
   labels:
     k8s-app: default-http-backend
     k8s-addon: ingress-nginx.addons.k8s.io
@@ -220,7 +220,7 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: ingress-nginx
-  namespace: kube-ingress
+  namespace: kube-system
   labels:
     k8s-addon: ingress-nginx.addons.k8s.io
 data:
@@ -232,7 +232,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: ingress-nginx
-  namespace: kube-ingress
+  namespace: kube-system
   labels:
     k8s-addon: ingress-nginx.addons.k8s.io
   annotations:
@@ -259,7 +259,7 @@ kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
   name: ingress-nginx
-  namespace: kube-ingress
+  namespace: kube-system
   labels:
     k8s-app: nginx-ingress-controller
     k8s-addon: ingress-nginx.addons.k8s.io

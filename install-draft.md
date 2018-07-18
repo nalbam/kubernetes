@@ -27,3 +27,16 @@ kubectl get pod,svc,ing -n default
 helm ls
 helm delete --purge sample-node
 ```
+
+## gcr
+
+```bash
+ACCESS_TOKEN=$(gcloud auth application-default print-access-token)
+AUTH_TOKEN=$(echo "{\"registrytoken\":\"$ACCESS_TOKEN\"}" | base64 --wrap=0)
+
+draft init --set \
+    registry.url=gcr.io,\
+    registry.org=${PROJECT},\
+    registry.authtoken=${AUTH_TOKEN},\
+    basedomain=${DOMAIN}
+```

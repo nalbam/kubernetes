@@ -40,7 +40,7 @@ sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 kubectl apply -f ${ADDON}
 
 # ingress-nginx 의 ELB Name 을 획득
-ELB_NAME=$(kubectl get svc -n kube-ingress -owide | grep ingress-nginx | grep LoadBalancer | awk '{print $4}' | cut -d'-' -f1)
+ELB_NAME=$(kubectl get svc -n namespace: kube-system -owide | grep ingress-nginx | grep LoadBalancer | awk '{print $4}' | cut -d'-' -f1)
 
 # ELB 에서 Hosted Zone ID, DNS Name 을 획득
 ELB_ZONE_ID=$(aws elb describe-load-balancers --load-balancer-name ${ELB_NAME} | grep CanonicalHostedZoneNameID | cut -d'"' -f4)
@@ -64,7 +64,7 @@ sed -i -e "s@{{DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://./${RECORD}
 
 # elb
-kubectl get svc -o wide -n kube-ingress
+kubectl get svc -o wide -n namespace: kube-system
 ```
 
 * <https://github.com/kubernetes/ingress-nginx/>
