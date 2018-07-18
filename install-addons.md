@@ -15,13 +15,25 @@ cd kubernetes
 ```bash
 #kubectl apply -f https://raw.githubusercontent.com/nalbam/kubernetes/master/addons/ingress-nginx-v1.6.0.yml
 
-ADDON=addons/.temp.yml
-cp -rf addons/ingress-nginx-v1.6.0-ssl.yml ${ADDON}
-
 SSL_CERT_ARN=$(aws acm list-certificates | jq '[.CertificateSummaryList[] | select(.DomainName=="*.apps.nalbam.com")][0]' | grep CertificateArn | cut -d'"' -f4)
 
 #SSL_CERT_ARN=$(aws acm request-certificate --domain-name *.demo.nalbam.com --validation-method DNS | grep CertificateArn | cut -d'"' -f4)
-#aws acm describe-certificate --certificate-arn ${SSL_CERT_ARN} | jq '.Certificate.DomainValidationOptions'
+#RECORDS=$(aws acm describe-certificate --certificate-arn ${SSL_CERT_ARN} | jq '.Certificate.DomainValidationOptions[].ResourceRecord')
+
+# # temp file
+# RECORD=sample/.temp.json
+# cp -rf addons/record-sets-cname.json ${RECORD}
+
+# # replace
+# sed -i -e "s@{{DOMAIN}}@${DOMAIN}@g" "${RECORD}"
+# sed -i -e "s@{{DNS_NAME}}@${DNS_NAME}@g" "${RECORD}"
+
+# # Route53 의 Record Set 에 입력/수정
+# aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://./${RECORD}
+
+# ingress-nginx
+ADDON=addons/.temp.yml
+cp -rf addons/ingress-nginx-v1.6.0-ssl.yml ${ADDON}
 
 sed -i -e "s@{{SSL_CERT_ARN}}@${SSL_CERT_ARN}@g" "${ADDON}"
 
@@ -41,12 +53,12 @@ DOMAIN="*.apps.nalbam.com."
 
 # temp file
 RECORD=sample/.temp.json
-cp -rf sample/record-sets.json ${RECORD}
+cp -rf addons/record-sets-alias.json ${RECORD}
 
 # replace
 sed -i -e "s@{{DOMAIN}}@${DOMAIN}@g" "${RECORD}"
-sed -i -e "s@{{ELB_ZONE_ID}}@${ELB_ZONE_ID}@g" "${RECORD}"
-sed -i -e "s@{{ELB_DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
+sed -i -e "s@{{ZONE_ID}}@${ELB_ZONE_ID}@g" "${RECORD}"
+sed -i -e "s@{{DNS_NAME}}@${ELB_DNS_NAME}@g" "${RECORD}"
 
 # Route53 의 Record Set 에 입력/수정
 aws route53 change-resource-record-sets --hosted-zone-id ${ZONE_ID} --change-batch file://./${RECORD}

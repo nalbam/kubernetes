@@ -1,0 +1,16 @@
+{
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "{{DOMAIN}}",
+        "Type": "CNAME",
+        "ResourceRecords": [
+          {
+            "Value": "{{DNS_NAME}}"
+          }
+        ]
+      }
+    }
+  ]
+}
