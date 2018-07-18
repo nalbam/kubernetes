@@ -84,4 +84,7 @@ helm history monitor
 helm upgrade monitor charts/monitor -f charts/monitor/values.yaml
 
 helm delete --purge monitor
+
+# http://monitor-prometheus-server
+# 1621
 ```
