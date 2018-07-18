@@ -11,8 +11,11 @@ curl -sL toast.sh/helper/bastion.sh | bash
 ```bash
 helm init
 
+helm repo update
 helm search
 helm list
+
+kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
 # incubator
 helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
@@ -22,42 +25,63 @@ helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubato
 * <https://github.com/kubernetes/helm>
 * <https://github.com/kubernetes/charts>
 
-## dependency build
+## charts
 
 ```bash
-pushd pipeline
-helm dependency build
-popd
-
 helm search jenkins
 helm search nexus
 helm search docker-registry
 helm search chartmuseum
+
+helm search prometheus
+helm search grafana
 ```
 
-## pipeline (helm)
+## devops
 
 ```bash
-kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
+pushd charts/devops
+rm -rf charts requirements.lock
+helm dependency build
+popd
 
-kubectl create namespace demo
-kubectl create clusterrolebinding cluster-admin:demo:default --clusterrole=cluster-admin --serviceaccount=demo:default
+kubectl create namespace devops
+kubectl create clusterrolebinding cluster-admin:devops:default --clusterrole=cluster-admin --serviceaccount=devops:default
 
-helm install pipeline -f pipeline/values.yaml --name demo --namespace demo
+helm install charts/devops -f charts/devops/values.yaml --name devops --namespace devops
 
-helm repo add chartmuseum http://demo-chartmuseum:8080
+kubectl get pod,svc,ing -n devops
 
-helm history demo
-helm upgrade demo pipeline -f pipeline/values.yaml
+#helm repo add chartmuseum http://devops-chartmuseum:8080
 
-helm delete --purge demo
+helm history devops
+helm upgrade devops charts/devops -f charts/devops/values.yaml
 
-kubectl get pod,svc,ing -n demo
+helm delete --purge devops
 
-kubectl logs $(kubectl get pod -n demo | grep demo-jenkins | awk '{print $1}') -n demo -f
+kubectl logs $(kubectl get pod -n devops | grep devops-jenkins | awk '{print $1}') -n devops -f
 
-kubectl exec -it $(kubectl get pod -n demo | grep demo-jenkins | awk '{print $1}') -- sh
-kubectl exec -it $(kubectl get pod -n demo | grep demo-sonatype-nexus | awk '{print $1}') -- sh
+kubectl exec -it $(kubectl get pod -n devops | grep devops-jenkins | awk '{print $1}') -- sh
+kubectl exec -it $(kubectl get pod -n devops | grep devops-sonatype-nexus | awk '{print $1}') -- sh
 ```
 
-* <https://github.com/CenterForOpenScience/helm-charts>
+## monitor
+
+```bash
+pushd charts/monitor
+rm -rf charts requirements.lock
+helm dependency build
+popd
+
+kubectl create namespace monitor
+kubectl create clusterrolebinding cluster-admin:monitor:default --clusterrole=cluster-admin --serviceaccount=monitor:default
+
+helm install charts/monitor -f charts/monitor/values.yaml --name monitor --namespace monitor
+
+kubectl get pod,svc,ing -n monitor
+
+helm history monitor
+helm upgrade monitor charts/monitor -f charts/monitor/values.yaml
+
+helm delete --purge monitor
+```

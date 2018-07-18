@@ -7,7 +7,7 @@ jenkins:
     AdminUser: admin
     AdminPassword: password
     ServiceType: NodePort
-    HostName: jenkins.apps.opspresso.com
+    HostName: jenkins-devops.apps.opspresso.com
     InstallPlugins:
       - git:latest
       - kubernetes:latest

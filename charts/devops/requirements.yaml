@@ -1,15 +1,13 @@
 dependencies:
 - name: chartmuseum
+  version: 1.6.0
   repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 1.5.0
 - name: docker-registry
+  version: 1.5.0
   repository: https://kubernetes-charts.storage.googleapis.com/
-  version: 1.4.4
 - name: jenkins
-  repository: https://kubernetes-charts.storage.googleapis.com/
   version: 0.16.6
-- name: sonatype-nexus
   repository: https://kubernetes-charts.storage.googleapis.com/
+- name: sonatype-nexus
   version: 1.5.1
-digest: sha256:69587f96a2c63717ecd7ce32fa636e4961f16bba67bed5617e0bf1f5378844e8
-generated: 2018-07-17T13:05:39.797411884+09:00
+  repository: https://kubernetes-charts.storage.googleapis.com/

@@ -1,0 +1,11 @@
+prometheus:
+  enabled: true
+
+grafana:
+  enabled: true
+  adminUser: admin
+  adminPassword: password
+  ingress:
+    enabled: true
+    hosts:
+      - grafana-monitor.apps.opspresso.com
