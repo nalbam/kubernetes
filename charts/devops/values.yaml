@@ -92,7 +92,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>COMMAND</name>
                   <description></description>
-                  <defaultValue>ls -al</defaultValue>
+                  <defaultValue>skaffold up</defaultValue>
                 </hudson.model.StringParameterDefinition>
               </parameterDefinitions>
             </hudson.model.ParametersDefinitionProperty>
@@ -547,6 +547,13 @@ jenkins:
                   draft config list
                   draft config set basedomain apps.opspresso.com
                   draft config set registry registry-devops.apps.opspresso.com
+                &quot;&quot;&quot;
+              }
+            }
+            stage(&quot;Run skaffold&quot;) {
+              container(&quot;builder&quot;) {
+                sh &quot;&quot;&quot;
+                  skaffold version
                 &quot;&quot;&quot;
               }
             }
