@@ -110,7 +110,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_REPO</name>
                   <description></description>
-                  <defaultValue>demo-docker-registry:5000/sample</defaultValue>
+                  <defaultValue>registry-devops.apps.opspresso.com/sample</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_NAME</name>
@@ -209,7 +209,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_REPO</name>
                   <description></description>
-                  <defaultValue>demo-docker-registry:5000/sample</defaultValue>
+                  <defaultValue>registry-devops.apps.opspresso.com/sample</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_NAME</name>
@@ -303,7 +303,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_REPO</name>
                   <description></description>
-                  <defaultValue>demo-docker-registry:5000/sample</defaultValue>
+                  <defaultValue>registry-devops.apps.opspresso.com/sample</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>IMAGE_NAME</name>
@@ -391,7 +391,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>EXECUTOR_IMAGE</name>
                   <description></description>
-                  <defaultValue>lachlanevenson/k8s-kubectl:latest</defaultValue>
+                  <defaultValue>nalbam/builder:latest</defaultValue>
                 </hudson.model.StringParameterDefinition>
                 <hudson.model.StringParameterDefinition>
                   <name>COMMAND</name>
@@ -410,9 +410,7 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
-          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
-          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
           hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
@@ -459,6 +457,7 @@ jenkins:
               container(&quot;docker&quot;) {
                 sh &quot;&quot;&quot;
                   docker images
+                  docker ps
                 &quot;&quot;&quot;
               }
             }
@@ -466,7 +465,7 @@ jenkins:
               container(&quot;builder&quot;) {
                 sh &quot;&quot;&quot;
                   kubectl version --client --short
-                  kubectl get pod,svc
+                  kubectl get pod,svc,ing
                 &quot;&quot;&quot;
               }
             }
@@ -499,9 +498,6 @@ jenkins:
 #    Image: jenkins/jnlp-slave
 #    ImageTag: alpine
 #    AlwaysPullImage: true
-#  Persistence:
-#    Enabled: true
-#    StorageClass: standard
   rbac:
     install: true
 
@@ -510,29 +506,32 @@ sonatype-nexus:
 #  nexus:
 #    imageName: quay.io/travelaudience/docker-nexus
 #    imageTag: 3.12.1
-#    serviceType: NodePort
-#  nexusProxy:
-#    env:
-#      nexusHttpHost: nexus.apps.opspresso.com
-#      nexusDockerHost: nexus-docker.apps.opspresso.com
-#  persistence:
-#    enabled: true
-#    storageClass: standard
-#  ingress:
-#    enabled: true
-#    tls:
-#      enabled: false
+  nexusProxy:
+    env:
+      nexusHttpHost: nexus-devops.apps.opspresso.com
+      nexusDockerHost: nexus-docker-devops.apps.opspresso.com
+  ingress:
+    enabled: true
+    tls:
+      enabled: false
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 500m
+      ingress.kubernetes.io/proxy-body-size: 500m
 
 docker-registry:
   enabled: true
 #  image:
 #    repository: registry
 #    tag: latest
-  service:
-    type: NodePort
-#  persistence:
-#    enabled: true
-#    storageClass: standard
+  ingress:
+    enabled: true
+    hosts:
+      - registry-devops.apps.opspresso.com
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 500m
+      ingress.kubernetes.io/proxy-body-size: 500m
 
 chartmuseum:
   enabled: true

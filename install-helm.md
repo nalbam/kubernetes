@@ -61,10 +61,9 @@ helm rollback devops 1
 
 helm delete --purge devops
 
-kubectl logs $(kubectl get pod -n devops | grep devops-jenkins | awk '{print $1}') -n devops -f
+kubectl logs $(kubectl get pod -n devops | grep devops-jenkins | awk '{print $1}' | head -1) -n devops -f
 
-kubectl exec -it $(kubectl get pod -n devops | grep devops-jenkins | awk '{print $1}') -- sh
-kubectl exec -it $(kubectl get pod -n devops | grep devops-sonatype-nexus | awk '{print $1}') -- sh
+kubectl exec -it $(kubectl get pod -n devops | grep jenkins-slave | grep Running | awk '{print $1}' | head -1) -- sh
 ```
 
 ## monitor
