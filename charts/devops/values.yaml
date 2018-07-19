@@ -24,9 +24,9 @@ docker-registry:
       - registry-devops.apps.opspresso.com
     path: "/"
     annotations:
-      - kubernetes.io/ingress.class: nginx
-      - nginx.ingress.kubernetes.io/proxy-body-size: 500m
-      - ingress.kubernetes.io/proxy-body-size: 500m
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 500m
+      ingress.kubernetes.io/proxy-body-size: 500m
 
 sonatype-nexus:
   enabled: true
@@ -75,6 +75,11 @@ jenkins:
             <hudson.model.ParametersDefinitionProperty>
               <parameterDefinitions>
                 <hudson.model.StringParameterDefinition>
+                  <name>EXECUTOR_IMAGE</name>
+                  <description></description>
+                  <defaultValue>nalbam/builder:latest</defaultValue>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
                   <name>REPOSITORY_URL</name>
                   <description></description>
                   <defaultValue>https://github.com/nalbam/sample-web</defaultValue>
@@ -101,11 +106,12 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
-          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
-          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.draft&quot;, hostPath: &quot;/home/jenkins/.draft&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.helm&quot;, hostPath: &quot;/home/jenkins/.helm&quot;)
         ]) {
           node(label) {
             stage(&quot;Checkout&quot;) {
@@ -118,7 +124,7 @@ jenkins:
               )
             }
             stage(&quot;Command&quot;) {
-              container(&quot;builder&quot;) {
+              container(&quot;executor&quot;) {
                 sh &quot;&quot;&quot;
                   $COMMAND
                 &quot;&quot;&quot;
@@ -182,7 +188,9 @@ jenkins:
           containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
-          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.draft&quot;, hostPath: &quot;/home/jenkins/.draft&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.helm&quot;, hostPath: &quot;/home/jenkins/.helm&quot;)
         ]) {
           node(label) {
             stage(&quot;Checkout&quot;) {
@@ -282,7 +290,9 @@ jenkins:
           containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
-          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.draft&quot;, hostPath: &quot;/home/jenkins/.draft&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.helm&quot;, hostPath: &quot;/home/jenkins/.helm&quot;)
         ]) {
           node(label) {
             stage(&quot;Checkout&quot;) {
@@ -405,7 +415,9 @@ jenkins:
           containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
-          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.draft&quot;, hostPath: &quot;/home/jenkins/.draft&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.helm&quot;, hostPath: &quot;/home/jenkins/.helm&quot;)
         ]) {
           node(label) {
             stage(&quot;Pull Image&quot;) {
@@ -457,7 +469,9 @@ jenkins:
           containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
-          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.draft&quot;, hostPath: &quot;/home/jenkins/.draft&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.helm&quot;, hostPath: &quot;/home/jenkins/.helm&quot;)
         ]) {
           node(label) {
             stage(&quot;Command&quot;) {
@@ -491,7 +505,9 @@ jenkins:
           containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
         volumes: [
-          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;)
+          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.draft&quot;, hostPath: &quot;/home/jenkins/.draft&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.helm&quot;, hostPath: &quot;/home/jenkins/.helm&quot;)
         ]) {
           node(label) {
             stage(&quot;Info&quot;) {
@@ -500,6 +516,7 @@ jenkins:
             stage(&quot;Run docker&quot;) {
               container(&quot;docker&quot;) {
                 sh &quot;&quot;&quot;
+                  docker version
                   docker images
                   docker ps
                 &quot;&quot;&quot;
@@ -527,6 +544,9 @@ jenkins:
                 sh &quot;&quot;&quot;
                   draft version --short
                   draft init
+                  draft config list
+                  draft config set basedomain apps.opspresso.com
+                  draft config set registry registry-devops.apps.opspresso.com
                 &quot;&quot;&quot;
               }
             }

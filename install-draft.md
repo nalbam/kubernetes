@@ -11,6 +11,7 @@ curl -sL toast.sh/helper/bastion.sh | bash
 ```bash
 draft init
 
+draft config set basedomain app.opspresso.com
 draft config set registry registry-devops.apps.opspresso.com
 ```
 
