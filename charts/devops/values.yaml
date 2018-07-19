@@ -1,5 +1,55 @@
+chartmuseum:
+  enabled: true
+#  image:
+#    repository: chartmuseum/chartmuseum
+#    tag: v0.7.1
+  ingress:
+    enabled: true
+    hosts:
+      chartmuseum-devops.apps.opspresso.com:
+        - "/"
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 500m
+      ingress.kubernetes.io/proxy-body-size: 500m
+
+docker-registry:
+  enabled: true
+#  image:
+#    repository: registry
+#    tag: latest
+  ingress:
+    enabled: true
+    hosts:
+      - registry-devops.apps.opspresso.com
+    path: "/"
+    annotations:
+      - kubernetes.io/ingress.class: nginx
+      - nginx.ingress.kubernetes.io/proxy-body-size: 500m
+      - ingress.kubernetes.io/proxy-body-size: 500m
+
+sonatype-nexus:
+  enabled: true
+#  nexus:
+#    imageName: quay.io/travelaudience/docker-nexus
+#    imageTag: 3.12.1
+  nexusProxy:
+    env:
+      nexusHttpHost: nexus-devops.apps.opspresso.com
+      # nexusDockerHost: nexus-docker-devops.apps.opspresso.com
+  ingress:
+    enabled: true
+    tls:
+      enabled: false
+    annotations:
+      kubernetes.io/ingress.class: nginx
+      nginx.ingress.kubernetes.io/proxy-body-size: 500m
+      ingress.kubernetes.io/proxy-body-size: 500m
+
 jenkins:
   enabled: true
+  rbac:
+    install: true
   Master:
 #    Image: jenkins/jenkins
 #    ImageTag: alpine
@@ -25,11 +75,6 @@ jenkins:
             <hudson.model.ParametersDefinitionProperty>
               <parameterDefinitions>
                 <hudson.model.StringParameterDefinition>
-                  <name>EXECUTOR_IMAGE</name>
-                  <description></description>
-                  <defaultValue>nalbam/builder:python</defaultValue>
-                </hudson.model.StringParameterDefinition>
-                <hudson.model.StringParameterDefinition>
                   <name>REPOSITORY_URL</name>
                   <description></description>
                   <defaultValue>https://github.com/nalbam/sample-web</defaultValue>
@@ -42,7 +87,7 @@ jenkins:
                 <hudson.model.StringParameterDefinition>
                   <name>COMMAND</name>
                   <description></description>
-                  <defaultValue>whoami && pwd && ls -al</defaultValue>
+                  <defaultValue>ls -al</defaultValue>
                 </hudson.model.StringParameterDefinition>
               </parameterDefinitions>
             </hudson.model.ParametersDefinitionProperty>
@@ -56,7 +101,6 @@ jenkins:
           buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
         ])
         podTemplate(label: label, containers: [
-          containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
           containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
           containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
         ],
@@ -74,7 +118,7 @@ jenkins:
               )
             }
             stage(&quot;Command&quot;) {
-              container(&quot;executor&quot;) {
+              container(&quot;builder&quot;) {
                 sh &quot;&quot;&quot;
                   $COMMAND
                 &quot;&quot;&quot;
@@ -473,6 +517,7 @@ jenkins:
               container(&quot;builder&quot;) {
                 sh &quot;&quot;&quot;
                   helm version --client --short
+                  helm init
                   helm list
                 &quot;&quot;&quot;
               }
@@ -481,6 +526,7 @@ jenkins:
               container(&quot;builder&quot;) {
                 sh &quot;&quot;&quot;
                   draft version --short
+                  draft init
                 &quot;&quot;&quot;
               }
             }
@@ -498,53 +544,3 @@ jenkins:
 #    Image: jenkins/jnlp-slave
 #    ImageTag: alpine
 #    AlwaysPullImage: true
-  rbac:
-    install: true
-
-sonatype-nexus:
-  enabled: true
-#  nexus:
-#    imageName: quay.io/travelaudience/docker-nexus
-#    imageTag: 3.12.1
-  nexusProxy:
-    env:
-      nexusHttpHost: nexus-devops.apps.opspresso.com
-      nexusDockerHost: nexus-docker-devops.apps.opspresso.com
-  ingress:
-    enabled: true
-    tls:
-      enabled: false
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/proxy-body-size: 500m
-      ingress.kubernetes.io/proxy-body-size: 500m
-
-docker-registry:
-  enabled: true
-#  image:
-#    repository: registry
-#    tag: latest
-  ingress:
-    enabled: true
-    hosts:
-      - registry-devops.apps.opspresso.com
-    path: "/"
-    annotations:
-      - kubernetes.io/ingress.class: nginx
-      - nginx.ingress.kubernetes.io/proxy-body-size: 500m
-      - ingress.kubernetes.io/proxy-body-size: 500m
-
-chartmuseum:
-  enabled: true
-#  image:
-#    repository: chartmuseum/chartmuseum
-#    tag: v0.7.1
-  ingress:
-    enabled: true
-    hosts:
-      chartmuseum-devops.apps.opspresso.com:
-        - "/"
-    annotations:
-      kubernetes.io/ingress.class: nginx
-      nginx.ingress.kubernetes.io/proxy-body-size: 500m
-      ingress.kubernetes.io/proxy-body-size: 500m

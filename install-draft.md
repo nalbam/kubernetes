@@ -10,6 +10,8 @@ curl -sL toast.sh/helper/bastion.sh | bash
 
 ```bash
 draft init
+
+draft config set registry registry-devops.apps.opspresso.com
 ```
 
 * <https://draft.sh/>
