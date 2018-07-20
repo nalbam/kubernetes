@@ -11,8 +11,8 @@ curl -sL toast.sh/helper/bastion.sh | bash
 ```bash
 draft init
 
-draft config set basedomain app.opspresso.com
 draft config set registry registry-devops.apps.opspresso.com
+draft config list
 ```
 
 * <https://draft.sh/>
@@ -21,14 +21,21 @@ draft config set registry registry-devops.apps.opspresso.com
 ## pipeline (helm)
 
 ```bash
-draft create --app sample-node
+draft create -a sample-node
 
-draft up
+kubectl create namespace staging
+
+draft up --docker-debug
+draft up -e staging
 
 kubectl get pod,svc,ing -n default
+kubectl get pod,svc,ing -n staging
+
+draft logs
+draft delete
 
 helm ls
-helm delete --purge sample-node
+helm history sample-node
 ```
 
 ## gcr

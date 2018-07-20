@@ -59,6 +59,7 @@ jenkins:
     ServiceType: NodePort
     HostName: jenkins-devops.apps.opspresso.com
     InstallPlugins:
+      - blueocean:latest
       - git:latest
       - kubernetes:latest
       - workflow-job:latest
@@ -345,6 +346,89 @@ jenkins:
           <triggers/>
           <disabled>false</disabled>
         </flow-definition>
+      build-pipeline: |-
+        <?xml version='1.0' encoding='UTF-8'?>
+        <flow-definition plugin="workflow-job@2.23">
+          <actions/>
+          <description></description>
+          <keepDependencies>false</keepDependencies>
+          <properties>
+            <hudson.model.ParametersDefinitionProperty>
+              <parameterDefinitions>
+                <hudson.model.StringParameterDefinition>
+                  <name>REPOSITORY_URL</name>
+                  <description></description>
+                  <defaultValue>https://github.com/nalbam/sample-node</defaultValue>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                  <name>BRANCH</name>
+                  <description></description>
+                  <defaultValue>master</defaultValue>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                  <name>IMAGE_REPO</name>
+                  <description></description>
+                  <defaultValue>registry-devops.apps.opspresso.com/sample</defaultValue>
+                </hudson.model.StringParameterDefinition>
+                <hudson.model.StringParameterDefinition>
+                  <name>IMAGE_NAME</name>
+                  <description></description>
+                  <defaultValue>sample-node</defaultValue>
+                </hudson.model.StringParameterDefinition>
+              </parameterDefinitions>
+            </hudson.model.ParametersDefinitionProperty>
+            <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+              <triggers/>
+            </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+          </properties>
+          <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.54">
+            <script>def label = &quot;worker-${UUID.randomUUID().toString()}&quot;
+        properties([
+          buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
+        ])
+        podTemplate(label: label, containers: [
+          containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder:latest&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+          containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
+        ],
+        volumes: [
+          hostPathVolume(mountPath: &quot;/var/run/docker.sock&quot;, hostPath: &quot;/var/run/docker.sock&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.draft&quot;, hostPath: &quot;/home/jenkins/.draft&quot;),
+          hostPathVolume(mountPath: &quot;/home/jenkins/.helm&quot;, hostPath: &quot;/home/jenkins/.helm&quot;)
+        ]) {
+          def VERSION = &quot;v0.0.1&quot;
+          node(label) {
+            stage(&quot;Checkout&quot;) {
+              checkout([$class: &quot;GitSCM&quot;,
+                branches: [[name: &quot;$BRANCH&quot;]],
+                doGenerateSubmoduleConfigurations: false,
+                extensions: [],
+                submoduleCfg: [],
+                userRemoteConfigs: [[url: &quot;$REPOSITORY_URL&quot;]]]
+              )
+            }
+            stage(&quot;Version&quot;) {
+              container(&quot;builder&quot;) {
+                def COUNT = sh(script: &quot;curl -sL https://sample-node.apps.opspresso.com/counter/$IMAGE_NAME&quot;, returnStdout: true)
+                VERSION = &quot;v0.1.$COUNT&quot;
+              }
+            }
+            stage(&quot;Build&quot;) {
+              container(&quot;builder&quot;) {
+                sh &quot;&quot;&quot;
+                  sed -i -e &quot;s/name:.*/name: $IMAGE_NAME/&quot; charts/$IMAGE_NAME/Chart.yaml
+                  sed -i -e &quot;s/version:.*/version: $VERSION/&quot; charts/$IMAGE_NAME/Chart.yaml
+                  draft up
+                &quot;&quot;&quot;
+              }
+            }
+          }
+        }
+            </script>
+            <sandbox>true</sandbox>
+          </definition>
+          <triggers/>
+          <disabled>false</disabled>
+        </flow-definition>
       deploy-image: |-
         <?xml version='1.0' encoding='UTF-8'?>
         <flow-definition plugin="workflow-job@2.23">
@@ -536,6 +620,11 @@ jenkins:
                   helm version --client --short
                   helm init
                   helm list
+                  #helm plugin install https://github.com/chartmuseum/helm-push
+                  helm plugin list
+                  helm repo add chartmuseum https://chartmuseum-devops.apps.opspresso.com
+                  helm repo list
+                  helm repo update
                 &quot;&quot;&quot;
               }
             }
@@ -544,9 +633,9 @@ jenkins:
                 sh &quot;&quot;&quot;
                   draft version --short
                   draft init
-                  draft config list
                   draft config set basedomain apps.opspresso.com
                   draft config set registry registry-devops.apps.opspresso.com
+                  draft config list
                 &quot;&quot;&quot;
               }
             }

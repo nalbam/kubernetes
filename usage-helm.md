@@ -11,14 +11,20 @@ curl -sL toast.sh/helper/bastion.sh | bash
 ```bash
 helm init
 
-helm repo update
 helm search
 helm list
+
+helm plugin install https://github.com/chartmuseum/helm-push
+helm plugin list
+
+helm repo add chartmuseum https://chartmuseum-devops.apps.opspresso.com
+helm repo update
+helm repo list
 
 kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
 # incubator
-helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
+#helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
 ```
 
 * <https://helm.sh/>
