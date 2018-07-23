@@ -408,16 +408,31 @@ jenkins:
             }
             stage(&quot;Version&quot;) {
               container(&quot;builder&quot;) {
-                def COUNT = sh(script: &quot;curl -sL https://sample-node.apps.opspresso.com/counter/$IMAGE_NAME&quot;, returnStdout: true)
+                def COUNT = sh(script: &quot;curl -sL -X POST https://sample-node.apps.opspresso.com/counter/$IMAGE_NAME&quot;, returnStdout: true)
                 VERSION = &quot;v0.1.$COUNT&quot;
-              }
-            }
-            stage(&quot;Build&quot;) {
-              container(&quot;builder&quot;) {
                 sh &quot;&quot;&quot;
+                  echo &quot;Version: $VERSION&quot;
                   sed -i -e &quot;s/name:.*/name: $IMAGE_NAME/&quot; charts/$IMAGE_NAME/Chart.yaml
                   sed -i -e &quot;s/version:.*/version: $VERSION/&quot; charts/$IMAGE_NAME/Chart.yaml
-                  draft up
+                &quot;&quot;&quot;
+              }
+            }
+            stage(&quot;Draft Development&quot;) {
+              container(&quot;builder&quot;) {
+                sh &quot;&quot;&quot;
+                  draft up --docker-debug
+                &quot;&quot;&quot;
+              }
+            }
+            stage(&quot;Procees Staging&quot;) {
+              timeout(time: 15, unit: &quot;MINUTES&quot;) {
+                input(message: &quot;Proceed Staging?: $IMAGE_NAME-$VERSION&quot;)
+              }
+            }
+            stage(&quot;Draft Staging&quot;) {
+              container(&quot;builder&quot;) {
+                sh &quot;&quot;&quot;
+                  draft up -e staging
                 &quot;&quot;&quot;
               }
             }
