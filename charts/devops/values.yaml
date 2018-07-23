@@ -424,9 +424,7 @@ jenkins:
             stage(&quot;Push Chartmuseum&quot;) {
               container(&quot;builder&quot;) {
                 sh &quot;&quot;&quot;
-                  #helm repo add chartmuseum https://chartmuseum-devops.apps.opspresso.com
-                  #helm repo list
-                  #helm push charts/$IMAGE_NAME/ chartmuseum
+                  helm push charts/$IMAGE_NAME/ chartmuseum
                 &quot;&quot;&quot;
               }
             }
