@@ -25,4 +25,9 @@ helm history sample-node-development
 helm repo add chartmuseum https://chartmuseum-devops.apps.opspresso.com
 helm repo update
 helm repo list
+
+helm search sample-node
+
+helm install chartmuseum/sample-node --name sample-node
+
 ```

@@ -425,6 +425,8 @@ jenkins:
               container(&quot;builder&quot;) {
                 sh &quot;&quot;&quot;
                   helm push charts/$IMAGE_NAME/ chartmuseum
+                  helm repo update
+                  helm search $IMAGE_NAME
                 &quot;&quot;&quot;
               }
             }
@@ -651,8 +653,8 @@ jenkins:
                   helm init
                   helm list
                   helm repo add chartmuseum https://chartmuseum-devops.apps.opspresso.com
-                  helm repo list
                   helm repo update
+                  helm repo list
                   # helm plugin install https://github.com/chartmuseum/helm-push
                   helm plugin list
                 &quot;&quot;&quot;
