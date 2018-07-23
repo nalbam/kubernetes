@@ -412,10 +412,13 @@ jenkins:
             }
             stage(&quot;Version&quot;) {
               container(&quot;builder&quot;) {
+                def REGISTRY = sh(script: &quot;kubectl get ing -n devops -o wide | grep registry | awk '{print $2}'&quot;, returnStdout: true)
                 def COUNT = sh(script: &quot;curl -sL -X POST https://sample-node.apps.opspresso.com/counter/$IMAGE_NAME&quot;, returnStdout: true)
                 VERSION = &quot;v0.1.$COUNT&quot;
                 sh &quot;&quot;&quot;
                   echo &quot;Version: $VERSION&quot;
+                  sed -i -e &quot;s/repository:.*/repository: $REGISTRY/$IMAGE_NAME/&quot; charts/$IMAGE_NAME/values.yaml
+                  sed -i -e &quot;s/tag:.*/tag: $VERSION/&quot; charts/$IMAGE_NAME/values.yaml
                   sed -i -e &quot;s/name:.*/name: $IMAGE_NAME/&quot; charts/$IMAGE_NAME/Chart.yaml
                   sed -i -e &quot;s/version:.*/version: $VERSION/&quot; charts/$IMAGE_NAME/Chart.yaml
                 &quot;&quot;&quot;
@@ -648,11 +651,12 @@ jenkins:
             }
             stage(&quot;Run helm&quot;) {
               container(&quot;builder&quot;) {
+                def CHARTMUSEUM = sh(script: &quot;kubectl get ing -n devops -o wide | grep chartmuseum | awk '{print $2}'&quot;, returnStdout: true)
                 sh &quot;&quot;&quot;
                   helm version --client --short
                   helm init
                   helm list
-                  helm repo add chartmuseum https://chartmuseum-devops.apps.opspresso.com
+                  helm repo add chartmuseum https://$CHARTMUSEUM
                   helm repo update
                   helm repo list
                   # helm plugin install https://github.com/chartmuseum/helm-push

@@ -15,7 +15,7 @@ curl -sL GET https://registry-devops.apps.opspresso.com/v2/sample-node-developme
 ## Chartmuseum
 
 ```bash
-kubectl get ing -n chartmuseum -o wide | grep registry | awk '{print $2}'
+kubectl get ing -n devops -o wide | grep chartmuseum | awk '{print $2}'
 
 curl -sL https://chartmuseum-devops.apps.opspresso.com/api/charts | jq
 
