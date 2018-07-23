@@ -11,7 +11,11 @@ kubectl cluster-info
 # kubectl config
 kubectl config view
 
-# change namespace
+# kubectl context
+kubectl config current-context
+kubectl config use-context cluster.k8s.local
+
+# kubectl change namespace
 kubectl config set-context $(kubectl config current-context) --namespace=default
 
 # kubectl get

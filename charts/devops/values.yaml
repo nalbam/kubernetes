@@ -7,7 +7,8 @@ chartmuseum:
     enabled: true
     hosts:
       chartmuseum-devops.apps.opspresso.com:
-        - "/"
+        - /charts
+        - /index.yaml
     annotations:
       kubernetes.io/ingress.class: nginx
       nginx.ingress.kubernetes.io/proxy-body-size: 500m
@@ -417,6 +418,13 @@ jenkins:
                 &quot;&quot;&quot;
               }
             }
+            stage(&quot;Push Chartmuseum&quot;) {
+              container(&quot;builder&quot;) {
+                sh &quot;&quot;&quot;
+                  helm push charts/$IMAGE_NAME/ chartmuseum
+                &quot;&quot;&quot;
+              }
+            }
             stage(&quot;Draft Development&quot;) {
               container(&quot;builder&quot;) {
                 sh &quot;&quot;&quot;
@@ -625,6 +633,7 @@ jenkins:
               container(&quot;builder&quot;) {
                 sh &quot;&quot;&quot;
                   kubectl version --client --short
+                  kubectl cluster-info
                   kubectl get pod,svc,ing
                 &quot;&quot;&quot;
               }
@@ -635,11 +644,11 @@ jenkins:
                   helm version --client --short
                   helm init
                   helm list
-                  #helm plugin install https://github.com/chartmuseum/helm-push
-                  helm plugin list
                   helm repo add chartmuseum https://chartmuseum-devops.apps.opspresso.com
                   helm repo list
                   helm repo update
+                  # helm plugin install https://github.com/chartmuseum/helm-push
+                  helm plugin list
                 &quot;&quot;&quot;
               }
             }

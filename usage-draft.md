@@ -24,6 +24,7 @@ draft config list
 draft create -a sample-node
 
 kubectl create namespace staging
+kubectl create namespace production
 
 draft up --docker-debug
 draft up -e staging
