@@ -57,6 +57,7 @@ jenkins:
 #    UseSecurity: false
     AdminUser: admin
     AdminPassword: password
+    JavaOpts: "-Dorg.apache.commons.jelly.tags.fmt.timeZone=Asia/Seoul"
     ServiceType: NodePort
     HostName: jenkins-devops.apps.opspresso.com
     InstallPlugins:
@@ -618,7 +619,10 @@ jenkins:
         ]) {
           node(label) {
             stage(&quot;Info&quot;) {
-              sh &quot;uname -a&quot;
+              sh &quot;&quot;&quot;
+                uname -a
+                date
+              &quot;&quot;&quot;
             }
             stage(&quot;Run docker&quot;) {
               container(&quot;docker&quot;) {

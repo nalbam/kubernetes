@@ -58,8 +58,6 @@ helm install charts/devops -f charts/devops/values.yaml --name devops --namespac
 
 kubectl get pod,svc,ing -n devops
 
-#helm repo add chartmuseum http://devops-chartmuseum:8080
-
 helm history devops
 helm upgrade devops charts/devops -f charts/devops/values.yaml
 
