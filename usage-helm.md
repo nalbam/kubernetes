@@ -44,6 +44,39 @@ helm search prometheus
 helm search grafana
 ```
 
+## base
+
+```bash
+BASE_DOMAIN="apps.opspresso.com"
+SSL_CERT_ARN=$(aws acm list-certificates | DOMAIN="*.${BASE_DOMAIN}" jq '[.CertificateSummaryList[] | select(.DomainName==env.DOMAIN)][0]' | grep CertificateArn | cut -d'"' -f4)
+
+sed -i -e "s@aws-load-balancer-ssl-cert:.*@aws-load-balancer-ssl-cert: ${SSL_CERT_ARN}@" charts/nginx-ingress.yaml
+
+# ingress-nginx
+kubectl create namespace kube-ingress
+helm install stable/nginx-ingress --name nginx-ingress --namespace kube-ingress \
+             --values "charts/nginx-ingress.yaml"
+
+kubectl get pod,svc -n kube-ingress
+kubectl get svc --all-namespaces -o wide | grep nginx | grep ingress | grep LoadBalancer | awk '{print $5}' | head -1
+
+# metrics-server
+kubectl create namespace kube-metrics
+helm install stable/metrics-server --name metrics-server --namespace kube-metrics
+
+kubectl get pod,svc -n kube-metrics
+
+# cluster-autoscaler
+kubectl create namespace kube-autoscaler
+helm install stable/cluster-autoscaler --name cluster-autoscaler --namespace kube-autoscaler \
+             --values "charts/cluster-autoscaler.yaml" \
+             --set "autoDiscovery.clusterName=ahsoka.k8s.local,awsRegion=ap-northeast-2"
+
+kubectl get pod,svc -n kube-autoscaler
+
+
+```
+
 ## devops
 
 ```bash

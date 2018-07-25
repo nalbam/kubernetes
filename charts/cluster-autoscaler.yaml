@@ -1,0 +1,4 @@
+nameOverride: cluster-autoscaler
+
+rbac:
+  create: true
