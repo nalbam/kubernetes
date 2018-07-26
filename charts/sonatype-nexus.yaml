@@ -1,0 +1,12 @@
+nexusProxy:
+  env:
+    nexusHttpHost: nexus-devops.apps.opspresso.com
+    nexusDockerHost: nexus-docker-devops.apps.opspresso.com
+ingress:
+  enabled: true
+  tls:
+    enabled: false
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/proxy-body-size: 500m
+    ingress.kubernetes.io/proxy-body-size: 500m
