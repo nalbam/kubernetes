@@ -44,7 +44,23 @@ helm search prometheus
 helm search grafana
 ```
 
-## base
+## basic
+
+```bash
+kubectl create namespace devops
+
+helm install stable/jenkins --name jenkins --namespace devops \
+             --values "charts/jenkins.yaml"
+
+helm history jenkins
+helm upgrade jenkins stable/jenkins -f charts/jenkins.yaml
+
+helm rollback jenkins 1
+
+helm delete --purge jenkins
+```
+
+## addons
 
 ```bash
 BASE_DOMAIN="apps.opspresso.com"
