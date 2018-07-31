@@ -28,5 +28,5 @@ helm repo list
 
 helm search sample-web
 
-helm install chartmuseum/sample-web --name sample-web --namespace default
+helm install chartmuseum/sample-web --name sample-web --namespace default --devel
 ```
