@@ -49,11 +49,9 @@ helm search grafana
 ```bash
 kubectl create namespace devops
 
-helm install stable/jenkins --name jenkins --namespace devops \
-             --values "charts/jenkins.yaml"
+helm upgrade --install jenkins stable/jenkins -f charts/jenkins.yaml --namespace devops --devel
 
 helm history jenkins
-helm upgrade jenkins stable/jenkins -f charts/jenkins.yaml
 
 helm rollback jenkins 1
 
