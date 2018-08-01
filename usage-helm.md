@@ -22,10 +22,11 @@ helm search
 helm plugin install https://github.com/chartmuseum/helm-push
 helm plugin list
 
+# cluster-admin kube-system default
 kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
 # incubator
-#helm repo add incubator http://storage.googleapis.com/kubernetes-charts-incubator
+helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com
 ```
 
 * <https://helm.sh/>
