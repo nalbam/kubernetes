@@ -49,3 +49,9 @@ helm delete --purge istio
 
 kubectl get pod,svc,ing -n istio-system
 ```
+
+## Sample
+
+```bash
+
+```
