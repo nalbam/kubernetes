@@ -11,6 +11,7 @@ kops rolling-update cluster --yes
 ```
 
 ```yaml
+spec:
   kubeAPIServer:
     admissionControl:
     - NamespaceLifecycle
@@ -48,10 +49,16 @@ helm install install/kubernetes/helm/istio --name istio --namespace istio-system
 helm delete --purge istio
 
 kubectl get pod,svc,ing -n istio-system
+kubectl get svc -n istio-system -o wide | grep istio-ingressgateway | awk '{print $4}'
 ```
 
 ## Sample
 
 ```bash
+kubectl label namespace default istio-injection=enabled
 
+kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+
+kubectl get pod,svc,gateway -n default
 ```
