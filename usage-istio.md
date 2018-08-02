@@ -1,8 +1,8 @@
 # istio
 
-* <https://preliminary.istio.io/docs/setup/kubernetes/helm-install/>
-
 ## Amazon Web Services (AWS) with Kops
+
+* <https://istio.io/docs/setup/kubernetes/platform-setup/aws/>
 
 ```bash
 kops edit cluster --name kamino.k8s.local --state s3://kops-state-sbl
@@ -29,6 +29,8 @@ spec:
 
 ## Installation steps
 
+* <https://istio.io/docs/setup/kubernetes/helm-install/>
+
 ```bash
 curl -L https://git.io/getLatestIstio | sh -
 cd istio-1.1.0
@@ -53,6 +55,8 @@ kubectl get svc -n istio-system -o wide | grep istio-ingressgateway | awk '{prin
 ```
 
 ## Sample
+
+* <https://istio.io/docs/examples/bookinfo/>
 
 ```bash
 kubectl label namespace default istio-injection=enabled
