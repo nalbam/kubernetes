@@ -22,6 +22,9 @@ kubectl config set-context $(kubectl config current-context) --namespace=default
 kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
 kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv -n default
 
+# kubectl delete
+kubectl delete pod -n devops -l jenkins=slave
+
 # get tunnel ip
 ifconfig tunl0 | grep inet | awk '{print $2}'
 ```
