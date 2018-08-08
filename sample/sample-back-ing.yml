@@ -53,7 +53,7 @@ spec:
           periodSeconds: 15
         env:
         - name: REDIS_URL
-          value: "redis://redis-master:6379"
+          value: "redis://sample-redis:6379"
 
 ---
 # ------------------- Service ------------------- #

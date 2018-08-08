@@ -1,26 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: redis-master
+  name: sample-redis
   labels:
-    app: redis
+    app: sample-redis
 spec:
   selector:
     matchLabels:
-      app: redis
-      role: master
-      tier: backend
+      app: sample-redis
   replicas: 1
   template:
     metadata:
       labels:
-        app: redis
-        role: master
-        tier: backend
+        app: sample-redis
     spec:
       containers:
       - name: master
-        image: k8s.gcr.io/redis:e2e # or just image: redis
+        image: redis
         resources:
           requests:
             cpu: 100m
@@ -33,16 +29,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: redis-master
+  name: sample-redis
   labels:
-    app: redis
-    role: master
-    tier: backend
+    app: sample-redis
 spec:
   ports:
   - port: 6379
     targetPort: 6379
   selector:
-    app: redis
-    role: master
-    tier: backend
+    app: sample-redis
