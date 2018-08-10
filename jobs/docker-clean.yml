@@ -16,7 +16,7 @@ spec:
         spec:
           containers:
           - name: docker-clean-process
-            image: nalbam/builder:alpine
+            image: alpine
             imagePullPolicy: Always
             command:
             - bash
@@ -56,7 +56,7 @@ spec:
         spec:
           containers:
           - name: docker-clean-images
-            image: nalbam/builder:alpine
+            image: docker
             imagePullPolicy: Always
             command:
             - bash
@@ -96,7 +96,7 @@ spec:
         spec:
           containers:
           - name: docker-clean-volume
-            image: nalbam/builder:alpine
+            image: docker
             imagePullPolicy: Always
             command:
             - bash
