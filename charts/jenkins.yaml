@@ -27,7 +27,7 @@ Master:
               <hudson.model.StringParameterDefinition>
                 <name>EXECUTOR_IMAGE</name>
                 <description></description>
-                <defaultValue>nalbam/builder</defaultValue>
+                <defaultValue>quay.io/opspresso/builder</defaultValue>
               </hudson.model.StringParameterDefinition>
               <hudson.model.StringParameterDefinition>
                 <name>REPOSITORY_URL</name>
@@ -134,7 +134,7 @@ Master:
         buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
       ])
       podTemplate(label: label, containers: [
-        containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+        containerTemplate(name: &quot;builder&quot;, image: &quot;quay.io/opspresso/builder&quot;, command: &quot;cat&quot;, ttyEnabled: true),
         containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
       ],
       volumes: [
@@ -236,7 +236,7 @@ Master:
       ])
       podTemplate(label: label, containers: [
         containerTemplate(name: &quot;executor&quot;, image: &quot;$EXECUTOR_IMAGE&quot;, command: &quot;cat&quot;, ttyEnabled: true),
-        containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+        containerTemplate(name: &quot;builder&quot;, image: &quot;quay.io/opspresso/builder&quot;, command: &quot;cat&quot;, ttyEnabled: true),
         containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
       ],
       volumes: [
@@ -336,7 +336,7 @@ Master:
         buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
       ])
       podTemplate(label: label, containers: [
-        containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+        containerTemplate(name: &quot;builder&quot;, image: &quot;quay.io/opspresso/builder&quot;, command: &quot;cat&quot;, ttyEnabled: true),
         containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
       ],
       volumes: [
@@ -471,7 +471,7 @@ Master:
         buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
       ])
       podTemplate(label: label, containers: [
-        containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+        containerTemplate(name: &quot;builder&quot;, image: &quot;quay.io/opspresso/builder&quot;, command: &quot;cat&quot;, ttyEnabled: true),
         containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
       ],
       volumes: [
@@ -507,7 +507,7 @@ Master:
               <hudson.model.StringParameterDefinition>
                 <name>EXECUTOR_IMAGE</name>
                 <description></description>
-                <defaultValue>nalbam/builder</defaultValue>
+                <defaultValue>quay.io/opspresso/builder</defaultValue>
               </hudson.model.StringParameterDefinition>
               <hudson.model.StringParameterDefinition>
                 <name>COMMAND</name>
@@ -561,7 +561,7 @@ Master:
         buildDiscarder(logRotator(daysToKeepStr: &quot;60&quot;, numToKeepStr: &quot;10&quot;))
       ])
       podTemplate(label: label, containers: [
-        containerTemplate(name: &quot;builder&quot;, image: &quot;nalbam/builder&quot;, command: &quot;cat&quot;, ttyEnabled: true),
+        containerTemplate(name: &quot;builder&quot;, image: &quot;quay.io/opspresso/builder&quot;, command: &quot;cat&quot;, ttyEnabled: true),
         containerTemplate(name: &quot;docker&quot;, image: &quot;docker&quot;, command: &quot;cat&quot;, ttyEnabled: true)
       ],
       volumes: [
