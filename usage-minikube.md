@@ -3,8 +3,9 @@
 ## install
 
 ```bash
-curl -oL minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-chmod +x minikube && sudo mv minikube /usr/local/bin/
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/v0.30.0/minikube-darwin-amd64 && \
+  chmod +x minikube && \
+  sudo mv minikube /usr/local/bin/minikube
 
 minikube config set cpus 2
 minikube config set memory 8GB
