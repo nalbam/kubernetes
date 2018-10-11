@@ -12,6 +12,8 @@ minikube config set memory 8GB
 minikube config set vm-driver kvm2  # ubuntu
 minikube config set vm-driver xhyve # mac
 
+minikube addons enable ingress
+
 minikube start
 
 eval $(minikube docker-env)
