@@ -11,13 +11,13 @@ minikube config set cpus 2
 minikube config set memory 8
 minikube config set vm-driver kvm2
 
-minikube addons enable ingress
-
 minikube start
 
 eval $(minikube docker-env)
 
 minikube dashboard
+
+minikube addons enable ingress
 
 minikube service sample-web
 
