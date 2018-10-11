@@ -29,3 +29,4 @@ minikube delete
 
 * <https://kubernetes.io/docs/tasks/tools/install-minikube/>
 * <https://kubernetes.io/docs/tutorials/stateless-application/hello-minikube/>
+* <https://github.com/kubernetes/minikube/blob/master/docs/drivers.md#kvm2-driver>
