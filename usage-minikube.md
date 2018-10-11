@@ -8,9 +8,8 @@ curl -oL minikube https://storage.googleapis.com/minikube/releases/latest/miniku
   sudo mv minikube /usr/local/bin/minikube
 
 minikube config set cpus 2
-minikube config set memory 8GB
-minikube config set vm-driver kvm2  # ubuntu
-minikube config set vm-driver xhyve # mac
+minikube config set memory 8
+minikube config set vm-driver kvm2
 
 minikube addons enable ingress
 
