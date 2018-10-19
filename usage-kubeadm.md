@@ -3,57 +3,52 @@
 ## install
 
 ```bash
-cat <<EOF > /etc/yum.repos.d/kubernetes.repo
-[kubernetes]
-name=Kubernetes
-baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-\$basearch
-enabled=1
-gpgcheck=1
-repo_gpgcheck=1
-gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
-EOF
+OS_NAME="$(uname | awk '{print tolower($0)}')"
 
-setenforce 0
-yum install -y kubelet kubeadm kubectl
-systemctl enable kubelet
-systemctl start kubelet
+VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
 
-cat <<EOF > /etc/sysctl.d/k8s.conf
-net.bridge.bridge-nf-call-ip6tables = 1
-net.bridge.bridge-nf-call-iptables = 1
-EOF
+curl -LO https://storage.googleapis.com/kubernetes-release/release/${VERSION}/bin/${OS_NAME}/amd64/kubectl
+chmod +x kubectl && sudo mv kubectl /usr/local/bin/kubectl
 
-sysctl --system
+curl -LO https://storage.googleapis.com/kubernetes-release/release/${VERSION}/bin/${OS_NAME}/amd64/kubeadm
+chmod +x kubeadm && sudo mv kubeadm /usr/local/bin/kubeadm
 
+curl -LO https://storage.googleapis.com/kubernetes-release/release/${VERSION}/bin/${OS_NAME}/amd64/kubelet
+chmod +x kubelet && sudo mv kubelet /usr/local/bin/kubelet
+```
+
+## prepare
+
+```bash
 # docker insecure-registry
-vi /etc/sysconfig/docker
-INSECURE_REGISTRY='--insecure-registry 10.0.0.0/8 --insecure-registry pp-docker-registry:5000'
+#vi /etc/sysconfig/docker
+#INSECURE_REGISTRY='--insecure-registry 10.0.0.0/8 --insecure-registry pp-docker-registry:5000'
 
 # docker cgroup
-docker info | grep -i cgroup
+#docker info | grep -i cgroup
+#vi /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
+#Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=systemd --runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice"
 
-vi /etc/systemd/system/kubelet.service.d/10-kubeadm.conf
-Environment="KUBELET_CGROUP_ARGS=--cgroup-driver=systemd --runtime-cgroups=/systemd/system.slice --kubelet-cgroups=/systemd/system.slice"
+sudo swapoff -a
+
+sudo systemctl daemon-reload
+sudo systemctl restart kubelet
+
+sudo kubeadm reset
 ```
 
 ## start
 
-* root
-
 ```bash
-kubeadm reset
-kubeadm init
+sudo kubeadm init
 
-systemctl status kubelet
-```
-
-* regular user:
-
-```bash
 rm -rf $HOME/.kube
 mkdir -p $HOME/.kube
-sudo cp -rf /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+# kubectl get all
+kubectl get all --all-namespaces
 
 # Installing a pod network
 kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
@@ -61,10 +56,7 @@ kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/
 # Master Isolation
 kubectl taint nodes --all node-role.kubernetes.io/master-
 
-# watch
-watch kubectl get all --all-namespaces
-
-ifconfig tunl0 | grep inet | awk '{print $2}'
+#ifconfig tunl0 | grep inet | awk '{print $2}'
 ```
 
 * <https://kubernetes.io/docs/tasks/tools/install-kubectl/>
@@ -76,14 +68,6 @@ ifconfig tunl0 | grep inet | awk '{print $2}'
 ## stop
 
 ```bash
-sudo systemctl disable httpd
-sudo systemctl stop httpd
-
-sudo systemctl disable kubelet
-sudo systemctl stop kubelet
-
-sudo yum remove -y kubelet kubeadm kubectl
-
 rm -rf $HOME/.kube
 
 ls -al /usr/bin/ | grep kube
