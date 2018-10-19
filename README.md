@@ -22,6 +22,9 @@ kubectl config set-context $(kubectl config current-context) --namespace=default
 kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv --all-namespaces
 kubectl get deploy,pod,svc,ing,job,cronjobs,pvc,pv -n default
 
+# kubectl exec bash
+kubectl exec -n devops -it jenkins-74bd9c7799-jjkxz -- /bin/bash
+
 # kubectl delete
 kubectl delete pod -n devops -l jenkins=slave
 
