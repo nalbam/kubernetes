@@ -3,34 +3,30 @@
 ## install
 
 ```bash
-curl -sL toast.sh/helper/bastion.sh | bash
+curl -sL toast.sh/tools | bash
 ```
 
-## aws
+## aws iam
 
 ```bash
 aws iam create-group --group-name kops
-
 aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonEC2FullAccess --group-name kops
 aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonRoute53FullAccess --group-name kops
 aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonS3FullAccess --group-name kops
 aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/IAMFullAccess --group-name kops
 aws iam attach-group-policy --policy-arn arn:aws:iam::aws:policy/AmazonVPCFullAccess --group-name kops
-
 aws iam create-user --user-name kops
-
 aws iam add-user-to-group --user-name kops --group-name kops
-
 aws iam create-access-key --user-name kops
 ```
 
-## usage
+## prepare
 
 ```bash
 # ssh-key
 ssh-keygen -q -f ~/.ssh/id_rsa -N ''
 
-# name
+# var
 export KOPS_CLUSTER_NAME=cluster.k8s.local
 export KOPS_STATE_STORE=s3://kops-state-nalbam
 
@@ -39,7 +35,11 @@ aws configure set default.region ap-northeast-2
 
 # make bucket
 aws s3 mb ${KOPS_STATE_STORE} --region ap-northeast-2
+```
 
+## kops
+
+```bash
 # create cluster
 kops create cluster \
     --cloud=aws \

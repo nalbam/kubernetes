@@ -3,7 +3,7 @@
 ## install
 
 ```bash
-curl -sL toast.sh/helper/bastion.sh | bash
+curl -sL toast.sh/tools | bash
 ```
 
 ## usage
