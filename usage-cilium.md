@@ -112,6 +112,57 @@ kubectl set image daemonset/cilium -n kube-system cilium-agent=docker.io/cilium/
 kubectl rollout status daemonset/cilium -n kube-system
 ```
 
+## demo
+
+```bash
+# apply application
+kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.1/examples/minikube/http-sw-app.yaml
+
+kubectl get pod,svc
+
+# get cilium pod id
+kubectl get pod -n kube-system -l k8s-app=cilium
+CILIUM=$(kubectl get pod -n kube-system -l k8s-app=cilium | grep Running | head -1 | awk '{print $1}' | xargs)
+
+# cilium endpoint list
+kubectl exec ${CILIUM} -n kube-system -- cilium endpoint list
+
+# request landing
+kubectl exec xwing -- curl -s -XPOST deathstar.default.svc.cluster.local/v1/request-landing
+kubectl exec tiefighter -- curl -s -XPOST deathstar.default.svc.cluster.local/v1/request-landing
+
+# apply policy
+kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.1/examples/minikube/sw_l3_l4_policy.yaml
+
+# retry landing
+```
+
+## apply rules
+
+```bash
+# get cnp (cilium-network-policies)
+kubectl get cnp
+kubectl describe cnp rule1
+
+# exhaust-port
+kubectl exec tiefighter -- curl -s -XPUT deathstar.default.svc.cluster.local/v1/exhaust-port
+
+kubectl get pod
+
+# allow request-landing
+kubectl apply -f https://raw.githubusercontent.com/cilium/cilium/v1.1/examples/minikube/sw_l3_l4_l7_policy.yaml
+
+# retry exhaust-port
+# retry landing
+```
+
+## etc
+
+```bash
+kubectl get cs
+kubectl get no
+```
+
 ## kops delete
 
 ```bash
@@ -120,3 +171,4 @@ kops delete cluster --name=${NAME} --yes
 ```
 
 * <https://cilium.readthedocs.io/en/v1.2/kubernetes/install/kops/#k8s-install-kops>
+* <https://ddiiwoong.github.io/2018/cilium-1/>
