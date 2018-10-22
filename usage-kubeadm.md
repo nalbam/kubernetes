@@ -40,7 +40,7 @@ sudo kubeadm reset
 ## start
 
 ```bash
-sudo kubeadm init
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=
 
 rm -rf $HOME/.kube
 mkdir -p $HOME/.kube
