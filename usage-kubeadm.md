@@ -44,6 +44,7 @@ rm -rf $HOME/.kube $HOME/.helm $HOME/.draft
 
 ```bash
 LOCAL_IP=$(ip addr show | grep -Po 'inet \K[\d.]+' | grep '10.30')
+echo ${LOCAL_IP}
 
 sudo kubeadm init
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${LOCAL_IP}
