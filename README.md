@@ -89,3 +89,7 @@ docker volume ls -q -f dangling=true | xargs --no-run-if-empty docker volume rmi
 docker rm $(docker ps -a -q)
 docker rmi -f $(docker images -q)
 ```
+
+```bash
+dpkg -l | grep '^rc' | cut -d' ' -f3 | xargs sudo dpkg --purge
+```

@@ -11,24 +11,38 @@ curl -Lo docker-machine-driver-kvm2 https://storage.googleapis.com/minikube/rele
 && chmod +x docker-machine-driver-kvm2 \
 && sudo mv docker-machine-driver-kvm2 /usr/local/bin/
 
-minikube config set cpus 2
-minikube config set memory 8
+minikube config set cpus 4
+minikube config set memory 8192
 minikube config set vm-driver kvm2
+minikube config set kubernetes-version v1.10.5
 
+minikube get-k8s-versions
+```
+
+## start
+
+```bash
 minikube start
+minikube start --cpus 4 --memory 8192
+minikube start --vm-driver=kvm2 --kubernetes-version v1.10.5
 
 eval $(minikube docker-env)
 
+# addons
+minikube addons list | grep enabled
+
 minikube dashboard
 
-minikube addons enable ingress
+kubectl get all --all-namespaces
+```
 
-minikube service sample-web
+## stop
 
-kubectl get deploy,pod,svc,ing,job,pvc,pv -n default
-
+```bash
 minikube stop
 minikube delete
+
+rm -rf $HOME/.minikube $HOME/.kube $HOME/.helm $HOME/.draft
 ```
 
 * <https://kubernetes.io/docs/tasks/tools/install-minikube/>
