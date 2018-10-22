@@ -27,8 +27,9 @@ aws iam create-access-key --user-name kops
 # ssh-key
 ssh-keygen -q -f ~/.ssh/id_rsa -N ''
 
-# var
-export KOPS_CLUSTER_NAME=cluster.k8s.local
+# vars
+export NAME=cluster.k8s.local
+
 export KOPS_STATE_STORE=s3://kops-state-nalbam
 
 # This flag is used to override the etcd version to be used from 2.X [kops default] to 3.1.x [requirement of cilium]
@@ -44,7 +45,11 @@ aws s3 mb ${KOPS_STATE_STORE} --region ap-northeast-2
 ## get ami
 
 ```bash
-aws ec2 describe-images --region=ap-northeast-2 --owner=595879546273 --filters "Name=virtualization-type,Values=hvm" "Name=name,Values=CoreOS-stable*" --query 'sort_by(Images,&CreationDate)[-1].{id:ImageLocation}'
+aws ec2 describe-images \
+    --region=ap-northeast-2 \
+    --owner=595879546273 \
+    --filters "Name=virtualization-type,Values=hvm" "Name=name,Values=CoreOS-stable*" \
+    --query 'sort_by(Images,&CreationDate)[-1].{id:ImageLocation}'
 ```
 
 ```json
@@ -56,25 +61,26 @@ aws ec2 describe-images --region=ap-northeast-2 --owner=595879546273 --filters "
 ## kops create
 
 ```bash
-kops create cluster \
-    --cloud aws \
-    --name ${KOPS_CLUSTER_NAME} \
-    --state ${KOPS_STATE_STORE} \
-    --node-size t2.medium \
-    --zones ap-northeast-2a,ap-northeast-2c \
-    --network-cidr 10.10.0.0/16 \
-    --networking cilium \
-    --override "cluster.spec.etcdClusters[*].version=3.1.11" \
-    --kubernetes-version 1.10.5 \
-    --image 595879546273/CoreOS-stable-1855.4.0-hvm \
-    --topology private \
-    --cloud-labels "Team=Dev,Owner=Admin"
+# create cluster
+kops create=cluster \
+    --state=${KOPS_STATE_STORE} \
+    --node-size=t2.medium \
+    --zones=ap-northeast-2a,ap-northeast-2c \
+    --network-cidr=10.10.0.0/16 \
+    --networking=cilium \
+    --override="cluster.spec.etcdClusters[*].version=3.1.11" \
+    --kubernetes-version=1.10.6 \
+    --image="595879546273/CoreOS-stable-1855.4.0-hvm" \
+    --topology=private \
+    --cloud-labels="Team=Dev,Owner=Admin" \
+    --name=${NAME}
 ```
 
 ## kops edit
 
 ```bash
-kops edit cluster --name ${KOPS_CLUSTER_NAME}
+# edit cluster
+kops edit cluster --name=${NAME}
 ```
 
 ```yaml
@@ -90,9 +96,11 @@ spec:
 ## kops update
 
 ```bash
-kops update cluster --name=${KOPS_CLUSTER_NAME} --yes
+# update cluster
+kops update cluster --name=${NAME} --yes
 
-kops validate cluster
+# validate cluster
+kops validate cluster --name=${NAME}
 ```
 
 ## update cilium
@@ -104,5 +112,11 @@ kubectl set image daemonset/cilium -n kube-system cilium-agent=docker.io/cilium/
 kubectl rollout status daemonset/cilium -n kube-system
 ```
 
+## kops delete
+
+```bash
+# delete cluster
+kops delete cluster --name=${NAME} --yes
+```
 
 * <https://cilium.readthedocs.io/en/v1.2/kubernetes/install/kops/#k8s-install-kops>

@@ -26,8 +26,9 @@ aws iam create-access-key --user-name kops
 # ssh-key
 ssh-keygen -q -f ~/.ssh/id_rsa -N ''
 
-# var
-export KOPS_CLUSTER_NAME=cluster.k8s.local
+# vars
+export NAME=cluster.k8s.local
+
 export KOPS_STATE_STORE=s3://kops-state-nalbam
 
 # region
@@ -42,13 +43,12 @@ aws s3 mb ${KOPS_STATE_STORE} --region ap-northeast-2
 ```bash
 # create cluster
 kops create cluster \
-    --cloud=aws \
-    --name=${KOPS_CLUSTER_NAME} \
     --state=${KOPS_STATE_STORE} \
     --node-size=m4.xlarge \
     --zones=ap-northeast-2a,ap-northeast-2c \
     --network-cidr=10.10.0.0/16 \
-    --networking=calico
+    --networking=calico \
+    --name=${NAME}
 
 #    --master-size=c4.large \
 #    --master-count=3 \
@@ -58,27 +58,31 @@ kops create cluster \
 #    --dns-zone=nalbam.com \
 #    --kubernetes-version=1.11.0 \
 #    --target=terraform \
-#    --out=.
+#    --out=. \
 
-kops get cluster
+# get cluster
+kops get cluster --name=${NAME}
 
 # edit cluster
-kops edit cluster
+kops edit cluster --name=${NAME}
 
 # edit instance group
-kops edit ig nodes
+kops edit ig nodes --name=${NAME}
 
-kops update cluster --name=${KOPS_CLUSTER_NAME} --yes
+# update cluster
+kops update cluster --name=${NAME} --yes
 
-kops rolling-update cluster --name=${KOPS_CLUSTER_NAME} --yes
+# rolling update cluster
+kops rolling-update cluster --name=${NAME} --yes
 
 # validate cluster
-kops validate cluster
+kops validate cluster --name=${NAME}
 
 # export kube config
-kops export kubecfg --name ${KOPS_CLUSTER_NAME}
+kops export kubecfg --name=${NAME}
 
-kops delete cluster --name=${KOPS_CLUSTER_NAME} --yes
+# delete cluster
+kops delete cluster --name=${NAME} --yes
 ```
 
 * <https://github.com/kubernetes/kops>

@@ -5,9 +5,14 @@
 * <https://istio.io/docs/setup/kubernetes/platform-setup/aws/>
 
 ```bash
-kops edit cluster --name kamino.k8s.local --state s3://kops-state-sbl
-kops update cluster --yes
-kops rolling-update cluster --yes
+export NAME=cluster.k8s.local
+export KOPS_STATE_STORE=s3://kops-state-nalbam
+
+kops edit cluster --name=${NAME} --state=${KOPS_STATE_STORE}
+
+kops update cluster --name=${NAME} --yes
+
+kops rolling-update cluster --name=${NAME} --yes
 ```
 
 ```yaml
@@ -35,6 +40,7 @@ spec:
 curl -L https://git.io/getLatestIstio | sh -
 cd istio-1.1.0
 
+# namespace
 kubectl create namespace istio-system
 
 # crds
