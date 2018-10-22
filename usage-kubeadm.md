@@ -34,27 +34,37 @@ sudo swapoff -a
 sudo systemctl daemon-reload
 sudo systemctl restart kubelet
 
+sudo kubeadm config images pull
+
 sudo kubeadm reset
+rm -rf $HOME/.kube $HOME/.helm $HOME/.draft
 ```
 
 ## start
 
 ```bash
-sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=
+LOCAL_IP=$(ip addr show | grep -Po 'inet \K[\d.]+' | grep '10.30')
 
-rm -rf $HOME/.kube
+sudo kubeadm init
+sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${LOCAL_IP}
+
 mkdir -p $HOME/.kube
-sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+sudo cp -rf /etc/kubernetes/admin.conf $HOME/.kube/config
 sudo chown $(id -u):$(id -g) $HOME/.kube/config
-
-# kubectl get all
-kubectl get all --all-namespaces
-
-# Installing a pod network
-kubectl apply -f https://docs.projectcalico.org/v3.0/getting-started/kubernetes/installation/hosted/kubeadm/1.7/calico.yaml
 
 # Master Isolation
 kubectl taint nodes --all node-role.kubernetes.io/master-
+
+# Installing a pod network
+kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+kubectl apply -f https://docs.projectcalico.org/v3.1/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+
+# kubectl create cluster-role-binding
+kubectl create clusterrolebinding cluster-admin:kube-system:default --clusterrole=cluster-admin --serviceaccount=kube-system:default
+kubectl create clusterrolebinding cluster-admin:kube-public:default --clusterrole=cluster-admin --serviceaccount=kube-public:default
+
+# kubectl get all
+kubectl get all --all-namespaces
 
 #ifconfig tunl0 | grep inet | awk '{print $2}'
 ```
