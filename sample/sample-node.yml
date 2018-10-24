@@ -38,11 +38,11 @@ spec:
           periodSeconds: 15
         resources:
           requests:
-            memory: "256Mi"
-            cpu: "250m"
+            cpu: 250m
+            memory: 256Mi
           limits:
-            memory: "512Mi"
-            cpu: "500m"
+            cpu: 500m
+            memory: 512Mi
         env:
         - name: REDIS_URL
           value: "redis://sample-redis:6379"

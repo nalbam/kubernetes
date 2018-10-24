@@ -38,10 +38,10 @@ spec:
             # keep request = limit to keep this container in guaranteed class
             limits:
               cpu: 100m
-              memory: 300Mi
+              memory: 256Mi
             requests:
               cpu: 100m
-              memory: 300Mi
+              memory: 256Mi
           command:
             - /heapster
             - --source=kubernetes.summary_api:''
@@ -50,10 +50,10 @@ spec:
           resources:
             limits:
               cpu: 50m
-              memory: 100Mi
+              memory: 128Mi
             requests:
               cpu: 50m
-              memory: 100Mi
+              memory: 128Mi
           env:
             - name: MY_POD_NAME
               valueFrom:

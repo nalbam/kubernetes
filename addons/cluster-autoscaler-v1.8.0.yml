@@ -210,10 +210,10 @@ spec:
           resources:
             limits:
               cpu: 100m
-              memory: 300Mi
+              memory: 256Mi
             requests:
-              cpu: 100m
-              memory: 300Mi
+              cpu: 200m
+              memory: 512Mi
           command:
             - ./cluster-autoscaler
             - --v=4
