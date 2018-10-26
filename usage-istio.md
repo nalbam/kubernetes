@@ -37,30 +37,40 @@ spec:
 * <https://istio.io/docs/setup/kubernetes/helm-install/>
 
 ```bash
-curl -L https://git.io/getLatestIstio | sh -
-cd istio-1.1.0
+curl -sL https://git.io/getLatestIstio | sh -
+cd istio-1.0.2
 
 # namespace
 kubectl create namespace istio-system
 
-# crds
-kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
-kubectl apply -f install/kubernetes/helm/istio/charts/certmanager/templates/crds.yaml
+# crds (Custom Resource Definitions)
+# kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
+# kubectl apply -f install/kubernetes/helm/istio/charts/certmanager/templates/crds.yaml
 
 # tiller
-kubectl create -f install/kubernetes/helm/helm-service-account.yaml
-helm init --service-account tiller
+# kubectl apply -f install/kubernetes/helm/helm-service-account.yaml
+# helm init --service-account tiller
 
 # install
-helm install install/kubernetes/helm/istio --name istio --namespace istio-system
+helm upgrade --install istio install/kubernetes/helm/istio \
+  --set ingress.enabled=true \
+  --set grafana.enabled=true \
+  --set servicegraph.enabled=true \
+  --set tracing.enabled=true \
+  --set kiali.enabled=true \
+  --namespace istio-system
 
+kubectl get pod,svc -n istio-system
+kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}'
+
+# delete
 helm delete --purge istio
 
-kubectl get pod,svc,ing -n istio-system
-kubectl get svc -n istio-system -o wide | grep istio-ingressgateway | awk '{print $4}'
+# kubectl delete -f install/kubernetes/helm/istio/templates/crds.yaml
+# kubectl delete -f install/kubernetes/helm/istio/charts/certmanager/templates/crds.yaml
 ```
 
-## Sample
+## Examples
 
 * <https://istio.io/docs/examples/bookinfo/>
 
@@ -70,5 +80,5 @@ kubectl label namespace default istio-injection=enabled
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
 
-kubectl get pod,svc,gateway -n default
+kubectl get pod,svc,ing,gateway -n default
 ```
