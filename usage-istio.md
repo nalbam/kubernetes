@@ -60,7 +60,7 @@ helm upgrade --install istio install/kubernetes/helm/istio \
   --set kiali.enabled=true \
   --namespace istio-system
 
-kubectl get pod,svc -n istio-system
+kubectl get pod,svc,ing -n istio-system
 kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}'
 
 # delete

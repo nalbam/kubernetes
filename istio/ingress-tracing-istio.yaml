@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: tracing
+  namespace: istio-system
+  labels:
+    app: tracing
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  rules:
+  - host: tracing-istio.demo.nalbam.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: tracing
+          servicePort: 9411
