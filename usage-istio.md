@@ -47,10 +47,6 @@ kubectl create namespace istio-system
 # kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
 # kubectl apply -f install/kubernetes/helm/istio/charts/certmanager/templates/crds.yaml
 
-# tiller
-# kubectl apply -f install/kubernetes/helm/helm-service-account.yaml
-# helm init --service-account tiller
-
 # install
 helm upgrade --install istio install/kubernetes/helm/istio \
   --set ingress.enabled=true \
@@ -65,9 +61,8 @@ kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}'
 
 # delete
 helm delete --purge istio
-
-# kubectl delete -f install/kubernetes/helm/istio/templates/crds.yaml
-# kubectl delete -f install/kubernetes/helm/istio/charts/certmanager/templates/crds.yaml
+kubectl delete -f install/kubernetes/helm/istio/templates/crds.yaml
+kubectl delete -f install/kubernetes/helm/istio/charts/certmanager/templates/crds.yaml
 ```
 
 ## Examples
@@ -81,4 +76,100 @@ kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
 
 kubectl get pod,svc,ing,gateway -n default
+```
+
+## Request Routing
+
+```bash
+# Apply default destination rules
+kubectl apply -f samples/bookinfo/networking/destination-rule-all.yaml
+
+# Apply a virtual service
+kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+
+# Route based on user identity (jason)
+kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
+
+# Cleanup
+kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+```
+
+## Fault Injection
+
+```bash
+kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
+
+# Injecting an HTTP delay fault (jason)
+kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-delay.yaml
+
+# Injecting an HTTP abort fault
+kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml
+
+# Cleanup
+kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+```
+
+## Traffic Shifting
+
+```bash
+kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+
+# Apply weight-based routing (50/50)
+kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml
+
+# Cleanup
+kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+```
+
+## Setting Request Timeouts
+
+```bash
+kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+
+```
+
+## Circuit Breaking
+
+```bash
+kubectl apply -f samples/httpbin/httpbin.yaml
+kubectl apply -f samples/httpbin/sample-client/fortio-deploy.yaml
+
+# 컨넥션을 1만 허용함
+cat <<EOF | kubectl apply -f -
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: httpbin
+spec:
+  host: httpbin
+  trafficPolicy:
+    connectionPool:
+      tcp:
+        maxConnections: 1
+      http:
+        http1MaxPendingRequests: 1
+        maxRequestsPerConnection: 1
+    outlierDetection:
+      consecutiveErrors: 1
+      interval: 1s
+      baseEjectionTime: 3m
+      maxEjectionPercent: 100
+EOF
+
+FORTIO_POD=$(kubectl get pod | grep fortio | awk '{ print $1 }')
+echo $FORTIO_POD
+
+kubectl exec -it $FORTIO_POD  -c fortio /usr/local/bin/fortio -- load -curl  http://httpbin:8000/get
+
+# 컨넥션 2 보냄 - 에러가 발생
+kubectl exec -it $FORTIO_POD  -c fortio /usr/local/bin/fortio -- load -c 2 -qps 0 -n 20 -loglevel Warning http://httpbin:8000/get
+
+# 컨넥션 3 보냄 - 더 많은 에러
+kubectl exec -it $FORTIO_POD  -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning http://httpbin:8000/get
+
+# Cleanup
+kubectl delete destinationrule httpbin
+kubectl delete deploy httpbin fortio-deploy
+kubectl delete svc httpbin
 ```
