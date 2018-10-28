@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: httpbin-v1
+  name: httpbin
   namespace: default
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
         version: v1
     spec:
       containers:
-      - name: httpbin
+      - name: httpbin-v1
         image: docker.io/kennethreitz/httpbin
         imagePullPolicy: IfNotPresent
         command: ["gunicorn", "--access-logfile", "-", "-b", "0.0.0.0:8080", "httpbin:app"]
@@ -35,7 +35,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: httpbin-v2
+  name: httpbin
   namespace: default
 spec:
   replicas: 1
@@ -49,7 +49,7 @@ spec:
         version: v2
     spec:
       containers:
-      - name: httpbin
+      - name: httpbin-v2
         image: docker.io/kennethreitz/httpbin
         imagePullPolicy: IfNotPresent
         command: ["gunicorn", "--access-logfile", "-", "-b", "0.0.0.0:8080", "httpbin:app"]
