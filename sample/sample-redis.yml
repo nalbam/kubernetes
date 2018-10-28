@@ -2,8 +2,6 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sample-redis
-  labels:
-    app: sample-redis
 spec:
   selector:
     matchLabels:
@@ -13,6 +11,7 @@ spec:
     metadata:
       labels:
         app: sample-redis
+        version: 0.0.1
     spec:
       containers:
       - name: master
