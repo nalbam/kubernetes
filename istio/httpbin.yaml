@@ -1,5 +1,6 @@
+# httpbin
 
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: httpbin-v1
@@ -32,7 +33,7 @@ spec:
 
 ---
 
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: httpbin-v2
