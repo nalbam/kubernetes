@@ -9,7 +9,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: httpbin-v1
+      app: httpbin
   template:
     metadata:
       labels:
@@ -42,7 +42,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: httpbin-v2
+      app: httpbin
   template:
     metadata:
       labels:
