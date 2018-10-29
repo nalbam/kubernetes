@@ -19,16 +19,16 @@ tracing:
   ingress:
     enabled: true
     hosts:
-      - tracing-istio.demo.nalbam.com
+      - tracing.istio.nalbam.com
   jaeger:
     ingress:
       enabled: true
       hosts:
-        - jaeger-istio.demo.nalbam.com
+        - jaeger.istio.nalbam.com
 
 kiali:
   enabled: true
   ingress:
     enabled: true
     hosts:
-      - kiali-istio.demo.nalbam.com
+      - kiali.istio.nalbam.com
