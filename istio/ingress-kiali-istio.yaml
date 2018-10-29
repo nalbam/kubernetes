@@ -16,10 +16,3 @@ spec:
         backend:
           serviceName: kiali
           servicePort: 20001
-  - host: kiali.istio.nalbam.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: kiali
-          servicePort: 20001

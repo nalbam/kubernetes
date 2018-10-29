@@ -50,6 +50,7 @@ kubectl create namespace istio-system
 helm upgrade --install istio install/kubernetes/helm/istio \
   --set ingress.enabled=true \
   --set grafana.enabled=true \
+  --set tracing.enabled=true \
   --set kiali.enabled=true \
   --namespace istio-system
 
