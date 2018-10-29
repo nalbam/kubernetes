@@ -136,27 +136,8 @@ kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-all-v
 # kubectl apply -f ~/istio-1.0.2/samples/httpbin/httpbin.yaml
 # kubectl apply -f ~/istio-1.0.2/samples/httpbin/sample-client/fortio-deploy.yaml
 
-# 컨넥션을 1만 허용함
-cat <<EOF | kubectl apply -f -
-apiVersion: networking.istio.io/v1alpha3
-kind: DestinationRule
-metadata:
-  name: sample-spring-default
-spec:
-  host: sample-spring-default
-  trafficPolicy:
-    connectionPool:
-      tcp:
-        maxConnections: 1
-      http:
-        http1MaxPendingRequests: 1
-        maxRequestsPerConnection: 1
-    outlierDetection:
-      consecutiveErrors: 1
-      interval: 1s
-      baseEjectionTime: 3m
-      maxEjectionPercent: 100
-EOF
+# 컨넥션을 1만 허용함 - DestinationRule
+kubectl apply -f ~/kubernetes/istio/sample/
 
 FORTIO_POD=$(kubectl get pod | grep fortio-default | awk '{ print $1 }')
 echo $FORTIO_POD
