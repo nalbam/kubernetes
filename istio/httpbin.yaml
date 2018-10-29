@@ -1,15 +1,12 @@
 # httpbin
 
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: httpbin-v1
   namespace: default
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: httpbin
   template:
     metadata:
       labels:
@@ -40,9 +37,6 @@ metadata:
   namespace: default
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: httpbin
   template:
     metadata:
       labels:

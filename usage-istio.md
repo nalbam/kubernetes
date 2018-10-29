@@ -45,14 +45,10 @@ kubectl create namespace istio-system
 
 # crds (Custom Resource Definitions)
 # kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
-# kubectl apply -f install/kubernetes/helm/istio/charts/certmanager/templates/crds.yaml
 
 # install
 helm upgrade --install istio install/kubernetes/helm/istio \
-  # --set ingress.enabled=true \
   --set grafana.enabled=true \
-  # --set servicegraph.enabled=true \
-  # --set tracing.enabled=true \
   --set kiali.enabled=true \
   --namespace istio-system
 
@@ -62,7 +58,7 @@ kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}'
 # delete
 helm delete --purge istio
 kubectl delete -f install/kubernetes/helm/istio/templates/crds.yaml
-kubectl delete -f install/kubernetes/helm/istio/charts/certmanager/templates/crds.yaml
+kubectl delete namespace istio-system
 ```
 
 ## Examples
@@ -71,6 +67,7 @@ kubectl delete -f install/kubernetes/helm/istio/charts/certmanager/templates/crd
 
 ```bash
 kubectl label namespace default istio-injection=enabled
+kubectl label namespace kube-ingress istio-injection=enabled
 
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
