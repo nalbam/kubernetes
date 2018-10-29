@@ -32,3 +32,10 @@ kiali:
     enabled: true
     hosts:
       - kiali.istio.nalbam.com
+
+servicegraph:
+  enabled: true
+  ingress:
+    enabled: true
+    hosts:
+      - servicegraph.istio.nalbam.com

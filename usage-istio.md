@@ -44,7 +44,7 @@ cd istio-1.0.2
 kubectl create namespace istio-system
 
 # crds (Custom Resource Definitions)
-# kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
+# kubectl apply -f ~/istio-1.0.2/install/kubernetes/helm/istio/templates/crds.yaml
 
 # Install
 helm upgrade --install istio ~/istio-1.0.2/install/kubernetes/helm/istio \
@@ -60,7 +60,7 @@ echo "http://${INGRESS_GATEWAY}"
 
 # Cleanup
 helm delete --purge istio
-kubectl delete -f install/kubernetes/helm/istio/templates/crds.yaml
+kubectl delete -f ~/istio-1.0.2/install/kubernetes/helm/istio/templates/crds.yaml
 kubectl delete namespace istio-system
 ```
 
@@ -71,8 +71,8 @@ kubectl delete namespace istio-system
 ```bash
 kubectl label namespace default istio-injection=enabled
 
-kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
-kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/bookinfo-gateway.yaml
 
 INGRESS_GATEWAY=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}')
 echo "http://${INGRESS_GATEWAY}/productpage"
@@ -80,66 +80,66 @@ echo "http://${INGRESS_GATEWAY}/productpage"
 kubectl get pod,svc,ing,hpa,gateway -n default
 
 # Cleanup
-kubectl delete -f samples/bookinfo/platform/kube/bookinfo.yaml
-kubectl delete -f samples/bookinfo/networking/bookinfo-gateway.yaml
+kubectl delete -f ~/istio-1.0.2/samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl delete -f ~/istio-1.0.2/samples/bookinfo/networking/bookinfo-gateway.yaml
 ```
 
 ## Request Routing
 
 ```bash
 # Apply default destination rules
-kubectl apply -f samples/bookinfo/networking/destination-rule-all.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/destination-rule-all.yaml
 
 # Apply a virtual service
-kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-all-v1.yaml
 
 # Route based on user identity (jason)
-kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
 
 # Cleanup
-kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl delete -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-all-v1.yaml
 ```
 
 ## Fault Injection
 
 ```bash
-kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
-kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
 
 # Injecting an HTTP delay fault (jason)
-kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-delay.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-ratings-test-delay.yaml
 
 # Injecting an HTTP abort fault
-kubectl apply -f samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml
 
 # Cleanup
-kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl delete -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-all-v1.yaml
 ```
 
 ## Traffic Shifting
 
 ```bash
-kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-all-v1.yaml
 
 # Apply weight-based routing (50/50)
-kubectl apply -f samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml
 
 # Cleanup
-kubectl delete -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl delete -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-all-v1.yaml
 ```
 
 ## Setting Request Timeouts
 
 ```bash
-kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl apply -f ~/istio-1.0.2/samples/bookinfo/networking/virtual-service-all-v1.yaml
 
 ```
 
 ## Circuit Breaking
 
 ```bash
-# kubectl apply -f samples/httpbin/httpbin.yaml
-# kubectl apply -f samples/httpbin/sample-client/fortio-deploy.yaml
+# kubectl apply -f ~/istio-1.0.2/samples/httpbin/httpbin.yaml
+# kubectl apply -f ~/istio-1.0.2/samples/httpbin/sample-client/fortio-deploy.yaml
 
 # 컨넥션을 1만 허용함
 cat <<EOF | kubectl apply -f -
