@@ -70,10 +70,12 @@ kubectl delete namespace istio-system
 
 ```bash
 kubectl label namespace default istio-injection=enabled
-kubectl label namespace kube-ingress istio-injection=enabled
 
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
+
+INGRESS_GATEWAY=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}')
+echo "http://${INGRESS_GATEWAY}/productpage"
 
 kubectl get pod,svc,ing,hpa,gateway -n default
 
