@@ -46,16 +46,19 @@ kubectl create namespace istio-system
 # crds (Custom Resource Definitions)
 # kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
 
-# install
+# Install
 helm upgrade --install istio install/kubernetes/helm/istio \
+  --set ingress.enabled=true \
   --set grafana.enabled=true \
   --set kiali.enabled=true \
   --namespace istio-system
 
 kubectl get pod,svc,ing -n istio-system
-kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}'
 
-# delete
+INGRESS_GATEWAY=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}')
+echo "http://${INGRESS_GATEWAY}"
+
+# Cleanup
 helm delete --purge istio
 kubectl delete -f install/kubernetes/helm/istio/templates/crds.yaml
 kubectl delete namespace istio-system
@@ -72,7 +75,11 @@ kubectl label namespace kube-ingress istio-injection=enabled
 kubectl apply -f samples/bookinfo/platform/kube/bookinfo.yaml
 kubectl apply -f samples/bookinfo/networking/bookinfo-gateway.yaml
 
-kubectl get pod,svc,ing,gateway -n default
+kubectl get pod,svc,ing,hpa,gateway -n default
+
+# Cleanup
+kubectl delete -f samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl delete -f samples/bookinfo/networking/bookinfo-gateway.yaml
 ```
 
 ## Request Routing
