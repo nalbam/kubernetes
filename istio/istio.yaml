@@ -10,24 +10,28 @@ tracing:
   enabled: true
   ingress:
     enabled: true
-    # hosts:
-    #   - tracing.istio.nalbam.com
+    hosts:
+      - tracing.istio.nalbam.com
+      - tracing-istio.demo.nalbam.com
   jaeger:
     ingress:
       enabled: true
-      # hosts:
-      #   - jaeger.istio.nalbam.com
+      hosts:
+        - jaeger.istio.nalbam.com
+        - jaeger-istio.demo.nalbam.com
 
 kiali:
   enabled: true
   ingress:
     enabled: true
-    # hosts:
-    #   - kiali.istio.nalbam.com
+    hosts:
+      - kiali.istio.nalbam.com
+      - kiali-istio.demo.nalbam.com
 
 servicegraph:
   enabled: true
   ingress:
     enabled: true
-    # hosts:
-    #   - servicegraph.istio.nalbam.com
+    hosts:
+      - servicegraph.istio.nalbam.com
+      - servicegraph-istio.demo.nalbam.com

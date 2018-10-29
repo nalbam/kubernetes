@@ -180,6 +180,7 @@ kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0
 
 # apache benchmark
 ab -n 1000000 -c 10 http://httpbin-default.demo.nalbam.com/get
+ab -n 1000000 -c 10 http://sample-spring-default.demo.nalbam.com/fault/30
 ab -n 1000000 -c 10 http://sample-spring-default.demo.nalbam.com/fault/80
 
 # Cleanup
