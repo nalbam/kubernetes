@@ -54,6 +54,11 @@ helm upgrade --install istio install/kubernetes/helm/istio \
   --set kiali.enabled=true \
   --namespace istio-system
 
+# Install
+helm upgrade --install istio install/kubernetes/helm/istio \
+  --values ~/kubernetes/istio/istio.yaml \
+  --namespace istio-system
+
 kubectl get pod,svc,ing -n istio-system
 
 INGRESS_GATEWAY=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}')

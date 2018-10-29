@@ -9,12 +9,12 @@ ingress:
 tracing:
   enabled: true
   ingress:
-    enabled: false
+    enabled: true
     hosts:
       - tracing-istio.demo.nalbam.com
   jaeger:
     ingress:
-      enabled: false
+      enabled: true
       hosts:
         - jaeger-istio.demo.nalbam.com
 
