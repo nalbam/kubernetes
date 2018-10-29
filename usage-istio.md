@@ -138,17 +138,17 @@ kubectl apply -f samples/bookinfo/networking/virtual-service-all-v1.yaml
 ## Circuit Breaking
 
 ```bash
-kubectl apply -f samples/httpbin/httpbin.yaml
-kubectl apply -f samples/httpbin/sample-client/fortio-deploy.yaml
+# kubectl apply -f samples/httpbin/httpbin.yaml
+# kubectl apply -f samples/httpbin/sample-client/fortio-deploy.yaml
 
 # 컨넥션을 1만 허용함
 cat <<EOF | kubectl apply -f -
 apiVersion: networking.istio.io/v1alpha3
 kind: DestinationRule
 metadata:
-  name: httpbin
+  name: sample-spring-default
 spec:
-  host: httpbin
+  host: sample-spring-default
   trafficPolicy:
     connectionPool:
       tcp:
@@ -163,16 +163,24 @@ spec:
       maxEjectionPercent: 100
 EOF
 
-FORTIO_POD=$(kubectl get pod | grep fortio | awk '{ print $1 }')
+FORTIO_POD=$(kubectl get pod | grep fortio-default | awk '{ print $1 }')
 echo $FORTIO_POD
 
-kubectl exec -it $FORTIO_POD  -c fortio /usr/local/bin/fortio -- load -curl  http://httpbin:8000/get
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -curl http://httpbin-default/get
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -curl http://sample-node-default/
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -curl http://sample-spring-default/
 
 # 컨넥션 2 보냄 - 에러가 발생
-kubectl exec -it $FORTIO_POD  -c fortio /usr/local/bin/fortio -- load -c 2 -qps 0 -n 20 -loglevel Warning http://httpbin:8000/get
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 2 -qps 0 -n 20 -loglevel Warning http://httpbin-default/get
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 2 -qps 0 -n 20 -loglevel Warning http://sample-spring-default/fault/60
 
 # 컨넥션 3 보냄 - 더 많은 에러
-kubectl exec -it $FORTIO_POD  -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning http://httpbin:8000/get
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning http://httpbin-default/get
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning http://sample-spring-default/fault/90
+
+# apache benchmark
+ab -n 1000000 -c 10 http://httpbin-default.demo.nalbam.com/get
+ab -n 1000000 -c 10 http://sample-spring-default.demo.nalbam.com/fault/80
 
 # Cleanup
 kubectl delete destinationrule httpbin
