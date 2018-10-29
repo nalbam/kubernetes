@@ -1,41 +1,33 @@
+# istio
 
 grafana:
   enabled: true
 
 ingress:
   enabled: true
-  # annotations:
-  #   # replace with the correct value of the generated certificate in the AWS console
-  #   service.beta.kubernetes.io/aws-load-balancer-ssl-cert: ""
-  #   # the backend instances are HTTP
-  #   service.beta.kubernetes.io/aws-load-balancer-backend-protocol: "http"
-  #   # Map port 443
-  #   service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "https"
-  #   # Increase the ELB idle timeout to avoid issues with WebSockets or Server-Sent Events.
-  #   service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: '3600'
 
 tracing:
   enabled: true
   ingress:
     enabled: true
-    hosts:
-      - tracing.istio.nalbam.com
+    # hosts:
+    #   - tracing.istio.nalbam.com
   jaeger:
     ingress:
       enabled: true
-      hosts:
-        - jaeger.istio.nalbam.com
+      # hosts:
+      #   - jaeger.istio.nalbam.com
 
 kiali:
   enabled: true
   ingress:
     enabled: true
-    hosts:
-      - kiali.istio.nalbam.com
+    # hosts:
+    #   - kiali.istio.nalbam.com
 
 servicegraph:
   enabled: true
   ingress:
     enabled: true
-    hosts:
-      - servicegraph.istio.nalbam.com
+    # hosts:
+    #   - servicegraph.istio.nalbam.com
