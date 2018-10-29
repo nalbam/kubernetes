@@ -4,23 +4,23 @@ grafana:
 
 ingress:
   enabled: true
-  annotations: {}
+  # annotations: {}
 
 tracing:
   enabled: true
-  ingress:
-    enabled: true
-    hosts:
-      - tracing-istio.demo.nalbam.com
-  jaeger:
-    ingress:
-      enabled: true
-      hosts:
-        - jaeger-istio.demo.nalbam.com
+  # ingress:
+  #   enabled: true
+  #   hosts:
+  #     - tracing-istio.demo.nalbam.com
+  # jaeger:
+  #   ingress:
+  #     enabled: true
+  #     hosts:
+  #       - jaeger-istio.demo.nalbam.com
 
 kiali:
   enabled: true
-  ingress:
-    enabled: true
-    hosts:
-      - kiali-istio.demo.nalbam.com
+  # ingress:
+  #   enabled: true
+  #   hosts:
+  #     - kiali-istio.demo.nalbam.com

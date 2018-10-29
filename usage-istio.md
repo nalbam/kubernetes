@@ -47,15 +47,7 @@ kubectl create namespace istio-system
 # kubectl apply -f install/kubernetes/helm/istio/templates/crds.yaml
 
 # Install
-helm upgrade --install istio install/kubernetes/helm/istio \
-  --set ingress.enabled=true \
-  --set grafana.enabled=true \
-  --set tracing.enabled=true \
-  --set kiali.enabled=true \
-  --namespace istio-system
-
-# Install
-helm upgrade --install istio install/kubernetes/helm/istio \
+helm upgrade --install istio ~/istio-1.0.2/install/kubernetes/helm/istio \
   --values ~/kubernetes/istio/istio.yaml \
   --namespace istio-system
 
