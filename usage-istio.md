@@ -65,6 +65,7 @@ kubectl delete namespace istio-system
 
 ```bash
 kubectl label namespace default istio-injection=enabled
+kubectl label namespace default istio-injection-
 
 kubectl apply -f ~/istio-1.0.3/samples/bookinfo/platform/kube/bookinfo.yaml
 kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/bookinfo-gateway.yaml
