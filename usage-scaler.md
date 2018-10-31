@@ -1,51 +1,40 @@
-# metrics-server
+# autoscaler
 
-## install
+## hpa
 
-```bash
-git clone https://github.com/kubernetes-incubator/metrics-server
-kubectl apply -f metrics-server/deploy/1.8+/
-```
-
-## sample
-
-```bash
-kubectl apply -f kubernetes/sample/sample-node-ing.yml
-kubectl apply -f kubernetes/sample/sample-spring-ing.yml
-kubectl apply -f kubernetes/sample/sample-web-ing.yml
-
-kubectl get pod,svc,ing -n default
-```
-
-## auto scale
+### autoscale
 
 ```bash
 kubectl autoscale deployment sample-spring --min=2 --max=50 --cpu-percent=50
 ```
 
-## stress
+### stress
 
 ```bash
-ab -n 1000000 -c 1 https://sample-spring.apps.nalbam.com/stress
-
-ab -n 1000000 -c 10 https://sample-spring.apps.nalbam.com/stress
+ab -n 1000000 -c 1 https://sample-spring.demo.nalbam.com/stress
+ab -n 1000000 -c 10 https://sample-spring.demo.nalbam.com/stress
 ```
 
-## result
+### result
 
 ```bash
 kubectl get hpa
 ```
 
-```bash
-NAME            REFERENCE                  TARGETS   MINPODS   MAXPODS   REPLICAS   AGE
-sample-node     Deployment/sample-node     0%/50%    1         10        1          1h
-sample-spring   Deployment/sample-spring   47%/50%   1         30        6          1h
-sample-web      Deployment/sample-web      0%/50%    1         10        1          1h
-```
+## cluster autoscaler
 
 ```bash
-kubectl describe hpa sample-spring
-```
+kubectl get no -o wide
 
-* <https://github.com/kubernetes-incubator/metrics-server>
+kubectl get pod --all-namespaces -o wide | grep ip-10-251-87-10.ap-northeast-2.compute.internal
+kubectl get pod --all-namespaces -o wide | grep ip-10-251-87-59.ap-northeast-2.compute.internal
+kubectl get pod --all-namespaces -o wide | grep ip-10-251-88-244.ap-northeast-2.compute.internal
+
+kubectl drain ip-10-251-88-244.ap-northeast-2.compute.internal
+kubectl uncordon ip-10-251-88-244.ap-northeast-2.compute.internal
+
+kubectl get pod -o wide --all-namespaces | grep ip-10-251-88-244.ap-northeast-2.compute.internal
+
+CA=$(kubectl get pod --all-namespaces | grep cluster-autoscaler | awk '{print $2}')
+kubectl logs ${CA} -n kube-system -f
+```
