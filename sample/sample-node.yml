@@ -5,6 +5,8 @@ kind: Deployment
 metadata:
   name: sample-node
   namespace: default
+  labels:
+    app: sample-node
 spec:
   replicas: 2
   revisionHistoryLimit: 10
@@ -82,23 +84,17 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: sample-node
   namespace: default
+  labels:
+    app: sample-node
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
     name: sample-node
-  minReplicas: 1
+  minReplicas: 2
   maxReplicas: 100
   metrics:
   - type: Resource
     resource:
       name: cpu
       targetAverageUtilization: 65
-  # - type: Resource
-  #   resource:
-  #     name: memory
-  #     targetAverageUtilization: 65
-  # - type: Pods
-  #   pods:
-  #     metricName: packets-per-second
-  #     targetAverageValue: 1k
