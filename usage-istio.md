@@ -156,9 +156,9 @@ kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0
 kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning http://sample-spring-default/fault/90
 
 # apache benchmark
-ab -n 1000000 -c 10 http://httpbin-default.demo.nalbam.com/get
-ab -n 1000000 -c 10 http://sample-spring-default.demo.nalbam.com/fault/30
-ab -n 1000000 -c 10 http://sample-spring-default.demo.nalbam.com/fault/80
+ab -n 1000000 -c 10 https://httpbin-default.dev.nalbam.com/get
+ab -n 1000000 -c 10 https://sample-spring-default.dev.nalbam.com/fault/30
+ab -n 1000000 -c 10 https://sample-spring-default.dev.nalbam.com/fault/80
 
 # Cleanup
 kubectl delete destinationrule httpbin
