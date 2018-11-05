@@ -24,6 +24,24 @@ kubectl get hpa
 ## cluster autoscaler
 
 ```bash
+export NAME=cluster.k8s.local
+export KOPS_STATE_STORE=s3://kops-state-nalbam
+
+kops edit cluster --name=${NAME} --state=${KOPS_STATE_STORE}
+
+kops update cluster --name=${NAME} --yes
+
+kops rolling-update cluster --name=${NAME} --yes
+```
+
+```yaml
+spec:
+  cloudLabels:
+    k8s.io/cluster-autoscaler/enabled: ""
+    kubernetes.io/cluster/dev.k8s.local: owned
+```
+
+```bash
 kubectl get no -o wide
 
 kubectl get pod --all-namespaces -o wide | grep ip-10-251-87-10.ap-northeast-2.compute.internal
