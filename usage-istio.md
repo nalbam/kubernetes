@@ -165,3 +165,11 @@ kubectl delete destinationrule httpbin
 kubectl delete deploy httpbin fortio-deploy
 kubectl delete svc httpbin
 ```
+
+## kiali
+
+```bash
+Could not fetch apps list, Error: [ replicasets.apps is forbidden: User "system:serviceaccount:istio-system:kiali-service-account" cannot list replicasets.apps in the namespace "monitor" ]
+
+kubectl create clusterrolebinding cluster-admin:istio-system:kiali-service-account --clusterrole=cluster-admin --serviceaccount=istio-system:kiali-service-account
+```
