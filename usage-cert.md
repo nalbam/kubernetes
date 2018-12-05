@@ -7,13 +7,13 @@ helm install --name cert-manager --namespace kube-system stable/cert-manager
 
 export EMAIL="me@nalbam.com"
 
-export NAMESPACE="dev"
-export APPLICATION="sample-node"
-export BASE_DOMAIN="demo.opsnow.io"
-
 # ClusterIssuer
 sed -e "s/email:.*/email: $EMAIL/g" cert/cluster-issuer.yaml | \
     kubectl apply -f-
+
+export NAMESPACE="dev"
+export APPLICATION="sample-node"
+export BASE_DOMAIN="demo.opsnow.io"
 
 # Certificate
 sed -e "s/NAMESPACE/$NAMESPACE/g" cert/certificate.yaml | \
@@ -24,7 +24,9 @@ sed -e "s/NAMESPACE/$NAMESPACE/g" cert/certificate.yaml | \
 # describe
 kubectl get certificate -n $NAMESPACE
 kubectl describe certificate $APPLICATION-$NAMESPACE -n $NAMESPACE
+
 kubectl get secret -n $NAMESPACE | grep tls
+kubectl describe secret $APPLICATION-$NAMESPACE -n $NAMESPACE
 ```
 
 ## ingress
