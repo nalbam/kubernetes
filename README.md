@@ -18,6 +18,9 @@ kubectl config use-context cluster.k8s.local
 # kubectl change namespace
 kubectl config set-context $(kubectl config current-context) --namespace=default
 
+# kubectl api versions
+kubectl api-versions
+
 # kubectl get
 kubectl get all --all-namespaces
 kubectl get all -n default
