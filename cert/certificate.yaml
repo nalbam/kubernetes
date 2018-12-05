@@ -1,0 +1,19 @@
+apiVersion: certmanager.k8s.io/v1alpha1
+kind: Certificate
+metadata:
+  name: APPLICATION-NAMESPACE
+  namespace: NAMESPACE
+spec:
+  secretName: APPLICATION-NAMESPACE
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: APPLICATION-NAMESPACE.BASE_DOMAIN
+  dnsNames:
+  - APPLICATION-NAMESPACE.BASE_DOMAIN
+  acme:
+    config:
+    - http01:
+        ingress: APPLICATION-NAMESPACE
+      domains:
+      - APPLICATION-NAMESPACE.BASE_DOMAIN
