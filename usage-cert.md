@@ -23,10 +23,10 @@ sed -e "s/NAMESPACE/$NAMESPACE/g" cert/certificate.yaml | \
 
 # describe
 kubectl get certificate -n $NAMESPACE
-kubectl describe certificate $APPLICATION-$NAMESPACE -n $NAMESPACE
+kubectl describe certificate $APPLICATION-$NAMESPACE-tls -n $NAMESPACE
 
 kubectl get secret -n $NAMESPACE | grep tls
-kubectl describe secret $APPLICATION-$NAMESPACE -n $NAMESPACE
+kubectl describe secret $APPLICATION-$NAMESPACE-tls -n $NAMESPACE
 ```
 
 ## ingress
