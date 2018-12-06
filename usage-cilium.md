@@ -46,10 +46,10 @@ aws s3 mb ${KOPS_STATE_STORE} --region ap-northeast-2
 
 ```bash
 aws ec2 describe-images \
-    --region=ap-northeast-2 \
-    --owner=595879546273 \
+    --region "ap-northeast-2" \
+    --owner "595879546273" \
     --filters "Name=virtualization-type,Values=hvm" "Name=name,Values=CoreOS-stable*" \
-    --query 'sort_by(Images,&CreationDate)[-1].{id:ImageLocation}'
+    --query "sort_by(Images,&CreationDate)[-1].{id:ImageLocation}" | jq .
 ```
 
 ```json

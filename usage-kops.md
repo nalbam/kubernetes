@@ -38,6 +38,22 @@ aws configure set default.region ap-northeast-2
 aws s3 mb ${KOPS_STATE_STORE} --region ap-northeast-2
 ```
 
+## get ami
+
+```bash
+aws ec2 describe-images \
+    --region "ap-northeast-2" \
+    --owner "383156758163" \
+    --filters "Name=virtualization-type,Values=hvm" "Name=name,Values=k8s-1.11-debian-jessie-amd64-hvm-ebs*" \
+    --query "sort_by(Images,&CreationDate)[-1].{id:ImageLocation}" | jq .
+```
+
+```json
+{
+    "id": "383156758163/k8s-1.11-debian-jessie-amd64-hvm-ebs-2018-08-17"
+}
+```
+
 ## kops
 
 ```bash
@@ -56,7 +72,8 @@ kops create cluster \
 #    --node-count=2 \
 #    --topology=private \
 #    --dns-zone=nalbam.com \
-#    --kubernetes-version=1.11.0 \
+#    --kubernetes-version=1.11.5 \
+#    --image="383156758163/k8s-1.11-debian-jessie-amd64-hvm-ebs-2018-08-17" \
 #    --target=terraform \
 #    --out=. \
 
