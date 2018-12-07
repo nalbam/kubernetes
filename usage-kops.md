@@ -45,13 +45,11 @@ aws ec2 describe-images \
     --region "ap-northeast-2" \
     --owner "383156758163" \
     --filters "Name=virtualization-type,Values=hvm" "Name=name,Values=k8s-1.11-debian-jessie-amd64-hvm-ebs*" \
-    --query "sort_by(Images,&CreationDate)[-1].{id:ImageLocation}" | jq .
+    --query "sort_by(Images,&CreationDate)[-1].{id:ImageLocation}" | jq -r '.id'
 ```
 
-```json
-{
-    "id": "383156758163/k8s-1.11-debian-jessie-amd64-hvm-ebs-2018-08-17"
-}
+```txt
+383156758163/k8s-1.11-debian-jessie-amd64-hvm-ebs-2018-08-17
 ```
 
 ## kops
@@ -62,20 +60,22 @@ kops create cluster \
     --state=${KOPS_STATE_STORE} \
     --node-size=m4.xlarge \
     --zones=ap-northeast-2a,ap-northeast-2c \
+    --kubernetes-version=1.11.5 \
+    --image="383156758163/k8s-1.11-debian-jessie-amd64-hvm-ebs-2018-08-17" \
     --network-cidr=10.10.0.0/16 \
     --networking=calico \
     --name=${NAME}
 
-#    --master-size=c4.large \
-#    --master-count=3 \
-#    --master-zones=ap-northeast-2a,ap-northeast-2c \
-#    --node-count=2 \
-#    --topology=private \
-#    --dns-zone=nalbam.com \
-#    --kubernetes-version=1.11.5 \
-#    --image="383156758163/k8s-1.11-debian-jessie-amd64-hvm-ebs-2018-08-17" \
-#    --target=terraform \
-#    --out=. \
+#     --master-size=c4.large \
+#     --master-count=3 \
+#     --master-zones=ap-northeast-2a,ap-northeast-2c \
+#     --node-count=2 \
+#     --topology=private \
+#     --dns-zone=nalbam.com \
+#     --kubernetes-version=1.11.5 \
+#     --image="383156758163/k8s-1.11-debian-jessie-amd64-hvm-ebs-2018-08-17" \
+#     --target=terraform \
+#     --out=. \
 
 # get cluster
 kops get cluster --name=${NAME}
