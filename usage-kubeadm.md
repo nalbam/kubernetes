@@ -10,6 +10,20 @@ sudo apt update
 sudo apt install -y kubelet kubeadm kubectl
 ```
 
+```bash
+export OS_NAME="linux"
+export VERSION=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/${VERSION}/bin/${OS_NAME}/amd64/kubelet
+chmod +x kubelet && sudo mv kubelet /usr/local/bin/kubelet
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/${VERSION}/bin/${OS_NAME}/amd64/kubeadm
+chmod +x kubeadm && sudo mv kubeadm /usr/local/bin/kubeadm
+
+curl -LO https://storage.googleapis.com/kubernetes-release/release/${VERSION}/bin/${OS_NAME}/amd64/kubectl
+chmod +x kubectl && sudo mv kubectl /usr/local/bin/kubectl
+```
+
 ## prepare
 
 ```bash
@@ -33,10 +47,10 @@ sudo kubeadm config images pull
 ## start
 
 ```bash
-LOCAL_IP=$(ip addr show | grep -Po 'inet \K[\d.]+' | grep '10.30')
+export LOCAL_IP=$(ip addr show | grep -Po 'inet \K[\d.]+' | grep '10.' | head -1)
 echo ${LOCAL_IP}
 
-sudo kubeadm init
+# sudo kubeadm init
 sudo kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=${LOCAL_IP}
 
 # auth
