@@ -9,7 +9,15 @@ curl -sL toast.sh/tools | bash
 ## usage
 
 ```bash
-helm init
+# kube-system tiller
+kubectl create sa tiller -n kube-system
+
+# cluster-admin kube-system tiller
+kubectl create clusterrolebinding cluster-admin:kube-system:tiller \
+    --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+# init
+helm init --upgrade --service-account=tiller
 
 helm list
 
@@ -21,10 +29,6 @@ helm search
 
 helm plugin install https://github.com/chartmuseum/helm-push
 helm plugin list
-
-# cluster-admin kube-system default
-kubectl create clusterrolebinding cluster-admin:kube-system:default \
-    --clusterrole=cluster-admin --serviceaccount=kube-system:default
 
 # incubator
 helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com
