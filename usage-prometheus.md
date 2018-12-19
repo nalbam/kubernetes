@@ -19,6 +19,7 @@ kubectl get --raw "/apis/metrics.k8s.io/v1beta1/pods" | jq .
 # custom metrics
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/dev/pods/*/cpu_usage" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/dev/pods/*/fs_usage_bytes" | jq .
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/dev/pods/*/http_requests" | jq .
 
 # sum (rate (container_cpu_usage_seconds_total{image!="",name=~"^k8s_.*"}[2m]) ) by (pod_name)
