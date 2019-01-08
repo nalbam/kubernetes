@@ -1,15 +1,6 @@
 # Prometheus
 
-## install
-
-```bash
-git clone https://github.com/nalbam/prometheus-kubernetes
-cd prometheus-kubernetes
-
-./deploy
-
-kubectl get pod,svc,ing -n monitoring
-```
+## usage
 
 ```bash
 # metrics
@@ -25,6 +16,11 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/dev/pods/*/htt
 # sum (rate (container_cpu_usage_seconds_total{image!="",name=~"^k8s_.*"}[2m]) ) by (pod_name)
 # sum (rate (container_network_receive_bytes_total{image!="",name=~"^k8s_.*"}[2m]) ) by (pod_name)
 
+# node
+sum (rate (container_cpu_usage_seconds_total{id="/",kubernetes_io_hostname=~"^$Node$"}[2m]))
+sum (kube_pod_container_resource_requests_cpu_cores{kubernetes_node=~"^$Node$"})
+sum (kube_pod_container_resource_limits_cpu_cores{kubernetes_node=~"^$Node$"})
+sum (machine_cpu_cores{kubernetes_io_hostname=~"^$Node$"})
 ```
 
 * <https://github.com/camilb/prometheus-kubernetes>
