@@ -5,11 +5,14 @@
 ```bash
 cat ~/.kube/config
 
-# kubectl cluster info
-kubectl cluster-info
+# kubectl cluster list
+kubectl config view -o json | jq '.clusters[].name' -r
 
 # kubectl config
 kubectl config view
+
+# kubectl cluster info
+kubectl cluster-info
 
 # kubectl context
 kubectl config current-context
