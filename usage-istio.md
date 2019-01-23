@@ -64,8 +64,8 @@ kubectl delete namespace istio-system
 * <https://istio.io/docs/examples/bookinfo/>
 
 ```bash
-kubectl label namespace default istio-injection=enabled
-kubectl label namespace default istio-injection-
+kubectl label namespace dev istio-injection=enabled
+kubectl label namespace dev istio-injection-
 
 kubectl apply -f ~/istio-1.0.3/samples/bookinfo/platform/kube/bookinfo.yaml
 kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/bookinfo-gateway.yaml
@@ -73,7 +73,7 @@ kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/bookinfo-gateway.yaml
 INGRESS_GATEWAY=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}')
 echo "http://${INGRESS_GATEWAY}/productpage"
 
-kubectl get pod,svc,ing,hpa,gateway -n default
+kubectl get pod,svc,ing,hpa,gateway -n dev
 
 # Cleanup
 kubectl delete -f ~/istio-1.0.3/samples/bookinfo/platform/kube/bookinfo.yaml
@@ -83,7 +83,7 @@ kubectl delete -f ~/istio-1.0.3/samples/bookinfo/networking/bookinfo-gateway.yam
 ## Request Routing
 
 ```bash
-# Apply default destination rules
+# Apply dev destination rules
 kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/destination-rule-all.yaml
 
 # Apply a virtual service
@@ -140,25 +140,25 @@ kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-all-v
 # 컨넥션을 1만 허용함 - DestinationRule
 kubectl apply -f ~/kubernetes/istio/sample/
 
-FORTIO_POD=$(kubectl get pod | grep fortio-default | awk '{ print $1 }')
+FORTIO_POD=$(kubectl get pod | grep fortio-dev | awk '{ print $1 }')
 echo $FORTIO_POD
 
-kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -curl http://httpbin-default/get
-kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -curl http://sample-node-default/
-kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -curl http://sample-spring-default/
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -curl http://httpbin-dev/get
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -curl http://sample-node-dev/
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -curl http://sample-spring-dev/
 
 # 컨넥션 2 보냄 - 에러가 발생
-kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 2 -qps 0 -n 20 -loglevel Warning http://httpbin-default/get
-kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 2 -qps 0 -n 20 -loglevel Warning http://sample-spring-default/fault/60
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 2 -qps 0 -n 20 -loglevel Warning http://httpbin-dev/get
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 2 -qps 0 -n 20 -loglevel Warning http://sample-spring-dev/fault/60
 
 # 컨넥션 3 보냄 - 더 많은 에러
-kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning http://httpbin-default/get
-kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning http://sample-spring-default/fault/90
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning http://httpbin-dev/get
+kubectl exec -it $FORTIO_POD -c fortio /usr/local/bin/fortio -- load -c 3 -qps 0 -n 20 -loglevel Warning http://sample-spring-dev/fault/90
 
 # apache benchmark
-ab -n 1000000 -c 10 https://httpbin-default.dev.nalbam.com/get
-ab -n 1000000 -c 10 https://sample-spring-default.dev.nalbam.com/fault/30
-ab -n 1000000 -c 10 https://sample-spring-default.dev.nalbam.com/fault/80
+ab -n 1000000 -c 10 https://httpbin-dev.demo.nalbam.com/get
+ab -n 1000000 -c 10 https://sample-spring-dev.demo.nalbam.com/fault/30
+ab -n 1000000 -c 10 https://sample-spring-dev.demo.nalbam.com/fault/80
 
 # Cleanup
 kubectl delete destinationrule httpbin
