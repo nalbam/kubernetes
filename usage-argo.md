@@ -3,18 +3,25 @@
 * <https://argoproj.github.io/>
 * <https://github.com/argoproj/argo>
 
-## argo-events
+## argo-workflow
+
+```bash
+helm install argo/argo --name argo --namespace devops
 
 ```
-kubectl create namespace argo-events
 
-helm install argo/argo-events --name argo-events --namespace argo-events
+## argo-events
 
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/examples/event-sources/webhook.yaml
+* <https://github.com/argoproj/argo-events>
 
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/examples/gateways/webhook.yaml
+```bash
+# kubectl create namespace devops
 
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/examples/sensors/webhook.yaml
+helm install argo/argo-events --name argo-events --namespace devops
 
-argo list -n argo-events
+kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-events/master/examples/event-sources/webhook.yaml
+kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-events/master/examples/gateways/webhook.yaml
+kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-events/master/examples/sensors/webhook.yaml
+
+argo list -n devops
 ```
