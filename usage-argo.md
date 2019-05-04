@@ -5,9 +5,18 @@
 
 ## argo-workflow
 
+* <https://github.com/argoproj/argo>
+
 ```bash
 helm install argo/argo --name argo --namespace devops
+```
 
+## argo-cd
+
+* <https://github.com/argoproj/argo-cd>
+
+```bash
+helm install argo/argo-cd --name argocd --namespace devops
 ```
 
 ## argo-events
