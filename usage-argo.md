@@ -9,6 +9,14 @@
 
 ```bash
 helm install argo/argo --name argo --namespace devops
+
+argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflows/hello-world.yaml
+argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflows/scripts-bash.yaml
+argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflows/steps.yaml
+
+argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflows/arguments-parameters.yaml -p message="goodbye world"
+
+argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflows/dag-diamond.yaml
 ```
 
 ## argo-cd
@@ -44,6 +52,7 @@ kubectl apply -n argo-events -f https://raw.githubusercontent.com/nalbam/argo-ex
 
 kubectl get pod,svc,ing -n argo-events
 
+curl -d 'goodbye world' -X POST webhook-argo-events.demo.nalbam.com/example
 curl -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST webhook-argo-events.demo.nalbam.com/example
 
 argo list -n argo-events
