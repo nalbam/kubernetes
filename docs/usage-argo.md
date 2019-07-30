@@ -23,9 +23,26 @@ argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflo
 ## argo-cd
 
 * <https://github.com/argoproj/argo-cd>
+* <https://github.com/argoproj/argo-cd/blob/master/docs/getting_started.md>
 
 ```bash
-helm install argo/argo-cd --name argocd --namespace devops
+# helm install argo/argo-cd --name argocd --namespace devops
+
+kubectl create namespace devops
+kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+kubectl create clusterrolebinding cluster-admin:devops:argocd-application-controller \
+    --clusterrole=cluster-admin --serviceaccount=devops:argocd-application-controller
+
+kubectl patch svc argocd-server -n devops -p '{"spec": {"type": "LoadBalancer"}}'
+
+USERNAME="admin"
+PASSWORD="$(kubectl get pods -n devops -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f2)"
+
+ARGOCD_SERVER="$(kubectl get svc -n devops argocd-server | grep LoadBalancer | awk '{print $4}')"
+
+argocd login $ARGOCD_SERVER
+
 ```
 
 ## argo-events
