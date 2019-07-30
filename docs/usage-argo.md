@@ -14,7 +14,8 @@ argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflo
 argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflows/scripts-bash.yaml
 argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflows/steps.yaml
 
-argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflows/arguments-parameters.yaml -p message="goodbye world"
+argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflows/arguments-parameters.yaml \
+    -p message="goodbye world"
 
 argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflows/dag-diamond.yaml
 ```

@@ -21,10 +21,15 @@ helm init --upgrade --service-account=tiller
 
 helm list
 
+# argo
+helm repo add argo https://argoproj.github.io/argo-helm
+
+# chartmuseum
 export CHARTMUSEUM=$(kubectl get ing -n devops -o wide | grep chartmuseum | awk '{print $2}')
 echo $CHARTMUSEUM
 
 helm repo add chartmuseum https://${CHARTMUSEUM}
+
 helm repo update
 helm repo list
 
