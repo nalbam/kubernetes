@@ -31,6 +31,9 @@ argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflo
 kubectl create namespace devops
 kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+kubectl create clusterrolebinding cluster-admin:devops:argocd-server \
+    --clusterrole=cluster-admin --serviceaccount=devops:argocd-server
+
 kubectl create clusterrolebinding cluster-admin:devops:argocd-application-controller \
     --clusterrole=cluster-admin --serviceaccount=devops:argocd-application-controller
 
