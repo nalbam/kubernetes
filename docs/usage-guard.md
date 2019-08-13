@@ -16,11 +16,11 @@ guard init ca
 guard init server --ips=${ips}
 
 # generate server certificate pair
-guard init client bespinglobal.com -o google
+guard init client nalbam.com -o google
 
-guard init client opsnow -o github
+guard init client opspresso -o github
 
-guard init client opsnow -o ldap
+guard init client opspresso -o ldap
 
 ls -l $HOME/.guard/pki
 ```
