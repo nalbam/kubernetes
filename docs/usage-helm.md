@@ -21,6 +21,9 @@ helm init --upgrade --service-account=tiller
 
 helm list
 
+# incubator
+helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com
+
 # argo
 helm repo add argo https://argoproj.github.io/argo-helm
 
@@ -37,9 +40,6 @@ helm search
 
 helm plugin install https://github.com/chartmuseum/helm-push
 helm plugin list
-
-# incubator
-helm repo add incubator https://kubernetes-charts-incubator.storage.googleapis.com
 ```
 
 * <https://helm.sh/>
