@@ -40,6 +40,8 @@ kubectl create clusterrolebinding cluster-admin:devops:argocd-application-contro
 # kubectl patch svc argocd-server -n devops -p '{"spec": {"type": "LoadBalancer"}}'
 kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress.yml
 
+kubectl edit deploy argocd-server -n devops
+
 USERNAME="admin"
 PASSWORD="$(kubectl get pods -n devops -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f2)"
 
