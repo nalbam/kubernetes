@@ -9,7 +9,8 @@ metadata:
     app: argocd-server
   annotations:
     kubernetes.io/ingress.class: nginx
-    # nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
     certmanager.k8s.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
@@ -19,14 +20,14 @@ spec:
       - path: /
         backend:
           serviceName: argocd-server
-          servicePort: 443
+          servicePort: https
   # - host: argocd-server-devops.demo.nalbam.com
   #   http:
   #     paths:
   #     - path: /
   #       backend:
   #         serviceName: argocd-server
-  #         servicePort: 443
+  #         servicePort: https
   tls:
   - hosts:
     - argocd-server-devops.demo.mzdev.be
