@@ -19,18 +19,18 @@ spec:
       - path: /
         backend:
           serviceName: argocd-server
-          servicePort: 80
-  - host: argocd-server-devops.demo.nalbam.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: argocd-server
-          servicePort: 80
+          servicePort: 443
+  # - host: argocd-server-devops.demo.nalbam.com
+  #   http:
+  #     paths:
+  #     - path: /
+  #       backend:
+  #         serviceName: argocd-server
+  #         servicePort: 443
   tls:
   - hosts:
     - argocd-server-devops.demo.mzdev.be
     secretName: argocd-server-mzdev-tls
-  - hosts:
-    - argocd-server-devops.demo.nalbam.com
-    secretName: argocd-server-nalbam-tls
+  # - hosts:
+  #   - argocd-server-devops.demo.nalbam.com
+  #   secretName: argocd-server-nalbam-tls
