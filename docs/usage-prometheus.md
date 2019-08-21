@@ -11,10 +11,10 @@ kubectl get --raw "/apis/metrics.k8s.io/v1beta1/pods" | jq .
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/cpu_usage" | jq .
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/fs_usage_bytes" | jq .
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/http_requests" | jq .
+
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/http_requests" | jq .
 
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/nginx_ingress_controller_requests" | jq .
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/nginx_ingress_controller_request_duration_seconds_count" | jq .
 
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "\"name\"" | sort
 

@@ -2,6 +2,10 @@
 
 ## basic
 
+<details>
+
+<summary>basic.yaml</summary>
+
 ```bash
 cat ~/.kube/config
 
@@ -37,6 +41,8 @@ kubectl delete pod -n devops -l jenkins=slave
 # get tunnel ip
 ifconfig tunl0 | grep inet | awk '{print $2}'
 ```
+
+</details>
 
 ## role
 
