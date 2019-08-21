@@ -9,9 +9,13 @@ kubectl get --raw "/apis/metrics.k8s.io/v1beta1/pods" | jq .
 
 # custom metrics
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/dev/pods/*/cpu_usage" | jq .
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/dev/pods/*/fs_usage_bytes" | jq .
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/dev/pods/*/http_requests" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/cpu_usage" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/fs_usage_bytes" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/http_requests" | jq .
+
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/nginx_ingress_controller_requests" | jq .
+
+kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1 | jq . | grep "\"name\"" | sort
 
 # sum (rate (container_cpu_usage_seconds_total{image!="",name=~"^k8s_.*"}[2m]) ) by (pod_name)
 # sum (rate (container_network_receive_bytes_total{image!="",name=~"^k8s_.*"}[2m]) ) by (pod_name)
