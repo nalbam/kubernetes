@@ -34,7 +34,7 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
 spec:
   rules:
-  - host: argocd-server-devops.demo.mzdev.be
+  - host: argocd-grpc-devops.demo.mzdev.be
     http:
       paths:
       - backend:
@@ -42,5 +42,5 @@ spec:
           servicePort: https
   tls:
   - hosts:
-    - argocd-server-devops.demo.mzdev.be
-    secretName: argocd-server-mzdev-tls
+    - argocd-grpc-devops.demo.mzdev.be
+    secretName: argocd-grpc-mzdev-tls

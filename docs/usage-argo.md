@@ -45,7 +45,8 @@ kubectl edit deploy argocd-server -n devops
 USERNAME="admin"
 PASSWORD="$(kubectl get pods -n devops -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f2)"
 
-ARGOCD_SERVER="$(kubectl get svc -n devops argocd-server | grep LoadBalancer | awk '{print $4}')"
+# ARGOCD_SERVER="$(kubectl get svc -n devops argocd-server | grep LoadBalancer | awk '{print $4}')"
+ARGOCD_SERVER="https://$(kubectl get ing -n devops argocd-server | grep argocd-server | awk '{print $2}')"
 
 argocd login $ARGOCD_SERVER
 
