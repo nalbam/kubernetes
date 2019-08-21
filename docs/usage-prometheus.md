@@ -14,8 +14,9 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/http_requests" | jq .
 
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/nginx_ingress_controller_requests" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/nginx_ingress_controller_request_duration_seconds_count" | jq .
 
-kubectl get --raw /apis/custom.metrics.k8s.io/v1beta1 | jq . | grep "\"name\"" | sort
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "\"name\"" | sort
 
 # sum (rate (container_cpu_usage_seconds_total{image!="",name=~"^k8s_.*"}[2m]) ) by (pod_name)
 # sum (rate (container_network_receive_bytes_total{image!="",name=~"^k8s_.*"}[2m]) ) by (pod_name)
