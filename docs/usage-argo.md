@@ -37,7 +37,8 @@ kubectl create clusterrolebinding cluster-admin:devops:argocd-server \
 kubectl create clusterrolebinding cluster-admin:devops:argocd-application-controller \
     --clusterrole=cluster-admin --serviceaccount=devops:argocd-application-controller
 
-kubectl patch svc argocd-server -n devops -p '{"spec": {"type": "LoadBalancer"}}'
+# kubectl patch svc argocd-server -n devops -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress.yml
 
 USERNAME="admin"
 PASSWORD="$(kubectl get pods -n devops -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f2)"
