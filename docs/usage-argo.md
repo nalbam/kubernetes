@@ -28,6 +28,8 @@ argo submit https://raw.githubusercontent.com/nalbam/argo-example/master/workflo
 ```bash
 # helm install argo/argo-cd --name argocd --namespace devops
 
+kubectl apply -f https://raw.githubusercontent.com/opspresso/argocd-env-demo/master/dev-demo/default/cluster-issuer.yaml
+
 kubectl create namespace devops
 kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
@@ -41,12 +43,14 @@ kubectl create clusterrolebinding cluster-admin:devops:argocd-application-contro
 kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress.yml
 
 kubectl edit deploy argocd-server -n devops
+- --insecure
 
 USERNAME="admin"
 PASSWORD="$(kubectl get pods -n devops -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f2)"
+echo $PASSWORD
 
 # ARGOCD_SERVER="$(kubectl get svc -n devops argocd-server | grep LoadBalancer | awk '{print $4}')"
-ARGOCD_SERVER="$(kubectl get ing -n devops argocd-grpc | grep argocd-grpc | awk '{print $2}')"
+ARGOCD_SERVER="$(kubectl get ing -n devops argocd-server-grpc | grep argocd-server-grpc | awk '{print $2}')"
 
 argocd login $ARGOCD_SERVER
 argocd account update-password
