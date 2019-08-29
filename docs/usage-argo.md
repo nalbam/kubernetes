@@ -54,6 +54,8 @@ kubectl edit deploy argocd-server -n devops
 ARGOCD_SERVER="$(kubectl get ing -n devops argocd-server-grpc | grep argocd-server-grpc | awk '{print $2}')"
 echo $ARGOCD_SERVER
 
+kubectl get pod,svc,ing -n devops
+
 argocd login $ARGOCD_SERVER
 argocd account update-password
 ```
