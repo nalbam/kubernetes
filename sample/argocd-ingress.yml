@@ -18,19 +18,10 @@ spec:
           - backend:
               serviceName: argocd-server
               servicePort: http
-    - host: argocd-devops-demo.mzdev.be
-      http:
-        paths:
-          - backend:
-              serviceName: argocd-server
-              servicePort: http
   tls:
     - hosts:
         - argocd-server-devops.demo.mzdev.be
       secretName: argocd-server-mzdev-tls
-    - hosts:
-        - argocd-server-devops-demo.mzdev.be
-      secretName: argocd-server-mzdev-tls2
 
 ---
 apiVersion: extensions/v1beta1
@@ -49,17 +40,7 @@ spec:
           - backend:
               serviceName: argocd-server
               servicePort: https
-    - host: argocd-grpc-devops-demo.mzdev.be
-      http:
-        paths:
-          - backend:
-              serviceName: argocd-server
-              servicePort: https
   tls:
     - hosts:
         - argocd-grpc-devops.demo.mzdev.be
       secretName: argocd-grpc-mzdev-tls
-
-    - hosts:
-        - argocd-grpc-devops-demo.mzdev.be
-      secretName: argocd-grpc-mzdev-tls2
