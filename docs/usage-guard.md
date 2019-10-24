@@ -78,6 +78,6 @@ kubectl get deployment,pod,svc -n kube-system
 
 ```bash
 
-guard get webhook-config opsnow -o ldap --addr=${ips}:443
+guard get webhook-config nalbam -o ldap --addr=${ips}:443
 
 ```
