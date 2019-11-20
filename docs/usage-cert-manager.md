@@ -14,6 +14,8 @@ kubectl get all -n cert-manager
 
 ```bash
 helm install --name cert-manager --namespace cert-manager stable/cert-manager
+
+kubectl get all -n cert-manager
 ```
 
 ## cluster issuer
@@ -26,7 +28,7 @@ curl -sL https://raw.githubusercontent.com/nalbam/kubernetes/master/cert/cluster
   kubectl apply -f-
 ```
 
-## cluster issuer
+## certificate
 
 ```bash
 export BASE_DOMAIN="demo.mzdev.be"
