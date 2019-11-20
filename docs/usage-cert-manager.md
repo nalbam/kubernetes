@@ -21,9 +21,10 @@ kubectl get all -n cert-manager
 ## cluster issuer
 
 ```bash
-EMAIL="me@nalbam.com"
+export EMAIL="me@nalbam.com"
 
-curl -sL https://raw.githubusercontent.com/nalbam/kubernetes/master/cert/cluster-issuer.yaml | \
+# cluster-issuer
+curl -sL https://raw.githubusercontent.com/nalbam/kubernetes/master/cert-manager/cluster-issuer.yaml | \
   sed -e "s/email:.*/email: $EMAIL/g" | \
   kubectl apply -f-
 ```
@@ -37,12 +38,13 @@ export PHASE="dev"
 export NAMESPACE="sample-$PHASE"
 export APPLICATION="sample-node"
 
-# Certificate
-sed -e "s/NAMESPACE/$NAMESPACE/g" cert/certificate.yaml | \
-    sed -e "s/APPLICATION/$APPLICATION/g" | \
-    sed -e "s/BASE_DOMAIN/$BASE_DOMAIN/g" | \
-    sed -e "s/PHASE/$PHASE/g" | \
-    kubectl apply -f-
+# certificate
+curl -sL https://raw.githubusercontent.com/nalbam/kubernetes/master/cert-manager/certificate.yaml | \
+  sed -e "s/NAMESPACE/$NAMESPACE/g" | \
+  sed -e "s/APPLICATION/$APPLICATION/g" | \
+  sed -e "s/BASE_DOMAIN/$BASE_DOMAIN/g" | \
+  sed -e "s/PHASE/$PHASE/g" | \
+  kubectl apply -f-
 
 # describe
 kubectl get certificate -n $NAMESPACE
