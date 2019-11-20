@@ -29,19 +29,21 @@ argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/ci.y
 * <https://github.com/argoproj/argo-cd>
 
 ```bash
+kubectl create namespace devops
+
 # helm install argo/argo-cd --name argocd --namespace devops
 
-kubectl create namespace devops
-kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+# kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.3.0/manifests/install.yaml
 
-kubectl create clusterrolebinding cluster-admin:devops:argocd-server \
-    --clusterrole=cluster-admin --serviceaccount=devops:argocd-server
+# kubectl create clusterrolebinding cluster-admin:devops:argocd-server \
+#     --clusterrole=cluster-admin --serviceaccount=devops:argocd-server
 
-kubectl create clusterrolebinding cluster-admin:devops:argocd-application-controller \
-    --clusterrole=cluster-admin --serviceaccount=devops:argocd-application-controller
+# kubectl create clusterrolebinding cluster-admin:devops:argocd-application-controller \
+#     --clusterrole=cluster-admin --serviceaccount=devops:argocd-application-controller
 
 # kubectl patch svc argocd-server -n devops -p '{"spec": {"type": "LoadBalancer"}}'
-kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress.yml
+kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress-spot.yml
 
 USERNAME="admin"
 PASSWORD="$(kubectl get pods -n devops -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f2)"
@@ -58,6 +60,9 @@ kubectl get pod,svc,ing -n devops
 
 argocd login $ARGOCD_SERVER
 argocd account update-password
+
+# stable   https://kubernetes-charts.storage.googleapis.com/
+# jetstack https://charts.jetstack.io/
 ```
 
 ## argo-events
