@@ -3,14 +3,32 @@
 ## install
 
 ```bash
-helm install --name cert-manager --namespace kube-ingress stable/cert-manager
+# kubectl create namespace cert-manager
 
-export EMAIL="me@nalbam.com"
+kubectl apply -f https://github.com/jetstack/cert-manager/releases/download/v0.11.0/cert-manager.yaml --validate=false
 
-# ClusterIssuer
-sed -e "s/email:.*/email: $EMAIL/g" cert/cluster-issuer.yaml | \
-    kubectl apply -f-
+kubectl get all -n cert-manager
+```
 
+## install with helm
+
+```bash
+helm install --name cert-manager --namespace cert-manager stable/cert-manager
+```
+
+## cluster issuer
+
+```bash
+EMAIL="me@nalbam.com"
+
+curl -sL https://raw.githubusercontent.com/nalbam/kubernetes/master/cert/cluster-issuer.yaml | \
+  sed -e "s/email:.*/email: $EMAIL/g" | \
+  kubectl apply -f-
+```
+
+## cluster issuer
+
+```bash
 export BASE_DOMAIN="demo.mzdev.be"
 
 export PHASE="dev"
