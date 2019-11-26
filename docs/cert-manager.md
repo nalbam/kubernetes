@@ -78,3 +78,10 @@ spec:
     - $APPLICATION-$PHASE.$BASE_DOMAIN
     secretName: $APPLICATION-$PHASE
 ```
+
+## delete
+
+```bash
+kubectl delete -f https://raw.githubusercontent.com/nalbam/kubernetes/master/cert-manager/cluster-issuer.yaml
+kubectl delete -f https://github.com/jetstack/cert-manager/releases/download/v0.11.0/cert-manager.yaml
+```
