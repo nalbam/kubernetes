@@ -43,6 +43,7 @@ kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/v1
 #     --clusterrole=cluster-admin --serviceaccount=devops:argocd-application-controller
 
 # kubectl patch svc argocd-server -n devops -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress.yml
 kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress-spot.yml
 
 USERNAME="admin"
