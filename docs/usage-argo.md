@@ -22,7 +22,7 @@ argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/hell
 argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/scripts-bash.yaml
 
 argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/arguments-parameters.yaml \
-    -p message="goodbye world"
+    -p message="hello nalbam"
 
 argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/dag-diamond.yaml
 
