@@ -75,3 +75,17 @@ spec:
         volumeMounts:
           - name: workdir
             mountPath: /work
+
+    - name: run-docker
+      container:
+        image: docker
+        command: [sh, -c]
+        args: [
+            "
+            cd /work/src &&
+            docker build -t ${registry}/${name}:${version} .
+            ",
+          ]
+        volumeMounts:
+          - name: workdir
+            mountPath: /work
