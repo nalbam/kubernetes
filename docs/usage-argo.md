@@ -16,8 +16,7 @@ kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo/stabl
 
 kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argo-ingress.yml
 
-kubectl create clusterrolebinding cluster-admin:default:default \
-    --clusterrole=cluster-admin --serviceaccount=default:default
+# kubectl create clusterrolebinding admin:devops:default --clusterrole=admin --serviceaccount=devops:default
 
 argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/hello-world.yaml
 argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/scripts-bash.yaml
