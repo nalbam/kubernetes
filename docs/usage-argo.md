@@ -14,7 +14,7 @@ kubectl create namespace devops
 
 kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/install.yaml
 
-kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress.yml
+kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argo-ingress.yml
 
 kubectl create clusterrolebinding cluster-admin:default:default \
     --clusterrole=cluster-admin --serviceaccount=default:default

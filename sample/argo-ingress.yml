@@ -16,7 +16,7 @@ spec:
         paths:
           - backend:
               serviceName: argo-ui
-              servicePort: http
+              servicePort: 80
   tls:
     - hosts:
         - argo-ui-devops.demo.mzdev.be
