@@ -56,7 +56,7 @@ spec:
           - name: revision
         artifacts:
           - name: code
-            path: /src
+            path: /work/src
             git:
               repo: "{{inputs.parameters.repo}}"
               revision: "{{inputs.parameters.revision}}"
@@ -65,14 +65,14 @@ spec:
         command: [sh, -c]
         args: [
             "
-            cd /src/{{inputs.parameters.name}} &&
+            cd /work/src/{{inputs.parameters.name}} &&
             git status &&
             npm run build
             ",
           ]
         volumeMounts:
           - name: workdir
-            mountPath: /src
+            mountPath: /work/src
     # - name: run-test
     #   inputs:
     #     parameters:
@@ -89,4 +89,4 @@ spec:
     #       ]
     #     volumeMounts:
     #       - name: workdir
-    #         mountPath: /src
+    #         mountPath: /work/src

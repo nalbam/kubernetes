@@ -29,6 +29,7 @@ argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/dag-
 argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/ci.yaml
 
 argo submit https://raw.githubusercontent.com/nalbam/kubernetes/master/argo/ci.yaml
+argo submit https://raw.githubusercontent.com/nalbam/kubernetes/master/argo/ci-node.yaml
 argo submit https://raw.githubusercontent.com/nalbam/kubernetes/master/argo/ci-output-artifact.yaml
 ```
 
