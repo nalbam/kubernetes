@@ -27,6 +27,9 @@ argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/argu
 argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/dag-diamond.yaml
 
 argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/ci.yaml
+
+argo submit https://raw.githubusercontent.com/nalbam/kubernetes/master/argo/ci.yaml
+argo submit https://raw.githubusercontent.com/nalbam/kubernetes/master/argo/ci-output-artifact.yaml
 ```
 
 ## argo-cd
