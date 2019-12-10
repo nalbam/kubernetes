@@ -39,20 +39,18 @@ spec:
                   value: "{{inputs.parameters.repo}}"
                 - name: revision
                   value: "{{inputs.parameters.revision}}"
-        # - - name: test
-        #     template: run-test
-        #     arguments:
-        #       parameters:
-        #         - name: os-image
-        #           value: "{{item.image}}:{{item.tag}}"
-        #     withItems:
-        #       - { image: "debian", tag: "9.1" }
-        #       - { image: "alpine", tag: "3.6" }
-        #       - { image: "ubuntu", tag: "17.10" }
+        - - name: test
+            template: run-test
+            arguments:
+              parameters:
+                - name: name
+                  value: "{{inputs.parameters.name}}"
 
     - name: run-build
       inputs:
         parameters:
+          - name: name
+          - name: repo
           - name: revision
         artifacts:
           - name: code
@@ -73,20 +71,20 @@ spec:
         volumeMounts:
           - name: workdir
             mountPath: /work/src
-    # - name: run-test
-    #   inputs:
-    #     parameters:
-    #       - name: os-image
-    #   container:
-    #     image: "{{inputs.parameters.os-image}}"
-    #     command: [sh, -c]
-    #     args: [
-    #         "
-    #         uname -a ;
-    #         cat /etc/os-release ;
-    #         /go/src/github.com/golang/example/hello/hello
-    #         ",
-    #       ]
-    #     volumeMounts:
-    #       - name: workdir
-    #         mountPath: /work/src
+
+    - name: run-test
+      inputs:
+        parameters:
+          - name: name
+      container:
+        image: node:12
+        command: [sh, -c]
+        args: [
+            "
+            cd /work/src/{{inputs.parameters.name}} &&
+            npm run test
+            ",
+          ]
+        volumeMounts:
+          - name: workdir
+            mountPath: /work/src
