@@ -70,7 +70,7 @@ spec:
           ]
         volumeMounts:
           - name: workdir
-            mountPath: /work/src
+            mountPath: /work
 
     - name: run-test
       inputs:
@@ -87,4 +87,4 @@ spec:
           ]
         volumeMounts:
           - name: workdir
-            mountPath: /work/src
+            mountPath: /work
