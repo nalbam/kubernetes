@@ -8,7 +8,13 @@
 * <https://github.com/argoproj/argo>
 
 ```bash
-helm install argo/argo --name argo --namespace devops
+kubectl create namespace devops
+
+# helm install argo/argo --name argo --namespace devops
+
+kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/install.yaml
+
+kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress.yml
 
 kubectl create clusterrolebinding cluster-admin:default:default \
     --clusterrole=cluster-admin --serviceaccount=default:default
@@ -34,7 +40,7 @@ kubectl create namespace devops
 # helm install argo/argo-cd --name argocd --namespace devops
 
 # kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.3.0/manifests/install.yaml
+kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.3.5/manifests/install.yaml
 
 # kubectl create clusterrolebinding cluster-admin:devops:argocd-server \
 #     --clusterrole=cluster-admin --serviceaccount=devops:argocd-server
