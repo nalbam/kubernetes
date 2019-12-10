@@ -56,6 +56,7 @@ spec:
         volumeMounts:
           - name: workdir
             mountPath: /go
+
     - name: run-hello
       inputs:
         parameters:
@@ -73,6 +74,7 @@ spec:
         volumeMounts:
           - name: workdir
             mountPath: /go
+
     - name: release-artifact
       container:
         image: alpine:3.8
