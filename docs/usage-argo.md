@@ -8,15 +8,15 @@
 * <https://github.com/argoproj/argo>
 
 ```bash
-kubectl create namespace devops
+kubectl create namespace argo
 
-# helm install argo/argo --name argo --namespace devops
+# helm install argo/argo --name argo --namespace argo
 
-kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/install.yaml
+kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo/stable/manifests/install.yaml
 
-kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argo-ingress.yml
+kubectl apply -n argo -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argo-ingress.yml
 
-# kubectl create clusterrolebinding admin:devops:default --clusterrole=admin --serviceaccount=devops:default
+# kubectl create clusterrolebinding admin:argo:default --clusterrole=admin --serviceaccount=argo:default
 
 argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/hello-world.yaml
 argo submit https://raw.githubusercontent.com/argoproj/argo/master/examples/scripts-bash.yaml
@@ -38,35 +38,35 @@ argo submit https://raw.githubusercontent.com/nalbam/kubernetes/master/argo/ci-o
 * <https://github.com/argoproj/argo-cd>
 
 ```bash
-kubectl create namespace devops
+kubectl create namespace argo
 
-# helm install argo/argo-cd --name argocd --namespace devops
+# helm install argo/argo-cd --name argocd --namespace argo
 
-# kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-kubectl apply -n devops -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.3.5/manifests/install.yaml
+# kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -n argo -f https://raw.githubusercontent.com/argoproj/argo-cd/v1.3.5/manifests/install.yaml
 
-# kubectl create clusterrolebinding cluster-admin:devops:argocd-server \
-#     --clusterrole=cluster-admin --serviceaccount=devops:argocd-server
+# kubectl create clusterrolebinding cluster-admin:argo:argocd-server \
+#     --clusterrole=cluster-admin --serviceaccount=argo:argocd-server
 
-# kubectl create clusterrolebinding cluster-admin:devops:argocd-application-controller \
-#     --clusterrole=cluster-admin --serviceaccount=devops:argocd-application-controller
+# kubectl create clusterrolebinding cluster-admin:argo:argocd-application-controller \
+#     --clusterrole=cluster-admin --serviceaccount=argo:argocd-application-controller
 
-# kubectl patch svc argocd-server -n devops -p '{"spec": {"type": "LoadBalancer"}}'
-kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress.yml
-kubectl apply -n devops -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress-spot.yml
+# kubectl patch svc argocd-server -n argo -p '{"spec": {"type": "LoadBalancer"}}'
+kubectl apply -n argo -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress.yml
+kubectl apply -n argo -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress-spot.yml
 
 USERNAME="admin"
-PASSWORD="$(kubectl get pods -n devops -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f2)"
+PASSWORD="$(kubectl get pods -n argo -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f2)"
 echo $PASSWORD
 
-kubectl edit deploy argocd-server -n devops
+kubectl edit deploy argocd-server -n argo
 - --insecure
 
-# ARGOCD_SERVER="$(kubectl get svc -n devops argocd-server | grep LoadBalancer | awk '{print $4}')"
-ARGOCD_SERVER="$(kubectl get ing -n devops argocd-server-grpc | grep argocd-server-grpc | awk '{print $2}')"
+# ARGOCD_SERVER="$(kubectl get svc -n argo argocd-server | grep LoadBalancer | awk '{print $4}')"
+ARGOCD_SERVER="$(kubectl get ing -n argo argocd-server-grpc | grep argocd-server-grpc | awk '{print $2}')"
 echo $ARGOCD_SERVER
 
-kubectl get pod,svc,ing -n devops
+kubectl get pod,svc,ing -n argo
 
 argocd login $ARGOCD_SERVER
 argocd account update-password
@@ -104,4 +104,12 @@ curl -d 'goodbye world' -X POST webhook-argo-events.demo.nalbam.com/example
 curl -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST webhook-argo-events.demo.nalbam.com/example
 
 argo list -n argo-events
+```
+
+## argo-rollouts
+
+```bash
+kubectl create namespace argo-rollouts
+
+kubectl apply -n argo-rollouts -f https://raw.githubusercontent.com/argoproj/argo-rollouts/stable/manifests/install.yaml
 ```
