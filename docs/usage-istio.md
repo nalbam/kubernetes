@@ -1,62 +1,17 @@
 # istio
 
-## Amazon Web Services (AWS) with Kops
+## istioctl
 
-* <https://istio.io/docs/setup/kubernetes/platform-setup/aws/>
-
-```bash
-export NAME=cluster.k8s.local
-export KOPS_STATE_STORE=s3://kops-state-nalbam
-
-kops edit cluster --name=${NAME} --state=${KOPS_STATE_STORE}
-
-kops update cluster --name=${NAME} --yes
-
-kops rolling-update cluster --name=${NAME} --yes
-```
-
-```yaml
-spec:
-  kubeAPIServer:
-    admissionControl:
-    - NamespaceLifecycle
-    - LimitRanger
-    - ServiceAccount
-    - PersistentVolumeLabel
-    - DefaultStorageClass
-    - DefaultTolerationSeconds
-    - MutatingAdmissionWebhook
-    - ValidatingAdmissionWebhook
-    - ResourceQuota
-    - NodeRestriction
-    - Priority
-```
-
-## Installation steps
-
-* <https://istio.io/docs/setup/kubernetes/helm-install/>
+* <https://istio.io/docs/setup/install/istioctl/>
 
 ```bash
-curl -sL https://git.io/getLatestIstio | sh -
-cd istio-1.0.3
+brew install istioctl
 
-# crds (Custom Resource Definitions)
-# kubectl apply -f ~/istio-1.0.3/install/kubernetes/helm/istio/templates/crds.yaml
+# demo profile
+istioctl manifest apply --set profile=demo
 
-# Install
-helm upgrade --install istio ~/istio-1.0.3/install/kubernetes/helm/istio \
-  --values ~/kubernetes/istio/istio.yaml \
-  --namespace istio-system
-
-kubectl get pod,svc,ing -n istio-system
-
-INGRESS_GATEWAY=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}')
-echo "http://${INGRESS_GATEWAY}"
-
-# Cleanup
-helm delete --purge istio
-kubectl delete -f ~/istio-1.0.3/install/kubernetes/helm/istio/templates/crds.yaml
-kubectl delete namespace istio-system
+# with zipkin
+istioctl manifest apply --set profile=demo --set values.tracing.provider=zipkin
 ```
 
 ## Examples
@@ -64,78 +19,80 @@ kubectl delete namespace istio-system
 * <https://istio.io/docs/examples/bookinfo/>
 
 ```bash
-kubectl label namespace dev istio-injection=enabled
-kubectl label namespace dev istio-injection-
+kubectl label namespace default istio-injection=enabled
+kubectl label namespace default istio-injection-
 
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/platform/kube/bookinfo.yaml
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/bookinfo-gateway.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/bookinfo-gateway.yaml
 
-INGRESS_GATEWAY=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}')
-echo "http://${INGRESS_GATEWAY}/productpage"
+GATEWAY_URL=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}')
+echo "http://${GATEWAY_URL}/productpage"
 
-kubectl get pod,svc,ing,hpa,gateway -n dev
+for i in `seq 1 100`; do curl -s -o /dev/null http://$GATEWAY_URL/productpage; done
+
+kubectl get pod,svc
 
 # Cleanup
-kubectl delete -f ~/istio-1.0.3/samples/bookinfo/platform/kube/bookinfo.yaml
-kubectl delete -f ~/istio-1.0.3/samples/bookinfo/networking/bookinfo-gateway.yaml
+kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/bookinfo-gateway.yaml
 ```
 
 ## Request Routing
 
 ```bash
 # Apply dev destination rules
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/destination-rule-all.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/destination-rule-all.yaml
 
 # Apply a virtual service
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-all-v1.yaml
 
 # Route based on user identity (jason)
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
 
 # Cleanup
-kubectl delete -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-all-v1.yaml
 ```
 
 ## Fault Injection
 
 ```bash
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-all-v1.yaml
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-reviews-test-v2.yaml
 
 # Injecting an HTTP delay fault (jason)
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-ratings-test-delay.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-ratings-test-delay.yaml
 
 # Injecting an HTTP abort fault
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-ratings-test-abort.yaml
 
 # Cleanup
-kubectl delete -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-all-v1.yaml
 ```
 
 ## Traffic Shifting
 
 ```bash
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-all-v1.yaml
 
 # Apply weight-based routing (50/50)
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-reviews-50-v3.yaml
 
 # Cleanup
-kubectl delete -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-all-v1.yaml
 ```
 
 ## Setting Request Timeouts
 
 ```bash
-kubectl apply -f ~/istio-1.0.3/samples/bookinfo/networking/virtual-service-all-v1.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/virtual-service-all-v1.yaml
 
 ```
 
 ## Circuit Breaking
 
 ```bash
-# kubectl apply -f ~/istio-1.0.3/samples/httpbin/httpbin.yaml
-# kubectl apply -f ~/istio-1.0.3/samples/httpbin/sample-client/fortio-deploy.yaml
+# kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/httpbin/httpbin.yaml
+# kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/httpbin/sample-client/fortio-deploy.yaml
 
 # 컨넥션을 1만 허용함 - DestinationRule
 kubectl apply -f ~/kubernetes/istio/sample/
@@ -164,12 +121,4 @@ ab -n 1000000 -c 10 https://sample-spring-dev.demo.nalbam.com/fault/80
 kubectl delete destinationrule httpbin
 kubectl delete deploy httpbin fortio-deploy
 kubectl delete svc httpbin
-```
-
-## kiali
-
-```bash
-Could not fetch apps list, Error: [ replicasets.apps is forbidden: User "system:serviceaccount:istio-system:kiali-service-account" cannot list replicasets.apps in the namespace "monitor" ]
-
-kubectl create clusterrolebinding cluster-admin:istio-system:kiali-service-account --clusterrole=cluster-admin --serviceaccount=istio-system:kiali-service-account
 ```
