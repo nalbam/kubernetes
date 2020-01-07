@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: kiali
+    app.kubernetes.io/name: kiali
+  name: kiali
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  rules:
+    - host: kiali-istio.demo.mzdev.be
+      http:
+        paths:
+          - backend:
+              serviceName: kiali
+              servicePort: 20001
+            path: /
+  tls:
+    - hosts:
+        - kiali-istio.demo.mzdev.be
+      secretName: kiali-mzdev-tls

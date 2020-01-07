@@ -1,0 +1,24 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app: tracing
+    app.kubernetes.io/name: tracing
+  name: tracing
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  rules:
+    - host: tracing-istio.demo.mzdev.be
+      http:
+        paths:
+          - backend:
+              serviceName: tracing
+              servicePort: 80
+            path: /
+  tls:
+    - hosts:
+        - tracing-istio.demo.mzdev.be
+      secretName: tracing-mzdev-tls
