@@ -7,11 +7,16 @@
 ```bash
 brew install istioctl
 
+kubectl create ns istio-system
+
 # demo profile
 istioctl manifest apply --set profile=demo
 
 # with zipkin
 istioctl manifest apply --set profile=demo --set values.tracing.provider=zipkin
+
+# demo delete
+istioctl manifest generate --set profile=demo | kubectl delete -f -
 ```
 
 ## Examples
