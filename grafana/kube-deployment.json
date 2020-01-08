@@ -584,7 +584,7 @@
       },
       "tableColumn": "",
       "targets": [{
-        "expr": "sum (kube_pod_container_resource_requests_cpu_cores{namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
+        "expr": "sum (kube_pod_container_resource_requests_cpu_cores{container!=\"istio-proxy\",namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
         "format": "time_series",
         "intervalFactor": 1,
         "refId": "A"
@@ -658,7 +658,7 @@
       },
       "tableColumn": "",
       "targets": [{
-        "expr": "sum (kube_pod_container_resource_limits_cpu_cores{namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
+        "expr": "sum (kube_pod_container_resource_limits_cpu_cores{container!=\"istio-proxy\",namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
         "format": "time_series",
         "intervalFactor": 1,
         "refId": "A"
@@ -1077,7 +1077,7 @@
       },
       "tableColumn": "",
       "targets": [{
-        "expr": "sum (kube_pod_container_resource_requests_memory_bytes{namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
+        "expr": "sum (kube_pod_container_resource_requests_memory_bytes{container!=\"istio-proxy\",namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
         "format": "time_series",
         "intervalFactor": 1,
         "refId": "A"
@@ -1151,7 +1151,7 @@
       },
       "tableColumn": "",
       "targets": [{
-        "expr": "sum (kube_pod_container_resource_limits_memory_bytes{namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
+        "expr": "sum (kube_pod_container_resource_limits_memory_bytes{container!=\"istio-proxy\",namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
         "format": "time_series",
         "intervalFactor": 1,
         "refId": "A"
