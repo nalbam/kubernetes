@@ -34,7 +34,7 @@
   "timezone": "browser",
   "uid": "kube-cluster",
   "title": "Kubernetes Cluster - Prometheus",
-  "description": "Monitors Kubernetes cluster using Prometheus.",
+  "description": "Dashboard for Kubernetes cluster with Prometheus.",
   "editable": true,
   "gnetId": 9797,
   "version": 1,

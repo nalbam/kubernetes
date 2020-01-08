@@ -33,7 +33,7 @@
   },
   "timezone": "browser",
   "uid": "jvm-overview",
-  "title": "JVM overview - Prometheus",
+  "title": "JVM Overview - Prometheus",
   "description": "Dashboard for JVM metrics with Prometheus / JMX Exporter",
   "editable": true,
   "gnetId": 3066,

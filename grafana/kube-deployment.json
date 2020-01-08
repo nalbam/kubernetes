@@ -34,7 +34,7 @@
   "timezone": "browser",
   "uid": "kube-deployment",
   "title": "Kubernetes Deployment - Prometheus",
-  "description": "Monitors Kubernetes deployment using Prometheus.",
+  "description": "Dashboard for Kubernetes deployment with Prometheus.",
   "editable": true,
   "gnetId": 9679,
   "version": 1,
