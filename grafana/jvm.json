@@ -518,13 +518,13 @@
     "list": [{
         "allValue": ".*",
         "current": {
-          "text": "default",
-          "value": "default"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": "${DS_PROMETHEUS}",
         "definition": "",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": null,
         "multi": false,
         "name": "Namespace",
@@ -534,9 +534,9 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
+        "tagValuesQuery": "",
         "type": "query",
         "useTags": false
       },
@@ -559,9 +559,9 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
+        "tagValuesQuery": "",
         "type": "query",
         "useTags": false
       }

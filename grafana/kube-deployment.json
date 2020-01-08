@@ -1439,9 +1439,9 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
+        "tagValuesQuery": "",
         "type": "query",
         "useTags": false
       },
@@ -1464,9 +1464,9 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
-        "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
+        "tagValuesQuery": "",
         "type": "query",
         "useTags": false
       }
