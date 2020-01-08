@@ -85,7 +85,7 @@
       "stack": false,
       "steppedLine": false,
       "targets": [{
-        "expr": "jvm_memory_bytes_used{instance=~\"$instance\"}",
+        "expr": "jvm_memory_bytes_used{kubernetes_namespace=~\"^$Namespace$\",kubernetes_pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}",
         "format": "time_series",
         "interval": "",
         "intervalFactor": 5,
@@ -175,7 +175,7 @@
       "stack": false,
       "steppedLine": false,
       "targets": [{
-          "expr": "jvm_threads_current{instance=~\"$instance\"}",
+          "expr": "jvm_threads_current{kubernetes_namespace=~\"^$Namespace$\",kubernetes_pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}",
           "format": "time_series",
           "intervalFactor": 5,
           "legendFormat": "{{kubernetes_pod_name}} [current]",
@@ -184,7 +184,7 @@
           "step": 10
         },
         {
-          "expr": "jvm_threads_daemon{instance=~\"$instance\"}",
+          "expr": "jvm_threads_daemon{kubernetes_namespace=~\"^$Namespace$\",kubernetes_pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}",
           "format": "time_series",
           "intervalFactor": 5,
           "legendFormat": "{{kubernetes_pod_name}} [daemon]",
@@ -275,7 +275,7 @@
       "stack": false,
       "steppedLine": false,
       "targets": [{
-        "expr": "jvm_classes_loaded{instance=~\"$instance\"}",
+        "expr": "jvm_classes_loaded{kubernetes_namespace=~\"^$Namespace$\",kubernetes_pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}",
         "format": "time_series",
         "interval": "",
         "intervalFactor": 5,
@@ -366,7 +366,7 @@
       "stack": false,
       "steppedLine": false,
       "targets": [{
-        "expr": "rate(jvm_gc_collection_seconds_sum{instance=~\"$instance\"}[1m])",
+        "expr": "rate(jvm_gc_collection_seconds_sum{kubernetes_namespace=~\"^$Namespace$\",kubernetes_pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}[1m])",
         "format": "time_series",
         "interval": "",
         "intervalFactor": 5,
@@ -456,7 +456,7 @@
       "stack": false,
       "steppedLine": false,
       "targets": [{
-        "expr": "jvm_gc_collection_seconds_count{instance=~\"$instance\"}",
+        "expr": "jvm_gc_collection_seconds_count{kubernetes_namespace=~\"^$Namespace$\",kubernetes_pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}",
         "format": "time_series",
         "interval": "",
         "intervalFactor": 5,
@@ -516,31 +516,56 @@
   ],
   "templating": {
     "list": [{
-      "allValue": "",
-      "current": {
-        "selected": false,
-        "text": "All",
-        "value": "$__all"
+        "allValue": ".*",
+        "current": {
+          "text": "default",
+          "value": "default"
+        },
+        "datasource": "${DS_PROMETHEUS}",
+        "definition": "",
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "Namespace",
+        "options": [],
+        "query": "label_values(kube_namespace_labels, namespace)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       },
-      "datasource": "Prometheus",
-      "definition": "",
-      "hide": 0,
-      "includeAll": true,
-      "label": "Instance",
-      "multi": true,
-      "name": "instance",
-      "options": [],
-      "query": "label_values(instance)",
-      "refresh": 1,
-      "regex": "",
-      "skipUrlSync": false,
-      "sort": 0,
-      "tagValuesQuery": "",
-      "tags": [],
-      "tagsQuery": "",
-      "type": "query",
-      "useTags": false
-    }]
+      {
+        "allValue": ".*",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "${DS_PROMETHEUS}",
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "name": "Deployment",
+        "options": [],
+        "query": "label_values(kube_deployment_labels{namespace=~\"^$Namespace$\"}, deployment)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-30m",
