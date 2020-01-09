@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Workflow
 metadata:
-  generateName: ci-node-
+  generateName: ci-build-
 spec:
   entrypoint: ci-node
   arguments:
@@ -20,7 +20,7 @@ spec:
             storage: 1Gi
 
   templates:
-    - name: ci-node
+    - name: ci-build
       inputs:
         parameters:
           - name: repo
@@ -49,7 +49,7 @@ spec:
               repo: "{{inputs.parameters.repo}}"
               revision: "{{inputs.parameters.revision}}"
       container:
-        image: node:12
+        image: node:13
         command: [sh, -c]
         args: [
             "
@@ -64,7 +64,7 @@ spec:
 
     - name: run-test
       container:
-        image: node:12
+        image: node:13
         command: [sh, -c]
         args: [
             "
