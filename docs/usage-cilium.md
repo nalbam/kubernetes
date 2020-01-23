@@ -3,7 +3,7 @@
 ## install
 
 ```bash
-curl -sL toast.sh/tools | bash
+curl -sL curl -sL opspresso.com/tools | bash | bash
 ```
 
 ## AWS IAM
