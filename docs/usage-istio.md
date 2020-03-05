@@ -9,11 +9,13 @@ brew install istioctl
 
 kubectl create ns istio-system
 
-# demo profile
+# install demo profile
 istioctl manifest apply --set profile=demo
 
-# with zipkin
+# install demo profile with zipkin
 istioctl manifest apply --set profile=demo --set values.tracing.provider=zipkin
+
+k apply -f ./kubernetes/istio/ingress/ -n istio-system
 
 # demo delete
 istioctl manifest generate --set profile=demo | kubectl delete -f -
