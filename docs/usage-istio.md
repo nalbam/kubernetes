@@ -16,7 +16,7 @@ istioctl manifest apply --set profile=demo
 istioctl manifest apply --set profile=demo --set values.tracing.provider=zipkin
 
 kubectl apply -f ./kubernetes/istio/ingress/
-kubectl apply -f ./kubernetes/istio/vs/
+kubectl apply -f ./kubernetes/istio/gateway/
 
 # demo delete
 istioctl manifest generate --set profile=demo | kubectl delete -f -
