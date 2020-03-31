@@ -5,6 +5,7 @@ metadata:
     app: tracing
     app.kubernetes.io/name: tracing
   name: tracing
+  namespace: istio-system
   annotations:
     kubernetes.io/ingress.class: nginx
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
