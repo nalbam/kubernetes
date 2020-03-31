@@ -15,7 +15,7 @@ spec:
         name: http
         protocol: HTTP
       hosts:
-        - "bookinfo.demo.mzdev.be"
+        - bookinfo.demo.mzdev.be
 ---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
@@ -27,7 +27,7 @@ metadata:
   namespace: default
 spec:
   hosts:
-    - "bookinfo.demo.mzdev.be"
+    - bookinfo.demo.mzdev.be
   gateways:
     - bookinfo-gateway
   http:

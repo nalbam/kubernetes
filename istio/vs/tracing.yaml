@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  labels:
+    app: tracing
+    app.kubernetes.io/name: tracing
+  name: tracing
+  namespace: istio-system
+spec:
+  hosts:
+    - tracing.demo.mzdev.be
+  gateways:
+    - ingressgateway
+  http:
+    - route:
+        - destination:
+            host: tracing
+            port:
+              number: 80
