@@ -15,6 +15,7 @@ istioctl manifest apply --set profile=demo
 # install demo profile with zipkin
 istioctl manifest apply --set profile=demo --set values.tracing.provider=zipkin
 
+kubectl apply -f ./kubernetes/istio/gateway/ -n istio-system
 kubectl apply -f ./kubernetes/istio/ingress/ -n istio-system
 
 # demo delete
@@ -29,8 +30,8 @@ istioctl manifest generate --set profile=demo | kubectl delete -f -
 kubectl label namespace default istio-injection=enabled
 kubectl label namespace default istio-injection-
 
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/platform/kube/bookinfo.yaml
-kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/bookinfo-gateway.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.5/samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.5/samples/bookinfo/networking/bookinfo-gateway.yaml
 
 GATEWAY_URL=$(kubectl get svc -n istio-system | grep istio-ingressgateway | awk '{print $4}')
 echo "http://${GATEWAY_URL}/productpage"
