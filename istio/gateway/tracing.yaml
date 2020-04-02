@@ -8,7 +8,7 @@ metadata:
   namespace: istio-system
 spec:
   hosts:
-    - tracing.demo.mzdev.be
+    - tracing-istio.demo.mzdev.be
   gateways:
     - ingressgateway
   http:
