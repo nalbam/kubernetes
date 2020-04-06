@@ -11,6 +11,7 @@ kubectl create ns istio-system
 
 # install demo profile
 istioctl manifest apply --set profile=demo
+istioctl manifest generate --set profile=demo > istio-demo.yaml
 
 # install demo profile with zipkin
 istioctl manifest apply --set profile=demo --set values.tracing.provider=zipkin
