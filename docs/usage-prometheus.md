@@ -15,7 +15,7 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "\"name\""
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/cpu_usage" | jq .
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/fs_usage_bytes" | jq .
 
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/nginx_ingress_controller_requests" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/sample/services/*/nginx_ingress_controller_requests" | jq .
 
 # kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/http_requests" | jq .
 
@@ -27,6 +27,10 @@ sum (rate (container_cpu_usage_seconds_total{id="/",kubernetes_io_hostname=~"^$N
 sum (kube_pod_container_resource_requests_cpu_cores{kubernetes_node=~"^$Node$"})
 sum (kube_pod_container_resource_limits_cpu_cores{kubernetes_node=~"^$Node$"})
 sum (machine_cpu_cores{kubernetes_io_hostname=~"^$Node$"})
+
+# ingress
+sum(rate(nginx_ingress_controller_requests{namespace=~\"$namespace\",ingress=~\"$ingress\",status!~\"[4-5].*\"}[2m]))
+sum(rate(nginx_ingress_controller_requests{namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m]))
 ```
 
 * <https://github.com/camilb/prometheus-kubernetes>
