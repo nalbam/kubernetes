@@ -16,6 +16,7 @@ istioctl manifest generate --set profile=demo > istio-demo.yaml
 # install demo profile with zipkin
 istioctl manifest apply --set profile=demo --set values.tracing.provider=zipkin
 
+# kubectl apply ingress or gateway
 kubectl apply -f ./kubernetes/istio/ingress/
 kubectl apply -f ./kubernetes/istio/gateway/
 
