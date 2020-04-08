@@ -21,7 +21,6 @@ kubectl apply -f ./kubernetes/istio/gateway/
 
 # delete demo
 istioctl manifest generate --set profile=demo | kubectl delete -f -
-kubectl delete ns istio-system
 ```
 
 ## Examples
