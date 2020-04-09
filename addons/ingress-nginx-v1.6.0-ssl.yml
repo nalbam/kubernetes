@@ -6,7 +6,6 @@ metadata:
     k8s-addon: ingress-nginx.addons.k8s.io
 
 ---
-
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -16,7 +15,6 @@ metadata:
     k8s-addon: ingress-nginx.addons.k8s.io
 
 ---
-
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
 metadata:
@@ -73,7 +71,6 @@ rules:
       - update
 
 ---
-
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: Role
 metadata:
@@ -119,7 +116,6 @@ rules:
       - update
 
 ---
-
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
 metadata:
@@ -132,12 +128,11 @@ roleRef:
   kind: ClusterRole
   name: nginx-ingress-controller
 subjects:
-- apiGroup: rbac.authorization.k8s.io
-  kind: User
-  name: system:serviceaccount:kube-ingress:nginx-ingress-controller
+  - apiGroup: rbac.authorization.k8s.io
+    kind: User
+    name: system:serviceaccount:kube-ingress:nginx-ingress-controller
 
 ---
-
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: RoleBinding
 metadata:
@@ -155,7 +150,6 @@ subjects:
     namespace: kube-system
 
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
@@ -166,13 +160,12 @@ metadata:
     k8s-addon: ingress-nginx.addons.k8s.io
 spec:
   ports:
-  - port: 80
-    targetPort: http
+    - port: 80
+      targetPort: http
   selector:
     app: nginx-default-backend
 
 ---
-
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -183,7 +176,7 @@ metadata:
     k8s-addon: ingress-nginx.addons.k8s.io
 spec:
   replicas: 1
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 5
   template:
     metadata:
       labels:
@@ -193,29 +186,28 @@ spec:
     spec:
       terminationGracePeriodSeconds: 60
       containers:
-      - name: default-http-backend
-        image: k8s.gcr.io/defaultbackend:1.3
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 30
-          timeoutSeconds: 5
-        resources:
-          limits:
-            cpu: 10m
-            memory: 32Mi
-          requests:
-            cpu: 10m
-            memory: 32Mi
-        ports:
-        - name: http
-          containerPort: 8080
-          protocol: TCP
+        - name: default-http-backend
+          image: k8s.gcr.io/defaultbackend:1.3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 10m
+              memory: 32Mi
+            requests:
+              cpu: 10m
+              memory: 32Mi
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
 
 ---
-
 kind: ConfigMap
 apiVersion: v1
 metadata:
@@ -227,7 +219,6 @@ data:
   use-proxy-protocol: "true"
 
 ---
-
 kind: Service
 apiVersion: v1
 metadata:
@@ -236,7 +227,7 @@ metadata:
   labels:
     k8s-addon: ingress-nginx.addons.k8s.io
   annotations:
-    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
+    service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: "*"
     service.beta.kubernetes.io/aws-load-balancer-ssl-ports: "443"
     service.beta.kubernetes.io/aws-load-balancer-ssl-cert: "{{SSL_CERT_ARN}}"
 spec:
@@ -244,17 +235,16 @@ spec:
   selector:
     app: ingress-nginx
   ports:
-  - name: http
-    port: 80
-    protocol: TCP
-    targetPort: 80
-  - name: https
-    port: 443
-    protocol: TCP
-    targetPort: 80
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+    - name: https
+      port: 443
+      protocol: TCP
+      targetPort: 80
 
 ---
-
 kind: Deployment
 apiVersion: extensions/v1beta1
 metadata:
@@ -272,46 +262,46 @@ spec:
         k8s-app: nginx-ingress-controller
         k8s-addon: ingress-nginx.addons.k8s.io
       annotations:
-        prometheus.io/port: '10254'
-        prometheus.io/scrape: 'true'
+        prometheus.io/port: "10254"
+        prometheus.io/scrape: "true"
     spec:
       terminationGracePeriodSeconds: 60
       serviceAccountName: nginx-ingress-controller
       containers:
-      - image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.12.0
-        name: nginx-ingress-controller
-        imagePullPolicy: Always
-        ports:
-          - name: http
-            containerPort: 80
-            protocol: TCP
-          - name: https
-            containerPort: 443
-            protocol: TCP
-        readinessProbe:
-          httpGet:
-            path: /healthz
-            port: 10254
-            scheme: HTTP
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: 10254
-            scheme: HTTP
-          initialDelaySeconds: 30
-          timeoutSeconds: 5
-        env:
-          - name: POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: POD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-        args:
-        - /nginx-ingress-controller
-        - --default-backend-service=$(POD_NAMESPACE)/nginx-default-backend
-        - --configmap=$(POD_NAMESPACE)/ingress-nginx
-        - --publish-service=$(POD_NAMESPACE)/ingress-nginx
-        - --annotations-prefix=ingress.kubernetes.io
+        - image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.12.0
+          name: nginx-ingress-controller
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+            - name: https
+              containerPort: 443
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 10254
+              scheme: HTTP
+            initialDelaySeconds: 30
+            timeoutSeconds: 5
+          env:
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          args:
+            - /nginx-ingress-controller
+            - --default-backend-service=$(POD_NAMESPACE)/nginx-default-backend
+            - --configmap=$(POD_NAMESPACE)/ingress-nginx
+            - --publish-service=$(POD_NAMESPACE)/ingress-nginx
+            - --annotations-prefix=ingress.kubernetes.io

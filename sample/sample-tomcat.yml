@@ -9,7 +9,7 @@ metadata:
     app: sample-tomcat
 spec:
   replicas: 2
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 5
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -24,33 +24,33 @@ spec:
         version: 0.0.1
     spec:
       containers:
-      - name: sample-tomcat
-        image: nalbam/sample-tomcat:alpine
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 8080
-          protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 30
-          timeoutSeconds: 3
-          periodSeconds: 15
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 8080
-          initialDelaySeconds: 30
-          timeoutSeconds: 3
-          periodSeconds: 15
-        resources:
-          requests:
-            cpu: 500m
-            memory: 512Mi
-          limits:
-            cpu: 1000m
-            memory: 1024Mi
+        - name: sample-tomcat
+          image: nalbam/sample-tomcat:alpine
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 3
+            periodSeconds: 15
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 3
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: 500m
+              memory: 512Mi
+            limits:
+              cpu: 1000m
+              memory: 1024Mi
 
 ---
 # ------------------- Service ------------------- #
@@ -98,7 +98,7 @@ spec:
   minReplicas: 2
   maxReplicas: 100
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 65
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 65

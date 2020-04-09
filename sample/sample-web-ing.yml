@@ -9,7 +9,7 @@ metadata:
     app: sample-web
 spec:
   replicas: 2
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 5
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -24,26 +24,26 @@ spec:
         version: 0.0.1
     spec:
       containers:
-      - name: sample-web
-        image: nalbam/sample-web:alpine
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 80
-          protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 30
-          timeoutSeconds: 3
-          periodSeconds: 15
-        resources:
-          requests:
-            cpu: 250m
-            memory: 256Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
+        - name: sample-web
+          image: nalbam/sample-web:alpine
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 30
+            timeoutSeconds: 3
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
 
 ---
 # ------------------- Service ------------------- #
@@ -78,13 +78,13 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: sample-web.apps.nalbam.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: sample-web
-          servicePort: 80
+    - host: sample-web.apps.nalbam.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: sample-web
+              servicePort: 80
 
 ---
 # ------------------- HorizontalPodAutoscaler ------------------- #
@@ -104,7 +104,7 @@ spec:
   minReplicas: 2
   maxReplicas: 100
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 65
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 65

@@ -9,7 +9,7 @@ metadata:
     app: sample-node
 spec:
   replicas: 2
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 5
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -24,29 +24,29 @@ spec:
         version: 0.0.1
     spec:
       containers:
-      - name: sample-node
-        image: nalbam/sample-node:alpine
-        imagePullPolicy: Always
-        ports:
-        - containerPort: 3000
-          protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 3000
-          initialDelaySeconds: 30
-          timeoutSeconds: 3
-          periodSeconds: 15
-        resources:
-          requests:
-            cpu: 250m
-            memory: 256Mi
-          limits:
-            cpu: 500m
-            memory: 512Mi
-        env:
-        - name: REDIS_URL
-          value: "redis://sample-redis:6379"
+        - name: sample-node
+          image: nalbam/sample-node:alpine
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+            initialDelaySeconds: 30
+            timeoutSeconds: 3
+            periodSeconds: 15
+          resources:
+            requests:
+              cpu: 250m
+              memory: 256Mi
+            limits:
+              cpu: 500m
+              memory: 512Mi
+          env:
+            - name: REDIS_URL
+              value: "redis://sample-redis:6379"
 
 ---
 # ------------------- Service ------------------- #
@@ -94,7 +94,7 @@ spec:
   minReplicas: 2
   maxReplicas: 100
   metrics:
-  - type: Resource
-    resource:
-      name: cpu
-      targetAverageUtilization: 65
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 65

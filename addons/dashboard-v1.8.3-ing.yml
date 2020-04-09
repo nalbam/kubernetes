@@ -37,32 +37,32 @@ metadata:
   namespace: kube-system
 rules:
   # Allow Dashboard to create 'kubernetes-dashboard-key-holder' secret.
-- apiGroups: [""]
-  resources: ["secrets"]
-  verbs: ["create"]
-  # Allow Dashboard to create 'kubernetes-dashboard-settings' config map.
-- apiGroups: [""]
-  resources: ["configmaps"]
-  verbs: ["create"]
-  # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
-- apiGroups: [""]
-  resources: ["secrets"]
-  resourceNames: ["kubernetes-dashboard-key-holder"]
-  verbs: ["get", "update", "delete"]
-  # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
-- apiGroups: [""]
-  resources: ["configmaps"]
-  resourceNames: ["kubernetes-dashboard-settings"]
-  verbs: ["get", "update"]
-  # Allow Dashboard to get metrics from heapster.
-- apiGroups: [""]
-  resources: ["services"]
-  resourceNames: ["heapster"]
-  verbs: ["proxy"]
-- apiGroups: [""]
-  resources: ["services/proxy"]
-  resourceNames: ["heapster", "http:heapster:", "https:heapster:"]
-  verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["secrets"]
+    verbs: ["create"]
+    # Allow Dashboard to create 'kubernetes-dashboard-settings' config map.
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    verbs: ["create"]
+    # Allow Dashboard to get, update and delete Dashboard exclusive secrets.
+  - apiGroups: [""]
+    resources: ["secrets"]
+    resourceNames: ["kubernetes-dashboard-key-holder"]
+    verbs: ["get", "update", "delete"]
+    # Allow Dashboard to get and update 'kubernetes-dashboard-settings' config map.
+  - apiGroups: [""]
+    resources: ["configmaps"]
+    resourceNames: ["kubernetes-dashboard-settings"]
+    verbs: ["get", "update"]
+    # Allow Dashboard to get metrics from heapster.
+  - apiGroups: [""]
+    resources: ["services"]
+    resourceNames: ["heapster"]
+    verbs: ["proxy"]
+  - apiGroups: [""]
+    resources: ["services/proxy"]
+    resourceNames: ["heapster", "http:heapster:", "https:heapster:"]
+    verbs: ["get"]
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -75,9 +75,9 @@ roleRef:
   kind: Role
   name: kubernetes-dashboard-minimal
 subjects:
-- kind: ServiceAccount
-  name: kubernetes-dashboard
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: kubernetes-dashboard
+    namespace: kube-system
 
 ---
 # ------------------- Dashboard Deployment ------------------- #
@@ -91,7 +91,7 @@ metadata:
   namespace: kube-system
 spec:
   replicas: 1
-  revisionHistoryLimit: 10
+  revisionHistoryLimit: 5
   selector:
     matchLabels:
       k8s-app: kubernetes-dashboard
@@ -101,34 +101,34 @@ spec:
         k8s-app: kubernetes-dashboard
     spec:
       containers:
-      - name: kubernetes-dashboard
-        image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3
-        ports:
-        - containerPort: 9090
-          protocol: TCP
-        args:
-          - --enable-insecure-login=true
-          - --insecure-bind-address=0.0.0.0
-          - --insecure-port=9090
-        volumeMounts:
-          # Create on-disk volume to store exec logs
-        - mountPath: /tmp
-          name: tmp-volume
-        livenessProbe:
-          httpGet:
-            scheme: HTTP
-            path: /
-            port: 9090
-          initialDelaySeconds: 30
-          timeoutSeconds: 30
+        - name: kubernetes-dashboard
+          image: k8s.gcr.io/kubernetes-dashboard-amd64:v1.8.3
+          ports:
+            - containerPort: 9090
+              protocol: TCP
+          args:
+            - --enable-insecure-login=true
+            - --insecure-bind-address=0.0.0.0
+            - --insecure-port=9090
+          volumeMounts:
+            # Create on-disk volume to store exec logs
+            - mountPath: /tmp
+              name: tmp-volume
+          livenessProbe:
+            httpGet:
+              scheme: HTTP
+              path: /
+              port: 9090
+            initialDelaySeconds: 30
+            timeoutSeconds: 30
       volumes:
-      - name: tmp-volume
-        emptyDir: {}
+        - name: tmp-volume
+          emptyDir: {}
       serviceAccountName: kubernetes-dashboard
       # Comment the following tolerations if Dashboard must not be deployed on master
       tolerations:
-      - key: node-role.kubernetes.io/master
-        effect: NoSchedule
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
 
 ---
 # ------------------- Dashboard Service ------------------- #
@@ -143,8 +143,8 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - port: 80
-    targetPort: 9090
+    - port: 80
+      targetPort: 9090
   selector:
     k8s-app: kubernetes-dashboard
 
@@ -162,10 +162,10 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: dashboard.apps.nalbam.com
-    http:
-      paths:
-      - path: /
-        backend:
-          serviceName: kubernetes-dashboard
-          servicePort: 80
+    - host: dashboard.apps.nalbam.com
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: kubernetes-dashboard
+              servicePort: 80
