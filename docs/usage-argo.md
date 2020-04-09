@@ -112,4 +112,6 @@ argo list -n argo-events
 kubectl create namespace argo-rollouts
 
 kubectl apply -n argo-rollouts -f https://raw.githubusercontent.com/argoproj/argo-rollouts/stable/manifests/install.yaml
+
+kubectl argo rollouts get rollout sample-node -n demo-prod -w
 ```
