@@ -111,7 +111,14 @@ argo list -n argo-events
 ```bash
 kubectl create namespace argo-rollouts
 
+# kubectl apply argo-rollouts
 kubectl apply -n argo-rollouts -f https://raw.githubusercontent.com/argoproj/argo-rollouts/stable/manifests/install.yaml
 
+# kubectl-argo-rollouts
+curl -sLO https://github.com/argoproj/argo-rollouts/releases/latest/download/kubectl-argo-rollouts-darwin-amd64 && \
+chmod +x ./kubectl-argo-rollouts-darwin-amd64 && \
+sudo mv ./kubectl-argo-rollouts-darwin-amd64 /usr/local/bin/kubectl-argo-rollouts
+
+# kubectl argo rollouts
 kubectl argo rollouts get rollout sample-node -n demo-prod -w
 ```
