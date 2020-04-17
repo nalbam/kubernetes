@@ -56,7 +56,7 @@ kubectl apply -n argo -f https://raw.githubusercontent.com/nalbam/kubernetes/mas
 kubectl apply -n argo -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argocd-ingress-spot.yml
 
 USERNAME="admin"
-PASSWORD="$(kubectl get pods -n argo -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f2)"
+PASSWORD="$(kubectl get pods -n argo-cd -l app.kubernetes.io/name=argocd-server -o name | cut -d'/' -f2)"
 echo $PASSWORD
 
 kubectl edit deploy argocd-server -n argo
