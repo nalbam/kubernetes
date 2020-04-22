@@ -3,7 +3,7 @@
 ## install
 
 ```bash
-curl -sL curl -sL opspresso.com/tools | bash | bash
+curl -sL curl -sL opspresso.com/install | bash
 ```
 
 ## usage
