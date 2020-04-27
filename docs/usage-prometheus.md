@@ -9,24 +9,28 @@ kubectl get --raw "/apis/metrics.k8s.io/v1beta1/pods" | jq .
 
 # custom metrics
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
-
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "\"name\"" | sort
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "\"name\"" | sort | grep http_requests
 
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/cpu_usage" | jq .
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/fs_usage_bytes" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "pods/" | sort
 
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/sample/services/*/nginx_ingress_controller_requests" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/cpu_usage" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/fs_usage_bytes" | jq .
 
-# kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/http_requests" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/pods/*/http_requests" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/default/services/*/http_requests" | jq .
 
-# sum (rate (container_cpu_usage_seconds_total{image!="",name=~"^k8s_.*"}[2m]) ) by (pod_name)
-# sum (rate (container_network_receive_bytes_total{image!="",name=~"^k8s_.*"}[2m]) ) by (pod_name)
+```
+
+```promql
+# sum(rate(container_cpu_usage_seconds_total{image!="",name=~"^k8s_.*"}[2m])) by (pod_name)
+# sum(rate(container_network_receive_bytes_total{image!="",name=~"^k8s_.*"}[2m])) by (pod_name)
 
 # node
-sum (rate (container_cpu_usage_seconds_total{id="/",kubernetes_io_hostname=~"^$Node$"}[2m]))
-sum (kube_pod_container_resource_requests_cpu_cores{kubernetes_node=~"^$Node$"})
-sum (kube_pod_container_resource_limits_cpu_cores{kubernetes_node=~"^$Node$"})
-sum (machine_cpu_cores{kubernetes_io_hostname=~"^$Node$"})
+sum(rate (container_cpu_usage_seconds_total{id="/",kubernetes_io_hostname=~"^$Node$"}[2m]))
+sum(kube_pod_container_resource_requests_cpu_cores{kubernetes_node=~"^$Node$"})
+sum(kube_pod_container_resource_limits_cpu_cores{kubernetes_node=~"^$Node$"})
+sum(machine_cpu_cores{kubernetes_io_hostname=~"^$Node$"})
 
 # ingress
 sum(rate(nginx_ingress_controller_requests{namespace=~\"$namespace\",ingress=~\"$ingress\",status!~\"[4-5].*\"}[2m]))

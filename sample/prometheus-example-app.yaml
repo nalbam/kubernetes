@@ -1,0 +1,106 @@
+---
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: example-deploy
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: example
+        release: mon
+    spec:
+      containers:
+        - name: example
+          image: quay.io/brancz/prometheus-example-app:v0.1.0
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: 100m
+              memory: 120Mi
+            limits:
+              cpu: 110m
+              memory: 134Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: example-service
+  labels:
+    release: mon
+    app: example
+spec:
+  ports:
+    - name: metrics-svc-port
+      port: 80
+      targetPort: 8080
+  selector:
+    app: example
+
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: example-sm
+  labels:
+    app: example
+    release: prometheus-operator
+spec:
+  jobLabel: examplemetrics
+  selector:
+    matchLabels:
+      app: example
+  namespaceSelector:
+    matchNames:
+      - default
+  endpoints:
+    - port: metrics-svc-port
+      interval: 10s
+      path: /metrics
+
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: example-app-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1beta1
+    kind: Deployment
+    name: example-deploy
+  minReplicas: 2
+  maxReplicas: 10
+  metrics:
+    - type: Object
+      object:
+        target:
+          kind: Service
+          name: example-service
+        metricName: http_requests
+        targetValue: 100m
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: example-ingress
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  rules:
+    - host: example-dev.demo.mzdev.be
+      http:
+        paths:
+          - backend:
+              serviceName: example-service
+              servicePort: 8080
+            path: /
+  tls:
+    - hosts:
+        - example-dev.demo.mzdev.be
+      secretName: example-mzdev-tls
