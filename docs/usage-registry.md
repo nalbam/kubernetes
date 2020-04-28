@@ -24,14 +24,14 @@ echo $CHARTMUSEUM
 
 curl -sL https://$CHARTMUSEUM/api/charts | jq .
 
-helm ls
-helm history sample-node-sample
-
 helm repo add chartmuseum https://$CHARTMUSEUM
 helm repo update
 helm repo list
 
-helm search sample-node
+helm search repo sample-node
 
-helm install chartmuseum/sample-node --name sample-node --namespace default --devel
+helm install chartmuseum/sample-node --name sample-node --namespace sample --devel
+
+helm ls -n sample
+helm history sample-node
 ```
