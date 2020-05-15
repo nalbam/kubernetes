@@ -32,6 +32,7 @@ istioctl manifest generate --set profile=demo | kubectl delete -f -
 kubectl label namespace default istio-injection=enabled
 kubectl label namespace default istio-injection-
 
+# apply
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.5/samples/bookinfo/platform/kube/bookinfo.yaml
 kubectl apply -f https://raw.githubusercontent.com/istio/istio/release-1.5/samples/bookinfo/networking/bookinfo-gateway.yaml
 
@@ -42,9 +43,9 @@ for i in `seq 1 100`; do curl -s -o /dev/null http://$GATEWAY_URL/productpage; d
 
 kubectl get pod,svc
 
-# Cleanup
-kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/platform/kube/bookinfo.yaml
-kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.4/samples/bookinfo/networking/bookinfo-gateway.yaml
+# delete
+kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.5/samples/bookinfo/platform/kube/bookinfo.yaml
+kubectl delete -f https://raw.githubusercontent.com/istio/istio/release-1.5/samples/bookinfo/networking/bookinfo-gateway.yaml
 ```
 
 ## Request Routing
