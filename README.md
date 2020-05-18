@@ -32,6 +32,10 @@ kubectl api-versions
 kubectl get all --all-namespaces
 kubectl get all -n default
 
+kubectl get nodes --no-headers | \
+  awk '{print $1}' | \
+  xargs -I {} sh -c 'echo {}; kubectl describe node {} | grep Allocated -A 5 | grep -ve Event -ve Allocated -ve percent -ve -- ; echo'
+
 # kubectl exec bash
 kubectl exec -n devops -it jenkins-74bd9c7799-jjkxz -- /bin/bash
 
