@@ -13,8 +13,12 @@ kubectl create ns istio-system
 istioctl manifest apply --set profile=demo
 istioctl manifest generate --set profile=demo > istio-demo.yaml
 
+istioctl manifest apply --set profile=demo \
+  --set values.kiali.dashboard.auth.strategy=anonymous
+
 # install demo profile with zipkin
-istioctl manifest apply --set profile=demo --set values.tracing.provider=zipkin
+istioctl manifest apply --set profile=demo \
+  --set values.tracing.provider=zipkin
 
 # kubectl apply ingress or gateway
 kubectl apply -f ./kubernetes/istio/ingress/
