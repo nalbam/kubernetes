@@ -3,7 +3,7 @@ kind: Workflow
 metadata:
   generateName: ci-build-
 spec:
-  entrypoint: ci-node
+  entrypoint: ci-build
   arguments:
     parameters:
       - name: repo
