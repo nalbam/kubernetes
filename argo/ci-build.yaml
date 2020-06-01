@@ -57,12 +57,13 @@ spec:
 
     - name: run-docker
       container:
-        image: docker
+        image: opspresso/builder:v0.7.76
         command: [sh, -c]
         args: [
             "
             cd /work/src &&
-            docker build -t {{workflow.parameters.image}} .
+            docker build -t {{workflow.parameters.image}} . &&
+            dicker images
             ",
           ]
         volumeMounts:
