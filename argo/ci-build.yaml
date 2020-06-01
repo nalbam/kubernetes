@@ -10,6 +10,8 @@ spec:
         value: https://github.com/nalbam/sample-node.git
       - name: revision
         value: master
+      - name: image
+        value: nalbam/sample-node
   volumeClaimTemplates:
     - metadata:
         name: workdir
@@ -28,26 +30,17 @@ spec:
       steps:
         - - name: build
             template: run-build
-            arguments:
-              parameters:
-                - name: repo
-                  value: "{{inputs.parameters.repo}}"
-                - name: revision
-                  value: "{{inputs.parameters.revision}}"
-        - - name: test
-            template: run-test
+        - - name: docker
+            template: run-docker
 
     - name: run-build
       inputs:
-        parameters:
-          - name: repo
-          - name: revision
         artifacts:
           - name: code
             path: /work/src
             git:
-              repo: "{{inputs.parameters.repo}}"
-              revision: "{{inputs.parameters.revision}}"
+              repo: "{{workflow.parameters.repo}}"
+              revision: "{{workflow.parameters.revision}}"
       container:
         image: node:13
         command: [sh, -c]
@@ -62,20 +55,6 @@ spec:
           - name: workdir
             mountPath: /work
 
-    - name: run-test
-      container:
-        image: node:13
-        command: [sh, -c]
-        args: [
-            "
-            cd /work/src &&
-            npm run test
-            ",
-          ]
-        volumeMounts:
-          - name: workdir
-            mountPath: /work
-
     - name: run-docker
       container:
         image: docker
@@ -83,7 +62,7 @@ spec:
         args: [
             "
             cd /work/src &&
-            docker build -t ${registry}/${name}:${version} .
+            docker build -t {{workflow.parameters.image}} .
             ",
           ]
         volumeMounts:
