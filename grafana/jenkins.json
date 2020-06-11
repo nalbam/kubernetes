@@ -31,9 +31,9 @@
       "type": "dashboard"
     }]
   },
-  "description": "Jobs queue speeds and rates, Executors availability, Nodes status, Jenkins and JVM resource usage, Jenkins Job Status, and lot more.",
+  "description": "Dashboard for Jenkins with Prometheus",
   "editable": true,
-  "gnetId": 9964,
+  "gnetId": 12444,
   "graphTooltip": 0,
   "id": 10,
   "links": [],
@@ -113,7 +113,7 @@
       "thresholds": "1,1",
       "title": "Jenkins health",
       "type": "singlestat",
-      "valueFontSize": "100%",
+      "valueFontSize": "120%",
       "valueMaps": [{
           "op": "=",
           "text": "Good!",
@@ -370,7 +370,7 @@
       "thresholds": "30,10",
       "title": "JVM free memory",
       "type": "singlestat",
-      "valueFontSize": "100%",
+      "valueFontSize": "120%",
       "valueMaps": [{
         "op": "=",
         "text": "N/A",
@@ -536,7 +536,7 @@
       "thresholds": "0,0",
       "title": "Jenkins nodes offline",
       "type": "singlestat",
-      "valueFontSize": "100%",
+      "valueFontSize": "120%",
       "valueMaps": [{
         "op": "=",
         "text": "None!",
@@ -698,7 +698,9 @@
         "expr": "jenkins_node_builds_count",
         "format": "time_series",
         "instant": false,
+        "interval": "",
         "intervalFactor": 1,
+        "legendFormat": "",
         "refId": "A",
         "textEditor": false
       }],
@@ -875,7 +877,7 @@
       "thresholds": "0,0",
       "title": "Aborted Jobs",
       "type": "singlestat",
-      "valueFontSize": "150%",
+      "valueFontSize": "120%",
       "valueMaps": [{
         "op": "=",
         "text": "None!",
@@ -961,7 +963,7 @@
       "thresholds": "0,0",
       "title": "Unstable Jobs",
       "type": "singlestat",
-      "valueFontSize": "150%",
+      "valueFontSize": "120%",
       "valueMaps": [{
         "op": "=",
         "text": "None!",
@@ -1045,7 +1047,7 @@
       "thresholds": "0,1",
       "title": "Failed Jobs",
       "type": "singlestat",
-      "valueFontSize": "150%",
+      "valueFontSize": "120%",
       "valueMaps": [{
         "op": "=",
         "text": "None!",
@@ -1360,11 +1362,7 @@
   "refresh": "10s",
   "schemaVersion": 25,
   "style": "dark",
-  "tags": [
-    "kubernetes",
-    "prometheus",
-    "jenkins"
-  ],
+  "tags": [],
   "templating": {
     "list": []
   },
@@ -1376,7 +1374,7 @@
     "refresh_intervals": [
       "10s",
       "30s",
-      "2m",
+      "1m",
       "5m",
       "15m",
       "30m",

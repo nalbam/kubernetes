@@ -23,7 +23,7 @@
   "annotations": {
     "list": [{
       "builtIn": 1,
-      "datasource": "-- Grafana --",
+      "datasource": "Prometheus",
       "enable": true,
       "hide": true,
       "iconColor": "rgba(0, 211, 255, 1)",
@@ -31,15 +31,12 @@
       "type": "dashboard"
     }]
   },
-  "timezone": "browser",
-  "uid": "jvm-overview",
-  "title": "JVM Overview - Prometheus",
   "description": "Dashboard for JVM metrics with Prometheus / JMX Exporter",
   "editable": true,
-  "gnetId": 3066,
-  "version": 1,
+  "gnetId": 11526,
   "graphTooltip": 0,
-  "iteration": 1578471764039,
+  "id": 9,
+  "iteration": 1591861062595,
   "links": [],
   "panels": [{
       "aliasColors": {},
@@ -47,6 +44,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -65,6 +68,7 @@
         "min": true,
         "rightSide": true,
         "show": true,
+        "sideWidth": 300,
         "total": false,
         "values": true
       },
@@ -89,7 +93,7 @@
         "format": "time_series",
         "interval": "",
         "intervalFactor": 5,
-        "legendFormat": "{{pod}} [{{area}}]",
+        "legendFormat": "[{{area}}] {{pod}}",
         "metric": "jvm_memory_bytes_used",
         "refId": "A",
         "step": 5
@@ -140,6 +144,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -155,7 +165,9 @@
         "current": false,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
+        "sideWidth": 200,
         "total": false,
         "values": false
       },
@@ -177,6 +189,7 @@
       "targets": [{
           "expr": "jvm_threads_current{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 5,
           "legendFormat": "{{pod}} [current]",
           "metric": "jvm_threads_current",
@@ -240,6 +253,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -255,7 +274,9 @@
         "current": false,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
+        "sideWidth": 200,
         "total": false,
         "values": false
       },
@@ -331,6 +352,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -346,7 +373,9 @@
         "current": false,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
+        "sideWidth": 200,
         "total": false,
         "values": false
       },
@@ -421,6 +450,12 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -436,7 +471,9 @@
         "current": false,
         "max": false,
         "min": false,
+        "rightSide": true,
         "show": true,
+        "sideWidth": 200,
         "total": false,
         "values": false
       },
@@ -508,7 +545,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 21,
+  "schemaVersion": 25,
   "style": "dark",
   "tags": [
     "JVM",
@@ -518,10 +555,11 @@
     "list": [{
         "allValue": ".*",
         "current": {
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "Prometheus",
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -534,19 +572,20 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
+        "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
-        "tagValuesQuery": "",
         "type": "query",
         "useTags": false
       },
       {
         "allValue": ".*",
         "current": {
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "Prometheus",
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -559,19 +598,20 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
+        "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
-        "tagValuesQuery": "",
         "type": "query",
         "useTags": false
       },
       {
         "allValue": ".*",
         "current": {
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "Prometheus",
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -584,9 +624,9 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
+        "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
-        "tagValuesQuery": "",
         "type": "query",
         "useTags": false
       }
@@ -598,7 +638,6 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "5s",
       "10s",
       "30s",
       "1m",
@@ -620,5 +659,9 @@
       "7d",
       "30d"
     ]
-  }
+  },
+  "timezone": "browser",
+  "title": "JVM Overview - Prometheus",
+  "uid": "jvm-overview",
+  "version": 1
 }
