@@ -2,12 +2,10 @@
 
 ## istioctl
 
-* <https://istio.io/docs/setup/install/istioctl/>
+* <https://istio.io/latest/docs/ops/diagnostic-tools/istioctl/>
 
 ```bash
 brew install istioctl
-
-kubectl create ns istio-system
 
 # install demo profile
 istioctl manifest apply --set profile=demo
