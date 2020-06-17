@@ -121,7 +121,7 @@ spec:
   # - type: Pods
   #   pods:
   #     metricName: packets-per-second
-  #     targetAverageValue: 1k
+  #     targetAverageValue: 30k
   # - type: Object
   #   object:
   #     metricName: requests-per-second
