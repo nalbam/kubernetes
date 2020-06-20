@@ -21,8 +21,8 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/http_requests" | jq .
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/http_requests" | jq .
 
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/nginx_ingress_controller_requests" | jq .
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/container_network_receive_bytes" | jq .
-
 ```
 
 ```promql
