@@ -35,8 +35,7 @@
   "editable": true,
   "gnetId": 11526,
   "graphTooltip": 0,
-  "id": 9,
-  "iteration": 1591861062595,
+  "iteration": 1592465944153,
   "links": [],
   "panels": [{
       "aliasColors": {},
@@ -92,7 +91,7 @@
         "expr": "jvm_memory_bytes_used{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
         "format": "time_series",
         "interval": "",
-        "intervalFactor": 5,
+        "intervalFactor": 2,
         "legendFormat": "[{{area}}] {{pod}}",
         "metric": "jvm_memory_bytes_used",
         "refId": "A",
@@ -117,6 +116,7 @@
         "values": []
       },
       "yaxes": [{
+          "$$hashKey": "object:2545",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -125,6 +125,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2546",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -179,6 +180,7 @@
         "dataLinks": []
       },
       "percentage": false,
+      "pluginVersion": "7.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -190,7 +192,7 @@
           "expr": "jvm_threads_current{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
           "format": "time_series",
           "interval": "",
-          "intervalFactor": 5,
+          "intervalFactor": 2,
           "legendFormat": "{{pod}} [current]",
           "metric": "jvm_threads_current",
           "refId": "A",
@@ -199,7 +201,8 @@
         {
           "expr": "jvm_threads_daemon{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
           "format": "time_series",
-          "intervalFactor": 5,
+          "interval": "",
+          "intervalFactor": 2,
           "legendFormat": "{{pod}} [daemon]",
           "metric": "jvm_threads_daemon",
           "refId": "B",
@@ -225,6 +228,7 @@
         "values": []
       },
       "yaxes": [{
+          "$$hashKey": "object:2630",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -234,6 +238,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2631",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -299,7 +304,7 @@
         "expr": "jvm_classes_loaded{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
         "format": "time_series",
         "interval": "",
-        "intervalFactor": 5,
+        "intervalFactor": 2,
         "legendFormat": "{{pod}} [loaded]",
         "metric": "jvm_classes_loaded",
         "refId": "A",
@@ -324,6 +329,7 @@
         "values": []
       },
       "yaxes": [{
+          "$$hashKey": "object:2881",
           "decimals": 0,
           "format": "short",
           "label": "",
@@ -333,6 +339,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2882",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -398,7 +405,7 @@
         "expr": "rate(jvm_gc_collection_seconds_sum{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}[1m])",
         "format": "time_series",
         "interval": "",
-        "intervalFactor": 5,
+        "intervalFactor": 2,
         "legendFormat": "{{pod}} [{{gc}}]",
         "metric": "jvm_gc_collection_seconds_sum",
         "refId": "A",
@@ -423,6 +430,7 @@
         "values": []
       },
       "yaxes": [{
+          "$$hashKey": "object:3051",
           "format": "s",
           "label": null,
           "logBase": 1,
@@ -431,6 +439,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:3052",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -496,7 +505,7 @@
         "expr": "jvm_gc_collection_seconds_count{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
         "format": "time_series",
         "interval": "",
-        "intervalFactor": 5,
+        "intervalFactor": 2,
         "legendFormat": "{{pod}} [{{gc}}]",
         "metric": "",
         "refId": "A",
@@ -521,6 +530,7 @@
         "values": []
       },
       "yaxes": [{
+          "$$hashKey": "object:2966",
           "decimals": 0,
           "format": "short",
           "label": null,
@@ -530,6 +540,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2967",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -555,7 +566,7 @@
     "list": [{
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },

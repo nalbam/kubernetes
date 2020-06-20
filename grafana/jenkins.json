@@ -35,34 +35,46 @@
   "editable": true,
   "gnetId": 12444,
   "graphTooltip": 0,
-  "id": 10,
+  "id": 12,
   "links": [],
   "panels": [{
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
       "datasource": "Prometheus",
-      "decimals": 1,
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "decimals": 0,
+          "mappings": [{
+              "id": 0,
+              "op": "=",
+              "text": "Good!",
+              "type": 1,
+              "value": "1.0"
+            },
+            {
+              "id": 1,
+              "op": "=",
+              "text": "Check :/",
+              "type": 1,
+              "value": ""
+            }
+          ],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+                "color": "orange",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 1
+              }
+            ]
+          },
+          "unit": "none"
         },
         "overrides": []
-      },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -72,88 +84,59 @@
       },
       "id": 8,
       "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
-      "tableColumn": "jenkins_health_check_score{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "jenkins_health_check_score",
+        "expr": "sum(jenkins_health_check_score)",
         "format": "time_series",
+        "interval": "",
         "intervalFactor": 1,
+        "legendFormat": "",
         "refId": "A",
         "textEditor": false
       }],
-      "thresholds": "1,1",
       "title": "Jenkins health",
-      "type": "singlestat",
-      "valueFontSize": "120%",
-      "valueMaps": [{
-          "op": "=",
-          "text": "Good!",
-          "value": "1.0"
-        },
-        {
-          "op": "=",
-          "text": "Check :/",
-          "value": "*"
-        }
-      ],
-      "valueName": "current"
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorValue": true,
-      "colors": [
-        "#C4162A",
-        "#C4162A",
-        "#37872D"
-      ],
       "datasource": "Prometheus",
-      "decimals": 0,
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {
+            "align": null
+          },
+          "decimals": 0,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+              "color": "green",
+              "value": null
+            }]
+          },
+          "unit": "ms"
         },
         "overrides": []
-      },
-      "format": "ms",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -163,79 +146,71 @@
       },
       "id": 16,
       "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(192, 216, 255, 0.06)",
-        "full": false,
-        "lineColor": "#E02F44",
-        "show": false
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
-      "tableColumn": "vm_uptime_milliseconds{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "vm_uptime_milliseconds",
+        "expr": "sum(vm_uptime_milliseconds{service=\"jenkins\"})",
         "format": "time_series",
         "instant": false,
+        "interval": "",
         "intervalFactor": 1,
+        "legendFormat": "",
         "refId": "A",
         "textEditor": false
       }],
-      "thresholds": "0,0",
-      "title": "JVM Uptime",
-      "type": "singlestat",
-      "valueFontSize": "120%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "N/A",
-        "value": "null"
-      }],
-      "valueName": "current"
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Uptime",
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#C4162A"
-      ],
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "decimals": 2,
+          "mappings": [{
+            "id": 0,
+            "op": "=",
+            "text": "N/A",
+            "type": 1,
+            "value": "null"
+          }],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percent"
         },
         "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -246,80 +221,58 @@
       "id": 5,
       "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "vm_cpu_load{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "vm_cpu_load",
+        "expr": "sum(vm_cpu_load{service=\"jenkins\"})",
         "format": "time_series",
+        "interval": "",
         "intervalFactor": 1,
+        "legendFormat": "",
         "refId": "A"
       }],
-      "thresholds": "50,80",
       "timeFrom": null,
       "timeShift": null,
-      "title": "CPU Usage",
-      "type": "singlestat",
-      "valueFontSize": "120%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "N/A",
-        "value": "null"
-      }],
-      "valueName": "current"
+      "title": "CPU Load",
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
       "datasource": "Prometheus",
-      "decimals": 1,
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "decimals": 2,
+          "mappings": [{
+            "id": 0,
+            "op": "=",
+            "text": "",
+            "type": 1,
+            "value": ""
+          }],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+              "color": "blue",
+              "value": null
+            }]
+          },
+          "unit": "none"
         },
         "overrides": []
-      },
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -327,83 +280,73 @@
         "x": 12,
         "y": 0
       },
-      "id": 7,
+      "id": 10,
       "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(85, 189, 31, 0.18)",
-        "full": false,
-        "lineColor": "rgb(60, 193, 31)",
-        "show": true
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
-      "tableColumn": "{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "(vm_memory_total_max - vm_memory_total_used) / vm_memory_total_max * 100.0",
-        "format": "time_series",
-        "intervalFactor": 1,
+        "expr": "sum(vm_cpu_load{service=\"jenkins\"})",
+        "interval": "",
+        "legendFormat": "",
         "refId": "A",
         "textEditor": false
       }],
-      "thresholds": "30,10",
-      "title": "JVM free memory",
-      "type": "singlestat",
-      "valueFontSize": "120%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "N/A",
-        "value": "null"
-      }],
-      "valueName": "current"
+      "title": "CPU Usage",
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorPrefix": false,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#1F60C4"
-      ],
       "datasource": "Prometheus",
-      "decimals": 0,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "decimals": 2,
+          "mappings": [{
+            "id": 0,
+            "op": "=",
+            "text": "N/A",
+            "type": 1,
+            "value": "null"
+          }],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 60
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
         },
         "overrides": []
-      },
-      "format": "decbytes",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -411,83 +354,60 @@
         "x": 16,
         "y": 0
       },
-      "id": 15,
+      "id": 7,
       "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0)",
-        "full": false,
-        "lineColor": "#8F3BB8",
-        "show": true
+      "options": {
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "vm_memory_total_used{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "vm_memory_total_used",
+        "expr": "(sum(vm_memory_total_max{service=\"jenkins\"}) - sum(vm_memory_total_used{service=\"jenkins\"})) / sum(vm_memory_total_max{service=\"jenkins\"}) * 100.0",
         "format": "time_series",
+        "interval": "",
         "intervalFactor": 1,
-        "refId": "A"
+        "legendFormat": "",
+        "refId": "A",
+        "textEditor": false
       }],
-      "thresholds": "0,0",
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Memory Usage",
-      "type": "singlestat",
-      "valueFontSize": "120%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "N/A",
-        "value": "null"
-      }],
-      "valueName": "current"
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
       "datasource": "Prometheus",
-      "decimals": 1,
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "decimals": 2,
+          "mappings": [{
+            "id": 0,
+            "op": "=",
+            "text": "",
+            "type": 1,
+            "value": "null"
+          }],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+              "color": "blue",
+              "value": null
+            }]
+          },
+          "unit": "decbytes"
         },
         "overrides": []
-      },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -495,80 +415,67 @@
         "x": 20,
         "y": 0
       },
-      "id": 10,
+      "id": 15,
       "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
-      "tableColumn": "jenkins_node_offline_value{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "jenkins_node_offline_value",
-        "refId": "A",
-        "textEditor": false
+        "expr": "sum(vm_memory_total_used{service=\"jenkins\"})",
+        "format": "time_series",
+        "interval": "",
+        "intervalFactor": 1,
+        "legendFormat": "",
+        "refId": "A"
       }],
-      "thresholds": "0,0",
-      "title": "Jenkins nodes offline",
-      "type": "singlestat",
-      "valueFontSize": "120%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "None!",
-        "value": "0"
-      }],
-      "valueName": "current"
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Memory Used",
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
       "datasource": "Prometheus",
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "decimals": 0,
+          "mappings": [{
+            "id": 0,
+            "op": "=",
+            "text": "None!",
+            "type": 1,
+            "value": "null"
+          }],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+              "color": "green",
+              "value": null
+            }]
+          },
+          "unit": "none"
         },
         "overrides": []
-      },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -576,126 +483,31 @@
         "x": 0,
         "y": 4
       },
-      "height": "",
-      "id": 3,
-      "interval": null,
-      "isNew": true,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(189, 174, 31, 0.18)",
-        "full": false,
-        "lineColor": "rgb(193, 185, 31)",
-        "show": true
-      },
-      "tableColumn": "jenkins_executor_in_use_value{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
-      "targets": [{
-        "expr": "jenkins_executor_in_use_value",
-        "interval": "",
-        "legendFormat": "",
-        "refId": "A"
-      }],
-      "thresholds": "",
-      "title": "Executor In-use",
-      "type": "singlestat",
-      "valueFontSize": "150%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "N/A",
-        "value": "null"
-      }],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorValue": true,
-      "colors": [
-        "#37872D",
-        "#F2CC0C",
-        "#F2CC0C"
-      ],
-      "datasource": "Prometheus",
-      "decimals": null,
-      "editable": true,
-      "error": false,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 4,
-        "x": 4,
-        "y": 4
-      },
       "id": 18,
       "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(242, 204, 12, 0.11)",
-        "full": false,
-        "lineColor": "#F2CC0C",
-        "show": true
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
-      "tableColumn": "jenkins_node_builds_count{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "jenkins_node_builds_count",
+        "expr": "sum(jenkins_runs_total_total)",
         "format": "time_series",
         "instant": false,
         "interval": "",
@@ -704,43 +516,105 @@
         "refId": "A",
         "textEditor": false
       }],
-      "thresholds": "1,2",
-      "title": "Total Jobs",
-      "type": "singlestat",
-      "valueFontSize": "150%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "None!",
-        "value": "null"
-      }],
-      "valueName": "current"
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Runs",
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "rgba(245, 54, 54, 0.9)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(50, 172, 45, 0.97)"
-      ],
       "datasource": "Prometheus",
-      "decimals": null,
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "decimals": 0,
+          "mappings": [{
+            "id": 0,
+            "op": "=",
+            "text": "N/A",
+            "type": 1,
+            "value": "null"
+          }],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+                "color": "blue",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
         },
         "overrides": []
       },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
+      "gridPos": {
+        "h": 4,
+        "w": 4,
+        "x": 4,
+        "y": 4
+      },
+      "id": 3,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
+      },
+      "pluginVersion": "7.0.3",
+      "targets": [{
+        "expr": "sum(jenkins_runs_not_built_total)",
+        "interval": "",
+        "legendFormat": "",
+        "refId": "A"
+      }],
+      "title": "Not Built Runs",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "decimals": 0,
+          "mappings": [{
+            "id": 0,
+            "op": "=",
+            "text": "",
+            "type": 1,
+            "value": ""
+          }],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+              "color": "green",
+              "value": null
+            }]
+          },
+          "unit": "none"
+        },
+        "overrides": []
       },
       "gridPos": {
         "h": 4,
@@ -750,82 +624,64 @@
       },
       "id": 9,
       "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(55, 135, 45, 0.08)",
-        "full": false,
-        "lineColor": "#37872D",
-        "show": true
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
-      "tableColumn": "jenkins_runs_success_total{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "jenkins_runs_success_total",
+        "expr": "sum(jenkins_runs_success_total)",
         "format": "time_series",
+        "interval": "",
         "intervalFactor": 1,
+        "legendFormat": "",
         "refId": "A",
         "textEditor": false
       }],
-      "thresholds": "0,0",
-      "title": "Sucessful Jobs",
-      "type": "singlestat",
-      "valueFontSize": "150%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "None!",
-        "value": "0"
-      }],
-      "valueName": "current"
+      "title": "Sucessful Runs",
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorValue": true,
-      "colors": [
-        "#37872D",
-        "#C4162A",
-        "rgb(217, 213, 213)"
-      ],
       "datasource": "Prometheus",
-      "decimals": null,
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "decimals": 0,
+          "mappings": [{
+            "id": 0,
+            "op": "=",
+            "text": "",
+            "type": 1,
+            "value": ""
+          }],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+                "color": "yellow",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
         },
         "overrides": []
-      },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -835,83 +691,70 @@
       },
       "id": 20,
       "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(176, 183, 194, 0.26)",
-        "full": false,
-        "lineColor": "rgb(219, 198, 200)",
-        "show": true
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
-      "tableColumn": "jenkins_runs_aborted_total{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "jenkins_runs_aborted_total",
+        "expr": "sum(jenkins_runs_aborted_total)",
         "format": "time_series",
         "instant": false,
+        "interval": "",
         "intervalFactor": 1,
+        "legendFormat": "",
         "refId": "A",
         "textEditor": false
       }],
-      "thresholds": "0,0",
-      "title": "Aborted Jobs",
-      "type": "singlestat",
-      "valueFontSize": "120%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "None!",
-        "value": "0"
-      }],
-      "valueName": "current"
+      "title": "Aborted Runs",
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorValue": true,
-      "colors": [
-        "#37872D",
-        "#C4162A",
-        "#FA6400"
-      ],
       "datasource": "Prometheus",
-      "decimals": null,
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "decimals": 0,
+          "mappings": [{
+            "id": 0,
+            "op": "=",
+            "text": "",
+            "type": 1,
+            "value": ""
+          }],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+                "color": "orange",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
         },
         "overrides": []
-      },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -921,82 +764,70 @@
       },
       "id": 6,
       "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(157, 175, 204, 0.36)",
-        "full": false,
-        "lineColor": "#FA6400",
-        "show": true
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
-      "tableColumn": "jenkins_runs_unstable_total{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "jenkins_runs_unstable_total",
+        "expr": "sum(jenkins_runs_unstable_total)",
         "format": "time_series",
         "instant": false,
+        "interval": "",
         "intervalFactor": 1,
+        "legendFormat": "",
         "refId": "A",
         "textEditor": false
       }],
-      "thresholds": "0,0",
-      "title": "Unstable Jobs",
-      "type": "singlestat",
-      "valueFontSize": "120%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "None!",
-        "value": "0"
-      }],
-      "valueName": "current"
+      "title": "Unstable Runs",
+      "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "#37872D",
-        "rgba(245, 54, 54, 0.9)"
-      ],
       "datasource": "Prometheus",
-      "decimals": null,
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "decimals": 0,
+          "mappings": [{
+            "id": 0,
+            "op": "=",
+            "text": "",
+            "type": 1,
+            "value": ""
+          }],
+          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "green",
+                "value": 0
+              }
+            ]
+          },
+          "unit": "none"
         },
         "overrides": []
-      },
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
       },
       "gridPos": {
         "h": 4,
@@ -1006,54 +837,38 @@
       },
       "id": 17,
       "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [{
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
       "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [{
-        "from": "null",
-        "text": "N/A",
-        "to": "null"
-      }],
-      "sparkline": {
-        "fillColor": "rgba(207, 19, 22, 0.49)",
-        "full": false,
-        "lineColor": "#C4162A",
-        "show": true
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ]
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        }
       },
-      "tableColumn": "jenkins_runs_failure_total{endpoint=\"http\", instance=\"10.10.5.254:8080\", job=\"jenkins\", namespace=\"devops\", pod=\"jenkins-6bb88c6d97-kxmtm\", service=\"jenkins\"}",
+      "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "jenkins_runs_failure_total",
+        "expr": "sum(jenkins_runs_failure_total)",
         "format": "time_series",
+        "interval": "",
         "intervalFactor": 1,
+        "legendFormat": "",
         "refId": "A",
         "textEditor": false
       }],
-      "thresholds": "0,1",
-      "title": "Failed Jobs",
-      "type": "singlestat",
-      "valueFontSize": "120%",
-      "valueMaps": [{
-        "op": "=",
-        "text": "None!",
-        "value": "0"
-      }],
-      "valueName": "current"
+      "title": "Failed Runs",
+      "type": "stat"
     },
     {
       "aliasColors": {},
@@ -1065,7 +880,22 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {
+            "align": null
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [{
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
         },
         "overrides": []
       },
@@ -1091,7 +921,7 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
       "options": {
@@ -1099,6 +929,7 @@
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1193,7 +1024,7 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
       "options": {
@@ -1211,6 +1042,7 @@
       "targets": [{
         "expr": "default_jenkins_builds_last_build_duration_milliseconds",
         "format": "time_series",
+        "interval": "",
         "intervalFactor": 1,
         "legendFormat": "",
         "refId": "A"
@@ -1296,7 +1128,7 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
       "options": {
@@ -1395,7 +1227,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Jenkins Overview - Prometheus",
-  "uid": "jenkins-overview",
-  "version": 1
+  "title": "Jenkins Overview - Prometheus2",
+  "uid": "jenkins-overview2",
+  "version": 3
 }
