@@ -22,4 +22,4 @@ spec:
   tls:
     - hosts:
         - grafana-istio.closed.mzdev.be
-      secretName: grafana-mzdev-tls
+      secretName: grafana--tls

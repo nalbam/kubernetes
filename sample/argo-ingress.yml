@@ -20,4 +20,4 @@ spec:
   tls:
     - hosts:
         - argo-ui-devops.demo.spic.me
-      secretName: argo-ui-mzdev-tls
+      secretName: argo-ui--tls

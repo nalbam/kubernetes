@@ -22,4 +22,4 @@ spec:
   tls:
     - hosts:
         - tracing-istio.closed.mzdev.be
-      secretName: tracing-mzdev-tls
+      secretName: tracing--tls
