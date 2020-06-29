@@ -1092,7 +1092,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Kubernetes Cluster - Prometheus 2",
-  "uid": "kube-cluster2",
+  "title": "Kubernetes Cluster - Prometheus",
+  "uid": "kube-cluster",
   "version": 6
 }

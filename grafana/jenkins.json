@@ -1227,7 +1227,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Jenkins Overview - Prometheus2",
-  "uid": "jenkins-overview2",
+  "title": "Jenkins Overview - Prometheus",
+  "uid": "jenkins-overview",
   "version": 3
 }
