@@ -11,7 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
-    - host: argo-ui-devops.demo.mzdev.be
+    - host: argo-ui-devops.demo.spic.me
       http:
         paths:
           - backend:
@@ -19,5 +19,5 @@ spec:
               servicePort: 80
   tls:
     - hosts:
-        - argo-ui-devops.demo.mzdev.be
+        - argo-ui-devops.demo.spic.me
       secretName: argo-ui-mzdev-tls

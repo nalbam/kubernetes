@@ -34,7 +34,7 @@ curl -sL https://raw.githubusercontent.com/nalbam/kubernetes/master/cert-manager
 ## certificate
 
 ```bash
-export BASE_DOMAIN="demo.mzdev.be"
+export BASE_DOMAIN="demo.spic.me"
 
 export PHASE="dev"
 export NAMESPACE="sample-$PHASE"

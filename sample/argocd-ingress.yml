@@ -11,7 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
-    - host: argocd-server-devops.demo.mzdev.be
+    - host: argocd-server-devops.demo.spic.me
       http:
         paths:
           - backend:
@@ -19,7 +19,7 @@ spec:
               servicePort: http
   tls:
     - hosts:
-        - argocd-server-devops.demo.mzdev.be
+        - argocd-server-devops.demo.spic.me
       secretName: argocd-server-mzdev-tls
 
 ---
@@ -33,7 +33,7 @@ metadata:
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
 spec:
   rules:
-    - host: argocd-grpc-devops.demo.mzdev.be
+    - host: argocd-grpc-devops.demo.spic.me
       http:
         paths:
           - backend:
@@ -41,5 +41,5 @@ spec:
               servicePort: https
   tls:
     - hosts:
-        - argocd-grpc-devops.demo.mzdev.be
+        - argocd-grpc-devops.demo.spic.me
       secretName: argocd-grpc-mzdev-tls
