@@ -22,4 +22,4 @@ spec:
   tls:
     - hosts:
         - bookinfo.demo.spic.me
-      secretName: bookinfo--tls
+      secretName: bookinfo-tls

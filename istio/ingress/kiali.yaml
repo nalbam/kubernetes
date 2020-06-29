@@ -22,4 +22,4 @@ spec:
   tls:
     - hosts:
         - kiali-istio.closed.mzdev.be
-      secretName: kiali--tls
+      secretName: kiali-tls

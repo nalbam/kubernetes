@@ -20,7 +20,7 @@ spec:
   tls:
     - hosts:
         - argocd-server-devops.spot.mzdev.be
-      secretName: argocd-server--tls
+      secretName: argocd-server-tls
 
 ---
 apiVersion: extensions/v1beta1
@@ -42,4 +42,4 @@ spec:
   tls:
     - hosts:
         - argocd-grpc-devops.spot.mzdev.be
-      secretName: argocd-grpc--tls
+      secretName: argocd-grpc-tls

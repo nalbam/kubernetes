@@ -103,4 +103,4 @@ spec:
   tls:
     - hosts:
         - example-dev.demo.spic.me
-      secretName: example--tls
+      secretName: example-tls
