@@ -170,7 +170,7 @@
       },
       "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "sum(kube_pod_container_resource_requests_cpu_cores{node=~\"^$Node$\"}) / sum(machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+        "expr": "sum(kube_pod_container_resource_requests_cpu_cores{node=~\"^$Node$\"}) / sum(kube_node_status_allocatable_cpu_cores{node=~\"^$Node$\"}) * 100",
         "format": "time_series",
         "interval": "10s",
         "intervalFactor": 1,
@@ -247,7 +247,7 @@
       },
       "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "sum(kube_pod_container_resource_requests_memory_bytes{node=~\"^$Node$\"}) / sum(machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+        "expr": "sum(kube_pod_container_resource_requests_memory_bytes{node=~\"^$Node$\"}) / sum(kube_node_status_allocatable_memory_bytes{node=~\"^$Node$\"}) * 100",
         "format": "time_series",
         "interval": "10s",
         "intervalFactor": 1,
@@ -590,7 +590,7 @@
       },
       "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "sum(machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"})",
+        "expr": "sum(kube_node_status_allocatable_cpu_cores{node=~\"^$Node$\"})",
         "format": "time_series",
         "interval": "10s",
         "intervalFactor": 1,
@@ -723,7 +723,7 @@
       },
       "pluginVersion": "7.0.3",
       "targets": [{
-        "expr": "sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"})",
+        "expr": "sum (kube_node_status_allocatable_memory_bytes{node=~\"^$Node$\"})",
         "format": "time_series",
         "interval": "10s",
         "intervalFactor": 1,
