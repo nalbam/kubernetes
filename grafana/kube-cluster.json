@@ -35,8 +35,8 @@
   "editable": true,
   "gnetId": 9797,
   "graphTooltip": 0,
-  "id": 12,
-  "iteration": 1593424646497,
+  "id": 3,
+  "iteration": 1593482334564,
   "links": [{
     "asDropdown": true,
     "icon": "external link",
@@ -49,7 +49,7 @@
     "type": "dashboards"
   }],
   "panels": [{
-      "datasource": null,
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -981,7 +981,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1092,7 +1092,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1207,7 +1207,7 @@
       }
     },
     {
-      "datasource": null,
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1224,6 +1224,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1289,6 +1290,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1354,6 +1356,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1419,6 +1422,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1484,7 +1488,7 @@
       "type": "stat"
     },
     {
-      "datasource": null,
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1501,6 +1505,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1566,6 +1571,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1630,6 +1636,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1699,6 +1706,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1768,6 +1776,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1833,7 +1842,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1851,6 +1860,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1916,6 +1926,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -1981,6 +1992,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -2051,6 +2063,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -2120,6 +2133,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -2179,7 +2193,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2197,6 +2211,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -2260,6 +2275,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
@@ -2325,6 +2341,7 @@
       "fieldConfig": {
         "defaults": {
           "custom": {},
+          "decimals": 0,
           "mappings": [{
             "id": 0,
             "op": "=",
