@@ -78,30 +78,31 @@ argocd account update-password
 ## argo-events
 
 * <https://github.com/argoproj/argo-events>
+* <https://argoproj.github.io/argo-events/quick_start/>
 
 ```bash
 kubectl create namespace argo-events
 
 # helm install argo/argo-events --name argo-events --namespace argo-events
 
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/hack/k8s/manifests/argo-events-cluster-roles.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/hack/k8s/manifests/argo-events-sa.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/hack/k8s/manifests/gateway-controller-configmap.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/hack/k8s/manifests/gateway-controller-deployment.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/hack/k8s/manifests/gateway-crd.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/hack/k8s/manifests/sensor-controller-configmap.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/hack/k8s/manifests/sensor-controller-deployment.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/hack/k8s/manifests/sensor-crd.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/hack/k8s/manifests/workflow-crd.yaml
+kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install.yaml
+# kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/namespace-install.yaml
 
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/nalbam/argo-example/master/events/webhook-event-sources.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/nalbam/argo-example/master/events/webhook-gateways.yaml
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/nalbam/argo-example/master/events/webhook-sensors.yaml
+
+kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/examples/event-sources/webhook.yaml
+kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/examples/gateways/webhook.yaml
+
+kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/examples/sensors/webhook.yaml
 
 kubectl get pod,svc,ing -n argo-events
 
-curl -d 'goodbye world' -X POST webhook-argo-events.demo.nalbam.com/example
-curl -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST webhook-argo-events.demo.nalbam.com/example
+# kubectl -n argo-events port-forward webhook-gateway-nvpfq-78cc89b7f-52pd4 12000:12000
+
+# curl -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST http://localhost:12000/example
+
+curl -sL -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST webhook.demo.mzdev.be/example
+
+kubectl -n argo-events get workflows | grep "webhook"
 
 argo list -n argo-events
 ```
