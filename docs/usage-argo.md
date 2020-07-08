@@ -96,6 +96,8 @@ kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-
 
 kubectl get pod,svc,ing -n argo-events
 
+kubectl apply -n argo-events -f https://raw.githubusercontent.com/nalbam/kubernetes/master/sample/argo-webhook-ingress.yaml
+
 # kubectl -n argo-events port-forward webhook-gateway-nvpfq-78cc89b7f-52pd4 12000:12000
 
 # curl -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST http://localhost:12000/example
