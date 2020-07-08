@@ -1,0 +1,110 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: webhook-event-source
+spec:
+  type: webhook
+  webhook:
+    example:
+      endpoint: /example
+      method: POST
+      port: "12000"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Gateway
+metadata:
+  name: webhook
+spec:
+  replica: 1
+  type: webhook
+  eventSourceRef:
+    name: webhook-event-source
+  template:
+    serviceAccountName: argo-events-sa
+  service:
+    ports:
+      - port: 12000
+        targetPort: 12000
+  subscribers:
+    http:
+      - "http://webhook-sensor.argo-events.svc:9300/"
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: webhook
+spec:
+  template:
+    serviceAccountName: argo-events-sa
+  dependencies:
+    - name: test-dep
+      gatewayName: webhook
+      eventName: example
+  subscription:
+    http:
+      port: 9300
+  triggers:
+    - template:
+        name: webhook-workflow-trigger
+        k8s:
+          group: argoproj.io
+          version: v1alpha1
+          resource: workflows
+          operation: create
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: webhook-job-
+              spec:
+                entrypoint: whalesay
+                arguments:
+                  parameters:
+                    - name: message
+                      # the value will get overridden by event payload from test-dep
+                      value: hello world
+                templates:
+                  - name: whalesay
+                    serviceAccountName: argo-events-sa
+                    inputs:
+                      parameters:
+                        - name: message
+                    container:
+                      image: docker/whalesay:latest
+                      command: [cowsay]
+                      args: ["{{inputs.parameters.message}}"]
+                podGC:
+                  # pod gc strategy must be one of the following
+                  # * OnPodCompletion - delete pods immediately when pod is completed (including errors/failures)
+                  # * OnPodSuccess - delete pods immediately when pod is successful
+                  # * OnWorkflowCompletion - delete pods when workflow is completed
+                  # * OnWorkflowSuccess - delete pods when workflow is successful
+                  strategy: OnPodSuccess
+          parameters:
+            - src:
+                dependencyName: test-dep
+              dest: spec.arguments.parameters.0.value
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: webhook-gateway
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-issuer"
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/whitelist-source-range: "0.0.0.0/0"
+spec:
+  rules:
+    - host: webhook.demo.mzdev.be
+      http:
+        paths:
+          - backend:
+              serviceName: webhook-gateway
+              servicePort: 12000
+  tls:
+    - hosts:
+        - webhook.demo.mzdev.be
+      secretName: webhook-gateway-tls
