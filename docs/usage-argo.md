@@ -85,7 +85,7 @@ kubectl create namespace argo-events
 
 # helm install argo/argo-events --name argo-events --namespace argo-events
 
-kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/install.yaml
+kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/master/manifests/install.yaml
 # kubectl apply -n argo-events -f https://raw.githubusercontent.com/argoproj/argo-events/stable/manifests/namespace-install.yaml
 
 
