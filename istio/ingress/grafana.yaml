@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
-    - host: grafana-istio.closed.mzdev.be
+    - host: grafana-istio.demo.spic.me
       http:
         paths:
           - backend:
@@ -21,5 +21,5 @@ spec:
             path: /
   tls:
     - hosts:
-        - grafana-istio.closed.mzdev.be
+        - grafana-istio.demo.spic.me
       secretName: grafana-tls

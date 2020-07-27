@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
-    - host: kiali-istio.closed.mzdev.be
+    - host: kiali-istio.demo.spic.me
       http:
         paths:
           - backend:
@@ -21,5 +21,5 @@ spec:
             path: /
   tls:
     - hosts:
-        - kiali-istio.closed.mzdev.be
+        - kiali-istio.demo.spic.me
       secretName: kiali-tls

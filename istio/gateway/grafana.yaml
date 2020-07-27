@@ -8,7 +8,7 @@ metadata:
   namespace: istio-system
 spec:
   hosts:
-    - grafana-istio.closed.mzdev.be
+    - grafana-istio.demo.spic.me
   gateways:
     - ingressgateway
   http:

@@ -8,7 +8,7 @@ metadata:
   namespace: istio-system
 spec:
   hosts:
-    - kiali-istio.closed.mzdev.be
+    - kiali-istio.demo.spic.me
   gateways:
     - ingressgateway
   http:
