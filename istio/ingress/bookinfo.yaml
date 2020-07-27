@@ -12,7 +12,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
-    - host: bookinfo.demo.mzdev.be
+    - host: bookinfo.demo.spic.me
       http:
         paths:
           - backend:
@@ -21,5 +21,5 @@ spec:
             path: /
   tls:
     - hosts:
-        - bookinfo.demo.mzdev.be
+        - bookinfo.demo.spic.me
       secretName: bookinfo-tls

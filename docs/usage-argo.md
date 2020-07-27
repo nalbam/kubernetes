@@ -102,7 +102,7 @@ kubectl apply -n argo-events -f https://raw.githubusercontent.com/nalbam/kuberne
 
 # curl -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST http://localhost:12000/example
 
-curl -sL -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST webhook.demo.mzdev.be/example
+curl -sL -d '{"message":"this is my first webhook"}' -H "Content-Type: application/json" -X POST webhook.demo.spic.me/example
 
 kubectl -n argo-events get workflows | grep "webhook"
 

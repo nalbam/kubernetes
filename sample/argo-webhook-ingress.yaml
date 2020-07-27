@@ -11,7 +11,7 @@ metadata:
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
 spec:
   rules:
-    - host: webhook.demo.mzdev.be
+    - host: webhook.demo.spic.me
       http:
         paths:
           - backend:
@@ -19,5 +19,5 @@ spec:
               servicePort: 12000
   tls:
     - hosts:
-        - webhook.demo.mzdev.be
+        - webhook.demo.spic.me
       secretName: webhook-gateway-tls
