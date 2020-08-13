@@ -59,7 +59,7 @@ spec:
 
     - name: run-docker
       container:
-        image: opspresso/builder:v0.7.76
+        image: opspresso/builder:v0.8.7
         command: [sh, -c]
         args: [
             "
