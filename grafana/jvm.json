@@ -1,13 +1,16 @@
 {
-  "__inputs": [{
-    "name": "DS_PROMETHEUS",
-    "label": "Prometheus",
-    "description": "",
-    "type": "datasource",
-    "pluginId": "prometheus",
-    "pluginName": "Prometheus"
-  }],
-  "__requires": [{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
@@ -21,15 +24,17 @@
     }
   ],
   "annotations": {
-    "list": [{
-      "builtIn": 1,
-      "datasource": "Prometheus",
-      "enable": true,
-      "hide": true,
-      "iconColor": "rgba(0, 211, 255, 1)",
-      "name": "Annotations & Alerts",
-      "type": "dashboard"
-    }]
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "Prometheus",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
   },
   "description": "Dashboard for JVM metrics with Prometheus / JMX Exporter",
   "editable": true,
@@ -37,7 +42,8 @@
   "graphTooltip": 0,
   "iteration": 1592465944153,
   "links": [],
-  "panels": [{
+  "panels": [
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
@@ -87,16 +93,18 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "jvm_memory_bytes_used{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 2,
-        "legendFormat": "[{{area}}] {{pod}}",
-        "metric": "jvm_memory_bytes_used",
-        "refId": "A",
-        "step": 5
-      }],
+      "targets": [
+        {
+          "expr": "jvm_memory_bytes_used{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "[{{area}}] {{pod}}",
+          "metric": "jvm_memory_bytes_used",
+          "refId": "A",
+          "step": 5
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -115,7 +123,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "$$hashKey": "object:2545",
           "format": "bytes",
           "label": null,
@@ -188,7 +197,8 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
+      "targets": [
+        {
           "expr": "jvm_threads_current{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
           "format": "time_series",
           "interval": "",
@@ -227,7 +237,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "$$hashKey": "object:2630",
           "decimals": 0,
           "format": "short",
@@ -300,16 +311,18 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "jvm_classes_loaded{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 2,
-        "legendFormat": "{{pod}} [loaded]",
-        "metric": "jvm_classes_loaded",
-        "refId": "A",
-        "step": 10
-      }],
+      "targets": [
+        {
+          "expr": "jvm_classes_loaded{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{pod}} [loaded]",
+          "metric": "jvm_classes_loaded",
+          "refId": "A",
+          "step": 10
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -328,7 +341,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "$$hashKey": "object:2881",
           "decimals": 0,
           "format": "short",
@@ -401,16 +415,18 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "rate(jvm_gc_collection_seconds_sum{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}[1m])",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 2,
-        "legendFormat": "{{pod}} [{{gc}}]",
-        "metric": "jvm_gc_collection_seconds_sum",
-        "refId": "A",
-        "step": 10
-      }],
+      "targets": [
+        {
+          "expr": "rate(jvm_gc_collection_seconds_sum{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}[1m])",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{pod}} [{{gc}}]",
+          "metric": "jvm_gc_collection_seconds_sum",
+          "refId": "A",
+          "step": 10
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -429,7 +445,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "$$hashKey": "object:3051",
           "format": "s",
           "label": null,
@@ -501,16 +518,18 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "jvm_gc_collection_seconds_count{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 2,
-        "legendFormat": "{{pod}} [{{gc}}]",
-        "metric": "",
-        "refId": "A",
-        "step": 10
-      }],
+      "targets": [
+        {
+          "expr": "jvm_gc_collection_seconds_count{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{pod}} [{{gc}}]",
+          "metric": "",
+          "refId": "A",
+          "step": 10
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -529,7 +548,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "$$hashKey": "object:2966",
           "decimals": 0,
           "format": "short",
@@ -563,7 +583,8 @@
     "prometheus"
   ],
   "templating": {
-    "list": [{
+    "list": [
+      {
         "allValue": ".*",
         "current": {
           "selected": false,

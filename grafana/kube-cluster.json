@@ -1,13 +1,6 @@
 {
-  "__inputs": [{
-    "name": "DS_PROMETHEUS",
-    "label": "Prometheus",
-    "description": "",
-    "type": "datasource",
-    "pluginId": "prometheus",
-    "pluginName": "Prometheus"
-  }],
-  "__requires": [{
+  "__requires": [
+    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
@@ -21,15 +14,17 @@
     }
   ],
   "annotations": {
-    "list": [{
-      "builtIn": 1,
-      "datasource": "Prometheus",
-      "enable": true,
-      "hide": true,
-      "iconColor": "rgba(0, 211, 255, 1)",
-      "name": "Annotations & Alerts",
-      "type": "dashboard"
-    }]
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
   },
   "description": "Dashboard for Kubernetes cluster with Prometheus.",
   "editable": true,
@@ -37,19 +32,22 @@
   "graphTooltip": 0,
   "id": 1,
   "iteration": 1593484572566,
-  "links": [{
-    "asDropdown": true,
-    "icon": "external link",
-    "includeVars": true,
-    "keepTime": false,
-    "tags": [
-      "kubernetes"
-    ],
-    "title": "Dashboards",
-    "type": "dashboards"
-  }],
-  "panels": [{
-      "datasource": "Prometheus",
+  "links": [
+    {
+      "asDropdown": true,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [
+        "kubernetes"
+      ],
+      "title": "Dashboards",
+      "type": "dashboards"
+    }
+  ],
+  "panels": [
+    {
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -62,25 +60,29 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "blue",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -110,37 +112,42 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_node_info)",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_node_info)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Cluster Nodes",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 1,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "max": 100,
           "min": 0,
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -186,37 +193,42 @@
         "showThresholdMarkers": true
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_info) / sum(kube_node_status_allocatable_pods) * 100",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_info) / sum(kube_node_status_allocatable_pods) * 100",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Cluster Pod Usage",
       "type": "gauge"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 1,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "max": 100,
           "min": 0,
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -262,37 +274,42 @@
         "showThresholdMarkers": true
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_container_resource_requests_cpu_cores) / sum(kube_node_status_allocatable_cpu_cores) * 100",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_container_resource_requests_cpu_cores) / sum(kube_node_status_allocatable_cpu_cores) * 100",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Cluster CPU Usage",
       "type": "gauge"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 1,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "max": 100,
           "min": 0,
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -338,35 +355,40 @@
         "showThresholdMarkers": true
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_container_resource_requests_memory_bytes) / sum(kube_node_status_allocatable_memory_bytes) * 100",
-        "format": "time_series",
-        "intervalFactor": 1,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_container_resource_requests_memory_bytes) / sum(kube_node_status_allocatable_memory_bytes) * 100",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
       "title": "Cluster Memory Usage",
       "type": "gauge"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 1,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "max": 100,
           "min": 0,
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -412,35 +434,40 @@
         "showThresholdMarkers": true
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(container_fs_usage_bytes{device=~\"^/dev/.*$\",id=\"/\"}) / sum(container_fs_limit_bytes{device=~\"^/dev/.*$\",id=\"/\"}) * 100",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(container_fs_usage_bytes{device=~\"^/dev/.*$\",id=\"/\"}) / sum(container_fs_limit_bytes{device=~\"^/dev/.*$\",id=\"/\"}) * 100",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Cluster Disk Usage",
       "type": "gauge"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -478,14 +505,16 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_node_spec_unschedulable)",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_node_spec_unschedulable)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Nodes Unavailable",
       "type": "stat"
     },
@@ -494,7 +523,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -535,7 +564,8 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
+      "targets": [
+        {
           "expr": "sum(kube_node_status_allocatable_pods)",
           "format": "time_series",
           "intervalFactor": 1,
@@ -575,7 +605,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "short",
           "label": "pods",
           "logBase": 1,
@@ -602,7 +633,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -643,7 +674,8 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
+      "targets": [
+        {
           "expr": "sum(kube_node_status_capacity_cpu_cores)",
           "format": "time_series",
           "intervalFactor": 1,
@@ -683,7 +715,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "decimals": null,
           "format": "none",
           "label": "cores",
@@ -711,7 +744,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -752,7 +785,8 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
+      "targets": [
+        {
           "expr": "sum(kube_node_status_allocatable_memory_bytes)",
           "format": "time_series",
           "intervalFactor": 1,
@@ -792,7 +826,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "decbytes",
           "label": null,
           "logBase": 1,
@@ -819,7 +854,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -860,7 +895,8 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
+      "targets": [
+        {
           "expr": "sum(container_fs_usage_bytes{device=~\"^/dev/.*$\",id=\"/\"})",
           "format": "time_series",
           "interval": "",
@@ -895,7 +931,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "decbytes",
           "label": null,
           "logBase": 1,
@@ -919,22 +956,25 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -972,20 +1012,22 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_node_status_condition{condition=\"OutOfDisk\", status=\"true\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_node_status_condition{condition=\"OutOfDisk\", status=\"true\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Nodes Out of Disk",
       "type": "stat"
     },
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1002,7 +1044,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
@@ -1048,12 +1090,14 @@
       "spaceLength": 10,
       "stack": true,
       "steppedLine": false,
-      "targets": [{
-        "expr": "sum(rate(nginx_ingress_controller_requests[2m])) by (status)",
-        "interval": "",
-        "legendFormat": "{{status}}",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(rate(nginx_ingress_controller_requests[2m])) by (status)",
+          "interval": "",
+          "legendFormat": "{{status}}",
+          "refId": "A"
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -1072,7 +1116,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1096,7 +1141,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1113,7 +1158,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "decimals": 2,
       "fieldConfig": {
         "defaults": {
@@ -1157,7 +1202,8 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
+      "targets": [
+        {
           "expr": "sum(rate(container_network_receive_bytes_total[2m]))",
           "interval": "",
           "legendFormat": "Received",
@@ -1188,7 +1234,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "Bps",
           "label": null,
           "logBase": 1,
@@ -1211,7 +1258,7 @@
       }
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1224,25 +1271,29 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -1277,38 +1328,44 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_deployment_status_replicas{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_deployment_status_replicas{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Deployment Replicas",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -1343,38 +1400,44 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_deployment_status_replicas_available{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_deployment_status_replicas_available{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Deployment Replicas - Available",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -1409,35 +1472,40 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_deployment_status_replicas_updated{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_deployment_status_replicas_updated{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Deployment Replicas - Updated",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -1480,19 +1548,21 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_deployment_status_replicas_unavailable{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_deployment_status_replicas_unavailable{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Deployment Replicas - Unavailable",
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1505,25 +1575,29 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -1558,35 +1632,40 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Running\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Running\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Pods Running",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -1629,34 +1708,39 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Pending\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Pending\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
       "title": "Pods Pending",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -1699,34 +1783,39 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Unknown\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Unknown\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
       "title": "Pods Unknown",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -1769,37 +1858,43 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Failed\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Failed\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
       "title": "Pods Failed",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -1834,19 +1929,21 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Succeeded\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Succeeded\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
       "title": "Pods Succeeded",
       "type": "stat"
     },
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1860,25 +1957,29 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -1913,38 +2014,44 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_container_status_running{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_container_status_running{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Containers Running",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -1979,35 +2086,40 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_container_status_ready{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_container_status_ready{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Containers Ready",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -2050,35 +2162,40 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_container_status_waiting{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_container_status_waiting{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Containers Waiting",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -2121,38 +2238,44 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(rate(kube_pod_container_status_restarts_total{namespace!=\"kube-system\"}[2m]))",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(rate(kube_pod_container_status_restarts_total{namespace!=\"kube-system\"}[2m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Containers Restarts (2m)",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -2187,18 +2310,20 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_pod_container_status_terminated{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "intervalFactor": 1,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_pod_container_status_terminated{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
       "title": "Containers Terminated",
       "type": "stat"
     },
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2212,25 +2337,29 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -2265,36 +2394,42 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_job_status_succeeded{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "intervalFactor": 1,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_job_status_succeeded{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
       "title": "Jobs Succeeded",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -2329,35 +2464,40 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_job_status_active{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_job_status_active{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Jobs Active",
       "type": "stat"
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -2400,12 +2540,14 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(kube_job_status_failed{namespace=~\"$namespace\"})",
-        "format": "time_series",
-        "intervalFactor": 1,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(kube_job_status_failed{namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
       "title": "Jobs Failed",
       "type": "stat"
     }
@@ -2418,33 +2560,25 @@
     "prometheus"
   ],
   "templating": {
-    "list": [{
-        "allValue": null,
+    "list": [
+      {
         "current": {
-          "selected": true,
-          "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "",
+          "value": ""
         },
-        "datasource": "Prometheus",
-        "definition": "label_values(kube_node_info, node)",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": null,
-        "multi": true,
-        "name": "node",
+        "multi": false,
+        "name": "datasource",
         "options": [],
-        "query": "label_values(kube_node_info, node)",
+        "query": "prometheus",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
-        "tagValuesQuery": null,
-        "tags": [],
-        "tagsQuery": null,
-        "type": "query",
-        "useTags": false
+        "type": "datasource"
       },
       {
         "allValue": null,
@@ -2455,7 +2589,7 @@
             "$__all"
           ]
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "hide": 0,
         "includeAll": true,

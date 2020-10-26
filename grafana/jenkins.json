@@ -1,13 +1,16 @@
 {
-  "__inputs": [{
-    "name": "DS_PROMETHEUS",
-    "label": "Prometheus",
-    "description": "",
-    "type": "datasource",
-    "pluginId": "prometheus",
-    "pluginName": "Prometheus"
-  }],
-  "__requires": [{
+  "__inputs": [
+    {
+      "name": "DS_PROMETHEUS",
+      "label": "Prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
@@ -21,15 +24,17 @@
     }
   ],
   "annotations": {
-    "list": [{
-      "builtIn": 1,
-      "datasource": "Prometheus",
-      "enable": true,
-      "hide": true,
-      "iconColor": "rgba(0, 211, 255, 1)",
-      "name": "Annotations & Alerts",
-      "type": "dashboard"
-    }]
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "Prometheus",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
   },
   "description": "Dashboard for Jenkins with Prometheus",
   "editable": true,
@@ -37,14 +42,16 @@
   "graphTooltip": 0,
   "id": 12,
   "links": [],
-  "panels": [{
+  "panels": [
+    {
       "cacheTimeout": null,
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
+          "mappings": [
+            {
               "id": 0,
               "op": "=",
               "text": "Good!",
@@ -62,7 +69,8 @@
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "orange",
                 "value": null
               },
@@ -105,15 +113,17 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(jenkins_health_check_score)",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A",
-        "textEditor": false
-      }],
+      "targets": [
+        {
+          "expr": "sum(jenkins_health_check_score)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A",
+          "textEditor": false
+        }
+      ],
       "title": "Jenkins health",
       "type": "stat"
     },
@@ -129,10 +139,12 @@
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "ms"
         },
@@ -162,16 +174,18 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(vm_uptime_milliseconds{service=\"jenkins\"})",
-        "format": "time_series",
-        "instant": false,
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A",
-        "textEditor": false
-      }],
+      "targets": [
+        {
+          "expr": "sum(vm_uptime_milliseconds{service=\"jenkins\"})",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A",
+          "textEditor": false
+        }
+      ],
       "timeFrom": null,
       "timeShift": null,
       "title": "Uptime",
@@ -184,17 +198,20 @@
         "defaults": {
           "custom": {},
           "decimals": 2,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -235,14 +252,16 @@
         "showThresholdMarkers": true
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(vm_cpu_load{service=\"jenkins\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(vm_cpu_load{service=\"jenkins\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "timeFrom": null,
       "timeShift": null,
       "title": "CPU Load",
@@ -255,20 +274,24 @@
         "defaults": {
           "custom": {},
           "decimals": 2,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "",
-            "type": 1,
-            "value": ""
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "",
+              "type": 1,
+              "value": ""
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "blue",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -303,13 +326,15 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(vm_cpu_load{service=\"jenkins\"})",
-        "interval": "",
-        "legendFormat": "",
-        "refId": "A",
-        "textEditor": false
-      }],
+      "targets": [
+        {
+          "expr": "sum(vm_cpu_load{service=\"jenkins\"})",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A",
+          "textEditor": false
+        }
+      ],
       "title": "CPU Usage",
       "type": "stat"
     },
@@ -320,17 +345,20 @@
         "defaults": {
           "custom": {},
           "decimals": 2,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -371,15 +399,17 @@
         "showThresholdMarkers": true
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "(sum(vm_memory_total_max{service=\"jenkins\"}) - sum(vm_memory_total_used{service=\"jenkins\"})) / sum(vm_memory_total_max{service=\"jenkins\"}) * 100.0",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A",
-        "textEditor": false
-      }],
+      "targets": [
+        {
+          "expr": "(sum(vm_memory_total_max{service=\"jenkins\"}) - sum(vm_memory_total_used{service=\"jenkins\"})) / sum(vm_memory_total_max{service=\"jenkins\"}) * 100.0",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A",
+          "textEditor": false
+        }
+      ],
       "title": "Memory Usage",
       "type": "gauge"
     },
@@ -390,20 +420,24 @@
         "defaults": {
           "custom": {},
           "decimals": 2,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "blue",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "blue",
+                "value": null
+              }
+            ]
           },
           "unit": "decbytes"
         },
@@ -438,14 +472,16 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(vm_memory_total_used{service=\"jenkins\"})",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(vm_memory_total_used{service=\"jenkins\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "timeFrom": null,
       "timeShift": null,
       "title": "Memory Used",
@@ -458,20 +494,24 @@
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "None!",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "None!",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -506,16 +546,18 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(jenkins_runs_total_total)",
-        "format": "time_series",
-        "instant": false,
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A",
-        "textEditor": false
-      }],
+      "targets": [
+        {
+          "expr": "sum(jenkins_runs_total_total)",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A",
+          "textEditor": false
+        }
+      ],
       "timeFrom": null,
       "timeShift": null,
       "title": "Total Runs",
@@ -528,17 +570,20 @@
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "N/A",
-            "type": 1,
-            "value": "null"
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "blue",
                 "value": null
               },
@@ -581,12 +626,14 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(jenkins_runs_not_built_total)",
-        "interval": "",
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "sum(jenkins_runs_not_built_total)",
+          "interval": "",
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "title": "Not Built Runs",
       "type": "stat"
     },
@@ -597,20 +644,24 @@
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "",
-            "type": 1,
-            "value": ""
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "",
+              "type": 1,
+              "value": ""
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
-              "color": "green",
-              "value": null
-            }]
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
           },
           "unit": "none"
         },
@@ -640,15 +691,17 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(jenkins_runs_success_total)",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A",
-        "textEditor": false
-      }],
+      "targets": [
+        {
+          "expr": "sum(jenkins_runs_success_total)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A",
+          "textEditor": false
+        }
+      ],
       "title": "Sucessful Runs",
       "type": "stat"
     },
@@ -659,17 +712,20 @@
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "",
-            "type": 1,
-            "value": ""
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "",
+              "type": 1,
+              "value": ""
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "yellow",
                 "value": null
               },
@@ -712,16 +768,18 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(jenkins_runs_aborted_total)",
-        "format": "time_series",
-        "instant": false,
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A",
-        "textEditor": false
-      }],
+      "targets": [
+        {
+          "expr": "sum(jenkins_runs_aborted_total)",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A",
+          "textEditor": false
+        }
+      ],
       "title": "Aborted Runs",
       "type": "stat"
     },
@@ -732,17 +790,20 @@
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "",
-            "type": 1,
-            "value": ""
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "",
+              "type": 1,
+              "value": ""
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "orange",
                 "value": null
               },
@@ -785,16 +846,18 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(jenkins_runs_unstable_total)",
-        "format": "time_series",
-        "instant": false,
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A",
-        "textEditor": false
-      }],
+      "targets": [
+        {
+          "expr": "sum(jenkins_runs_unstable_total)",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A",
+          "textEditor": false
+        }
+      ],
       "title": "Unstable Runs",
       "type": "stat"
     },
@@ -805,17 +868,20 @@
         "defaults": {
           "custom": {},
           "decimals": 0,
-          "mappings": [{
-            "id": 0,
-            "op": "=",
-            "text": "",
-            "type": 1,
-            "value": ""
-          }],
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "",
+              "type": 1,
+              "value": ""
+            }
+          ],
           "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "red",
                 "value": null
               },
@@ -858,15 +924,17 @@
         }
       },
       "pluginVersion": "7.0.3",
-      "targets": [{
-        "expr": "sum(jenkins_runs_failure_total)",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A",
-        "textEditor": false
-      }],
+      "targets": [
+        {
+          "expr": "sum(jenkins_runs_failure_total)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A",
+          "textEditor": false
+        }
+      ],
       "title": "Failed Runs",
       "type": "stat"
     },
@@ -886,7 +954,8 @@
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
-            "steps": [{
+            "steps": [
+              {
                 "color": "green",
                 "value": null
               },
@@ -937,12 +1006,14 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "jenkins_job_queuing_duration",
-        "format": "time_series",
-        "intervalFactor": 1,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "jenkins_job_queuing_duration",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -962,7 +1033,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1039,14 +1111,16 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "default_jenkins_builds_last_build_duration_milliseconds",
-        "format": "time_series",
-        "interval": "",
-        "intervalFactor": 1,
-        "legendFormat": "",
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "default_jenkins_builds_last_build_duration_milliseconds",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -1066,7 +1140,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "ms",
           "label": "",
           "logBase": 2,
@@ -1143,12 +1218,14 @@
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
-      "targets": [{
-        "expr": "avg(sum(jenkins_job_building_duration)/sum(jenkins_job_building_duration_count))",
-        "format": "time_series",
-        "intervalFactor": 1,
-        "refId": "A"
-      }],
+      "targets": [
+        {
+          "expr": "avg(sum(jenkins_job_building_duration)/sum(jenkins_job_building_duration_count))",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
@@ -1168,7 +1245,8 @@
         "show": true,
         "values": []
       },
-      "yaxes": [{
+      "yaxes": [
+        {
           "format": "short",
           "label": "",
           "logBase": 2,
