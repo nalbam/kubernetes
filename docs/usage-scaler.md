@@ -44,13 +44,18 @@ spec:
 ```bash
 kubectl get no -o wide
 
-kubectl get pod --all-namespaces -o wide | grep ip-10-251-87-129.ap-northeast-2.compute.internal
+kubectl get pod --all-namespaces -o wide | grep ip-10-251-87-129
 
 kubectl drain ip-10-251-87-129.ap-northeast-2.compute.internal --delete-local-data --ignore-daemonsets
+
+kubectl cordon ip-10-251-87-129.ap-northeast-2.compute.internal
 kubectl uncordon ip-10-251-87-129.ap-northeast-2.compute.internal
 
-kubectl get pod -o wide --all-namespaces | grep ip-10-251-88-244.ap-northeast-2.compute.internal
+kubectl get pod -o wide --all-namespaces | grep ip-10-251-88-244
 
 CA=$(kubectl get pod --all-namespaces | grep cluster-autoscaler | awk '{print $2}')
 kubectl logs ${CA} -n kube-system -f
+
+k get no --show-labels | grep 'worker' | grep 'v1.14.7' | cut -d' ' -f1
+
 ```
