@@ -30,8 +30,8 @@
   "editable": true,
   "gnetId": 9797,
   "graphTooltip": 0,
-  "id": 1,
-  "iteration": 1593484572566,
+  "id": 118,
+  "iteration": 1606907139306,
   "links": [
     {
       "asDropdown": true,
@@ -109,12 +109,13 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "sum(kube_node_info)",
+          "expr": "sum(kube_node_info * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -192,10 +193,10 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "sum(kube_pod_info) / sum(kube_node_status_allocatable_pods) * 100",
+          "expr": "sum(kube_pod_info * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"}) /\nsum(kube_node_status_allocatable_pods * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -273,10 +274,10 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests_cpu_cores) / sum(kube_node_status_allocatable_cpu_cores) * 100",
+          "expr": "sum(kube_pod_container_resource_requests_cpu_cores * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"}) /\nsum(kube_node_status_allocatable_cpu_cores * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -354,12 +355,14 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests_memory_bytes) / sum(kube_node_status_allocatable_memory_bytes) * 100",
+          "expr": "sum(kube_pod_container_resource_requests_memory_bytes * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"}) /\nsum(kube_node_status_allocatable_memory_bytes * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"}) * 100",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -433,10 +436,10 @@
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "sum(container_fs_usage_bytes{device=~\"^/dev/.*$\",id=\"/\"}) / sum(container_fs_limit_bytes{device=~\"^/dev/.*$\",id=\"/\"}) * 100",
+          "expr": "sum(container_fs_usage_bytes{device=~\"^/dev/.*$\",id=\"/\"} * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"}) /\nsum(container_fs_limit_bytes{device=~\"^/dev/.*$\",id=\"/\"} * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -502,12 +505,13 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "sum(kube_node_spec_unschedulable)",
+          "expr": "sum(kube_node_spec_unschedulable * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -526,7 +530,8 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -554,9 +559,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -566,22 +572,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_allocatable_pods)",
+          "expr": "sum(kube_node_status_allocatable_pods * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "allocatable",
           "refId": "A"
         },
         {
-          "expr": "sum(kube_node_status_capacity_pods)",
+          "expr": "sum(kube_node_status_capacity_pods * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "capacity",
           "refId": "B"
         },
         {
-          "expr": "sum(kube_pod_info)",
+          "expr": "sum(kube_pod_info * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "requested",
           "refId": "C"
@@ -636,7 +645,8 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -664,9 +674,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -676,22 +687,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_capacity_cpu_cores)",
+          "expr": "sum(kube_node_status_capacity_cpu_cores * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "allocatable",
           "refId": "A"
         },
         {
-          "expr": "sum(kube_node_status_allocatable_cpu_cores)",
+          "expr": "sum(kube_node_status_allocatable_cpu_cores * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "capacity",
           "refId": "B"
         },
         {
-          "expr": "sum(kube_pod_container_resource_requests_cpu_cores)",
+          "expr": "sum(kube_pod_container_resource_requests_cpu_cores * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "requested",
           "refId": "C"
@@ -747,7 +761,8 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -775,9 +790,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -787,22 +803,25 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_allocatable_memory_bytes)",
+          "expr": "sum(kube_node_status_allocatable_memory_bytes * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "allocatable",
           "refId": "A"
         },
         {
-          "expr": "sum(kube_node_status_capacity_memory_bytes)",
+          "expr": "sum(kube_node_status_capacity_memory_bytes * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "capacity",
           "refId": "B"
         },
         {
-          "expr": "sum(kube_pod_container_resource_requests_memory_bytes)",
+          "expr": "sum(kube_pod_container_resource_requests_memory_bytes * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "requested",
           "refId": "C"
@@ -857,7 +876,8 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -885,9 +905,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -897,7 +918,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(container_fs_usage_bytes{device=~\"^/dev/.*$\",id=\"/\"})",
+          "expr": "sum(container_fs_usage_bytes{device=~\"^/dev/.*$\",id=\"/\"} * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -905,7 +926,7 @@
           "refId": "A"
         },
         {
-          "expr": "sum(container_fs_limit_bytes{device=~\"^/dev/.*$\",id=\"/\"})",
+          "expr": "sum(container_fs_limit_bytes{device=~\"^/dev/.*$\",id=\"/\"} * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1009,12 +1030,13 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
-          "expr": "sum(kube_node_status_condition{condition=\"OutOfDisk\", status=\"true\"})",
+          "expr": "sum(kube_node_status_condition{condition=\"OutOfDisk\", status=\"true\"} * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1048,7 +1070,8 @@
       "decimals": 0,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -1080,9 +1103,10 @@
       "linewidth": 1,
       "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1162,7 +1186,8 @@
       "decimals": 2,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -1192,9 +1217,10 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1325,9 +1351,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas{namespace=~\"$namespace\"})",
@@ -1397,9 +1424,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_available{namespace=~\"$namespace\"})",
@@ -1469,9 +1497,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_updated{namespace=~\"$namespace\"})",
@@ -1545,9 +1574,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_unavailable{namespace=~\"$namespace\"})",
@@ -1629,9 +1659,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Running\"})",
@@ -1705,9 +1736,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Pending\"})",
@@ -1780,9 +1812,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Unknown\"})",
@@ -1855,9 +1888,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Failed\"})",
@@ -1926,9 +1960,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_pod_status_phase{namespace=~\"$namespace\", phase=\"Succeeded\"})",
@@ -2011,9 +2046,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_pod_container_status_running{namespace=~\"$namespace\"})",
@@ -2083,9 +2119,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_pod_container_status_ready{namespace=~\"$namespace\"})",
@@ -2159,9 +2196,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_pod_container_status_waiting{namespace=~\"$namespace\"})",
@@ -2235,9 +2273,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(rate(kube_pod_container_status_restarts_total{namespace!=\"kube-system\"}[2m]))",
@@ -2307,9 +2346,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_pod_container_status_terminated{namespace=~\"$namespace\"})",
@@ -2391,9 +2431,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_job_status_succeeded{namespace=~\"$namespace\"})",
@@ -2461,9 +2502,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_job_status_active{namespace=~\"$namespace\"})",
@@ -2537,9 +2579,10 @@
           ],
           "fields": "",
           "values": false
-        }
+        },
+        "textMode": "auto"
       },
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "7.3.3",
       "targets": [
         {
           "expr": "sum(kube_job_status_failed{namespace=~\"$namespace\"})",
@@ -2553,7 +2596,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 25,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -2567,6 +2610,7 @@
           "text": "",
           "value": ""
         },
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -2583,18 +2627,48 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "$datasource",
+        "definition": "label_values(kube_node_labels, label_group)",
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "name": "node_group",
+        "options": [],
+        "query": "label_values(kube_node_labels, label_group)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": null,
+        "tags": [],
+        "tagsQuery": null,
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "$datasource",
         "definition": "",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": null,
-        "multi": true,
+        "multi": false,
         "name": "namespace",
         "options": [],
         "query": "label_values(kube_pod_info, namespace)",
@@ -2641,5 +2715,5 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster - Prometheus",
   "uid": "kube-cluster",
-  "version": 1
+  "version": 5
 }

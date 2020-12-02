@@ -38,6 +38,16 @@ sum(machine_cpu_cores{kubernetes_io_hostname=~"^$Node$"})
 # ingress
 sum(rate(nginx_ingress_controller_requests{namespace=~\"$namespace\",ingress=~\"$ingress\",status!~\"[4-5].*\"}[2m]))
 sum(rate(nginx_ingress_controller_requests{namespace=~\"$namespace\",ingress=~\"$ingress\"}[2m]))
+
+# node group
+sum(kube_node_info)
+kube_node_labels{label_group="worker"}
+
+label_values(kube_node_labels, label_group)
+
+sum(kube_pod_info * on (node) group_left (role) kube_node_labels{label_group=~"$node_group"}) /
+sum(kube_node_status_allocatable_pods * on (node) group_left (role) kube_node_labels{label_group=~"$node_group"}) * 100
+
 ```
 
 * <https://github.com/camilb/prometheus-kubernetes>
