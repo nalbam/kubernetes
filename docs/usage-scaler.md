@@ -56,9 +56,11 @@ kubectl get pod -o wide --all-namespaces | grep ip-10-251-88-244
 CA=$(kubectl get pod --all-namespaces | grep cluster-autoscaler | awk '{print $2}')
 kubectl logs ${CA} -n addon-cluster-autoscaler -f
 
-k get no --show-labels
-k get no --show-labels | grep 'group=data' | grep 'v1.14.7' | cut -d' ' -f1
+k get pod --all-namespaces | grep -v Running | grep -v Completed
 
-k get no --show-labels | grep 'group=data' | grep 'v1.14.7' | cut -d' ' -f1 > /tmp/kube_nodes
+k get no --show-labels
+k get no --show-labels | grep 'group=webapp' | grep 'v1.14.9' | cut -d' ' -f1
+
+k get no --show-labels | grep 'group=webapp' | grep 'v1.14.7' | cut -d' ' -f1 > /tmp/kube_nodes
 
 ```

@@ -16,16 +16,16 @@ fi
 
 ################################################################################
 
-echo "# $(date)"
+# echo "# $(date)"
+
+# while read LINE; do
+#   kubectl cordon ${LINE}
+# done < ${KUBE_NODES}
+
+# echo "sleep 10"
+# sleep 10
 
 while read LINE; do
-
-  kubectl cordon ${LINE}
-
-done < ${KUBE_NODES}
-
-while read LINE; do
-
   echo "# $(date)"
 
   kubectl drain --delete-local-data --ignore-daemonsets ${LINE}
@@ -33,14 +33,14 @@ while read LINE; do
   while true; do
     COUNT=$(kubectl get pod --all-namespaces | grep -v Running | grep -v Completed | wc -l | xargs)
 
-    if [ ${COUNT} -lt 1 ]; then
+    echo ${COUNT}
+
+    if [ ${COUNT} -lt 3 ]; then
       break
     fi
 
-    sleep 2
-    printf "."
+    sleep 3
   done
-
 done < ${KUBE_NODES}
 
 echo "# $(date)"
