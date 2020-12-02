@@ -31,11 +31,11 @@ while read LINE; do
   kubectl drain --delete-local-data --ignore-daemonsets ${LINE}
 
   while true; do
-    COUNT=$(kubectl get pod --all-namespaces | grep -v Running | grep -v Completed | wc -l | xargs)
+    COUNT=$(kubectl get pod --all-namespaces | grep -v Running | grep -v Completed | grep -v Terminating | wc -l | xargs)
 
     echo ${COUNT}
 
-    if [ ${COUNT} -lt 3 ]; then
+    if [ ${COUNT} -lt 2 ]; then
       break
     fi
 
