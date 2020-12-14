@@ -16,17 +16,18 @@ fi
 
 ################################################################################
 
-# echo "# $(date)"
-
-# while read LINE; do
-#   kubectl cordon ${LINE}
-# done < ${KUBE_NODES}
-
-# echo "sleep 10"
-# sleep 10
+echo "# $(date)"
 
 while read LINE; do
-  echo "# $(date)"
+  kubectl cordon ${LINE}
+done < ${KUBE_NODES}
+
+echo "sleep 10.."
+sleep 10
+
+IDX=1
+while read LINE; do
+  echo "#${IDX} $(date)"
 
   kubectl drain --delete-local-data --ignore-daemonsets ${LINE}
 
@@ -41,6 +42,8 @@ while read LINE; do
 
     sleep 3
   done
+
+  IDX=$(( ${IDX} + 1 ))
 done < ${KUBE_NODES}
 
 echo "# $(date)"
