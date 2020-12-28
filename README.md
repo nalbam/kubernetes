@@ -39,8 +39,11 @@ kubectl get nodes --no-headers | \
 # kubectl exec bash
 kubectl exec -n devops -it jenkins-74bd9c7799-jjkxz -- /bin/bash
 
-# kubectl delete
+# kubectl delete pod
 kubectl delete pod -n devops -l jenkins=slave
+
+# kubectl delete ns force
+for ns in $(kubectl get ns --field-selector status.phase=Terminating -o jsonpath='{.items[*].metadata.name}'); do kubectl get ns $ns -ojson | jq '.spec.finalizers = []' | kubectl replace --raw "/api/v1/namespaces/$ns/finalize" -f -; done
 
 # get tunnel ip
 ifconfig tunl0 | grep inet | awk '{print $2}'
