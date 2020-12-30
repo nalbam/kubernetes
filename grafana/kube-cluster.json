@@ -31,7 +31,7 @@
   "gnetId": 9797,
   "graphTooltip": 0,
   "id": 118,
-  "iteration": 1606907139306,
+  "iteration": 1609312627324,
   "links": [
     {
       "asDropdown": true,
@@ -2644,7 +2644,7 @@
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": null,
         "tags": [],
         "tagsQuery": null,
@@ -2675,7 +2675,7 @@
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": null,
         "tags": [],
         "tagsQuery": null,
@@ -2715,5 +2715,5 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster - Prometheus",
   "uid": "kube-cluster",
-  "version": 5
+  "version": 8
 }
