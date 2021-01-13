@@ -20,30 +20,30 @@ fi
 
 echo "# $(date)"
 
-while read LINE; do
-  kubectl cordon ${LINE}
-done < ${KUBE_NODES}
-
-echo "sleep 10.."
-sleep 10
+# while read LINE; do
+#   kubectl cordon ${LINE}
+# done < ${KUBE_NODES}
+# echo "sleep 10.."
+# sleep 10
 
 IDX=1
 while read LINE; do
-  echo "#${IDX} $(date)"
+  echo "#"
+  echo "# ${IDX}/${COUNT} $(date)"
+  echo "#"
+  echo "# kubectl drain ${LINE}"
+  echo "#"
 
   kubectl drain --delete-local-data --ignore-daemonsets ${LINE}
 
-  while true; do
-    COUNT=$(kubectl get pod --all-namespaces | grep -v Running | grep -v Completed | grep -v Terminating | wc -l | xargs)
-
-    echo ${COUNT}
-
-    if [ ${COUNT} -lt 2 ]; then
-      break
-    fi
-
-    sleep 3
-  done
+  # while true; do
+  #   CNT=$(kubectl get pod --all-namespaces | grep -v Running | grep -v Completed | grep -v Terminating | wc -l | xargs)
+  #   echo ${CNT}
+  #   if [ ${CNT} -lt 2 ]; then
+  #     break
+  #   fi
+  #   sleep 3
+  # done
 
   IDX=$(( ${IDX} + 1 ))
 done < ${KUBE_NODES}
