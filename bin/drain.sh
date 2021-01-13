@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# k get no --show-labels | grep 'v1.14.7' | cut -d' ' -f1 > /tmp/kube_nodes
+
 KUBE_NODES=/tmp/kube_nodes
 
 if [ ! -f ${KUBE_NODES} ]; then
