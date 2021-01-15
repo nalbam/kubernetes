@@ -31,7 +31,7 @@
   "gnetId": 9797,
   "graphTooltip": 0,
   "id": 118,
-  "iteration": 1609312627324,
+  "iteration": 1610693421245,
   "links": [
     {
       "asDropdown": true,
@@ -2607,8 +2607,8 @@
       {
         "current": {
           "selected": false,
-          "text": "",
-          "value": ""
+          "text": "prom-alpha-kr-a",
+          "value": "prom-alpha-kr-a"
         },
         "error": null,
         "hide": 0,
@@ -2627,9 +2627,13 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "$datasource",
         "definition": "label_values(kube_node_labels, label_group)",
@@ -2715,5 +2719,5 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster - Prometheus",
   "uid": "kube-cluster",
-  "version": 8
+  "version": 10
 }

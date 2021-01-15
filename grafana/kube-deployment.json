@@ -26,19 +26,29 @@
       }
     ]
   },
-  "timezone": "browser",
-  "uid": "kube-deployment",
-  "title": "Kubernetes Deployment - Prometheus",
   "description": "Dashboard for Kubernetes deployment with Prometheus.",
   "editable": true,
   "gnetId": 9679,
-  "version": 1,
   "graphTooltip": 0,
-  "iteration": 1552366560145,
-  "links": [],
+  "id": 170,
+  "iteration": 1610693375248,
+  "links": [
+    {
+      "asDropdown": true,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": false,
+      "tags": [
+        "kubernetes"
+      ],
+      "title": "Dashboards",
+      "type": "dashboards"
+    }
+  ],
   "panels": [
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -61,6 +71,12 @@
       ],
       "datasource": "$datasource",
       "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -144,6 +160,12 @@
         "#e24d42"
       ],
       "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -224,7 +246,14 @@
       "decimals": 3,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 0,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 7,
@@ -233,6 +262,7 @@
         "y": 1
       },
       "height": "",
+      "hiddenSeries": false,
       "id": 17,
       "isNew": true,
       "legend": {
@@ -253,7 +283,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -284,7 +318,6 @@
         "sort": 2,
         "value_type": "cumulative"
       },
-      "transparent": false,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -327,6 +360,12 @@
       ],
       "datasource": "$datasource",
       "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -409,6 +448,12 @@
       ],
       "datasource": "$datasource",
       "decimals": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -490,6 +535,12 @@
       ],
       "datasource": "$datasource",
       "decimals": 3,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -571,6 +622,12 @@
       ],
       "datasource": "$datasource",
       "decimals": 3,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -652,6 +709,12 @@
       ],
       "datasource": "$datasource",
       "decimals": 3,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -729,13 +792,21 @@
       "dashes": false,
       "datasource": "$datasource",
       "decimals": 0,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 0,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 6,
         "x": 0,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 27,
       "legend": {
         "alignAsTable": true,
@@ -753,7 +824,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -836,6 +911,12 @@
         "#e24d42"
       ],
       "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -915,7 +996,14 @@
       "decimals": 2,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 0,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 7,
@@ -923,6 +1011,7 @@
         "x": 12,
         "y": 8
       },
+      "hiddenSeries": false,
       "id": 25,
       "isNew": true,
       "legend": {
@@ -943,7 +1032,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1016,6 +1109,12 @@
       ],
       "datasource": "$datasource",
       "decimals": 2,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "bytes",
       "gauge": {
         "maxValue": 100,
@@ -1097,6 +1196,12 @@
       ],
       "datasource": "$datasource",
       "decimals": 2,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "bytes",
       "gauge": {
         "maxValue": 100,
@@ -1178,6 +1283,12 @@
       ],
       "datasource": "$datasource",
       "decimals": 2,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "bytes",
       "gauge": {
         "maxValue": 100,
@@ -1250,6 +1361,7 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1270,7 +1382,14 @@
       "decimals": 0,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 6,
@@ -1278,6 +1397,7 @@
         "x": 0,
         "y": 16
       },
+      "hiddenSeries": false,
       "id": 47,
       "isNew": true,
       "legend": {
@@ -1298,7 +1418,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1363,6 +1487,7 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1383,7 +1508,14 @@
       "decimals": 2,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 6,
@@ -1391,6 +1523,7 @@
         "x": 0,
         "y": 23
       },
+      "hiddenSeries": false,
       "id": 16,
       "isNew": true,
       "legend": {
@@ -1411,7 +1544,11 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
       "percentage": false,
+      "pluginVersion": "7.3.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1499,7 +1636,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 16,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -1510,9 +1647,10 @@
       {
         "current": {
           "selected": false,
-          "text": "",
-          "value": ""
+          "text": "prom-alpha-kr-a",
+          "value": "prom-alpha-kr-a"
         },
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -1529,11 +1667,13 @@
       {
         "allValue": ".*",
         "current": {
+          "selected": false,
           "text": "default",
           "value": "default"
         },
         "datasource": "$datasource",
         "definition": "",
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -1545,20 +1685,22 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
+        "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
-        "tagValuesQuery": "",
         "type": "query",
         "useTags": false
       },
       {
         "allValue": ".*",
         "current": {
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
         "datasource": "$datasource",
         "definition": "",
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": null,
@@ -1570,9 +1712,9 @@
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
+        "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
-        "tagValuesQuery": "",
         "type": "query",
         "useTags": false
       }
@@ -1606,5 +1748,9 @@
       "7d",
       "30d"
     ]
-  }
+  },
+  "timezone": "browser",
+  "title": "Kubernetes Deployment - Prometheus",
+  "uid": "kube-deployment",
+  "version": 4
 }
