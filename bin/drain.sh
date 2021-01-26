@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# k get no --show-labels | grep 'v1.14' | cut -d' ' -f1 > /tmp/kube_nodes
+# k get no --show-labels | cut -d' ' -f1 > /tmp/kube_nodes
 
 KUBE_NODES=/tmp/kube_nodes
 
@@ -20,11 +20,12 @@ fi
 
 echo "# $(date)"
 
-# while read LINE; do
-#   kubectl cordon ${LINE}
-# done < ${KUBE_NODES}
-# echo "sleep 10.."
-# sleep 10
+while read LINE; do
+  kubectl cordon ${LINE}
+done < ${KUBE_NODES}
+
+echo "sleep 3.."
+sleep 3
 
 IDX=1
 while read LINE; do
@@ -34,7 +35,7 @@ while read LINE; do
   echo "# kubectl drain ${LINE}"
   echo "#"
 
-  kubectl drain --delete-local-data --ignore-daemonsets ${LINE}
+  kubectl drain --delete-emptydir-data --ignore-daemonsets ${LINE}
 
   # while true; do
   #   CNT=$(kubectl get pod --all-namespaces | grep -v Running | grep -v Completed | grep -v Terminating | wc -l | xargs)
