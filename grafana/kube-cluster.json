@@ -31,7 +31,7 @@
   "gnetId": 9797,
   "graphTooltip": 0,
   "id": 118,
-  "iteration": 1610693667115,
+  "iteration": 1611812826458,
   "links": [
     {
       "asDropdown": true,
@@ -123,7 +123,7 @@
           "refId": "A"
         }
       ],
-      "title": "Cluster Nodes",
+      "title": "Nodes",
       "type": "stat"
     },
     {
@@ -204,7 +204,7 @@
           "refId": "A"
         }
       ],
-      "title": "Cluster Pod Usage",
+      "title": "Pod Requests / Allocatable",
       "type": "gauge"
     },
     {
@@ -285,7 +285,7 @@
           "refId": "A"
         }
       ],
-      "title": "Cluster CPU Usage",
+      "title": "CPU Requests / Allocatable",
       "type": "gauge"
     },
     {
@@ -366,7 +366,7 @@
           "refId": "A"
         }
       ],
-      "title": "Cluster Memory Usage",
+      "title": "Memory Requests / Aallocatable",
       "type": "gauge"
     },
     {
@@ -447,7 +447,7 @@
           "refId": "A"
         }
       ],
-      "title": "Cluster Disk Usage",
+      "title": "Disk Usage / Limit",
       "type": "gauge"
     },
     {
@@ -519,7 +519,7 @@
           "refId": "A"
         }
       ],
-      "title": "Nodes Unavailable",
+      "title": "Unavailable",
       "type": "stat"
     },
     {
@@ -600,7 +600,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Cluster Pod Capacity",
+      "title": "Pod Capacity",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -709,13 +709,20 @@
           "intervalFactor": 1,
           "legendFormat": "requested",
           "refId": "C"
+        },
+        {
+          "expr": "sum(rate(container_cpu_usage_seconds_total[2m]) * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "usage",
+          "refId": "D"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Cluster CPU Capacity",
+      "title": "CPU Capacity",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -825,13 +832,20 @@
           "intervalFactor": 1,
           "legendFormat": "requested",
           "refId": "C"
+        },
+        {
+          "expr": "sum(container_memory_working_set_bytes * on (node) group_left (role) kube_node_labels{label_group=~\"$node_group\"})",
+          "hide": true,
+          "interval": "",
+          "legendFormat": "usage",
+          "refId": "D"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Cluster Mem Capacity",
+      "title": "Memory Capacity",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -938,7 +952,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Cluster Disk Capacity",
+      "title": "Disk Capacity",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -1044,7 +1058,7 @@
           "refId": "A"
         }
       ],
-      "title": "Nodes Out of Disk",
+      "title": "Out of Disk",
       "type": "stat"
     },
     {
@@ -2611,8 +2625,8 @@
       {
         "current": {
           "selected": false,
-          "text": "prom-alpha-kr-a",
-          "value": "prom-alpha-kr-a"
+          "text": "prom-p03",
+          "value": "prom-p03"
         },
         "error": null,
         "hide": 0,
@@ -2631,13 +2645,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "workers",
+          "value": "workers"
         },
         "datasource": "$datasource",
         "definition": "label_values(kube_node_labels, label_group)",
@@ -2662,13 +2672,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "webapp",
+          "value": "webapp"
         },
         "datasource": "$datasource",
         "definition": "",
@@ -2723,5 +2729,5 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster - Prometheus",
   "uid": "kube-cluster",
-  "version": 12
+  "version": 16
 }

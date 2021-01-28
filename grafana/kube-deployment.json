@@ -31,7 +31,7 @@
   "gnetId": 9679,
   "graphTooltip": 0,
   "id": 170,
-  "iteration": 1610693692084,
+  "iteration": 1611811839421,
   "links": [
     {
       "asDropdown": true,
@@ -221,11 +221,12 @@
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
       "thresholds": "65, 90",
-      "title": "CPU Usage",
+      "title": "CPU Usage / Requests",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -594,12 +595,14 @@
         {
           "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",namespace=~\"^$Namespace$\",pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}[2m]))",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
       "thresholds": "",
-      "title": "Used",
+      "title": "Usage",
       "type": "singlestat",
       "valueFontSize": "50%",
       "valueMaps": [
@@ -679,9 +682,11 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (kube_pod_container_resource_requests_cpu_cores{container!=\"istio-proxy\",namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
+          "expr": "sum (kube_pod_container_resource_requests_cpu_cores{namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -766,9 +771,11 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (kube_pod_container_resource_limits_cpu_cores{container!=\"istio-proxy\",namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
+          "expr": "sum (kube_pod_container_resource_limits_cpu_cores{namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -975,7 +982,7 @@
         }
       ],
       "thresholds": "65,90",
-      "title": "Memory Usage",
+      "title": "Memory Usage / Requests",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -1173,7 +1180,7 @@
         }
       ],
       "thresholds": "",
-      "title": "Used",
+      "title": "Usage",
       "type": "singlestat",
       "valueFontSize": "50%",
       "valueMaps": [
@@ -1253,9 +1260,11 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (kube_pod_container_resource_requests_memory_bytes{container!=\"istio-proxy\",namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
+          "expr": "sum (kube_pod_container_resource_requests_memory_bytes{namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -1340,9 +1349,11 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (kube_pod_container_resource_limits_memory_bytes{container!=\"istio-proxy\",namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
+          "expr": "sum (kube_pod_container_resource_limits_memory_bytes{namespace=~\"^$Namespace$\",pod=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"})",
           "format": "time_series",
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -1487,7 +1498,7 @@
       "type": "row"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
@@ -1496,145 +1507,126 @@
         "y": 16
       },
       "id": 43,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$datasource",
-          "decimals": 2,
-          "editable": true,
-          "error": false,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "grid": {},
-          "gridPos": {
-            "h": 6,
-            "w": 24,
-            "x": 0,
-            "y": 17
-          },
-          "hiddenSeries": false,
-          "id": 16,
-          "isNew": true,
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sideWidth": null,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "connected",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.3",
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",namespace=~\"^$Namespace$\",pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}[2m])) by (pod_name)",
-              "format": "time_series",
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "-> {{ pod_name }}",
-              "metric": "network",
-              "refId": "A",
-              "step": 10
-            },
-            {
-              "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",namespace=~\"^$Namespace$\",pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}[2m])) by (pod_name)",
-              "format": "time_series",
-              "interval": "",
-              "intervalFactor": 1,
-              "legendFormat": "<- {{ pod_name }}",
-              "metric": "network",
-              "refId": "B",
-              "step": 10
-            },
-            {
-              "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",namespace=~\"^$Namespace$\",pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}[2m]))",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "-> {{ $Deployment }}",
-              "refId": "C"
-            },
-            {
-              "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",namespace=~\"^$Namespace$\",pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}[2m]))",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "<- {{ $Deployment }}",
-              "refId": "D"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Network I/O (2m avg)",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "sort": 2,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "Bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
+      "panels": [],
       "title": "Network",
       "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "decimals": 2,
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "hiddenSeries": false,
+      "id": 16,
+      "isNew": true,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sideWidth": null,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.3",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(rate(container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",namespace=~\"^$Namespace$\",pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}[2m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "receive",
+          "refId": "C"
+        },
+        {
+          "expr": "- sum(rate(container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",namespace=~\"^$Namespace$\",pod_name=~\"^$Deployment-[a-z0-9]+-[a-z0-9]+\"}[2m]))",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "transmit",
+          "refId": "D"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Network I/O (2m avg)",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 2,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "Bps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "10s",
@@ -1648,9 +1640,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
-          "text": "prom-alpha-kr-a",
-          "value": "prom-alpha-kr-a"
+          "selected": true,
+          "text": "prom-p04",
+          "value": "prom-p04"
         },
         "error": null,
         "hide": 0,
@@ -1669,9 +1661,9 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
-          "text": "default",
-          "value": "default"
+          "selected": true,
+          "text": "similar-articles",
+          "value": "similar-articles"
         },
         "datasource": "$datasource",
         "definition": "",
@@ -1697,8 +1689,8 @@
         "allValue": ".*",
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": "similar-articles",
+          "value": "similar-articles"
         },
         "datasource": "$datasource",
         "definition": "",
@@ -1754,5 +1746,5 @@
   "timezone": "browser",
   "title": "Kubernetes Deployment - Prometheus",
   "uid": "kube-deployment",
-  "version": 5
+  "version": 11
 }
