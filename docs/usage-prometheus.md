@@ -30,7 +30,7 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/
 # sum(rate(container_network_receive_bytes_total{image!="",name=~"^k8s_.*"}[2m])) by (pod_name)
 
 # node
-sum(rate (container_cpu_usage_seconds_total{id="/",kubernetes_io_hostname=~"^$Node$"}[2m]))
+sum(rate(container_cpu_usage_seconds_total{id="/",kubernetes_io_hostname=~"^$Node$"}[2m]))
 sum(kube_pod_container_resource_requests_cpu_cores{kubernetes_node=~"^$Node$"})
 sum(kube_pod_container_resource_limits_cpu_cores{kubernetes_node=~"^$Node$"})
 sum(machine_cpu_cores{kubernetes_io_hostname=~"^$Node$"})
