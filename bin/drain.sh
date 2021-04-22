@@ -19,11 +19,13 @@ fi
 ################################################################################
 
 echo "# $(date)"
+echo "#"
 
 while read LINE; do
   kubectl cordon ${LINE}
 done < ${KUBE_NODES}
 
+echo "#"
 echo "sleep 3.."
 sleep 3
 

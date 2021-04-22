@@ -19,31 +19,11 @@ fi
 ################################################################################
 
 echo "# $(date)"
+echo "#"
 
 while read LINE; do
   kubectl cordon ${LINE}
 done < ${KUBE_NODES}
 
-# IDX=1
-# while read LINE; do
-#   echo "#"
-#   echo "# ${IDX}/${COUNT} $(date)"
-#   echo "#"
-#   echo "# kubectl drain ${LINE}"
-#   echo "#"
-
-#   kubectl drain --delete-emptydir-data --ignore-daemonsets ${LINE}
-
-#   # while true; do
-#   #   CNT=$(kubectl get pod --all-namespaces | grep -v Running | grep -v Completed | grep -v Terminating | wc -l | xargs)
-#   #   echo ${CNT}
-#   #   if [ ${CNT} -lt 2 ]; then
-#   #     break
-#   #   fi
-#   #   sleep 3
-#   # done
-
-#   IDX=$(( ${IDX} + 1 ))
-# done < ${KUBE_NODES}
-
+echo "#"
 echo "# $(date)"
