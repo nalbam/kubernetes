@@ -37,7 +37,11 @@ while read LINE; do
   echo "# kubectl drain ${LINE}"
   echo "#"
 
-  kubectl drain --delete-emptydir-data --ignore-daemonsets ${LINE}
+  kubectl drain \
+    --delete-emptydir-data \
+    --ignore-daemonsets \
+    --skip-wait-for-delete-timeout=0 \
+    ${LINE}
 
   # while true; do
   #   CNT=$(kubectl get pod --all-namespaces | grep -v Running | grep -v Completed | grep -v Terminating | wc -l | xargs)
