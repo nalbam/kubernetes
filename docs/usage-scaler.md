@@ -44,14 +44,14 @@ spec:
 ```bash
 kubectl get no -o wide
 
-kubectl get pod --all-namespaces -o wide | grep ip-10-251-87-129
+kubectl get pod --all-namespaces -o wide | grep $NODE_ID
 
-kubectl cordon ip-10-251-87-129.ap-northeast-2.compute.internal
-kubectl uncordon ip-10-251-87-129.ap-northeast-2.compute.internal
+kubectl cordon $NODE_ID
+kubectl uncordon $NODE_ID
 
-kubectl drain --delete-local-data --ignore-daemonsets ip-10-251-87-129.ap-northeast-2.compute.internal
+kubectl drain --delete-emptydir-data --ignore-daemonsets --skip-wait-for-delete-timeout=0 $NODE_ID
 
-kubectl get pod -o wide --all-namespaces | grep ip-10-251-88-244
+kubectl get pod --all-namespaces -o wide | grep $NODE_ID
 
 CA=$(kubectl get pod --all-namespaces | grep cluster-autoscaler | awk '{print $2}')
 kubectl logs ${CA} -n addon-cluster-autoscaler -f
@@ -63,6 +63,8 @@ k get no --show-labels | grep 'group=worker' | grep 'v1.14.7' | cut -d' ' -f1
 
 k get no --show-labels | grep 'group=worker' | grep 'v1.14.7' | cut -d' ' -f1 > /tmp/kube_nodes
 
-k get no --show-labels | grep 'group=worker' | grep 'v1.14.7' | cut -d' ' -f1 | xargs -I {} k cordon {}
+cat /tmp/kube_nodes | xargs -I {} k cordon {}
+
+cat /tmp/kube_nodes | xargs -I {} k drain --delete-emptydir-data --ignore-daemonsets --skip-wait-for-delete-timeout=0 {}
 
 ```
