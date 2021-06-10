@@ -63,4 +63,6 @@ k get no --show-labels | grep 'group=worker' | grep 'v1.14.7' | cut -d' ' -f1
 
 k get no --show-labels | grep 'group=worker' | grep 'v1.14.7' | cut -d' ' -f1 > /tmp/kube_nodes
 
+k get no --show-labels | cut -d' ' -f1 | xargs -I {} k cordon {}
+
 ```
