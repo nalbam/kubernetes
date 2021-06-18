@@ -31,7 +31,7 @@
   "gnetId": 9797,
   "graphTooltip": 0,
   "id": 118,
-  "iteration": 1616474992379,
+  "iteration": 1623979116983,
   "links": [
     {
       "asDropdown": true,
@@ -63,7 +63,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
@@ -74,7 +73,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -110,9 +108,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_node_info * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
@@ -131,7 +130,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 1,
           "mappings": [
             {
@@ -144,7 +142,6 @@
           ],
           "max": 100,
           "min": 0,
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -191,9 +188,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_pod_info * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(kube_node_status_allocatable_pods * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
@@ -212,7 +210,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 1,
           "mappings": [
             {
@@ -225,7 +222,6 @@
           ],
           "max": 100,
           "min": 0,
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -272,9 +268,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_pod_container_resource_requests_cpu_cores * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(kube_node_status_allocatable_cpu_cores * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
@@ -293,7 +290,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 1,
           "mappings": [
             {
@@ -306,7 +302,6 @@
           ],
           "max": 100,
           "min": 0,
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -353,9 +348,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_pod_container_resource_requests_memory_bytes * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(kube_node_status_allocatable_memory_bytes * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
@@ -374,7 +370,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 1,
           "mappings": [
             {
@@ -387,7 +382,6 @@
           ],
           "max": 100,
           "min": 0,
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -434,9 +428,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "text": {}
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(container_fs_usage_bytes{device=~\"^/dev/.*$\",id=\"/\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(container_fs_limit_bytes{device=~\"^/dev/.*$\",id=\"/\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
@@ -455,7 +450,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
@@ -466,7 +460,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -506,9 +499,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_node_spec_unschedulable * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
@@ -530,7 +524,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -562,7 +555,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -616,14 +609,16 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:43",
           "format": "short",
-          "label": "pods",
+          "label": "",
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:44",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -645,7 +640,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -677,7 +671,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -738,15 +732,17 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:72",
           "decimals": null,
           "format": "none",
-          "label": "cores",
+          "label": "",
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
         },
         {
+          "$$hashKey": "object:73",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -768,7 +764,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -800,7 +795,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -861,6 +856,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:101",
           "format": "decbytes",
           "label": null,
           "logBase": 1,
@@ -869,6 +865,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:102",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -890,7 +887,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -922,7 +918,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -994,7 +990,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
@@ -1005,7 +1000,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1045,9 +1039,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_node_status_condition{condition=\"OutOfDisk\",status=\"true\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
@@ -1062,7 +1057,7 @@
       "type": "stat"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": "$datasource",
       "gridPos": {
         "h": 1,
@@ -1070,244 +1065,199 @@
         "x": 0,
         "y": 10
       },
-      "id": 68,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$datasource",
-          "decimals": 0,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 6,
-            "w": 24,
-            "x": 0,
-            "y": 11
-          },
-          "hiddenSeries": false,
-          "id": 66,
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sideWidth": 200,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "connected",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.3",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(nginx_ingress_controller_requests{cluster=~\"^$cluster$\"}[2m])) by (status)",
-              "interval": "",
-              "legendFormat": "{{status}}",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Nginx Ingress Requests (2m)",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "title": "Ingress Controller",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": "$datasource",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 11
-      },
       "id": 60,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$datasource",
-          "decimals": 2,
-          "fieldConfig": {
-            "defaults": {
-              "custom": {},
-              "links": []
-            },
-            "overrides": []
-          },
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 4,
-            "w": 24,
-            "x": 0,
-            "y": 12
-          },
-          "hiddenSeries": false,
-          "id": 70,
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sideWidth": 200,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "nullPointMode": "null",
-          "options": {
-            "alertThreshold": true
-          },
-          "percentage": false,
-          "pluginVersion": "7.3.3",
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum(rate(container_network_receive_bytes_total{cluster=~\"^$cluster$\"}[2m]))",
-              "interval": "",
-              "legendFormat": "Received",
-              "refId": "A"
-            },
-            {
-              "expr": "- sum(rate(container_network_transmit_bytes_total{cluster=~\"^$cluster$\"}[2m]))",
-              "interval": "",
-              "legendFormat": "Sent",
-              "refId": "B"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Network I/O (2m)",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "Bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
+      "panels": [],
       "title": "Network I/O",
       "type": "row"
     },
     {
       "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "Bps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 11
+      },
+      "id": 70,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min",
+            "sum"
+          ],
+          "displayMode": "hidden",
+          "placement": "right"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.1",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(rate(container_network_receive_bytes_total{cluster=~\"^$cluster$\"}[5m]))",
+          "interval": "",
+          "legendFormat": "Received",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "- sum(rate(container_network_transmit_bytes_total{cluster=~\"^$cluster$\"}[5m]))",
+          "interval": "",
+          "legendFormat": "Sent",
+          "refId": "B"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Network I/O (5m)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "graph": false,
+              "legend": false,
+              "tooltip": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "reqps"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 11
+      },
+      "id": 74,
+      "options": {
+        "graph": {},
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max",
+            "min",
+            "sum"
+          ],
+          "displayMode": "hidden",
+          "placement": "right"
+        },
+        "tooltipOptions": {
+          "mode": "single"
+        }
+      },
+      "pluginVersion": "7.5.1",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(irate(istio_requests_total{reporter=\"source\",cluster=~\"^$cluster$\"}[5m]))",
+          "interval": "",
+          "legendFormat": "Received",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "ISTIO Request (5m)",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": false,
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 17
       },
       "id": 58,
+      "panels": [],
       "title": "Deployments",
       "type": "row"
     },
@@ -1316,7 +1266,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
@@ -1327,7 +1276,79 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 0,
+        "y": 18
+      },
+      "id": 73,
+      "interval": null,
+      "links": [],
+      "maxDataPoints": 100,
+      "options": {
+        "colorMode": "value",
+        "fieldOptions": {
+          "calcs": [
+            "mean"
+          ]
+        },
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "7.5.1",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "count(kube_deployment_status_replicas{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Deployments",
+      "type": "stat"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {
+          "decimals": 0,
+          "mappings": [
+            {
+              "id": 0,
+              "op": "=",
+              "text": "N/A",
+              "type": 1,
+              "value": "null"
+            }
+          ],
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1344,8 +1365,8 @@
       "gridPos": {
         "h": 3,
         "w": 5,
-        "x": 0,
-        "y": 13
+        "x": 4,
+        "y": 18
       },
       "id": 18,
       "interval": null,
@@ -1368,9 +1389,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1389,7 +1411,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
@@ -1400,7 +1421,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1417,8 +1437,8 @@
       "gridPos": {
         "h": 3,
         "w": 5,
-        "x": 5,
-        "y": 13
+        "x": 9,
+        "y": 18
       },
       "id": 64,
       "interval": null,
@@ -1441,9 +1461,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1462,7 +1483,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
@@ -1473,7 +1493,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1490,8 +1509,8 @@
       "gridPos": {
         "h": 3,
         "w": 5,
-        "x": 10,
-        "y": 13
+        "x": 14,
+        "y": 18
       },
       "id": 19,
       "interval": null,
@@ -1514,9 +1533,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1535,7 +1555,6 @@
       "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "decimals": 0,
           "mappings": [
             {
@@ -1546,7 +1565,6 @@
               "value": "null"
             }
           ],
-          "nullValueMode": "connected",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -1567,8 +1585,8 @@
       "gridPos": {
         "h": 3,
         "w": 5,
-        "x": 15,
-        "y": 13
+        "x": 19,
+        "y": 18
       },
       "id": 20,
       "interval": null,
@@ -1591,9 +1609,10 @@
           "fields": "",
           "values": false
         },
+        "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.3.3",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1608,407 +1627,21 @@
       "type": "stat"
     },
     {
-      "datasource": "$datasource",
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 16
-      },
-      "id": 56,
-      "title": "Pods",
-      "type": "row"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "decimals": 0,
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "nullValueMode": "connected",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 5,
-        "x": 0,
-        "y": 17
-      },
-      "id": 30,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.3.3",
-      "targets": [
-        {
-          "expr": "sum(kube_pod_status_phase{cluster=~\"$cluster\",namespace=~\"$namespace\",phase=\"Running\"})",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Pods Running",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "decimals": 0,
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "nullValueMode": "connected",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 5,
-        "x": 5,
-        "y": 17
-      },
-      "id": 31,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.3.3",
-      "targets": [
-        {
-          "expr": "sum(kube_pod_status_phase{cluster=~\"$cluster\",namespace=~\"$namespace\",phase=\"Pending\"})",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "title": "Pods Pending",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "decimals": 0,
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "nullValueMode": "connected",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "orange",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 5,
-        "x": 10,
-        "y": 17
-      },
-      "id": 34,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.3.3",
-      "targets": [
-        {
-          "expr": "sum(kube_pod_status_phase{cluster=~\"$cluster\",namespace=~\"$namespace\",phase=\"Unknown\"})",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "title": "Pods Unknown",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "decimals": 0,
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "nullValueMode": "connected",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 1
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 5,
-        "x": 15,
-        "y": 17
-      },
-      "id": 32,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.3.3",
-      "targets": [
-        {
-          "expr": "sum(kube_pod_status_phase{cluster=~\"$cluster\",namespace=~\"$namespace\",phase=\"Failed\"})",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "title": "Pods Failed",
-      "type": "stat"
-    },
-    {
-      "cacheTimeout": null,
-      "datasource": "$datasource",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "decimals": 0,
-          "mappings": [
-            {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
-            }
-          ],
-          "nullValueMode": "connected",
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 20,
-        "y": 17
-      },
-      "id": 33,
-      "interval": null,
-      "links": [],
-      "maxDataPoints": 100,
-      "options": {
-        "colorMode": "value",
-        "fieldOptions": {
-          "calcs": [
-            "lastNotNull"
-          ]
-        },
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "horizontal",
-        "reduceOptions": {
-          "calcs": [
-            "last"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "textMode": "auto"
-      },
-      "pluginVersion": "7.3.3",
-      "targets": [
-        {
-          "expr": "sum(kube_pod_status_phase{cluster=~\"$cluster\",namespace=~\"$namespace\",phase=\"Succeeded\"})",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
-          "refId": "A"
-        }
-      ],
-      "title": "Pods Succeeded",
-      "type": "stat"
-    },
-    {
       "collapsed": true,
       "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 21
       },
-      "id": 54,
+      "id": 56,
       "panels": [
         {
           "cacheTimeout": null,
           "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
-              "custom": {},
               "decimals": 0,
               "mappings": [
                 {
@@ -2019,7 +1652,389 @@
                   "value": "null"
                 }
               ],
-              "nullValueMode": "connected",
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 4,
+            "x": 0,
+            "y": 17
+          },
+          "id": 30,
+          "interval": null,
+          "links": [],
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "fieldOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            },
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.1",
+          "targets": [
+            {
+              "expr": "sum(kube_pod_status_phase{cluster=~\"$cluster\",namespace=~\"$namespace\",phase=\"Running\"})",
+              "format": "time_series",
+              "interval": "",
+              "intervalFactor": 1,
+              "legendFormat": "",
+              "refId": "A"
+            }
+          ],
+          "title": "Pods Running",
+          "type": "stat"
+        },
+        {
+          "cacheTimeout": null,
+          "datasource": "$datasource",
+          "fieldConfig": {
+            "defaults": {
+              "decimals": 0,
+              "mappings": [
+                {
+                  "id": 0,
+                  "op": "=",
+                  "text": "N/A",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 1
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 4,
+            "y": 17
+          },
+          "id": 31,
+          "interval": null,
+          "links": [],
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "fieldOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            },
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.1",
+          "targets": [
+            {
+              "expr": "sum(kube_pod_status_phase{cluster=~\"$cluster\",namespace=~\"$namespace\",phase=\"Pending\"})",
+              "format": "time_series",
+              "interval": "",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "title": "Pods Pending",
+          "type": "stat"
+        },
+        {
+          "cacheTimeout": null,
+          "datasource": "$datasource",
+          "fieldConfig": {
+            "defaults": {
+              "decimals": 0,
+              "mappings": [
+                {
+                  "id": 0,
+                  "op": "=",
+                  "text": "N/A",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "orange",
+                    "value": 1
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 9,
+            "y": 17
+          },
+          "id": 34,
+          "interval": null,
+          "links": [],
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "fieldOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            },
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.1",
+          "targets": [
+            {
+              "expr": "sum(kube_pod_status_phase{cluster=~\"$cluster\",namespace=~\"$namespace\",phase=\"Unknown\"})",
+              "format": "time_series",
+              "interval": "",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "title": "Pods Unknown",
+          "type": "stat"
+        },
+        {
+          "cacheTimeout": null,
+          "datasource": "$datasource",
+          "fieldConfig": {
+            "defaults": {
+              "decimals": 0,
+              "mappings": [
+                {
+                  "id": 0,
+                  "op": "=",
+                  "text": "N/A",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 1
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 14,
+            "y": 17
+          },
+          "id": 32,
+          "interval": null,
+          "links": [],
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "fieldOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            },
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.1",
+          "targets": [
+            {
+              "expr": "sum(kube_pod_status_phase{cluster=~\"$cluster\",namespace=~\"$namespace\",phase=\"Failed\"})",
+              "format": "time_series",
+              "interval": "",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "title": "Pods Failed",
+          "type": "stat"
+        },
+        {
+          "cacheTimeout": null,
+          "datasource": "$datasource",
+          "fieldConfig": {
+            "defaults": {
+              "decimals": 0,
+              "mappings": [
+                {
+                  "id": 0,
+                  "op": "=",
+                  "text": "N/A",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              },
+              "unit": "none"
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 3,
+            "w": 5,
+            "x": 19,
+            "y": 17
+          },
+          "id": 33,
+          "interval": null,
+          "links": [],
+          "maxDataPoints": 100,
+          "options": {
+            "colorMode": "value",
+            "fieldOptions": {
+              "calcs": [
+                "lastNotNull"
+              ]
+            },
+            "graphMode": "area",
+            "justifyMode": "auto",
+            "orientation": "horizontal",
+            "reduceOptions": {
+              "calcs": [
+                "last"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "text": {},
+            "textMode": "auto"
+          },
+          "pluginVersion": "7.5.1",
+          "targets": [
+            {
+              "expr": "sum(kube_pod_status_phase{cluster=~\"$cluster\",namespace=~\"$namespace\",phase=\"Succeeded\"})",
+              "format": "time_series",
+              "interval": "",
+              "intervalFactor": 1,
+              "refId": "A"
+            }
+          ],
+          "title": "Pods Succeeded",
+          "type": "stat"
+        }
+      ],
+      "title": "Pods",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "datasource": "$datasource",
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 54,
+      "panels": [
+        {
+          "cacheTimeout": null,
+          "datasource": "$datasource",
+          "fieldConfig": {
+            "defaults": {
+              "decimals": 0,
+              "mappings": [
+                {
+                  "id": 0,
+                  "op": "=",
+                  "text": "N/A",
+                  "type": 1,
+                  "value": "null"
+                }
+              ],
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -2037,7 +2052,7 @@
             "h": 3,
             "w": 5,
             "x": 0,
-            "y": 21
+            "y": 24
           },
           "id": 38,
           "interval": null,
@@ -2060,9 +2075,10 @@
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "7.3.3",
+          "pluginVersion": "7.5.1",
           "targets": [
             {
               "expr": "sum(kube_pod_container_status_running{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -2081,7 +2097,6 @@
           "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
-              "custom": {},
               "decimals": 0,
               "mappings": [
                 {
@@ -2092,7 +2107,6 @@
                   "value": "null"
                 }
               ],
-              "nullValueMode": "connected",
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -2110,7 +2124,7 @@
             "h": 3,
             "w": 5,
             "x": 5,
-            "y": 21
+            "y": 24
           },
           "id": 39,
           "interval": null,
@@ -2133,9 +2147,10 @@
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "7.3.3",
+          "pluginVersion": "7.5.1",
           "targets": [
             {
               "expr": "sum(kube_pod_container_status_ready{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -2154,7 +2169,6 @@
           "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
-              "custom": {},
               "decimals": 0,
               "mappings": [
                 {
@@ -2165,7 +2179,6 @@
                   "value": "null"
                 }
               ],
-              "nullValueMode": "connected",
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -2187,7 +2200,7 @@
             "h": 3,
             "w": 5,
             "x": 10,
-            "y": 21
+            "y": 24
           },
           "id": 63,
           "interval": null,
@@ -2210,9 +2223,10 @@
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "7.3.3",
+          "pluginVersion": "7.5.1",
           "targets": [
             {
               "expr": "sum(kube_pod_container_status_waiting{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -2231,7 +2245,6 @@
           "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
-              "custom": {},
               "decimals": 0,
               "mappings": [
                 {
@@ -2242,7 +2255,6 @@
                   "value": "null"
                 }
               ],
-              "nullValueMode": "connected",
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -2264,7 +2276,7 @@
             "h": 3,
             "w": 5,
             "x": 15,
-            "y": 21
+            "y": 24
           },
           "id": 41,
           "interval": null,
@@ -2287,9 +2299,10 @@
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "7.3.3",
+          "pluginVersion": "7.5.1",
           "targets": [
             {
               "expr": "sum(rate(kube_pod_container_status_restarts_total{cluster=~\"$cluster\",namespace!=\"kube-system\"}[2m]))",
@@ -2308,7 +2321,6 @@
           "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
-              "custom": {},
               "decimals": 0,
               "mappings": [
                 {
@@ -2319,7 +2331,6 @@
                   "value": "null"
                 }
               ],
-              "nullValueMode": "connected",
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -2337,7 +2348,7 @@
             "h": 3,
             "w": 4,
             "x": 20,
-            "y": 21
+            "y": 24
           },
           "id": 40,
           "interval": null,
@@ -2360,9 +2371,10 @@
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "7.3.3",
+          "pluginVersion": "7.5.1",
           "targets": [
             {
               "expr": "sum(kube_pod_container_status_terminated{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -2385,7 +2397,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 23
       },
       "id": 52,
       "panels": [
@@ -2394,7 +2406,6 @@
           "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
-              "custom": {},
               "decimals": 0,
               "mappings": [
                 {
@@ -2405,7 +2416,6 @@
                   "value": "null"
                 }
               ],
-              "nullValueMode": "connected",
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -2423,7 +2433,7 @@
             "h": 3,
             "w": 5,
             "x": 0,
-            "y": 25
+            "y": 22
           },
           "id": 47,
           "interval": null,
@@ -2446,9 +2456,10 @@
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "7.3.3",
+          "pluginVersion": "7.5.1",
           "targets": [
             {
               "expr": "sum(kube_job_status_succeeded{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -2465,7 +2476,6 @@
           "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
-              "custom": {},
               "decimals": 0,
               "mappings": [
                 {
@@ -2476,7 +2486,6 @@
                   "value": "null"
                 }
               ],
-              "nullValueMode": "connected",
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -2494,7 +2503,7 @@
             "h": 3,
             "w": 5,
             "x": 5,
-            "y": 25
+            "y": 22
           },
           "id": 48,
           "interval": null,
@@ -2517,9 +2526,10 @@
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "7.3.3",
+          "pluginVersion": "7.5.1",
           "targets": [
             {
               "expr": "sum(kube_job_status_active{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -2538,7 +2548,6 @@
           "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
-              "custom": {},
               "decimals": 0,
               "mappings": [
                 {
@@ -2549,7 +2558,6 @@
                   "value": "null"
                 }
               ],
-              "nullValueMode": "connected",
               "thresholds": {
                 "mode": "absolute",
                 "steps": [
@@ -2571,7 +2579,7 @@
             "h": 3,
             "w": 5,
             "x": 10,
-            "y": 25
+            "y": 22
           },
           "id": 49,
           "interval": null,
@@ -2594,9 +2602,10 @@
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "7.3.3",
+          "pluginVersion": "7.5.1",
           "targets": [
             {
               "expr": "sum(kube_job_status_failed{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -2614,11 +2623,12 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "kubernetes",
-    "prometheus"
+    "prometheus",
+    "cortex/enabled"
   ],
   "templating": {
     "list": [
@@ -2628,6 +2638,7 @@
           "text": "cortex",
           "value": "cortex"
         },
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": false,
@@ -2646,11 +2657,12 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "ks-kr-p03",
-          "value": "ks-kr-p03"
+          "text": "prod-kr-a",
+          "value": "prod-kr-a"
         },
         "datasource": "$datasource",
         "definition": "label_values(kube_node_labels,cluster)",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -2658,7 +2670,10 @@
         "multi": false,
         "name": "cluster",
         "options": [],
-        "query": "label_values(kube_node_labels,cluster)",
+        "query": {
+          "query": "label_values(kube_node_labels,cluster)",
+          "refId": "cortex-cluster-Variable-Query"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2678,6 +2693,7 @@
         },
         "datasource": "$datasource",
         "definition": "label_values(kube_node_labels{cluster=~\"^$cluster$\"},label_group)",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -2685,7 +2701,10 @@
         "multi": false,
         "name": "label_group",
         "options": [],
-        "query": "label_values(kube_node_labels{cluster=~\"^$cluster$\"},label_group)",
+        "query": {
+          "query": "label_values(kube_node_labels{cluster=~\"^$cluster$\"},label_group)",
+          "refId": "cortex-label_group-Variable-Query"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2705,6 +2724,7 @@
         },
         "datasource": "$datasource",
         "definition": "label_values(kube_pod_info{cluster=~\"^$cluster$\"},namespace)",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -2712,7 +2732,10 @@
         "multi": false,
         "name": "namespace",
         "options": [],
-        "query": "label_values(kube_pod_info{cluster=~\"^$cluster$\"},namespace)",
+        "query": {
+          "query": "label_values(kube_pod_info{cluster=~\"^$cluster$\"},namespace)",
+          "refId": "cortex-namespace-Variable-Query"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2756,5 +2779,5 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster - Prometheus",
   "uid": "kube-cluster",
-  "version": 32
+  "version": 42
 }
