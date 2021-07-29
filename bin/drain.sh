@@ -52,6 +52,10 @@ while read LINE; do
   #   sleep 3
   # done
 
+  echo "#"
+  echo "sleep 5.."
+  sleep 5
+
   IDX=$(( ${IDX} + 1 ))
 done < ${KUBE_NODES}
 
