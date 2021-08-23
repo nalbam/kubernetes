@@ -31,7 +31,7 @@
   "gnetId": 9679,
   "graphTooltip": 0,
   "id": 80,
-  "iteration": 1629695442397,
+  "iteration": 1629696559976,
   "links": [
     {
       "asDropdown": true,
@@ -980,7 +980,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\",container!~\"POD|\"}) / sum (kube_pod_container_resource_requests_memory_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\"}) * 100",
+          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\",container!~\"POD|\"}) / sum (kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1333,7 +1333,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_requests_memory_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\"})",
+          "expr": "sum(kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1411,7 +1411,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_limits_memory_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\"})",
+          "expr": "sum(kube_pod_container_resource_limits{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1760,8 +1760,8 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "text": "argocd",
-          "value": "argocd"
+          "text": "addon-prometheus",
+          "value": "addon-prometheus"
         },
         "datasource": "$datasource",
         "definition": "label_values(kube_namespace_labels{cluster=~\"^$cluster$\"},namespace)",
@@ -1878,7 +1878,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Kubernetes StatefulSet - Prometheus 2",
-  "uid": "kube-statefulset-s",
-  "version": 6
+  "title": "Kubernetes StatefulSet - Prometheus",
+  "uid": "kube-statefulset",
+  "version": 7
 }
