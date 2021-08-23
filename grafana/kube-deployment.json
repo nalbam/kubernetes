@@ -216,7 +216,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|\"}[2m])) / sum (kube_pod_container_resource_requests_cpu_cores{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"}) * 100",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|\"}[2m])) / sum (kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -734,7 +734,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests_cpu_cores{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"})",
+          "expr": "sum(kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -821,7 +821,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits_cpu_cores{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"})",
+          "expr": "sum(kube_pod_container_resource_limits{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,

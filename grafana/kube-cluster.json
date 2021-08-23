@@ -31,7 +31,7 @@
   "gnetId": 9797,
   "graphTooltip": 0,
   "id": 118,
-  "iteration": 1623979116983,
+  "iteration": 1629689863083,
   "links": [
     {
       "asDropdown": true,
@@ -194,7 +194,7 @@
       "pluginVersion": "7.5.1",
       "targets": [
         {
-          "expr": "sum(kube_pod_info * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(kube_node_status_allocatable_pods * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
+          "expr": "sum(kube_pod_info * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(kube_node_status_allocatable{resource=~\"pods\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -274,7 +274,8 @@
       "pluginVersion": "7.5.1",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests_cpu_cores * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(kube_node_status_allocatable_cpu_cores * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(kube_node_status_allocatable{resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -354,7 +355,8 @@
       "pluginVersion": "7.5.1",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_requests_memory_bytes * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(kube_node_status_allocatable_memory_bytes * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{resource=~\"memory\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(kube_node_status_allocatable{resource=~\"memory\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -565,7 +567,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_allocatable_pods * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "expr": "sum(kube_node_status_allocatable{resource=~\"pods\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -573,7 +575,7 @@
           "refId": "A"
         },
         {
-          "expr": "sum(kube_node_status_capacity_pods * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "expr": "sum(kube_node_status_capacity{resource=~\"pods\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -681,7 +683,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_capacity_cpu_cores * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "exemplar": true,
+          "expr": "sum(kube_node_status_capacity{resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -689,7 +692,8 @@
           "refId": "A"
         },
         {
-          "expr": "sum(kube_node_status_allocatable_cpu_cores * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "exemplar": true,
+          "expr": "sum(kube_node_status_allocatable{resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -697,7 +701,8 @@
           "refId": "B"
         },
         {
-          "expr": "sum(kube_pod_container_resource_requests_cpu_cores * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -805,7 +810,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(kube_node_status_allocatable_memory_bytes * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "exemplar": true,
+          "expr": "sum(kube_node_status_allocatable{resource=~\"memory\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -813,7 +819,8 @@
           "refId": "A"
         },
         {
-          "expr": "sum(kube_node_status_capacity_memory_bytes * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "exemplar": true,
+          "expr": "sum(kube_node_status_capacity{resource=~\"memory\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -821,7 +828,8 @@
           "refId": "B"
         },
         {
-          "expr": "sum(kube_pod_container_resource_requests_memory_bytes * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{resource=~\"memory\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2779,5 +2787,5 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster - Prometheus",
   "uid": "kube-cluster",
-  "version": 42
+  "version": 43
 }
