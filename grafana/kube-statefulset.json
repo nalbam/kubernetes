@@ -28,10 +28,10 @@
   },
   "description": "Dashboard for Kubernetes StatefulSet with Prometheus.",
   "editable": true,
-  "gnetId": 9679,
+  "gnetId": 14902,
   "graphTooltip": 0,
-  "id": 80,
-  "iteration": 1629696559976,
+  "id": 28,
+  "iteration": 1629699692168,
   "links": [
     {
       "asDropdown": true,
@@ -48,7 +48,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -62,7 +62,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -143,7 +143,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -222,7 +222,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -314,7 +314,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -390,7 +390,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "100\n* sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_throttled_periods_total{\ncluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|\"}[5m]))\n/ sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_periods_total{\ncluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|\"}[5m]))",
+          "expr": "100\n* sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_throttled_periods_total{\ncluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\",container!~\"POD|\"}[5m]))\n/ sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_periods_total{\ncluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\",container!~\"POD|\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -407,7 +407,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -486,7 +486,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -565,7 +565,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -643,7 +643,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -721,7 +721,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -802,7 +802,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "unit": "short"
@@ -913,7 +913,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -992,7 +992,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1084,7 +1084,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1166,7 +1166,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(irate(container_network_receive_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+-[a-z0-9]+\"}[5m]))",
+          "expr": "sum(irate(container_network_receive_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1175,7 +1175,7 @@
         },
         {
           "exemplar": true,
-          "expr": "- sum(irate(container_network_transmit_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+-[a-z0-9]+\"}[5m]))",
+          "expr": "- sum(irate(container_network_transmit_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$statefulset-[a-z0-9]+\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1190,7 +1190,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1268,7 +1268,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1346,7 +1346,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1424,7 +1424,7 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1434,7 +1434,7 @@
       "id": 51,
       "panels": [
         {
-          "datasource": "$datasource",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1512,7 +1512,7 @@
           "type": "stat"
         },
         {
-          "datasource": "$datasource",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1577,7 +1577,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "$datasource",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "unit": "s"
@@ -1733,7 +1733,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "$datasource",
+        "datasource": "Prometheus",
         "definition": "label_values(kube_node_labels,cluster)",
         "description": null,
         "error": null,
@@ -1760,10 +1760,10 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "text": "addon-prometheus",
-          "value": "addon-prometheus"
+          "text": "argocd",
+          "value": "argocd"
         },
-        "datasource": "$datasource",
+        "datasource": "Prometheus",
         "definition": "label_values(kube_namespace_labels{cluster=~\"^$cluster$\"},namespace)",
         "description": null,
         "error": null,
@@ -1793,7 +1793,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "$datasource",
+        "datasource": "Prometheus",
         "definition": "label_values(kube_statefulset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},statefulset)",
         "description": null,
         "error": null,
@@ -1823,7 +1823,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "$datasource",
+        "datasource": "Prometheus",
         "definition": "label_values(kube_service_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},service)",
         "description": null,
         "error": null,
@@ -1880,5 +1880,5 @@
   "timezone": "browser",
   "title": "Kubernetes StatefulSet - Prometheus",
   "uid": "kube-statefulset",
-  "version": 7
+  "version": 1
 }
