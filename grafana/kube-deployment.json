@@ -1855,8 +1855,8 @@
         "allValue": "",
         "current": {
           "selected": false,
-          "text": "webapp-stable",
-          "value": "webapp-stable"
+          "text": "default",
+          "value": "default"
         },
         "datasource": "$datasource",
         "definition": "label_values(kube_deployment_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},deployment)",
