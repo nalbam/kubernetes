@@ -1760,8 +1760,8 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "text": "argocd",
-          "value": "argocd"
+          "text": "addon-prometheus",
+          "value": "addon-prometheus"
         },
         "datasource": "Prometheus",
         "definition": "label_values(kube_namespace_labels{cluster=~\"^$cluster$\"},namespace)",
