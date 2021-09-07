@@ -8,18 +8,29 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1595591291797,
+  "iteration": 1631005243107,
   "links": [],
   "panels": [
     {
       "collapsed": true,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -29,13 +40,7 @@
       "id": 106,
       "panels": [
         {
-          "content": "<div class=\"dashboard-header text-center\">\n<span>SERVICE: $service</span>\n</div>",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "gridPos": {
             "h": 3,
             "w": 24,
@@ -44,39 +49,50 @@
           },
           "id": 89,
           "links": [],
-          "mode": "html",
           "options": {
             "content": "<div class=\"dashboard-header text-center\">\n<span>SERVICE: $service</span>\n</div>",
             "mode": "html"
           },
-          "pluginVersion": "7.1.0",
-          "title": "",
+          "pluginVersion": "8.1.2",
           "transparent": true,
           "type": "text"
         },
         {
           "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "Prometheus",
+          "datasource": null,
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ops"
             },
             "overrides": []
-          },
-          "format": "ops",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
           },
           "gridPos": {
             "h": 4,
@@ -87,8 +103,9 @@
           "id": 12,
           "interval": null,
           "links": [],
+          "maxDataPoints": 100,
           "options": {
-            "colorMode": "value",
+            "colorMode": "none",
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "horizontal",
@@ -99,40 +116,10 @@
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": true,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "tableColumn": "",
+          "pluginVersion": "8.1.2",
           "targets": [
             {
               "expr": "round(sum(irate(istio_requests_total{reporter=~\"$qrep\",destination_service=~\"$service\"}[5m])), 0.001)",
@@ -142,43 +129,49 @@
               "step": 4
             }
           ],
-          "thresholds": "",
           "title": "Client Request Volume",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "type": "stat"
         },
         {
           "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "datasource": "Prometheus",
-          "decimals": null,
+          "datasource": null,
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgba(50, 172, 45, 0.97)",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 95
+                  },
+                  {
+                    "color": "rgba(245, 54, 54, 0.9)",
+                    "value": 99
+                  }
+                ]
+              },
+              "unit": "percentunit"
             },
             "overrides": []
-          },
-          "format": "percentunit",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 80,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": false
           },
           "gridPos": {
             "h": 4,
@@ -189,52 +182,23 @@
           "id": 14,
           "interval": null,
           "links": [],
+          "maxDataPoints": 100,
           "options": {
-            "colorMode": "value",
+            "colorMode": "none",
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "horizontal",
             "reduceOptions": {
               "calcs": [
-                "lastNotNull"
+                "mean"
               ],
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": true,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "tableColumn": "",
+          "pluginVersion": "8.1.2",
           "targets": [
             {
               "expr": "sum(irate(istio_requests_total{reporter=~\"$qrep\",destination_service=~\"$service\",response_code!~\"5.*\"}[5m])) / sum(irate(istio_requests_total{reporter=~\"$qrep\",destination_service=~\"$service\"}[5m]))",
@@ -243,31 +207,15 @@
               "refId": "A"
             }
           ],
-          "thresholds": "95, 99, 99.5",
           "title": "Client Success Rate (non-5xx responses)",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "avg"
+          "type": "stat"
         },
         {
           "aliasColors": {},
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -295,8 +243,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -373,27 +324,40 @@
         },
         {
           "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": "Prometheus",
+          "datasource": null,
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "Bps"
             },
             "overrides": []
-          },
-          "format": "Bps",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
           },
           "gridPos": {
             "h": 4,
@@ -404,52 +368,23 @@
           "id": 84,
           "interval": null,
           "links": [],
+          "maxDataPoints": 100,
           "options": {
-            "colorMode": "value",
+            "colorMode": "none",
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "horizontal",
             "reduceOptions": {
               "calcs": [
-                "lastNotNull"
+                "mean"
               ],
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": true,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "tableColumn": "",
+          "pluginVersion": "8.1.2",
           "targets": [
             {
               "expr": "sum(irate(istio_tcp_received_bytes_total{reporter=~\"$qrep\", destination_service=~\"$service\"}[1m]))",
@@ -460,42 +395,45 @@
               "refId": "A"
             }
           ],
-          "thresholds": "",
           "title": "TCP Received Bytes",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "avg"
+          "type": "stat"
         },
         {
           "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(245, 54, 54, 0.9)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(50, 172, 45, 0.97)"
-          ],
-          "datasource": "Prometheus",
+          "datasource": null,
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "ops"
             },
             "overrides": []
-          },
-          "format": "ops",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
           },
           "gridPos": {
             "h": 4,
@@ -506,8 +444,9 @@
           "id": 97,
           "interval": null,
           "links": [],
+          "maxDataPoints": 100,
           "options": {
-            "colorMode": "value",
+            "colorMode": "none",
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "horizontal",
@@ -518,40 +457,10 @@
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": true,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "tableColumn": "",
+          "pluginVersion": "8.1.2",
           "targets": [
             {
               "expr": "round(sum(irate(istio_requests_total{reporter=\"destination\",destination_service=~\"$service\"}[5m])), 0.001)",
@@ -561,43 +470,49 @@
               "step": 4
             }
           ],
-          "thresholds": "",
           "title": "Server Request Volume",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "current"
+          "type": "stat"
         },
         {
           "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "rgba(50, 172, 45, 0.97)",
-            "rgba(237, 129, 40, 0.89)",
-            "rgba(245, 54, 54, 0.9)"
-          ],
-          "datasource": "Prometheus",
-          "decimals": null,
+          "datasource": null,
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "rgba(50, 172, 45, 0.97)",
+                    "value": null
+                  },
+                  {
+                    "color": "rgba(237, 129, 40, 0.89)",
+                    "value": 95
+                  },
+                  {
+                    "color": "rgba(245, 54, 54, 0.9)",
+                    "value": 99
+                  }
+                ]
+              },
+              "unit": "percentunit"
             },
             "overrides": []
-          },
-          "format": "percentunit",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 80,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": false
           },
           "gridPos": {
             "h": 4,
@@ -608,52 +523,23 @@
           "id": 98,
           "interval": null,
           "links": [],
+          "maxDataPoints": 100,
           "options": {
-            "colorMode": "value",
+            "colorMode": "none",
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "horizontal",
             "reduceOptions": {
               "calcs": [
-                "lastNotNull"
+                "mean"
               ],
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": true,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "tableColumn": "",
+          "pluginVersion": "8.1.2",
           "targets": [
             {
               "expr": "sum(irate(istio_requests_total{reporter=\"destination\",destination_service=~\"$service\",response_code!~\"5.*\"}[5m])) / sum(irate(istio_requests_total{reporter=\"destination\",destination_service=~\"$service\"}[5m]))",
@@ -662,31 +548,15 @@
               "refId": "A"
             }
           ],
-          "thresholds": "95, 99, 99.5",
           "title": "Server Success Rate (non-5xx responses)",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "avg"
+          "type": "stat"
         },
         {
           "aliasColors": {},
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -714,8 +584,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -792,27 +665,40 @@
         },
         {
           "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": "Prometheus",
+          "datasource": null,
           "fieldConfig": {
             "defaults": {
-              "custom": {}
+              "color": {
+                "fixedColor": "rgb(31, 120, 193)",
+                "mode": "fixed"
+              },
+              "mappings": [
+                {
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
+                }
+              ],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "red",
+                    "value": 80
+                  }
+                ]
+              },
+              "unit": "Bps"
             },
             "overrides": []
-          },
-          "format": "Bps",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
           },
           "gridPos": {
             "h": 4,
@@ -823,52 +709,23 @@
           "id": 100,
           "interval": null,
           "links": [],
+          "maxDataPoints": 100,
           "options": {
-            "colorMode": "value",
+            "colorMode": "none",
             "graphMode": "area",
             "justifyMode": "auto",
             "orientation": "horizontal",
             "reduceOptions": {
               "calcs": [
-                "lastNotNull"
+                "mean"
               ],
               "fields": "",
               "values": false
             },
+            "text": {},
             "textMode": "auto"
           },
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": true,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": true
-          },
-          "tableColumn": "",
+          "pluginVersion": "8.1.2",
           "targets": [
             {
               "expr": "sum(irate(istio_tcp_sent_bytes_total{reporter=~\"$qrep\", destination_service=~\"$service\"}[1m]))",
@@ -879,18 +736,8 @@
               "refId": "A"
             }
           ],
-          "thresholds": "",
           "title": "TCP Sent Bytes",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "avg"
+          "type": "stat"
         }
       ],
       "title": "General",
@@ -898,6 +745,11 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -907,13 +759,7 @@
       "id": 104,
       "panels": [
         {
-          "content": "<div class=\"dashboard-header text-center\">\n<span>CLIENT WORKLOADS</span>\n</div>",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "gridPos": {
             "h": 3,
             "w": 24,
@@ -922,13 +768,11 @@
           },
           "id": 45,
           "links": [],
-          "mode": "html",
           "options": {
             "content": "<div class=\"dashboard-header text-center\">\n<span>CLIENT WORKLOADS</span>\n</div>",
             "mode": "html"
           },
-          "pluginVersion": "7.1.0",
-          "title": "",
+          "pluginVersion": "8.1.2",
           "transparent": true,
           "type": "text"
         },
@@ -937,13 +781,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 0,
           "fillGradient": 0,
           "gridPos": {
@@ -968,8 +806,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null as zero",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -1044,13 +885,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1076,8 +911,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -1151,14 +989,8 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": null,
           "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1186,8 +1018,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -1315,13 +1150,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1348,8 +1177,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -1477,13 +1309,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1510,8 +1336,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -1639,13 +1468,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1669,8 +1492,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -1743,13 +1569,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -1773,8 +1593,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -1847,6 +1670,11 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1856,13 +1684,7 @@
       "id": 102,
       "panels": [
         {
-          "content": "<div class=\"dashboard-header text-center\">\n<span>SERVICE WORKLOADS</span>\n</div>",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "gridPos": {
             "h": 3,
             "w": 24,
@@ -1871,13 +1693,11 @@
           },
           "id": 69,
           "links": [],
-          "mode": "html",
           "options": {
             "content": "<div class=\"dashboard-header text-center\">\n<span>SERVICE WORKLOADS</span>\n</div>",
             "mode": "html"
           },
-          "pluginVersion": "7.1.0",
-          "title": "",
+          "pluginVersion": "8.1.2",
           "transparent": true,
           "type": "text"
         },
@@ -1886,13 +1706,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 0,
           "fillGradient": 0,
           "gridPos": {
@@ -1917,8 +1731,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null as zero",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -1993,13 +1810,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -2025,8 +1836,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -2100,14 +1914,8 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": null,
           "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -2135,8 +1943,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -2264,13 +2075,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -2297,8 +2102,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -2426,13 +2234,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -2459,8 +2261,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -2588,13 +2393,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -2618,8 +2417,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -2692,13 +2494,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fieldConfig": {
-            "defaults": {
-              "custom": {}
-            },
-            "overrides": []
-          },
+          "datasource": null,
           "fill": 1,
           "fillGradient": 0,
           "gridPos": {
@@ -2722,8 +2518,11 @@
           "linewidth": 1,
           "links": [],
           "nullPointMode": "null",
+          "options": {
+            "alertThreshold": true
+          },
           "percentage": false,
-          "pluginVersion": "7.1.0",
+          "pluginVersion": "8.1.2",
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
@@ -2795,8 +2594,8 @@
       "type": "row"
     }
   ],
-  "refresh": "1m",
-  "schemaVersion": 26,
+  "refresh": "",
+  "schemaVersion": 30,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -2804,9 +2603,11 @@
       {
         "current": {
           "selected": true,
-          "text": "default",
-          "value": "default"
+          "text": "Prometheus",
+          "value": "Prometheus"
         },
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": null,
@@ -2823,8 +2624,12 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "istio",
         "definition": "",
+        "description": null,
+        "error": {
+          "message": "Datasource named istio was not found"
+        },
         "hide": 0,
         "includeAll": false,
         "label": "Service",
@@ -2837,7 +2642,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2849,8 +2653,12 @@
           "text": "destination",
           "value": "destination"
         },
-        "datasource": "Prometheus",
+        "datasource": "istio",
         "definition": "",
+        "description": null,
+        "error": {
+          "message": "Datasource named istio was not found"
+        },
         "hide": 0,
         "includeAll": false,
         "label": "Reporter",
@@ -2863,7 +2671,6 @@
         "skipUrlSync": false,
         "sort": 2,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2871,8 +2678,12 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "istio",
         "definition": "",
+        "description": null,
+        "error": {
+          "message": "Datasource named istio was not found"
+        },
         "hide": 0,
         "includeAll": true,
         "label": "Client Workload Namespace",
@@ -2885,7 +2696,6 @@
         "skipUrlSync": false,
         "sort": 2,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2893,8 +2703,12 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "istio",
         "definition": "",
+        "description": null,
+        "error": {
+          "message": "Datasource named istio was not found"
+        },
         "hide": 0,
         "includeAll": true,
         "label": "Client Workload",
@@ -2907,7 +2721,6 @@
         "skipUrlSync": false,
         "sort": 3,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2915,8 +2728,12 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "istio",
         "definition": "",
+        "description": null,
+        "error": {
+          "message": "Datasource named istio was not found"
+        },
         "hide": 0,
         "includeAll": true,
         "label": "Service Workload Namespace",
@@ -2929,7 +2746,6 @@
         "skipUrlSync": false,
         "sort": 2,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2937,8 +2753,12 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "Prometheus",
+        "datasource": "istio",
         "definition": "",
+        "description": null,
+        "error": {
+          "message": "Datasource named istio was not found"
+        },
         "hide": 0,
         "includeAll": true,
         "label": "Service Workload",
@@ -2951,7 +2771,6 @@
         "skipUrlSync": false,
         "sort": 3,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -2959,7 +2778,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
