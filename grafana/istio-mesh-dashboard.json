@@ -21,11 +21,11 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1631005124717,
+  "iteration": 1631006735269,
   "links": [],
   "panels": [
     {
-      "datasource": null,
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 3,
         "w": 24,
@@ -48,7 +48,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -122,7 +122,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -201,7 +201,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -276,7 +276,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -351,7 +351,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -427,7 +427,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -503,7 +503,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -579,7 +579,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -655,7 +655,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -731,7 +731,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -807,7 +807,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -883,7 +883,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -959,7 +959,7 @@
     },
     {
       "columns": [],
-      "datasource": "istio",
+      "datasource": "${datasource}",
       "fontSize": "100%",
       "gridPos": {
         "h": 21,
@@ -1211,7 +1211,7 @@
     },
     {
       "columns": [],
-      "datasource": "istio",
+      "datasource": "Prometheus",
       "fontSize": "100%",
       "gridPos": {
         "h": 18,
@@ -1388,7 +1388,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "istio",
+      "datasource": "Prometheus",
       "fill": 1,
       "gridPos": {
         "h": 9,
@@ -1480,7 +1480,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "Prometheus",
           "value": "Prometheus"
         },
@@ -1533,5 +1533,5 @@
   "timezone": "browser",
   "title": "Istio Mesh Dashboard",
   "uid": "G8wLrJIZk",
-  "version": 1
+  "version": 2
 }
