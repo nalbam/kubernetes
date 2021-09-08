@@ -1,18 +1,4 @@
 {
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "6.0.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "5.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -31,7 +17,7 @@
   "gnetId": 9797,
   "graphTooltip": 0,
   "id": 118,
-  "iteration": 1629689863083,
+  "iteration": 1631072433491,
   "links": [
     {
       "asDropdown": true,
@@ -194,6 +180,7 @@
       "pluginVersion": "7.5.1",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(kube_pod_info * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(kube_node_status_allocatable{resource=~\"pods\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
           "format": "time_series",
           "interval": "",
@@ -567,6 +554,7 @@
       "steppedLine": false,
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(kube_node_status_allocatable{resource=~\"pods\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
@@ -575,6 +563,7 @@
           "refId": "A"
         },
         {
+          "exemplar": true,
           "expr": "sum(kube_node_status_capacity{resource=~\"pods\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
@@ -2787,5 +2776,5 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster - Prometheus",
   "uid": "kube-cluster",
-  "version": 43
+  "version": 45
 }

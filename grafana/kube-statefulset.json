@@ -1,18 +1,4 @@
 {
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "6.0.0"
-    },
-    {
-      "type": "datasource",
-      "id": "prometheus",
-      "name": "Prometheus",
-      "version": "5.0.0"
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -28,10 +14,10 @@
   },
   "description": "Dashboard for Kubernetes StatefulSet with Prometheus.",
   "editable": true,
-  "gnetId": 14902,
+  "gnetId": 9679,
   "graphTooltip": 0,
-  "id": 28,
-  "iteration": 1629699692168,
+  "id": 381,
+  "iteration": 1631072490188,
   "links": [
     {
       "asDropdown": true,
@@ -48,7 +34,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -62,7 +48,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -125,7 +111,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "exemplar": true,
@@ -143,7 +129,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -206,7 +192,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "exemplar": true,
@@ -222,7 +208,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -248,14 +234,7 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "spanNulls": false
           },
           "mappings": [],
           "thresholds": {
@@ -292,6 +271,9 @@
         },
         "tooltip": {
           "mode": "single"
+        },
+        "tooltipOptions": {
+          "mode": "single"
         }
       },
       "pluginVersion": "7.5.1",
@@ -314,7 +296,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -340,14 +322,7 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "spanNulls": false
           },
           "mappings": [],
           "thresholds": {
@@ -384,6 +359,9 @@
         },
         "tooltip": {
           "mode": "single"
+        },
+        "tooltipOptions": {
+          "mode": "single"
         }
       },
       "pluginVersion": "7.5.1",
@@ -407,7 +385,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -470,7 +448,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_statefulset_status_replicas_updated{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",statefulset=~\"^$statefulset\"})",
@@ -486,7 +464,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -503,6 +481,7 @@
               "type": "special"
             }
           ],
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -549,7 +528,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "expr": "sum(kube_statefulset_status_replicas_unavailable{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",statefulset=~\"^$statefulset\"})",
@@ -565,7 +544,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -626,7 +605,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "exemplar": true,
@@ -643,7 +622,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -704,7 +683,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "exemplar": true,
@@ -721,7 +700,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -782,7 +761,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "exemplar": true,
@@ -802,7 +781,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "unit": "short"
@@ -836,7 +815,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -913,7 +892,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -976,7 +955,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "exemplar": true,
@@ -992,7 +971,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1018,14 +997,7 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "spanNulls": false
           },
           "mappings": [],
           "thresholds": {
@@ -1062,6 +1034,9 @@
         },
         "tooltip": {
           "mode": "single"
+        },
+        "tooltipOptions": {
+          "mode": "single"
         }
       },
       "pluginVersion": "7.5.1",
@@ -1084,7 +1059,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1110,14 +1085,7 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "spanNulls": false
           },
           "mappings": [],
           "thresholds": {
@@ -1160,6 +1128,9 @@
         },
         "tooltip": {
           "mode": "single"
+        },
+        "tooltipOptions": {
+          "mode": "single"
         }
       },
       "pluginVersion": "7.5.1",
@@ -1190,7 +1161,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1251,7 +1222,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "exemplar": true,
@@ -1268,7 +1239,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1329,7 +1300,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "exemplar": true,
@@ -1346,7 +1317,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1407,7 +1378,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.0.5",
+      "pluginVersion": "7.5.1",
       "targets": [
         {
           "exemplar": true,
@@ -1424,7 +1395,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "Prometheus",
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1434,7 +1405,7 @@
       "id": 51,
       "panels": [
         {
-          "datasource": "Prometheus",
+          "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1494,7 +1465,7 @@
             "text": {},
             "textMode": "value"
           },
-          "pluginVersion": "8.0.5",
+          "pluginVersion": "7.5.1",
           "targets": [
             {
               "exemplar": true,
@@ -1512,7 +1483,7 @@
           "type": "stat"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1555,7 +1526,7 @@
             "text": {},
             "textMode": "auto"
           },
-          "pluginVersion": "8.0.5",
+          "pluginVersion": "7.5.1",
           "targets": [
             {
               "exemplar": true,
@@ -1577,7 +1548,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "$datasource",
           "fieldConfig": {
             "defaults": {
               "unit": "s"
@@ -1611,7 +1582,7 @@
             "alertThreshold": true
           },
           "percentage": false,
-          "pluginVersion": "8.0.5",
+          "pluginVersion": "7.5.1",
           "pointradius": 2,
           "points": false,
           "renderer": "flot",
@@ -1697,7 +1668,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 30,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -1708,8 +1679,8 @@
       {
         "current": {
           "selected": false,
-          "text": "Prometheus",
-          "value": "Prometheus"
+          "text": "cortex",
+          "value": "cortex"
         },
         "description": null,
         "error": null,
@@ -1730,10 +1701,10 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": "prod-kr-a",
+          "value": "prod-kr-a"
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(kube_node_labels,cluster)",
         "description": null,
         "error": null,
@@ -1752,6 +1723,7 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
+        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1759,11 +1731,11 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
-          "text": "addon-prometheus",
-          "value": "addon-prometheus"
+          "selected": false,
+          "text": "addon-monitoring",
+          "value": "addon-monitoring"
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(kube_namespace_labels{cluster=~\"^$cluster$\"},namespace)",
         "description": null,
         "error": null,
@@ -1782,6 +1754,7 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
+        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1790,10 +1763,10 @@
         "allValue": "",
         "current": {
           "selected": false,
-          "text": "All",
-          "value": "$__all"
+          "text": "prometheus-k8s",
+          "value": "prometheus-k8s"
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(kube_statefulset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},statefulset)",
         "description": null,
         "error": null,
@@ -1812,6 +1785,7 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
+        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1823,7 +1797,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(kube_service_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},service)",
         "description": null,
         "error": null,
@@ -1842,6 +1816,7 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
+        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1880,5 +1855,5 @@
   "timezone": "browser",
   "title": "Kubernetes StatefulSet - Prometheus",
   "uid": "kube-statefulset",
-  "version": 1
+  "version": 9
 }
