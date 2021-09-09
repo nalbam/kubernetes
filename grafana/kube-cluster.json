@@ -17,7 +17,7 @@
   "gnetId": 9797,
   "graphTooltip": 0,
   "id": 118,
-  "iteration": 1631072433491,
+  "iteration": 1631145358114,
   "links": [
     {
       "asDropdown": true,
@@ -33,7 +33,7 @@
   ],
   "panels": [
     {
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -46,7 +46,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -113,7 +113,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 1,
@@ -194,7 +194,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 1,
@@ -275,7 +275,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 1,
@@ -356,7 +356,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 1,
@@ -436,7 +436,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -510,7 +510,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -628,7 +628,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -755,7 +755,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -881,7 +881,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "links": []
@@ -984,7 +984,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -1055,7 +1055,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1068,7 +1068,7 @@
       "type": "row"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1160,7 +1160,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1246,7 +1246,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1260,7 +1260,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -1333,7 +1333,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -1405,7 +1405,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -1477,7 +1477,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -1549,7 +1549,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "decimals": 0,
@@ -1625,7 +1625,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1636,7 +1636,7 @@
       "panels": [
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -1708,7 +1708,7 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -1783,7 +1783,7 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -1858,7 +1858,7 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -1933,7 +1933,7 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -2008,7 +2008,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2019,7 +2019,7 @@
       "panels": [
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -2091,7 +2091,7 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -2163,7 +2163,7 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -2239,7 +2239,7 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -2315,7 +2315,7 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -2389,7 +2389,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2400,7 +2400,7 @@
       "panels": [
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -2470,7 +2470,7 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -2542,7 +2542,7 @@
         },
         {
           "cacheTimeout": null,
-          "datasource": "$datasource",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "decimals": 0,
@@ -2632,8 +2632,8 @@
       {
         "current": {
           "selected": false,
-          "text": "cortex",
-          "value": "cortex"
+          "text": "Prometheus",
+          "value": "Prometheus"
         },
         "description": null,
         "error": null,
@@ -2654,10 +2654,10 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "prod-kr-a",
-          "value": "prod-kr-a"
+          "text": "All",
+          "value": "$__all"
         },
-        "datasource": "$datasource",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_node_labels,cluster)",
         "description": null,
         "error": null,
@@ -2688,7 +2688,7 @@
           "text": "workers",
           "value": "workers"
         },
-        "datasource": "$datasource",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_node_labels{cluster=~\"^$cluster$\"},label_group)",
         "description": null,
         "error": null,
@@ -2719,7 +2719,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "$datasource",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_pod_info{cluster=~\"^$cluster$\"},namespace)",
         "description": null,
         "error": null,

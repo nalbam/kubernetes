@@ -17,7 +17,7 @@
   "gnetId": 9679,
   "graphTooltip": 0,
   "id": 170,
-  "iteration": 1631072172048,
+  "iteration": 1631145458524,
   "links": [
     {
       "asDropdown": true,
@@ -55,7 +55,7 @@
         "#f9934e",
         "#e0f9d7"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "decimals": null,
       "fieldConfig": {
         "defaults": {},
@@ -146,7 +146,7 @@
         "#f9934e",
         "#e24d42"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -225,7 +225,7 @@
       "valueName": "current"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -309,7 +309,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -401,7 +401,7 @@
         "#f9934e",
         "#e0f9d7"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "decimals": null,
       "fieldConfig": {
         "defaults": {},
@@ -489,7 +489,7 @@
         "#f9934e",
         "#e24d42"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "decimals": null,
       "fieldConfig": {
         "defaults": {},
@@ -576,7 +576,7 @@
         "#f9934e",
         "#e24d42"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "decimals": 3,
       "fieldConfig": {
         "defaults": {},
@@ -664,7 +664,7 @@
         "#f9934e",
         "#e24d42"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "decimals": 3,
       "fieldConfig": {
         "defaults": {},
@@ -751,7 +751,7 @@
         "#f9934e",
         "#e24d42"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "decimals": 3,
       "fieldConfig": {
         "defaults": {},
@@ -834,7 +834,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "unit": "short"
@@ -952,7 +952,7 @@
         "#f9934e",
         "#e24d42"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -1031,7 +1031,7 @@
       "valueName": "current"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1115,7 +1115,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1220,7 +1220,7 @@
         "#f9934e",
         "#e24d42"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "decimals": 2,
       "fieldConfig": {
         "defaults": {},
@@ -1308,7 +1308,7 @@
         "#f9934e",
         "#e24d42"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "decimals": 2,
       "fieldConfig": {
         "defaults": {},
@@ -1395,7 +1395,7 @@
         "#f9934e",
         "#e24d42"
       ],
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "decimals": 2,
       "fieldConfig": {
         "defaults": {},
@@ -1488,7 +1488,7 @@
       "type": "row"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1566,7 +1566,7 @@
       "type": "stat"
     },
     {
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1631,7 +1631,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$datasource",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "unit": "s"
@@ -1877,8 +1877,8 @@
       {
         "current": {
           "selected": false,
-          "text": "cortex",
-          "value": "cortex"
+          "text": "Prometheus",
+          "value": "Prometheus"
         },
         "description": null,
         "error": null,
@@ -1898,11 +1898,11 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "km-kr-p01",
-          "value": "km-kr-p01"
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
-        "datasource": "$datasource",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_node_labels,cluster)",
         "description": null,
         "error": null,
@@ -1929,11 +1929,11 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "argocd",
           "value": "argocd"
         },
-        "datasource": "$datasource",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_namespace_labels{cluster=~\"^$cluster$\"},namespace)",
         "description": null,
         "error": null,
@@ -1961,10 +1961,10 @@
         "allValue": "",
         "current": {
           "selected": false,
-          "text": "argocd-repo-server",
-          "value": "argocd-repo-server"
+          "text": "All",
+          "value": "$__all"
         },
-        "datasource": "$datasource",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_deployment_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},deployment)",
         "description": null,
         "error": null,
@@ -1995,7 +1995,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "$datasource",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_service_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},service)",
         "description": null,
         "error": null,
