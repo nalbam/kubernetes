@@ -1690,7 +1690,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "(histogram_quantile(0.99, sum(irate(istio_request_duration_milliseconds_bucket{cluster=~\"^$cluster$\",reporter=\"source\", destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le)) / 1000) or histogram_quantile(0.99, sum(irate(istio_request_duration_seconds_bucket{reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le))",
+          "expr": "(histogram_quantile(0.99, sum(irate(istio_request_duration_milliseconds_bucket{cluster=~\"^$cluster$\",reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le)) / 1000) or histogram_quantile(0.99, sum(irate(istio_request_duration_seconds_bucket{reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1699,7 +1699,7 @@
         },
         {
           "exemplar": true,
-          "expr": "(histogram_quantile(0.90, sum(irate(istio_request_duration_milliseconds_bucket{cluster=~\"^$cluster$\",reporter=\"source\", destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le)) / 1000) or histogram_quantile(0.90, sum(irate(istio_request_duration_seconds_bucket{reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le))",
+          "expr": "(histogram_quantile(0.90, sum(irate(istio_request_duration_milliseconds_bucket{cluster=~\"^$cluster$\",reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le)) / 1000) or histogram_quantile(0.90, sum(irate(istio_request_duration_seconds_bucket{reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1809,7 +1809,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\", stream=\"stderr\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"}[2m])) by (pod)",
+          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",stream=\"stderr\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"}[2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1818,7 +1818,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\", container!~\"istio-proxy\"} |~ \"error|ERROR\" [2m])) by (pod)",
+          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"} |~ \"error|ERROR\" [2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1827,7 +1827,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\", container!~\"istio-proxy\"} |~ \"warn|WARN\" [2m])) by (pod)",
+          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"} |~ \"warn|WARN\" [2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
