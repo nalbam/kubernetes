@@ -135,7 +135,7 @@
           "tags": []
         }
       ],
-      "title": "Yesterday's AWS costs",
+      "title": "This Month's AWS costs",
       "type": "gauge"
     },
     {
