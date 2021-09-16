@@ -22,7 +22,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 14,
-  "iteration": 1631767795043,
+  "iteration": 1631768300989,
   "links": [],
   "panels": [
     {
@@ -504,6 +504,7 @@
       }
     }
   ],
+  "refresh": "10s",
   "schemaVersion": 30,
   "style": "dark",
   "tags": [],
@@ -560,7 +561,7 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
@@ -591,5 +592,5 @@
   "timezone": "",
   "title": "AWS Costs Exporter",
   "uid": "aws-ce",
-  "version": 7
+  "version": 8
 }
