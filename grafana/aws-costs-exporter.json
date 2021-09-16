@@ -22,7 +22,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 14,
-  "iteration": 1631759884919,
+  "iteration": 1631765839728,
   "links": [],
   "panels": [
     {
@@ -295,7 +295,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(aws_yesterday_daily_costs{cluster=~\"$cluster\"})",
+          "expr": "sum(aws_monyhly_costs{cluster=~\"$cluster\"})",
           "format": "time_series",
           "groupBy": [
             {
@@ -340,7 +340,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Previous day costs",
+      "title": "Monthly AWS costs",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -466,7 +466,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Current day costs",
+      "title": "Daily AWS costs",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -591,5 +591,5 @@
   "timezone": "",
   "title": "AWS Costs Exporter",
   "uid": "aws-ce",
-  "version": 5
+  "version": 6
 }
