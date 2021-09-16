@@ -22,7 +22,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 14,
-  "iteration": 1631765839728,
+  "iteration": 1631767795043,
   "links": [],
   "panels": [
     {
@@ -44,7 +44,7 @@
               "type": "special"
             }
           ],
-          "max": 200,
+          "max": 500,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -55,11 +55,11 @@
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
-                "value": 200
+                "value": 300
               },
               {
                 "color": "#d44a3a",
-                "value": 300
+                "value": 400
               }
             ]
           },
@@ -94,7 +94,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "aws_yesterday_daily_costs{cluster=~\"$cluster\"}",
+          "expr": "aws_monyhly_costs{cluster=~\"$cluster\"}",
           "format": "time_series",
           "groupBy": [
             {
@@ -157,7 +157,7 @@
               "type": "special"
             }
           ],
-          "max": 200,
+          "max": 20,
           "min": 0,
           "thresholds": {
             "mode": "absolute",
@@ -168,11 +168,11 @@
               },
               {
                 "color": "rgba(237, 129, 40, 0.89)",
-                "value": 200
+                "value": 10
               },
               {
                 "color": "#d44a3a",
-                "value": 300
+                "value": 15
               }
             ]
           },
@@ -560,7 +560,7 @@
     ]
   },
   "time": {
-    "from": "now-7d",
+    "from": "now-2d",
     "to": "now"
   },
   "timepicker": {
@@ -591,5 +591,5 @@
   "timezone": "",
   "title": "AWS Costs Exporter",
   "uid": "aws-ce",
-  "version": 6
+  "version": 7
 }
