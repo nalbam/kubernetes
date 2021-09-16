@@ -108,7 +108,7 @@
               "type": "fill"
             }
           ],
-          "instant": true,
+          "instant": false,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -221,7 +221,7 @@
               "type": "fill"
             }
           ],
-          "instant": true,
+          "instant": false,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
