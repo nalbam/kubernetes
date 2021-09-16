@@ -21,6 +21,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
+  "id": 14,
+  "iteration": 1631759884919,
   "links": [],
   "panels": [
     {
@@ -108,7 +110,7 @@
               "type": "fill"
             }
           ],
-          "instant": false,
+          "instant": true,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -221,7 +223,7 @@
               "type": "fill"
             }
           ],
-          "instant": false,
+          "instant": true,
           "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
@@ -309,9 +311,10 @@
               "type": "fill"
             }
           ],
+          "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "",
+          "legendFormat": "total",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -434,9 +437,10 @@
               "type": "fill"
             }
           ],
+          "instant": false,
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "",
+          "legendFormat": "total",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -520,6 +524,7 @@
         "name": "datasource",
         "options": [],
         "query": "prometheus",
+        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -555,7 +560,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
@@ -586,5 +591,5 @@
   "timezone": "",
   "title": "AWS Costs Exporter",
   "uid": "aws-ce",
-  "version": 3
+  "version": 5
 }
