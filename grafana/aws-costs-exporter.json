@@ -21,12 +21,11 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 14,
   "links": [],
   "panels": [
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -92,7 +91,8 @@
       "pluginVersion": "8.1.2",
       "targets": [
         {
-          "expr": "aws_yesterday_daily_costs",
+          "exemplar": true,
+          "expr": "aws_yesterday_daily_costs{cluster=~\"$cluster\"}",
           "format": "time_series",
           "groupBy": [
             {
@@ -109,6 +109,7 @@
             }
           ],
           "instant": true,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
           "orderByTime": "ASC",
@@ -137,7 +138,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -203,7 +204,8 @@
       "pluginVersion": "8.1.2",
       "targets": [
         {
-          "expr": "aws_today_daily_costs",
+          "exemplar": true,
+          "expr": "aws_today_daily_costs{cluster=~\"$cluster\"}",
           "format": "time_series",
           "groupBy": [
             {
@@ -220,6 +222,7 @@
             }
           ],
           "instant": true,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
           "orderByTime": "ASC",
@@ -251,7 +254,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -289,7 +292,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "aws_yesterday_daily_costs",
+          "exemplar": true,
+          "expr": "aws_yesterday_daily_costs{cluster=~\"$cluster\"}",
           "format": "time_series",
           "groupBy": [
             {
@@ -305,7 +309,9 @@
               "type": "fill"
             }
           ],
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -373,7 +379,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "${datasource}",
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -411,7 +417,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "aws_today_daily_costs",
+          "exemplar": true,
+          "expr": "aws_today_daily_costs{cluster=~\"$cluster\"}",
           "format": "time_series",
           "groupBy": [
             {
@@ -427,7 +434,9 @@
               "type": "fill"
             }
           ],
+          "interval": "",
           "intervalFactor": 1,
+          "legendFormat": "",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -495,7 +504,55 @@
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "Prometheus",
+          "value": "Prometheus"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "${datasource}",
+        "definition": "label_values(kube_node_labels,cluster)",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": false,
+        "name": "cluster",
+        "options": [],
+        "query": {
+          "query": "label_values(kube_node_labels,cluster)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "type": "query"
+      }
+    ]
   },
   "time": {
     "from": "now-6h",
@@ -529,5 +586,5 @@
   "timezone": "",
   "title": "AWS Costs Exporter",
   "uid": "aws-ce",
-  "version": 2
+  "version": 3
 }
