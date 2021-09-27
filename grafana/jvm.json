@@ -40,7 +40,8 @@
   "editable": true,
   "gnetId": 11526,
   "graphTooltip": 0,
-  "iteration": 1592465944153,
+  "id": 15,
+  "iteration": 1632729808092,
   "links": [],
   "panels": [
     {
@@ -51,14 +52,14 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "links": []
         },
         "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
+        "h": 9,
         "w": 24,
         "x": 0,
         "y": 0
@@ -82,9 +83,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "8.1.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -95,11 +97,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_memory_bytes_used{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
+          "exemplar": true,
+          "expr": "jvm_memory_used_bytes{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "[{{area}}] {{pod}}",
+          "legendFormat": "[{{area}}:{{id}}] {{pod}}",
           "metric": "jvm_memory_bytes_used",
           "refId": "A",
           "step": 5
@@ -156,7 +159,7 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "links": []
         },
         "overrides": []
       },
@@ -166,7 +169,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 7
+        "y": 9
       },
       "hiddenSeries": false,
       "id": 3,
@@ -186,10 +189,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.0.3",
+      "pluginVersion": "8.1.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -199,17 +202,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_threads_current{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
+          "exemplar": true,
+          "expr": "jvm_threads_live_threads{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{pod}} [current]",
+          "legendFormat": "{{pod}} [live]",
           "metric": "jvm_threads_current",
           "refId": "A",
           "step": 10
         },
         {
-          "expr": "jvm_threads_daemon{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
+          "exemplar": true,
+          "expr": "jvm_threads_daemon_threads{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -271,7 +276,7 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "links": []
         },
         "overrides": []
       },
@@ -281,7 +286,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 7
+        "y": 9
       },
       "hiddenSeries": false,
       "id": 4,
@@ -301,9 +306,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "8.1.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -313,7 +319,8 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "jvm_classes_loaded{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
+          "exemplar": true,
+          "expr": "jvm_classes_loaded_classes{namespace=~\"^$Namespace$\",service=~\"^$Service$\",pod=~\"^$Pod$\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -375,7 +382,7 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "links": []
         },
         "overrides": []
       },
@@ -385,7 +392,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 14
+        "y": 16
       },
       "hiddenSeries": false,
       "id": 5,
@@ -405,9 +412,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "8.1.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -478,7 +486,7 @@
       "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "links": []
         },
         "overrides": []
       },
@@ -488,7 +496,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 14
+        "y": 16
       },
       "hiddenSeries": false,
       "id": 6,
@@ -508,9 +516,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "8.1.5",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -576,7 +585,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 25,
+  "schemaVersion": 30,
   "style": "dark",
   "tags": [
     "JVM",
@@ -593,19 +602,23 @@
         },
         "datasource": "Prometheus",
         "definition": "",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": null,
         "multi": false,
         "name": "Namespace",
         "options": [],
-        "query": "label_values(kube_namespace_labels, namespace)",
+        "query": {
+          "query": "label_values(kube_namespace_labels, namespace)",
+          "refId": "Prometheus-Namespace-Variable-Query"
+        },
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -619,19 +632,23 @@
         },
         "datasource": "Prometheus",
         "definition": "",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": null,
         "multi": false,
         "name": "Service",
         "options": [],
-        "query": "label_values(kube_service_labels{namespace=~\"^$Namespace$\"}, service)",
+        "query": {
+          "query": "label_values(kube_service_labels{namespace=~\"^$Namespace$\"}, service)",
+          "refId": "Prometheus-Service-Variable-Query"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -645,19 +662,23 @@
         },
         "datasource": "Prometheus",
         "definition": "",
+        "description": null,
+        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": null,
         "multi": false,
         "name": "Pod",
         "options": [],
-        "query": "label_values(kube_pod_labels{namespace=~\"^$Namespace$\",pod=~\"^$Service-[a-z0-9]+-[a-z0-9]+\"}, pod)",
+        "query": {
+          "query": "label_values(kube_pod_labels{namespace=~\"^$Namespace$\",pod=~\"^$Service-[a-z0-9]+-[a-z0-9]+\"}, pod)",
+          "refId": "Prometheus-Pod-Variable-Query"
+        },
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -665,7 +686,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -695,5 +716,5 @@
   "timezone": "browser",
   "title": "JVM Overview - Prometheus",
   "uid": "jvm-overview",
-  "version": 1
+  "version": 5
 }
