@@ -22,6 +22,12 @@
         "hide": true,
         "iconColor": "rgba(0,211,255,1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
@@ -31,7 +37,7 @@
   "gnetId": 9797,
   "graphTooltip": 0,
   "id": 118,
-  "iteration": 1631145358114,
+  "iteration": 1634783000047,
   "links": [
     {
       "asDropdown": true,
@@ -66,11 +72,13 @@
           "decimals": 0,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -111,7 +119,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "expr": "sum(kube_node_info * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
@@ -133,11 +141,13 @@
           "decimals": 1,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "max": 100,
@@ -191,7 +201,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "exemplar": true,
@@ -214,11 +224,13 @@
           "decimals": 1,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "max": 100,
@@ -272,7 +284,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "exemplar": true,
@@ -295,11 +307,13 @@
           "decimals": 1,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "max": 100,
@@ -353,7 +367,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "exemplar": true,
@@ -376,11 +390,13 @@
           "decimals": 1,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "max": 100,
@@ -434,7 +450,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "expr": "sum(container_fs_usage_bytes{device=~\"^/dev/.*$\",id=\"/\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(container_fs_limit_bytes{device=~\"^/dev/.*$\",id=\"/\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
@@ -456,11 +472,13 @@
           "decimals": 0,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -505,7 +523,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "expr": "sum(kube_node_spec_unschedulable * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
@@ -546,7 +564,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -558,7 +576,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -601,7 +619,7 @@
       "title": "Pod Capacity",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -664,7 +682,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -676,7 +694,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -687,7 +705,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(kube_node_status_capacity{resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "expr": "sum(kube_node_status_capacity{cluster=~\"$cluster\",resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -696,7 +714,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(kube_node_status_allocatable{resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "expr": "sum(kube_node_status_allocatable{cluster=~\"$cluster\",resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -705,7 +723,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_requests{resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "expr": "sum(kube_pod_container_resource_requests{cluster=~\"$cluster\",resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -713,11 +731,22 @@
           "refId": "C"
         },
         {
-          "expr": "sum(rate(container_cpu_usage_seconds_total[2m]) * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "exemplar": true,
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\"}[2m]) * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "hide": true,
           "interval": "",
           "legendFormat": "usage",
           "refId": "D"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{cluster=~\"$cluster\",namespace!~\"addon-[a-z0-9-]+\",resource=~\"cpu\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) by (namespace)",
+          "format": "time_series",
+          "hide": false,
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{namespace}}",
+          "refId": "E"
         }
       ],
       "thresholds": [],
@@ -727,7 +756,7 @@
       "title": "CPU Capacity",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -791,7 +820,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -803,7 +832,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -854,7 +883,7 @@
       "title": "Memory Capacity",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -917,7 +946,7 @@
         "current": false,
         "max": false,
         "min": false,
-        "show": true,
+        "show": false,
         "total": false,
         "values": false
       },
@@ -929,7 +958,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -962,7 +991,7 @@
       "title": "Disk Capacity",
       "tooltip": {
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -1004,11 +1033,13 @@
           "decimals": 0,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1053,7 +1084,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "expr": "sum(kube_node_status_condition{condition=\"OutOfDisk\",status=\"true\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
@@ -1098,7 +1129,8 @@
             "hideFrom": {
               "graph": false,
               "legend": false,
-              "tooltip": false
+              "tooltip": false,
+              "viz": false
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
@@ -1107,7 +1139,14 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -1147,7 +1186,7 @@
           "displayMode": "hidden",
           "placement": "right"
         },
-        "tooltipOptions": {
+        "tooltip": {
           "mode": "single"
         }
       },
@@ -1190,7 +1229,8 @@
             "hideFrom": {
               "graph": false,
               "legend": false,
-              "tooltip": false
+              "tooltip": false,
+              "viz": false
             },
             "lineInterpolation": "linear",
             "lineWidth": 1,
@@ -1199,7 +1239,14 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": true
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -1239,7 +1286,7 @@
           "displayMode": "hidden",
           "placement": "right"
         },
-        "tooltipOptions": {
+        "tooltip": {
           "mode": "single"
         }
       },
@@ -1280,11 +1327,13 @@
           "decimals": 0,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1330,7 +1379,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "exemplar": true,
@@ -1353,11 +1402,13 @@
           "decimals": 0,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1403,7 +1454,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1425,11 +1476,13 @@
           "decimals": 0,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1475,7 +1528,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1497,11 +1550,13 @@
           "decimals": 0,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1547,7 +1602,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1569,11 +1624,13 @@
           "decimals": 0,
           "mappings": [
             {
-              "id": 0,
-              "op": "=",
-              "text": "N/A",
-              "type": 1,
-              "value": "null"
+              "options": {
+                "match": "null",
+                "result": {
+                  "text": "N/A"
+                }
+              },
+              "type": "special"
             }
           ],
           "thresholds": {
@@ -1623,7 +1680,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.1.6",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1656,11 +1713,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -1728,11 +1787,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -1803,11 +1864,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -1878,11 +1941,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -1953,11 +2018,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -2039,11 +2106,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -2111,11 +2180,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -2183,11 +2254,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -2259,11 +2332,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -2335,11 +2410,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -2420,11 +2497,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -2490,11 +2569,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -2562,11 +2643,13 @@
               "decimals": 0,
               "mappings": [
                 {
-                  "id": 0,
-                  "op": "=",
-                  "text": "N/A",
-                  "type": 1,
-                  "value": "null"
+                  "options": {
+                    "match": "null",
+                    "result": {
+                      "text": "N/A"
+                    }
+                  },
+                  "type": "special"
                 }
               ],
               "thresholds": {
@@ -2634,7 +2717,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 27,
+  "schemaVersion": 30,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -2690,7 +2773,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": null,
-        "tags": [],
         "tagsQuery": null,
         "type": "query",
         "useTags": false
@@ -2721,7 +2803,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": null,
-        "tags": [],
         "tagsQuery": null,
         "type": "query",
         "useTags": false
@@ -2752,7 +2833,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": null,
-        "tags": [],
         "tagsQuery": null,
         "type": "query",
         "useTags": false
@@ -2790,5 +2870,5 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster - Prometheus",
   "uid": "kube-cluster",
-  "version": 45
+  "version": 54
 }
