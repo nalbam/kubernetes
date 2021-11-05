@@ -37,8 +37,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 9679,
   "graphTooltip": 0,
-  "id": 3,
-  "iteration": 1636112103510,
+  "iteration": 1636112604722,
   "links": [
     {
       "asDropdown": true,
@@ -57,10 +56,6 @@
     {
       "collapsed": false,
       "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -719,6 +714,7 @@
       "pluginVersion": "8.2.3",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"})",
           "format": "time_series",
           "interval": "",
@@ -796,7 +792,8 @@
       "pluginVersion": "8.2.3",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits_cpu_cores{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"})",
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_limits{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1342,6 +1339,7 @@
       "pluginVersion": "8.2.3",
       "targets": [
         {
+          "exemplar": true,
           "expr": "sum(kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"})",
           "format": "time_series",
           "interval": "",
@@ -1419,7 +1417,8 @@
       "pluginVersion": "8.2.3",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits_memory_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"})",
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_limits{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1433,10 +1432,6 @@
     {
       "collapsed": false,
       "datasource": "Prometheus",
-      "fieldConfig": {
-        "defaults": {},
-        "overrides": []
-      },
       "gridPos": {
         "h": 1,
         "w": 24,
