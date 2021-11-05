@@ -37,7 +37,7 @@
   "gnetId": 9797,
   "graphTooltip": 0,
   "id": 118,
-  "iteration": 1634783000047,
+  "iteration": 1636111996477,
   "links": [
     {
       "asDropdown": true,
@@ -732,8 +732,8 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\"}[2m]) * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
-          "hide": true,
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",container!~\"POD|\"}[2m]) * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "hide": false,
           "interval": "",
           "legendFormat": "usage",
           "refId": "D"
@@ -2840,7 +2840,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-6h",
     "to": "now"
   },
   "timepicker": {
@@ -2870,5 +2870,5 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster - Prometheus",
   "uid": "kube-cluster",
-  "version": 54
+  "version": 60
 }

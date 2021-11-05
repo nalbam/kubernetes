@@ -22,16 +22,23 @@
         "hide": true,
         "iconColor": "rgba(0,211,255,1)",
         "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
         "type": "dashboard"
       }
     ]
   },
   "description": "Dashboard for Kubernetes DaemonSet with Prometheus.",
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 9679,
   "graphTooltip": 0,
-  "id": 381,
-  "iteration": 1631145524860,
+  "id": 13,
+  "iteration": 1636112143000,
   "links": [
     {
       "asDropdown": true,
@@ -45,10 +52,15 @@
       "type": "dashboards"
     }
   ],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -62,7 +74,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -125,7 +137,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -143,7 +155,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -206,7 +218,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -222,7 +234,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -248,7 +260,14 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -285,9 +304,6 @@
         },
         "tooltip": {
           "mode": "single"
-        },
-        "tooltipOptions": {
-          "mode": "single"
         }
       },
       "pluginVersion": "7.5.1",
@@ -310,7 +326,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -336,7 +352,14 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -373,9 +396,6 @@
         },
         "tooltip": {
           "mode": "single"
-        },
-        "tooltipOptions": {
-          "mode": "single"
         }
       },
       "pluginVersion": "7.5.1",
@@ -399,7 +419,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -462,7 +482,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "expr": "sum(kube_daemonset_status_replicas_updated{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",daemonset=~\"^$daemonset\"})",
@@ -478,7 +498,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -542,7 +562,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "expr": "sum(kube_daemonset_status_replicas_unavailable{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",daemonset=~\"^$daemonset\"})",
@@ -558,7 +578,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -619,7 +639,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -636,7 +656,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -697,7 +717,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -714,7 +734,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -775,7 +795,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -795,7 +815,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "unit": "short"
@@ -829,7 +849,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -906,7 +926,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -969,7 +989,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -985,7 +1005,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1011,7 +1031,14 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -1048,9 +1075,6 @@
         },
         "tooltip": {
           "mode": "single"
-        },
-        "tooltipOptions": {
-          "mode": "single"
         }
       },
       "pluginVersion": "7.5.1",
@@ -1073,7 +1097,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1099,7 +1123,14 @@
               "type": "linear"
             },
             "showPoints": "never",
-            "spanNulls": false
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
           "mappings": [],
           "thresholds": {
@@ -1142,9 +1173,6 @@
         },
         "tooltip": {
           "mode": "single"
-        },
-        "tooltipOptions": {
-          "mode": "single"
         }
       },
       "pluginVersion": "7.5.1",
@@ -1175,7 +1203,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1236,7 +1264,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -1253,7 +1281,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1314,7 +1342,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -1331,7 +1359,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1392,7 +1420,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -1409,7 +1437,11 @@
     },
     {
       "collapsed": true,
-      "datasource": null,
+      "datasource": "Prometheus",
+      "fieldConfig": {
+        "defaults": {},
+        "overrides": []
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1419,7 +1451,7 @@
       "id": 51,
       "panels": [
         {
-          "datasource": "${datasource}",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1497,7 +1529,7 @@
           "type": "stat"
         },
         {
-          "datasource": "${datasource}",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1562,7 +1594,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${datasource}",
+          "datasource": "Prometheus",
           "fieldConfig": {
             "defaults": {
               "unit": "s"
@@ -1682,7 +1714,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 27,
+  "schemaVersion": 31,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -1718,7 +1750,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "${datasource}",
+        "datasource": "Prometheus",
         "definition": "label_values(kube_node_labels,cluster)",
         "description": null,
         "error": null,
@@ -1737,7 +1769,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1749,7 +1780,7 @@
           "text": "addon-prometheus",
           "value": "addon-prometheus"
         },
-        "datasource": "${datasource}",
+        "datasource": "Prometheus",
         "definition": "label_values(kube_namespace_labels{cluster=~\"^$cluster$\"},namespace)",
         "description": null,
         "error": null,
@@ -1768,7 +1799,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1780,7 +1810,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "${datasource}",
+        "datasource": "Prometheus",
         "definition": "label_values(kube_daemonset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},daemonset)",
         "description": null,
         "error": null,
@@ -1799,7 +1829,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1811,7 +1840,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "${datasource}",
+        "datasource": "Prometheus",
         "definition": "label_values(kube_service_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},service)",
         "description": null,
         "error": null,
@@ -1830,7 +1859,6 @@
         "skipUrlSync": false,
         "sort": 1,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -1869,5 +1897,5 @@
   "timezone": "browser",
   "title": "Kubernetes DaemonSet - Prometheus",
   "uid": "kube-daemonset",
-  "version": 9
+  "version": 1
 }
