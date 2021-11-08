@@ -37,8 +37,8 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 9679,
   "graphTooltip": 0,
-  "id": 119,
-  "iteration": 1636111996477,
+  "id": 120,
+  "iteration": 1636380099675,
   "links": [
     {
       "asDropdown": true,
@@ -56,7 +56,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,

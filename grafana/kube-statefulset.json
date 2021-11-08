@@ -35,10 +35,10 @@
   "description": "Dashboard for Kubernetes StatefulSet with Prometheus.",
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": 9679,
+  "gnetId": 14902,
   "graphTooltip": 0,
-  "id": 119,
-  "iteration": 1636111996477,
+  "id": 120,
+  "iteration": 1636380099675,
   "links": [
     {
       "asDropdown": true,
@@ -56,7 +56,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "fieldConfig": {
         "defaults": {},
         "overrides": []

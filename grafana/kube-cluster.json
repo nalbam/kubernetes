@@ -34,10 +34,11 @@
   },
   "description": "Dashboard for Kubernetes cluster with Prometheus.",
   "editable": true,
+  "fiscalYearStartMonth": 0,
   "gnetId": 9797,
   "graphTooltip": 0,
-  "id": 119,
-  "iteration": 1636111996477,
+  "id": 120,
+  "iteration": 1636380099675,
   "links": [
     {
       "asDropdown": true,
@@ -51,9 +52,10 @@
       "type": "dashboards"
     }
   ],
+  "liveNow": false,
   "panels": [
     {
-      "datasource": "${datasource}",
+      "datasource": "Prometheus",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -119,7 +121,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "expr": "sum(kube_node_info * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
@@ -201,7 +203,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -284,7 +286,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -367,7 +369,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -450,7 +452,7 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "expr": "sum(container_fs_usage_bytes{device=~\"^/dev/.*$\",id=\"/\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) /\nsum(container_fs_limit_bytes{device=~\"^/dev/.*$\",id=\"/\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"}) * 100",
@@ -523,7 +525,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "expr": "sum(kube_node_spec_unschedulable * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
@@ -576,7 +578,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -694,7 +696,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -832,7 +834,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -958,7 +960,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1084,7 +1086,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "expr": "sum(kube_node_status_condition{condition=\"OutOfDisk\",status=\"true\"} * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
@@ -1379,7 +1381,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "exemplar": true,
@@ -1454,7 +1456,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1528,7 +1530,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1602,7 +1604,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -1680,7 +1682,7 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.1.6",
+      "pluginVersion": "8.2.3",
       "targets": [
         {
           "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"$cluster\",namespace=~\"$namespace\"})",
@@ -2717,7 +2719,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 30,
+  "schemaVersion": 31,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -2729,8 +2731,8 @@
       {
         "current": {
           "selected": false,
-          "text": "Prometheus",
-          "value": "Prometheus"
+          "text": "demo",
+          "value": "demo"
         },
         "description": null,
         "error": null,
@@ -2741,7 +2743,6 @@
         "name": "datasource",
         "options": [],
         "query": "prometheus",
-        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -2780,7 +2781,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "workers",
           "value": "workers"
         },
