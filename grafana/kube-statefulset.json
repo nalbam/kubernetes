@@ -56,7 +56,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -74,7 +74,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -155,7 +155,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -234,7 +234,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -326,7 +326,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -419,7 +419,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -498,7 +498,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -578,7 +578,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -656,7 +656,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -734,7 +734,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -815,7 +815,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "unit": "short"
@@ -926,7 +926,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1005,7 +1005,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1097,7 +1097,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1203,7 +1203,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1281,7 +1281,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1359,7 +1359,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1437,7 +1437,7 @@
     },
     {
       "collapsed": true,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {},
         "overrides": []
@@ -1451,7 +1451,7 @@
       "id": 51,
       "panels": [
         {
-          "datasource": "Prometheus",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1529,7 +1529,7 @@
           "type": "stat"
         },
         {
-          "datasource": "Prometheus",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1594,7 +1594,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "${datasource}",
           "fieldConfig": {
             "defaults": {
               "unit": "s"
@@ -1750,7 +1750,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "Prometheus",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_node_labels,cluster)",
         "description": null,
         "error": null,
@@ -1780,7 +1780,7 @@
           "text": "addon-prometheus",
           "value": "addon-prometheus"
         },
-        "datasource": "Prometheus",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_namespace_labels{cluster=~\"^$cluster$\"},namespace)",
         "description": null,
         "error": null,
@@ -1810,7 +1810,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "Prometheus",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_statefulset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},statefulset)",
         "description": null,
         "error": null,
@@ -1840,7 +1840,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "Prometheus",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_service_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},service)",
         "description": null,
         "error": null,

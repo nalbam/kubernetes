@@ -37,7 +37,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 9679,
   "graphTooltip": 0,
-  "iteration": 1636112604722,
+  "iteration": 1636377755652,
   "links": [
     {
       "asDropdown": true,
@@ -55,7 +55,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -69,7 +69,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -150,7 +150,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -229,7 +229,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -321,7 +321,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -414,7 +414,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -493,7 +493,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -572,7 +572,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -650,7 +650,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -728,7 +728,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -809,7 +809,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "unit": "short"
@@ -920,7 +920,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -999,7 +999,7 @@
       "type": "gauge"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1091,7 +1091,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1197,7 +1197,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1275,7 +1275,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1353,7 +1353,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1431,7 +1431,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1444,7 +1444,7 @@
       "type": "row"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1522,7 +1522,7 @@
       "type": "stat"
     },
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1587,7 +1587,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "unit": "s"
@@ -1706,7 +1706,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "unit": "short"
@@ -1833,8 +1833,8 @@
       {
         "current": {
           "selected": false,
-          "text": "Prometheus",
-          "value": "Prometheus"
+          "text": "demo-a",
+          "value": "demo-a"
         },
         "description": null,
         "error": null,
@@ -1845,7 +1845,6 @@
         "name": "datasource",
         "options": [],
         "query": "prometheus",
-        "queryValue": "",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1858,7 +1857,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "Prometheus",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_node_labels,cluster)",
         "description": null,
         "error": null,
@@ -1884,11 +1883,11 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
-          "text": "argocd",
-          "value": "argocd"
+          "selected": true,
+          "text": "sample",
+          "value": "sample"
         },
-        "datasource": "Prometheus",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_namespace_labels{cluster=~\"^$cluster$\"},namespace)",
         "description": null,
         "error": null,
@@ -1918,7 +1917,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "Prometheus",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_deployment_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},deployment)",
         "description": null,
         "error": null,
@@ -1948,7 +1947,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "Prometheus",
+        "datasource": "${datasource}",
         "definition": "label_values(kube_service_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},service)",
         "description": null,
         "error": null,

@@ -27,7 +27,7 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "Prometheus",
+        "datasource": "${datasource}",
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -45,7 +45,7 @@
   "panels": [
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -129,7 +129,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -193,7 +193,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -269,7 +269,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -340,7 +340,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -415,7 +415,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -489,7 +489,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -565,7 +565,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -639,7 +639,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -707,7 +707,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -785,7 +785,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -863,7 +863,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -943,7 +943,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1061,7 +1061,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1168,7 +1168,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "editable": true,
       "error": false,
       "fieldConfig": {

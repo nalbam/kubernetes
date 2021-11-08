@@ -25,7 +25,7 @@
   "links": [],
   "panels": [
     {
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "gridPos": {
         "h": 3,
         "w": 24,
@@ -1211,7 +1211,7 @@
     },
     {
       "columns": [],
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fontSize": "100%",
       "gridPos": {
         "h": 18,
@@ -1388,7 +1388,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "${datasource}",
       "fill": 1,
       "gridPos": {
         "h": 9,
