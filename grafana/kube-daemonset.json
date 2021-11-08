@@ -222,7 +222,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|\"}[2m])) / sum (kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\"}) * 100",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m])) / sum (kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -310,7 +310,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|\"}[5m])) by (pod)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[5m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -402,7 +402,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "100\n* sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_throttled_periods_total{\ncluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|\"}[5m]))\n/ sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_periods_total{\ncluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|\"}[5m]))",
+          "expr": "100\n* sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_throttled_periods_total{\ncluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[5m]))\n/ sum by(container_name, pod_name, namespace) (increase(container_cpu_cfs_periods_total{\ncluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[5m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -643,7 +643,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|\"}[2m]))",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -993,7 +993,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|\"}) / sum (kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\"}) * 100",
+          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) / sum (kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1081,7 +1081,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|\"}) by (pod)",
+          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1268,7 +1268,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|\"})",
+          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$daemonset-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,

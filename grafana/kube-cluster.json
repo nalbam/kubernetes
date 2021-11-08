@@ -732,7 +732,7 @@
         },
         {
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",container!~\"POD|\"}[2m]) * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"$cluster\",container!~\"POD|istio-proxy|\"}[2m]) * on (node) group_left (role) kube_node_labels{cluster=~\"$cluster\",label_group=~\"$label_group\"})",
           "hide": false,
           "interval": "",
           "legendFormat": "usage",
