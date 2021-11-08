@@ -2781,7 +2781,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "workers",
           "value": "workers"
         },

@@ -1884,7 +1884,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "sample",
           "value": "sample"
         },
