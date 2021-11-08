@@ -2870,5 +2870,5 @@
   "timezone": "browser",
   "title": "Kubernetes Cluster - Prometheus",
   "uid": "kube-cluster",
-  "version": 60
+  "version": 2
 }

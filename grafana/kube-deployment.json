@@ -2004,5 +2004,5 @@
   "timezone": "browser",
   "title": "Kubernetes Deployment - Prometheus",
   "uid": "kube-deployment",
-  "version": 1
+  "version": 2
 }

@@ -1897,5 +1897,5 @@
   "timezone": "browser",
   "title": "Kubernetes DaemonSet - Prometheus",
   "uid": "kube-daemonset",
-  "version": 1
+  "version": 2
 }
