@@ -1833,8 +1833,8 @@
       {
         "current": {
           "selected": false,
-          "text": "demo-a",
-          "value": "demo-a"
+          "text": "Prometheus",
+          "value": "Prometheus"
         },
         "description": null,
         "error": null,
