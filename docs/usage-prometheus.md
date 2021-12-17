@@ -14,15 +14,16 @@ kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "\"name\""
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "\"name\"" | sort | grep http_requests
 
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "pods/" | sort
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "namespaces/" | grep "pods/" | sort
 
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/cpu_usage" | jq .
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/fs_usage_bytes" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/sample/pods/*/cpu_usage" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/sample/pods/*/fs_usage_bytes" | jq .
 
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/http_requests" | jq .
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/services/*/http_requests" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/sample/pods/*/http_requests" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/sample/services/*/http_requests" | jq .
 
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/nginx_ingress_controller_requests" | jq .
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/demo-dev/pods/*/container_network_receive_bytes" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/sample/pods/*/nginx_ingress_controller_requests" | jq .
+kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1/namespaces/sample/pods/*/container_network_receive_bytes" | jq .
 ```
 
 ```promql
