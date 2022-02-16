@@ -6,7 +6,7 @@
 brew install kubeseal
 ```
 
-## secrets.yaml
+## secret.yaml
 
 ```yaml
 apiVersion: v1
