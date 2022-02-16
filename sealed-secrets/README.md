@@ -19,7 +19,7 @@ data:
   username: dGVzdDEyMzQK # <- base64 encoded test1234
 ```
 
-##
+## sealed-secret.yaml
 
 ```bash
 cat secret.yaml | kubeseal \
