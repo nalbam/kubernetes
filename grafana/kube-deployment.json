@@ -153,7 +153,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
+          "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -237,7 +237,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "100\n* sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))\n/ sum(kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "100\n* sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))\n/ sum(kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -330,7 +330,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m])) by (pod)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -425,7 +425,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "100\n* sum by(pod, namespace) (increase(container_cpu_cfs_throttled_periods_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))\n/ sum by(pod, namespace) (increase(container_cpu_cfs_periods_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
+          "expr": "100\n* sum by(pod, namespace) (increase(container_cpu_cfs_throttled_periods_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))\n/ sum by(pod, namespace) (increase(container_cpu_cfs_periods_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -509,7 +509,7 @@
           "datasource": {
             "uid": "${datasource}"
           },
-          "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
+          "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -591,7 +591,7 @@
           "datasource": {
             "uid": "${datasource}"
           },
-          "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
+          "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -672,7 +672,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -753,7 +753,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "sum(kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -834,7 +834,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_limits{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "sum(kube_pod_container_resource_limits{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -925,7 +925,7 @@
           "datasource": {
             "uid": "${datasource}"
           },
-          "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
+          "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -936,7 +936,7 @@
           "datasource": {
             "uid": "${datasource}"
           },
-          "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
+          "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -947,7 +947,7 @@
           "datasource": {
             "uid": "${datasource}"
           },
-          "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
+          "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1030,7 +1030,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) / sum (kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) * 100",
+          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) / sum (kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1123,7 +1123,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) by (pod)",
+          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1224,7 +1224,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(irate(container_network_receive_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
+          "expr": "sum(irate(container_network_receive_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1236,7 +1236,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "- sum(irate(container_network_transmit_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
+          "expr": "- sum(irate(container_network_transmit_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1317,7 +1317,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1398,7 +1398,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "sum(kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1479,7 +1479,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_limits{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "sum(kube_pod_container_resource_limits{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1833,7 +1833,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",stream=\"stderr\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"}[2m])) by (pod)",
+          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",stream=\"stderr\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"}[2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1845,7 +1845,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"} |~ \"error|ERROR\" [2m])) by (pod)",
+          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"} |~ \"error|ERROR\" [2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1857,7 +1857,7 @@
             "uid": "${datasource}"
           },
           "exemplar": true,
-          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"} |~ \"warn|WARN\" [2m])) by (pod)",
+          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"} |~ \"warn|WARN\" [2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -2002,66 +2002,6 @@
         "options": [],
         "query": {
           "query": "label_values(kube_deployment_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},deployment)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": "",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values(kube_daemonset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},daemonset)",
-        "hide": 0,
-        "includeAll": true,
-        "multi": false,
-        "name": "daemonset",
-        "options": [],
-        "query": {
-          "query": "label_values(kube_daemonset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},daemonset)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 2,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": "",
-        "current": {
-          "selected": false,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${datasource}"
-        },
-        "definition": "label_values(kube_statefulset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},statefulset)",
-        "hide": 0,
-        "includeAll": true,
-        "multi": false,
-        "name": "statefulset",
-        "options": [],
-        "query": {
-          "query": "label_values(kube_statefulset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},statefulset)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 2,
