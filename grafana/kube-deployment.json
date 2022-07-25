@@ -17,7 +17,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0,211,255,1)",
@@ -37,8 +40,6 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 9679,
   "graphTooltip": 0,
-  "id": 120,
-  "iteration": 1636380099675,
   "links": [
     {
       "asDropdown": true,
@@ -56,7 +57,10 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": "Prometheus",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -65,12 +69,22 @@
       },
       "id": 58,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Deployment",
       "type": "row"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -115,7 +129,6 @@
         "y": 1
       },
       "id": 46,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -133,11 +146,14 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
+          "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -150,8 +166,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -198,7 +215,6 @@
         "y": 1
       },
       "id": 31,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -214,11 +230,14 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "100\n* sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))\n/ sum(kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "100\n* sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))\n/ sum(kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -230,7 +249,9 @@
       "type": "gauge"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -244,7 +265,6 @@
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
-              "graph": false,
               "legend": false,
               "tooltip": false,
               "viz": false
@@ -299,14 +319,18 @@
           "placement": "right"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
       "pluginVersion": "7.5.1",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m])) by (pod)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -316,13 +340,13 @@
           "step": 10
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "CPU Usage (2m avg)",
       "type": "timeseries"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -336,7 +360,6 @@
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
-              "graph": false,
               "legend": false,
               "tooltip": false,
               "viz": false
@@ -391,14 +414,18 @@
           "placement": "bottom"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "100\n* sum by(pod, namespace) (increase(container_cpu_cfs_throttled_periods_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))\n/ sum by(pod, namespace) (increase(container_cpu_cfs_periods_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
+          "expr": "100\n* sum by(pod, namespace) (increase(container_cpu_cfs_throttled_periods_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))\n/ sum by(pod, namespace) (increase(container_cpu_cfs_periods_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -408,14 +435,13 @@
           "step": 10
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "CPU Throttled (2m avg)",
       "type": "timeseries"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -460,7 +486,6 @@
         "y": 6
       },
       "id": 52,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -478,10 +503,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
-          "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -493,8 +521,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -539,7 +568,6 @@
         "y": 6
       },
       "id": 53,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -557,10 +585,13 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
-          "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -572,8 +603,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -616,7 +648,6 @@
         "y": 6
       },
       "id": 35,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -634,11 +665,14 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -650,8 +684,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -694,7 +729,6 @@
         "y": 6
       },
       "id": 37,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -712,11 +746,14 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "sum(kube_pod_container_resource_requests{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -728,8 +765,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -772,7 +810,6 @@
         "y": 6
       },
       "id": 44,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -790,11 +827,14 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_limits{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "sum(kube_pod_container_resource_limits{resource=~\"cpu\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -806,55 +846,86 @@
       "type": "stat"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 5,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
           "unit": "short"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 4,
         "x": 0,
         "y": 8
       },
-      "hiddenSeries": false,
       "id": 27,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 1,
       "links": [],
-      "nullPointMode": "null",
       "options": {
-        "alertThreshold": true
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
       },
-      "percentage": false,
-      "pluginVersion": "8.2.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      "pluginVersion": "9.0.4",
       "targets": [
         {
-          "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "expr": "sum(kube_deployment_status_replicas_updated{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -862,7 +933,10 @@
           "refId": "A"
         },
         {
-          "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "expr": "sum(kube_deployment_status_replicas_available{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -870,7 +944,10 @@
           "refId": "B"
         },
         {
-          "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment\"})",
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "expr": "sum(kube_deployment_status_replicas_unavailable{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",deployment=~\"^$deployment$daemonset$statefulset\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -878,50 +955,13 @@
           "refId": "C"
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Replicas",
-      "tooltip": {
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -968,7 +1008,6 @@
         "y": 8
       },
       "id": 33,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -984,11 +1023,14 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) / sum (kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) * 100",
+          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) / sum (kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) * 100",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1000,7 +1042,9 @@
       "type": "gauge"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1014,7 +1058,6 @@
             "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
-              "graph": false,
               "legend": false,
               "tooltip": false,
               "viz": false
@@ -1069,14 +1112,18 @@
           "placement": "right"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) by (pod)",
+          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1086,13 +1133,13 @@
           "step": 10
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Memory Usage",
       "type": "timeseries"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1106,7 +1153,6 @@
             "fillOpacity": 10,
             "gradientMode": "none",
             "hideFrom": {
-              "graph": false,
               "legend": false,
               "tooltip": false,
               "viz": false
@@ -1167,14 +1213,18 @@
           "placement": "right"
         },
         "tooltip": {
-          "mode": "single"
+          "mode": "single",
+          "sort": "none"
         }
       },
-      "pluginVersion": "7.5.1",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(irate(container_network_receive_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
+          "expr": "sum(irate(container_network_receive_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1182,8 +1232,11 @@
           "refId": "C"
         },
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "- sum(irate(container_network_transmit_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
+          "expr": "- sum(irate(container_network_transmit_bytes_total{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"}[2m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1191,14 +1244,13 @@
           "refId": "D"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Network I/O Total (2m avg)",
       "type": "timeseries"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1241,7 +1293,6 @@
         "y": 13
       },
       "id": 39,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -1259,11 +1310,14 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "sum(container_memory_working_set_bytes{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1275,8 +1329,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1319,7 +1374,6 @@
         "y": 13
       },
       "id": 41,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -1337,11 +1391,14 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "sum(kube_pod_container_resource_requests{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1353,8 +1410,9 @@
       "type": "stat"
     },
     {
-      "cacheTimeout": null,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1397,7 +1455,6 @@
         "y": 13
       },
       "id": 45,
-      "interval": null,
       "links": [],
       "maxDataPoints": 100,
       "options": {
@@ -1415,11 +1472,14 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(kube_pod_container_resource_limits{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
+          "expr": "sum(kube_pod_container_resource_limits{resource=~\"memory\",cluster=~\"^$cluster$\",namespace=~\"^$namespace$\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"POD|istio-proxy|\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1432,7 +1492,9 @@
     },
     {
       "collapsed": false,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1441,11 +1503,21 @@
       },
       "id": 51,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "uid": "${datasource}"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Service",
       "type": "row"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1505,9 +1577,12 @@
         "text": {},
         "textMode": "value"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(irate(istio_requests_total{reporter=\"source\",cluster=~\"^$cluster$\",destination_service=~\"^$service.$namespace.svc.cluster.local\",response_code=~\"[2].*\"}[5m])) / sum(irate(istio_requests_total{reporter=\"source\",cluster=~\"^$cluster$\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) * 100",
           "format": "time_series",
@@ -1517,13 +1592,13 @@
           "refId": "C"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Success Rate 2xx (5m avg)",
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1566,9 +1641,12 @@
         "text": {},
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(irate(istio_requests_total{reporter=\"source\",cluster=~\"^$cluster$\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m]))",
           "format": "time_series",
@@ -1578,8 +1656,6 @@
           "refId": "C"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
       "title": "Requests Total (5m avg)",
       "type": "stat"
     },
@@ -1588,7 +1664,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "unit": "s"
@@ -1622,7 +1700,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1632,6 +1710,9 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "(histogram_quantile(0.99, sum(irate(istio_request_duration_milliseconds_bucket{cluster=~\"^$cluster$\",reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le)) / 1000) or histogram_quantile(0.99, sum(irate(istio_request_duration_seconds_bucket{reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le))",
           "format": "time_series",
@@ -1641,6 +1722,9 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "(histogram_quantile(0.90, sum(irate(istio_request_duration_milliseconds_bucket{cluster=~\"^$cluster$\",reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le)) / 1000) or histogram_quantile(0.90, sum(irate(istio_request_duration_seconds_bucket{reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le))",
           "format": "time_series",
@@ -1650,6 +1734,9 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "(histogram_quantile(0.50, sum(irate(istio_request_duration_milliseconds_bucket{cluster=~\"^$cluster$\",reporter=\"source\", destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le)) / 1000) or histogram_quantile(0.50, sum(irate(istio_request_duration_seconds_bucket{reporter=\"source\",destination_service=~\"^$service.$namespace.svc.cluster.local\"}[5m])) by (le))",
           "format": "time_series",
@@ -1660,9 +1747,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Requests Duration (5m avg)",
       "tooltip": {
         "shared": true,
@@ -1671,9 +1756,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1681,25 +1764,18 @@
         {
           "$$hashKey": "object:262",
           "format": "s",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:263",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
@@ -1707,7 +1783,9 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "${datasource}",
+      "datasource": {
+        "uid": "${datasource}"
+      },
       "fieldConfig": {
         "defaults": {
           "unit": "short"
@@ -1741,7 +1819,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.0.4",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -1751,8 +1829,11 @@
       "steppedLine": false,
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",stream=\"stderr\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"}[2m])) by (pod)",
+          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",stream=\"stderr\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"}[2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1760,8 +1841,11 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"} |~ \"error|ERROR\" [2m])) by (pod)",
+          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"} |~ \"error|ERROR\" [2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1769,8 +1853,11 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
-          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"} |~ \"warn|WARN\" [2m])) by (pod)",
+          "expr": "sum(count_over_time({cluster=~\"$cluster\",namespace=~\"$namespace\",pod=~\"^$deployment$daemonset$statefulset-[a-z0-9]+-[a-z0-9]+\",container!~\"istio-proxy\"} |~ \"warn|WARN\" [2m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1779,9 +1866,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "error/warn/stderr",
       "tooltip": {
         "shared": true,
@@ -1790,9 +1875,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -1800,30 +1883,23 @@
         {
           "$$hashKey": "object:262",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:263",
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 31,
+  "schemaVersion": 36,
   "style": "dark",
   "tags": [
     "kubernetes",
@@ -1837,11 +1913,8 @@
           "text": "Prometheus",
           "value": "Prometheus"
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "datasource",
         "options": [],
@@ -1852,19 +1925,18 @@
         "type": "datasource"
       },
       {
-        "allValue": null,
         "current": {
           "selected": false,
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "${datasource}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
         "definition": "label_values(kube_node_labels,cluster)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": false,
         "name": "cluster",
         "options": [],
@@ -1888,13 +1960,13 @@
           "text": "sample",
           "value": "sample"
         },
-        "datasource": "${datasource}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
         "definition": "label_values(kube_namespace_labels{cluster=~\"^$cluster$\"},namespace)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
-        "label": null,
         "multi": false,
         "name": "namespace",
         "options": [],
@@ -1918,13 +1990,13 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "${datasource}",
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
         "definition": "label_values(kube_deployment_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},deployment)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": false,
         "name": "deployment",
         "options": [],
@@ -1948,13 +2020,73 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "${datasource}",
-        "definition": "label_values(kube_service_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},service)",
-        "description": null,
-        "error": null,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "definition": "label_values(kube_daemonset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},daemonset)",
         "hide": 0,
         "includeAll": true,
-        "label": null,
+        "multi": false,
+        "name": "daemonset",
+        "options": [],
+        "query": {
+          "query": "label_values(kube_daemonset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},daemonset)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "definition": "label_values(kube_statefulset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},statefulset)",
+        "hide": 0,
+        "includeAll": true,
+        "multi": false,
+        "name": "statefulset",
+        "options": [],
+        "query": {
+          "query": "label_values(kube_statefulset_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},statefulset)",
+          "refId": "StandardVariableQuery"
+        },
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "definition": "label_values(kube_service_labels{cluster=~\"^$cluster$\",namespace=~\"^$namespace$\"},service)",
+        "hide": 0,
+        "includeAll": true,
         "multi": false,
         "name": "service",
         "options": [],
@@ -2005,5 +2137,6 @@
   "timezone": "browser",
   "title": "Kubernetes Deployment - Prometheus",
   "uid": "kube-deployment",
-  "version": 2
+  "version": 1,
+  "weekStart": ""
 }
