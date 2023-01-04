@@ -59,12 +59,15 @@ kubectl logs ${CA} -n addon-cluster-autoscaler -f
 k get pod --all-namespaces | grep -v Running | grep -v Completed
 
 k get no -l group=workers
-k get no -l instancegroup=workers-v1
-k get no -l instancegroup=workers-v1 | grep -v 'NAME' | awk '{print $1}'
+k get no -l instancegroup=workers-v2
 
-k get no -l instancegroup=workers-v1 | grep -v 'NAME' | awk '{print $1}' | xargs -I {} kubectl cordon {}
-
-k get no -l instancegroup=workers-v1 | grep -v 'NAME' | awk '{print $1}' | \
+k get no -l instancegroup=workers-v2 | grep -v 'NAME' | awk '{print $1}'
+k get no -l instancegroup=workers-v2 | grep -v 'NAME' | awk '{print $1}' | xargs -I {} kubectl cordon {}
+k get no -l instancegroup=workers-v2 | grep -v 'NAME' | awk '{print $1}' | \
 xargs -I {} kubectl drain --delete-emptydir-data --ignore-daemonsets --skip-wait-for-delete-timeout=0 {}
 
+k get no --show-labels | grep v2 | awk '{print $1}'
+k get no --show-labels | grep v2 | awk '{print $1}' | xargs -I {} kubectl cordon {}
+k get no --show-labels | grep v2 | awk '{print $1}' | \
+xargs -I {} kubectl drain --delete-emptydir-data --ignore-daemonsets --skip-wait-for-delete-timeout=0 {}
 ```
