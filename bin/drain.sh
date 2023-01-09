@@ -23,7 +23,7 @@ echo "#"
 
 while read LINE; do
   kubectl cordon ${LINE}
-done < ${KUBE_NODES}
+done <${KUBE_NODES}
 
 echo "#"
 echo "sleep 3.."
@@ -56,7 +56,7 @@ while read LINE; do
   echo "sleep 5.."
   sleep 5
 
-  IDX=$(( ${IDX} + 1 ))
-done < ${KUBE_NODES}
+  IDX=$((${IDX} + 1))
+done <${KUBE_NODES}
 
 echo "# $(date)"

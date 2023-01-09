@@ -23,7 +23,7 @@ echo "#"
 
 while read LINE; do
   kubectl cordon ${LINE}
-done < ${KUBE_NODES}
+done <${KUBE_NODES}
 
 echo "#"
 echo "# $(date)"
