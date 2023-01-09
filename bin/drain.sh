@@ -18,7 +18,7 @@ fi
 
 ################################################################################
 
-echo "# $(date)"
+echo "# $(date) [${COUNT}]"
 echo "#"
 
 while read LINE; do
@@ -59,4 +59,5 @@ while read LINE; do
   IDX=$((${IDX} + 1))
 done <${KUBE_NODES}
 
+echo "#"
 echo "# $(date)"
