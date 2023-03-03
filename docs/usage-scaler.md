@@ -70,4 +70,13 @@ k get no --show-labels | grep v2 | awk '{print $1}'
 k get no --show-labels | grep v2 | awk '{print $1}' | xargs -I {} kubectl cordon {}
 k get no --show-labels | grep v2 | awk '{print $1}' | \
 xargs -I {} kubectl drain --delete-emptydir-data --ignore-daemonsets --skip-wait-for-delete-timeout=0 {}
+
+# cordon
+
+k cordon -l instancegroup=workers-v5
+
+# drain
+
+k drain -l instancegroup=workers-v5 --delete-emptydir-data --ignore-daemonsets --skip-wait-for-delete-timeout=0
+
 ```
