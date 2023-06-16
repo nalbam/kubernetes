@@ -8,7 +8,7 @@ kubectl get --raw "/apis/metrics.k8s.io/v1beta1" | jq .
 kubectl get --raw "/apis/metrics.k8s.io/v1beta1/pods" | jq .
 
 # custom metrics
-kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq .
+kubectl get --raw "/apis/external.metrics.k8s.io/v1beta1" | jq .
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "\"name\"" | sort
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "\"name\"" | sort | grep container_network
 kubectl get --raw "/apis/custom.metrics.k8s.io/v1beta1" | jq . | grep "\"name\"" | sort | grep http_requests
